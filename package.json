@@ -1,0 +1,28 @@
+{
+  "name": "create-fsd-architecture",
+  "version": "1.0.3",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "create-fsd-architecture": "bin/index.mjs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/index.mjs"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "create-fsd-architecture": "^1.0.1",
+    "degit": "^2.8.4",
+    "ora": "^9.4.0",
+    "prompts": "^2.4.2"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
