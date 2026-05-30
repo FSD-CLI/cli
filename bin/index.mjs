@@ -18,7 +18,7 @@ const TEMPLATES = [
     title: "Next.js",
     value: "nextjs",
     description: "Next.js — Full-stack React framework with SSR, SSG, and App Router.",
-    repo: "ashrafmo-1/FSD-NEXTJS",
+    repo: "FSD-architectures/FSD-NEXTJS",
     available: true,
   },
 ];
@@ -34,7 +34,7 @@ function showBanner() {
 
   Feature-Sliced Design Scaffolding  
   `;
-  
+
   console.log(chalk.cyanBright(banner));
 }
 
