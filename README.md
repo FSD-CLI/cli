@@ -13,13 +13,13 @@ Scaffold production-ready projects with [Feature-Sliced Design](https://feature-
 ## Quick Start
 
 ```bash
-npx create-fsd-architecture my-app
+npx create-fsd-architecture@latest my-app
 ```
 
 Or with a specific package manager:
 
 ```bash
-npm create fsd-architecture my-app
+npm create fsd-architecture@latest my-app
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ npm create fsd-architecture my-app
 ### Interactive Mode
 
 ```bash
-npx create-fsd-architecture
+npx create-fsd-architecture@latest
 ```
 
 The CLI will guide you through:
@@ -40,7 +40,7 @@ The CLI will guide you through:
 ### With Arguments
 
 ```bash
-npx create-fsd-architecture my-app
+npx create-fsd-architecture@latest my-app
 ```
 
 Pass the project name directly to skip the name prompt.
@@ -65,15 +65,6 @@ src/
 ├── entities/     # Business entities and their representations
 └── shared/       # Reusable utilities, UI kit, configs
 ```
-
-## Roadmap
-
-- [x] React + Vite template
-- [ ] Next.js template
-- [ ] Vue + Vite template
-- [ ] Custom template support
-- [ ] Git initialization option
-- [ ] Package manager detection (npm, yarn, pnpm, bun)
 
 ## Requirements
 

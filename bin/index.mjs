@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import degit from "degit";
 import prompts from "prompts";
 import chalk from "chalk";
