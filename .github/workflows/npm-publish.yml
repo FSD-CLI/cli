@@ -39,6 +39,6 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish package
-        if: steps.npm-version.outputs.exists == 'false'
-        run: npm publish
+          - name: Publish package
+          if: steps.npm-version.outputs.exists == 'false'
+          run: npm publish
