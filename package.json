@@ -3,6 +3,14 @@
   "version": "1.0.6",
   "description": "",
   "main": "index.js",
+  "homepage": "https://fsd-docs.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FSD-architectures/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FSD-architectures/cli/issues"
+  },
   "bin": {
     "create-fsd-architecture": "bin/index.mjs"
   },
