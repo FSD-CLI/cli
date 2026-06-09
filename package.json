@@ -1,5 +1,6 @@
 {
   "name": "create-fsd-architecture",
+  "author": "Ashraf Mohamed",
   "version": "1.0.6",
   "description": "",
   "main": "index.js",
@@ -29,8 +30,19 @@
     "bin",
     "README.md"
   ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "fsd",
+    "feature-sliced-design",
+    "react",
+    "vite",
+    "mextJs",
+    "architecture",
+    "frontend",
+    "scaffolding",
+    "cli",
+    "scaffold",
+    "template"
+  ],
+  "license": "MIT",
   "type": "commonjs"
 }

@@ -2,6 +2,15 @@
 
 Scaffold production-ready projects with [Feature-Sliced Design](https://feature-sliced.design/) architecture in seconds.
 
+![npm](https://img.shields.io/npm/v/create-fsd-architecture)
+
+![downloads](https://img.shields.io/npm/dw/create-fsd-architecture)
+
+📚 Documentation: https://fsd-docs.vercel.app
+
+🚀 GitHub: https://github.com/FSD-architectures/cli
+
+
 ## Features
 
 - **FSD Architecture** — Pre-configured layers: app, pages, widgets, features, entities, shared
