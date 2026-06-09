@@ -7,6 +7,7 @@ import ora from "ora";
 import fs from "fs";
 import path from "path";
 import { execFileSync, execSync, spawn } from "child_process";
+import { parseGenerateArgs, runGenerator } from "./generator.mjs";
 
 const TEMPLATES = [
   {
@@ -27,13 +28,27 @@ const TEMPLATES = [
 
 function showBanner() {
   const banner = `
-  ███████╗ ███████╗ ██████╗ 
-  ██╔════╝ ██╔════╝ ██╔══██╗
-  █████╗   ███████╗ ██║  ██║
-  ██║      ███████║ ██████╔╝
-  ╚═╝      ╚══════╝ ╚═════╝ 
-
-  Feature-Sliced Design Scaffolding  
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│    ███████╗███████╗██████╗                                                  │
+│    ██╔════╝██╔════╝██╔══██╗                                                 │
+│    █████╗  ███████╗██║  ██║                                                 │
+│    ██╔══╝  ╚════██║██║  ██║                                                 │
+│    ██║     ███████║██████╔╝                                                 │
+│    ╚═╝     ╚══════╝╚═════╝                                                  │
+│                                                                             │
+│           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+│                                                                             │
+│   app                                                                       │
+│   └── pages                                                                 │
+│       └── widgets                                                           │
+│           └── features                                                      │
+│               └── entities                                                  │
+│                   └── shared                                                │
+│                                                                             │
+│   Scalable • Maintainable • Enterprise Frontend Architecture                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
   `;
 
   console.log(chalk.cyanBright(banner));
@@ -177,6 +192,13 @@ function verifyCommitlintRejectsInvalidMessage(targetDir) {
 }
 
 async function main() {
+  const generateOptions = parseGenerateArgs(process.argv.slice(2));
+
+  if (generateOptions.shouldGenerate) {
+    await runGenerator(generateOptions);
+    return;
+  }
+
   showBanner();
 
   const argName = process.argv[2];

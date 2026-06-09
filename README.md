@@ -15,6 +15,7 @@ Scaffold production-ready projects with [Feature-Sliced Design](https://feature-
 
 - **FSD Architecture** — Pre-configured layers: app, pages, widgets, features, entities, shared
 - **Interactive CLI** — Guided setup with project name, template selection, and dependency installation
+- **In-project Generators** — Add FSD slices to existing projects
 - **Multiple Templates** — Choose from available project templates (more coming soon)
 - **Zero Config** — Start coding immediately with sensible defaults
 - **TypeScript** — Full TypeScript support out of the box
@@ -29,6 +30,12 @@ Or with a specific package manager:
 
 ```bash
 npm create fsd-architecture@latest my-app
+```
+
+Generate slices inside an existing project:
+
+```bash
+npx create-fsd-architecture --generate feature auth
 ```
 
 ## Usage
@@ -53,6 +60,31 @@ npx create-fsd-architecture@latest my-app
 ```
 
 Pass the project name directly to skip the name prompt.
+
+### Generate FSD Slices
+
+```bash
+npx create-fsd-architecture --generate <type> <name>
+npx create-fsd-architecture -g feature auth
+```
+
+Allowed types:
+
+- `feature`
+- `entity`
+- `widget`
+- `page`
+
+The generator writes into `src/features`, `src/entities`, `src/widgets`, or `src/pages` when `src/` exists. Otherwise, it writes to root-level FSD folders. Existing slices are protected by default; pass `--force` to overwrite one.
+
+Examples:
+
+```bash
+npx create-fsd-architecture --generate feature auth
+npx create-fsd-architecture --generate entity product
+npx create-fsd-architecture --generate widget navbar
+npx create-fsd-architecture --generate page checkout
+```
 
 ## Available Templates
 
