@@ -14,14 +14,14 @@ const TEMPLATES = [
     title: "React + Vite",
     value: "react-vite",
     description: "React with Vite and FSD architecture",
-    repo: "FSD-architectures/FSD",
+    repo: "FSD-CLI/FSD",
     available: true,
   },
   {
     title: "Next.js",
     value: "nextjs",
     description: "Next.js — Full-stack React framework with SSR, SSG, and App Router.",
-    repo: "FSD-architectures/FSD-NEXTJS",
+    repo: "FSD-CLI/FSD-NEXTJS",
     available: true,
   },
 ];

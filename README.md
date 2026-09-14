@@ -8,7 +8,7 @@ Scaffold production-ready projects with [Feature-Sliced Design](https://feature-
 
 📚 Documentation: https://fsd-docs.vercel.app
 
-🚀 GitHub: https://github.com/FSD-architectures/cli
+🚀 GitHub: https://github.com/FSD-CLI/cli
 
 
 ## Features
@@ -91,7 +91,7 @@ npx create-fsd-architecture --generate page checkout
 | Template | Status |
 | --- | --- |
 | React + Vite | Available |
-| Next.js | Coming Soon |
+| Next.js | Available |
 
 ## Project Structure
 
@@ -109,8 +109,8 @@ src/
 
 ## Requirements
 
-- Node.js 18 or later
+- Node.js 20 or later
 
 ## License
 
-ISC
+MIT
