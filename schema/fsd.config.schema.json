@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/FSD-CLI/cli/main/schema/fsd.config.schema.json",
+  "title": "FSD CLI project configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "framework",
+    "packageManager",
+    "apiClient",
+    "serverState",
+    "clientState",
+    "forms",
+    "ui"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "framework": { "enum": ["react-vite", "nextjs"] },
+    "packageManager": { "enum": ["npm", "pnpm", "yarn", "bun"] },
+    "apiClient": { "enum": ["axios", "fetch"] },
+    "serverState": { "enum": ["react-query", "none"] },
+    "clientState": { "enum": ["zustand", "redux", "none"] },
+    "forms": { "enum": ["react-hook-form-zod", "none"] },
+    "ui": { "const": "shared-ui" }
+  }
+}

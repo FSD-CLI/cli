@@ -14,7 +14,7 @@ Scaffold production-ready projects with [Feature-Sliced Design](https://feature-
 ## Features
 
 - **FSD Architecture** — Pre-configured layers: app, pages, widgets, features, entities, shared
-- **Interactive CLI** — Guided setup with project name, template selection, and dependency installation
+- **One-time stack setup** — Choose API, state, forms, and package manager once
 - **In-project Generators** — Add FSD slices to existing projects
 - **Multiple Templates** — Choose from available project templates (more coming soon)
 - **Zero Config** — Start coding immediately with sensible defaults
@@ -50,8 +50,10 @@ The CLI will guide you through:
 
 1. **Project name** — Name your project
 2. **Template selection** — Choose your framework
-3. **Install dependencies** — Optionally install packages
-4. **Start dev server** — Optionally launch the development server
+3. **Stack selection** — Axios or Fetch, React Query, Zustand or Redux, and forms
+4. **Package manager** — npm, pnpm, Yarn, or Bun
+5. **Install dependencies** — Optionally install packages
+6. **Start dev server** — Optionally launch the development server
 
 ### With Arguments
 
@@ -76,6 +78,13 @@ Allowed types:
 - `page`
 
 The generator writes into `src/features`, `src/entities`, `src/widgets`, or `src/pages` when `src/` exists. Otherwise, it writes to root-level FSD folders. Existing slices are protected by default; pass `--force` to overwrite one.
+
+The selected stack is stored in `fsd.config.json`. Generators read it
+automatically, so they never ask which API or state tool to use again. Generating
+`feature auth` creates login, registration, forgot-password, reset-password, and
+verification-code flows together. With the default forms stack it also creates
+typed React Hook Form components and Zod validation schemas wired to the generated
+React Query mutations.
 
 Examples:
 
@@ -104,8 +113,12 @@ src/
 ├── widgets/      # Large self-contained UI blocks
 ├── features/     # User interactions and actions
 ├── entities/     # Business entities and their representations
-└── shared/       # Reusable utilities, UI kit, configs
+└── shared/       # API, assets, config, utilities, types, and UI kit
 ```
+
+Every layer and its core segments are created up front. Empty architectural
+folders contain documentation placeholders so the complete structure survives
+Git clones.
 
 ## Requirements
 

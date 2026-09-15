@@ -6,8 +6,13 @@ import chalk from "chalk";
 import ora from "ora";
 import fs from "fs";
 import path from "path";
-import { execFileSync, execSync, spawn } from "child_process";
+import { execFileSync, spawn } from "child_process";
 import { parseGenerateArgs, runGenerator } from "./generator.mjs";
+import {
+  DEFAULT_PROJECT_CONFIG,
+  configureProject,
+  normalizeProjectConfig,
+} from "./project-config.mjs";
 
 const TEMPLATES = [
   {
@@ -54,15 +59,17 @@ function showBanner() {
   console.log(chalk.cyanBright(banner));
 }
 
-function showNextSteps(projectName, depsInstalled) {
+function showNextSteps(projectName, depsInstalled, packageManager) {
   console.log();
   console.log(chalk.bold.white("  Next steps:"));
   console.log();
   console.log(`    ${chalk.cyan("$")} cd ${projectName}`);
   if (!depsInstalled) {
-    console.log(`    ${chalk.cyan("$")} npm install`);
+    console.log(`    ${chalk.cyan("$")} ${packageManager} install`);
   }
-  console.log(`    ${chalk.cyan("$")} npm run dev`);
+  console.log(
+    `    ${chalk.cyan("$")} ${packageManager === "npm" ? "npm run dev" : `${packageManager} dev`}`
+  );
   console.log();
 }
 
@@ -75,15 +82,82 @@ function handleCancel() {
 
 const onCancel = { onCancel: handleCancel };
 
+async function promptProjectConfig(framework) {
+  const answers = await prompts(
+    [
+      {
+        type: "select",
+        name: "apiClient",
+        message: "API client",
+        initial: 0,
+        choices: [
+          { title: "Axios", value: "axios" },
+          { title: "Native Fetch", value: "fetch" },
+        ],
+      },
+      {
+        type: "select",
+        name: "serverState",
+        message: "Server state",
+        initial: 0,
+        choices: [
+          { title: "TanStack React Query", value: "react-query" },
+          { title: "None", value: "none" },
+        ],
+      },
+      {
+        type: "select",
+        name: "clientState",
+        message: "Client state",
+        initial: 0,
+        choices: [
+          { title: "Zustand", value: "zustand" },
+          { title: "Redux Toolkit", value: "redux" },
+          { title: "None", value: "none" },
+        ],
+      },
+      {
+        type: "select",
+        name: "forms",
+        message: "Forms and validation",
+        initial: 0,
+        choices: [
+          { title: "React Hook Form + Zod", value: "react-hook-form-zod" },
+          { title: "None", value: "none" },
+        ],
+      },
+      {
+        type: "select",
+        name: "packageManager",
+        message: "Package manager",
+        initial: 0,
+        choices: [
+          { title: "npm", value: "npm" },
+          { title: "pnpm", value: "pnpm" },
+          { title: "Yarn", value: "yarn" },
+          { title: "Bun", value: "bun" },
+        ],
+      },
+    ],
+    onCancel
+  );
+
+  return normalizeProjectConfig(framework, {
+    ...DEFAULT_PROJECT_CONFIG,
+    ...answers,
+  });
+}
+
+function packageManagerCommand(packageManager, script) {
+  return packageManager === "npm"
+    ? { command: "npm", args: ["run", script] }
+    : { command: packageManager, args: [script] };
+}
+
 const REQUIRED_HUSKY_HOOKS = ["pre-commit", "commit-msg", "pre-push"];
 const COMMITLINT_DEV_DEPENDENCIES = {
   "@commitlint/cli": "^20.5.3",
   "@commitlint/config-conventional": "^20.5.3",
-};
-const DEFAULT_HUSKY_HOOKS = {
-  "pre-commit": "npm run lint\ngit diff --check\nnpm audit --omit=dev\nnpm run build\n",
-  "commit-msg": '#!/bin/sh\nnpx --no -- commitlint --edit "$1"\n',
-  "pre-push": "npm run build\n",
 };
 const COMMITLINT_CONFIG_FILES = [
   "commitlint.config.js",
@@ -146,16 +220,32 @@ function ensureCommitlintConfig(targetDir) {
   );
 }
 
-function ensureHuskyHooks(targetDir) {
+function createHuskyHooks(packageManager) {
+  const run = (script) =>
+    packageManager === "npm" ? `npm run ${script}` : `${packageManager} ${script}`;
+  const execCommitlint = {
+    npm: 'npx --no -- commitlint --edit "$1"',
+    pnpm: 'pnpm exec commitlint --edit "$1"',
+    yarn: 'yarn exec commitlint --edit "$1"',
+    bun: 'bunx commitlint --edit "$1"',
+  }[packageManager];
+
+  return {
+    "pre-commit": `${run("lint")}\ngit diff --check\n${run("build")}\n`,
+    "commit-msg": `#!/bin/sh\n${execCommitlint}\n`,
+    "pre-push": `${run("build")}\n`,
+  };
+}
+
+function ensureHuskyHooks(targetDir, packageManager) {
   const huskyDir = path.join(targetDir, ".husky");
+  const hooks = createHuskyHooks(packageManager);
   fs.mkdirSync(huskyDir, { recursive: true });
 
   for (const hook of REQUIRED_HUSKY_HOOKS) {
     const hookPath = path.join(huskyDir, hook);
 
-    if (!fs.existsSync(hookPath)) {
-      fs.writeFileSync(hookPath, DEFAULT_HUSKY_HOOKS[hook]);
-    }
+    fs.writeFileSync(hookPath, hooks[hook]);
 
     fs.chmodSync(hookPath, 0o755);
   }
@@ -254,6 +344,8 @@ async function main() {
     process.exit(0);
   }
 
+  const projectConfig = await promptProjectConfig(selected.value);
+
   console.log();
 
   const spinner = ora({
@@ -277,11 +369,14 @@ async function main() {
   }).start();
 
   try {
+    configureProject(targetDir, projectConfig);
     ensureCommitlintDependencies(targetDir);
     ensureCommitlintConfig(targetDir);
     ensureGitRepository(targetDir);
-    ensureHuskyHooks(targetDir);
-    gitSpinner.succeed(chalk.green("Git repository and Husky hooks configured."));
+    ensureHuskyHooks(targetDir, projectConfig.packageManager);
+    gitSpinner.succeed(
+      chalk.green("FSD stack, Git repository, and Husky hooks configured.")
+    );
   } catch (err) {
     gitSpinner.fail(chalk.red("Failed to configure Git and Husky."));
     console.error(chalk.dim(`  ${err.message}`));
@@ -307,7 +402,7 @@ async function main() {
     }).start();
 
     try {
-      execSync("npm install", { cwd: targetDir, stdio: "pipe" });
+      runCommand(projectConfig.packageManager, ["install"], targetDir);
       runCommand("git", ["config", "core.hooksPath", ".husky"], targetDir);
       installSpinner.succeed(chalk.green("Dependencies installed."));
       depsInstalled = true;
@@ -357,15 +452,16 @@ async function main() {
       console.log(chalk.cyan("  Starting development server..."));
       console.log();
 
-      const child = spawn("npm", ["run", "dev"], {
+      const devCommand = packageManagerCommand(projectConfig.packageManager, "dev");
+      const child = spawn(devCommand.command, devCommand.args, {
         cwd: targetDir,
         stdio: "inherit",
-        shell: true,
+        shell: false,
       });
 
       child.on("error", (err) => {
         console.log(chalk.red(`  Failed to start dev server: ${err.message}`));
-        showNextSteps(projectName, true);
+        showNextSteps(projectName, true, projectConfig.packageManager);
       });
 
       return;
@@ -374,7 +470,7 @@ async function main() {
 
   console.log();
   console.log(chalk.green.bold("  Project created successfully!"));
-  showNextSteps(projectName, depsInstalled);
+  showNextSteps(projectName, depsInstalled, projectConfig.packageManager);
 }
 
 main().catch((err) => {

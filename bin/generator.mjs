@@ -1,58 +1,16 @@
 import fs from "fs";
 import path from "path";
-import prompts from "prompts";
 import chalk from "chalk";
 
 const ALLOWED_TYPES = ["feature", "entity", "widget", "page"];
 
-const FEATURE_TOOLS = [
-  {
-    title: "API: Axios + React Query",
-    value: "react-query",
-  },
-  {
-    title: "Local State: Zustand",
-    value: "zustand",
-  },
-  {
-    title: "Global State: Redux Toolkit",
-    value: "redux",
-  },
-  {
-    title: "UI only",
-    value: "ui-only",
-  },
-];
-
-const AUTH_MODULES = [
-  {
-    title: "Login",
-    value: "login",
-  },
-  {
-    title: "Register",
-    value: "register",
-  },
-  {
-    title: "Forgot Password Flow",
-    value: "forgot-password",
-  },
-];
+const ALL_AUTH_MODULES = ["login", "register", "forgot-password"];
 
 const LAYER_DIRS = {
   feature: "features",
   entity: "entities",
   widget: "widgets",
   page: "pages",
-};
-
-const onCancel = {
-  onCancel() {
-    console.log();
-    console.log(chalk.yellow("  Cancelled."));
-    console.log();
-    process.exit(0);
-  },
 };
 
 export function parseGenerateArgs(args) {
@@ -79,7 +37,7 @@ export async function runGenerator(options) {
     validateGenerateOptions(options);
 
     const normalizedName = toKebabCase(options.name);
-    const config = await resolveGeneratorConfig(options.type, normalizedName);
+    const config = loadProjectConfig(process.cwd());
     const createdFiles = generateSlice({
       cwd: process.cwd(),
       type: options.type,
@@ -113,49 +71,45 @@ function validateGenerateOptions({ type, name }) {
   }
 }
 
-async function resolveGeneratorConfig(type, name) {
-  if (type !== "feature") {
-    return {};
+export function loadProjectConfig(cwd) {
+  const configPath = path.join(cwd, "fsd.config.json");
+
+  if (fs.existsSync(configPath)) {
+    const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+    if (config.schemaVersion !== 1) {
+      throw new Error(`Unsupported fsd.config.json schemaVersion: ${config.schemaVersion}.`);
+    }
+    return config;
   }
 
-  const { tool } = await prompts(
-    {
-      type: "select",
-      name: "tool",
-      message: "What will this feature use?",
-      choices: FEATURE_TOOLS,
-    },
-    onCancel
-  );
+  const packagePath = path.join(cwd, "package.json");
+  const packageJson = fs.existsSync(packagePath)
+    ? JSON.parse(fs.readFileSync(packagePath, "utf8"))
+    : {};
+  const dependencies = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  };
 
-  if (!tool) {
-    throw new Error("Feature tool selection is required.");
-  }
-
-  if (name !== "auth") {
-    return { tool };
-  }
-
-  const { modules } = await prompts(
-    {
-      type: "multiselect",
-      name: "modules",
-      message: "Which auth modules do you need?",
-      choices: AUTH_MODULES,
-      min: 1,
-      hint: "- Space to select. Enter to submit.",
-    },
-    onCancel
-  );
-
-  if (!modules?.length) {
-    throw new Error("Select at least one auth module.");
-  }
-
-  return { tool, modules };
+  return {
+    schemaVersion: 1,
+    framework: dependencies.next ? "nextjs" : "react-vite",
+    apiClient: dependencies.axios ? "axios" : "fetch",
+    serverState: dependencies["@tanstack/react-query"] ? "react-query" : "none",
+    clientState: dependencies.zustand
+      ? "zustand"
+      : dependencies["@reduxjs/toolkit"]
+        ? "redux"
+        : "none",
+    forms:
+      dependencies["react-hook-form"] && dependencies.zod
+        ? "react-hook-form-zod"
+        : "none",
+    ui: "shared-ui",
+  };
 }
 
-function generateSlice({ cwd, type, name, config, force }) {
+export function generateSlice({ cwd, type, name, config, force }) {
   const layerDir = LAYER_DIRS[type];
   const baseDir = fs.existsSync(path.join(cwd, "src"))
     ? path.join(cwd, "src", layerDir)
@@ -175,7 +129,8 @@ function generateSlice({ cwd, type, name, config, force }) {
   const files = createFilePlan(type, name, config);
   const publicExports = files
     .filter((file) => file.public)
-    .map((file) => exportLine(file.path));
+    .map((file) => exportLine(file.path))
+    .sort();
 
   files.push({
     path: "index.ts",
@@ -189,14 +144,57 @@ function generateSlice({ cwd, type, name, config, force }) {
     fs.writeFileSync(filePath, file.content);
   }
 
+  if (type === "feature" && config.clientState === "redux") {
+    registerReduxReducer(cwd, name);
+  }
+
   return files.map((file) => path.relative(cwd, path.join(sliceDir, file.path)));
+}
+
+function registerReduxReducer(cwd, name) {
+  const storePath = path.join(cwd, "src", "app", "store.ts");
+  if (!fs.existsSync(storePath)) return;
+
+  const reducerName = name === "auth" ? "authReducer" : `${toCamelCase(name)}Reducer`;
+  const importLine = `import { ${reducerName} } from "@/features/${name}";`;
+  const reducerLine = `    ${toCamelCase(name)}: ${reducerName},`;
+  let content = fs.readFileSync(storePath, "utf8");
+
+  content = updateMarkerBlock(
+    content,
+    "// fsd-cli:imports:start",
+    "// fsd-cli:imports:end",
+    importLine
+  );
+  content = updateMarkerBlock(
+    content,
+    "    // fsd-cli:reducers:start",
+    "    // fsd-cli:reducers:end",
+    reducerLine
+  );
+  fs.writeFileSync(storePath, content);
+}
+
+function updateMarkerBlock(content, start, end, newLine) {
+  if (!content.includes(start) || !content.includes(end)) return content;
+
+  const [before, remainder] = content.split(start);
+  const [block, after] = remainder.split(end);
+  const lines = block
+    .split("\n")
+    .map((line) => line.trimEnd())
+    .filter((line) => line.trim())
+    .concat(newLine);
+  const uniqueLines = [...new Set(lines)].sort((a, b) => a.trim().localeCompare(b.trim()));
+
+  return `${before}${start}\n${uniqueLines.join("\n")}\n${end}${after}`;
 }
 
 function createFilePlan(type, name, config) {
   if (type === "feature") {
     return name === "auth"
-      ? createAuthFeatureFiles(config.tool, config.modules)
-      : createGenericFeatureFiles(name, config.tool);
+      ? createAuthFeatureFiles(config)
+      : createGenericFeatureFiles(name, config);
   }
 
   if (type === "entity") {
@@ -210,21 +208,28 @@ function createFilePlan(type, name, config) {
   return createPageFiles(name);
 }
 
-function createAuthFeatureFiles(tool, modules) {
+function createAuthFeatureFiles(config) {
   const files = [];
+  const modules = ALL_AUTH_MODULES;
   const expandedModules = expandAuthModules(modules);
 
-  if (tool === "react-query") {
+  if (
+    config.serverState === "react-query" ||
+    config.forms === "react-hook-form-zod"
+  ) {
+    files.push(...modules.flatMap((module) => authTypeFiles[module] ?? []));
+  }
+
+  if (config.serverState === "react-query") {
     files.push(
       ...modules.flatMap((module) => authApiFiles[module] ?? []),
-      ...modules.flatMap((module) => authTypeFiles[module] ?? []),
       file("api/auth.query.ts", authQueryContent(modules), true),
       file("lib/auth.keys.ts", authKeysContent(), true),
       file("model/auth.types.ts", authTypesContent(), true)
     );
   }
 
-  if (tool === "zustand") {
+  if (config.clientState === "zustand") {
     files.push(
       file("model/auth.store.ts", authStoreContent(), true),
       file("model/auth.types.ts", authTypesContent(), true),
@@ -232,7 +237,7 @@ function createAuthFeatureFiles(tool, modules) {
     );
   }
 
-  if (tool === "redux") {
+  if (config.clientState === "redux") {
     files.push(
       file("model/auth.slice.ts", authSliceContent(), true),
       file("model/auth.selectors.ts", authSelectorsContent(), true),
@@ -240,13 +245,24 @@ function createAuthFeatureFiles(tool, modules) {
     );
   }
 
+  if (
+    config.serverState !== "react-query" &&
+    !["zustand", "redux"].includes(config.clientState)
+  ) {
+    files.push(file("model/auth.types.ts", authTypesContent(), true));
+  }
+
+  if (config.forms === "react-hook-form-zod") {
+    files.push(...modules.flatMap((module) => getAuthSchemaFiles(module)));
+  }
+
   files.push(
     ...expandedModules.map((module) =>
-      file(`ui/${module}-form.tsx`, authFormContent(module, tool), true)
+      file(`ui/${module}-form.tsx`, authFormContent(module, config), true)
     )
   );
 
-  return files;
+  return dedupeFiles(files);
 }
 
 const authApiFiles = {
@@ -285,44 +301,41 @@ const authTypeFiles = {
   ],
 };
 
-function createGenericFeatureFiles(name, tool) {
+function createGenericFeatureFiles(name, config) {
   const pascalName = toPascalCase(name);
   const camelName = toCamelCase(name);
-  const viewFile = file(
-    `ui/${name}-view.tsx`,
-    viewContent(`${pascalName}View`, `${pascalName} feature`),
-    true
-  );
+  const files = [
+    file(`model/${name}.types.ts`, genericTypesContent(pascalName), true),
+    file(
+      `ui/${name}-view.tsx`,
+      viewContent(`${pascalName}View`, `${pascalName} feature`),
+      true
+    ),
+  ];
 
-  if (tool === "react-query") {
-    return [
+  if (config.serverState === "react-query") {
+    files.push(
       file(`api/${name}.api.ts`, genericApiContent(name, camelName, pascalName), false),
       file(`api/${name}.query.ts`, genericQueryContent(name, camelName, pascalName), true),
-      file(`model/${name}.types.ts`, genericTypesContent(pascalName), true),
-      file(`lib/${name}.keys.ts`, keysContent(camelName, name), true),
-      viewFile,
-    ];
+      file(`lib/${name}.keys.ts`, keysContent(camelName, name), true)
+    );
   }
 
-  if (tool === "zustand") {
-    return [
+  if (config.clientState === "zustand") {
+    files.push(
       file(`model/${name}.store.ts`, storeContent(camelName, pascalName), true),
-      file(`model/${name}.types.ts`, genericTypesContent(pascalName), true),
-      file(`lib/${name}.helpers.ts`, helpersContent(camelName, pascalName), true),
-      viewFile,
-    ];
+      file(`lib/${name}.helpers.ts`, helpersContent(camelName, pascalName), true)
+    );
   }
 
-  if (tool === "redux") {
-    return [
+  if (config.clientState === "redux") {
+    files.push(
       file(`model/${name}.slice.ts`, sliceContent(camelName, pascalName), true),
-      file(`model/${name}.selectors.ts`, selectorsContent(camelName, pascalName), true),
-      file(`model/${name}.types.ts`, genericTypesContent(pascalName), true),
-      viewFile,
-    ];
+      file(`model/${name}.selectors.ts`, selectorsContent(camelName, pascalName), true)
+    );
   }
 
-  return [viewFile];
+  return files;
 }
 
 function createEntityFiles(name) {
@@ -358,6 +371,10 @@ function file(pathname, content, isPublic) {
   };
 }
 
+function dedupeFiles(files) {
+  return [...new Map(files.map((item) => [item.path, item])).values()];
+}
+
 function exportLine(filePath) {
   return `export * from "./${filePath.replace(/\.(tsx|ts)$/, "")}";`;
 }
@@ -373,7 +390,7 @@ function expandAuthModules(modules) {
 function authQueryContent(modules) {
   const imports = [
     'import { useMutation } from "@tanstack/react-query";',
-    ...modules.flatMap((module) => authQueryImports[module] ?? []),
+    ...modules.flatMap((module) => authQueryImports[module] ?? []).sort(),
     "",
   ];
   const hooks = modules.flatMap((module) => authQueryHooks[module] ?? []);
@@ -426,11 +443,33 @@ const authQueryHooks = {
 };
 
 function authApiContent(functionName, payloadType, resultType) {
+  const payloadFile = modelFileName(payloadType);
+  const resultFile = modelFileName(resultType);
+  const typeImports =
+    payloadFile === resultFile
+      ? `import type {\n  ${payloadType},\n  ${resultType},\n} from "../model/${payloadFile}";`
+      : [
+          `import type { ${payloadType} } from "../model/${payloadFile}";`,
+          `import type { ${resultType} } from "../model/${resultFile}";`,
+        ]
+          .sort()
+          .join("\n");
+
+  const endpoint = `/auth/${toKebabCase(functionName)}`;
+  const compactRequest = `  const { data } = await apiClient.post<${resultType}>("${endpoint}", payload);`;
+  const request =
+    compactRequest.length <= 80
+      ? compactRequest
+      : `  const { data } = await apiClient.post<${resultType}>(
+    "${endpoint}",
+    payload,
+  );`;
+
   return `import { apiClient } from "@/shared/api";
-import type { ${payloadType}, ${resultType} } from "../model/${modelFileName(payloadType)}";
+${typeImports}
 
 export async function ${functionName}(payload: ${payloadType}) {
-  const { data } = await apiClient.post<${resultType}>("/auth/${toKebabCase(functionName)}", payload);
+${request}
 
   return data;
 }
@@ -438,6 +477,7 @@ export async function ${functionName}(payload: ${payloadType}) {
 }
 
 function modelFileName(typeName) {
+  if (typeName.startsWith("Auth")) return "auth.types";
   if (typeName.startsWith("Login")) return "login.types";
   if (typeName.startsWith("Register")) return "register.types";
   if (typeName.startsWith("Forgot")) return "forgot-password.types";
@@ -537,6 +577,57 @@ export type VerifyCodeFormValues = VerifyCodePayload;
 `;
 }
 
+function authSchemaContent(module) {
+  const schemaName = authSchemaNames[module];
+  const fields = authSchemaFields[module] ?? [];
+
+  return `import { z } from "zod";
+
+export const ${schemaName} = z.object({
+${fields.map((field) => `  ${field}`).join("\n")}
+});
+`;
+}
+
+const authSchemaNames = {
+  login: "loginSchema",
+  register: "registerSchema",
+  "forgot-password": "forgotPasswordSchema",
+  "reset-password": "resetPasswordSchema",
+  "verify-code": "verifyCodeSchema",
+};
+
+const authSchemaFields = {
+  login: [
+    'email: z.string().email("Enter a valid email address"),',
+    'password: z.string().min(8, "Password must contain at least 8 characters"),',
+  ],
+  register: [
+    'name: z.string().min(2, "Name must contain at least 2 characters"),',
+    'email: z.string().email("Enter a valid email address"),',
+    'password: z.string().min(8, "Password must contain at least 8 characters"),',
+  ],
+  "forgot-password": ['email: z.string().email("Enter a valid email address"),'],
+  "reset-password": [
+    'email: z.string().email("Enter a valid email address"),',
+    'code: z.string().min(4, "Enter the verification code"),',
+    'password: z.string().min(8, "Password must contain at least 8 characters"),',
+    'passwordConfirmation: z.string().min(8, "Confirm your password"),',
+  ],
+  "verify-code": [
+    'email: z.string().email("Enter a valid email address"),',
+    'code: z.string().min(4, "Enter the verification code"),',
+  ],
+};
+
+function getAuthSchemaFiles(module) {
+  const expandedModules = expandAuthModules([module]);
+
+  return expandedModules.map((name) =>
+    file(`model/${name}.schema.ts`, authSchemaContent(name), true)
+  );
+}
+
 function authStoreContent() {
   return `import { create } from "zustand";
 import type { AuthSession, AuthState, AuthUser } from "./auth.types";
@@ -571,7 +662,9 @@ function authHelpersContent() {
   return `import type { AuthState } from "../model/auth.types";
 
 export function getAuthHeader(state: AuthState) {
-  return state.accessToken ? { Authorization: \`Bearer \${state.accessToken}\` } : {};
+  return state.accessToken
+    ? { Authorization: \`Bearer \${state.accessToken}\` }
+    : {};
 }
 
 export function isLoggedIn(state: AuthState) {
@@ -621,40 +714,81 @@ type RootState = {
 
 export const selectAuth = (state: RootState) => state.auth;
 export const selectAuthUser = (state: RootState) => state.auth.user;
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
+export const selectIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated;
 `;
 }
 
-function authFormContent(module, tool) {
+function authFormContent(module, config) {
+  if (config.forms === "react-hook-form-zod") {
+    return hookFormAuthContent(module, config);
+  }
+
   const componentName = `${toPascalCase(module)}Form`;
   const hookName = authMutationHookNames[module];
   const hookImport =
-    tool === "react-query" && hookName
+    config.serverState === "react-query" && hookName
       ? `import { ${hookName} } from "../api/auth.query";\n`
       : "";
   const mutationLine =
-    tool === "react-query" && hookName
+    config.serverState === "react-query" && hookName
       ? `  const ${toCamelCase(module)}Mutation = ${hookName}();\n`
       : "";
   const submitHandler =
-    tool === "react-query" && hookName
+    config.serverState === "react-query" && hookName
       ? `  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     onSubmit?.(event);
+    const payload = Object.fromEntries(new FormData(event.currentTarget));
+    ${toCamelCase(module)}Mutation.mutate(payload as never);
   }\n`
       : `  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     onSubmit?.(event);
   }\n`;
   const busyProp =
-    tool === "react-query" && hookName
-      ? ` aria-busy={${toCamelCase(module)}Mutation.isPending}`
+    config.serverState === "react-query" && hookName
+      ? `aria-busy={${toCamelCase(module)}Mutation.isPending}`
       : "";
   const disabledProp =
-    tool === "react-query" && hookName
-      ? ` disabled={${toCamelCase(module)}Mutation.isPending}`
+    config.serverState === "react-query" && hookName
+      ? `disabled={${toCamelCase(module)}Mutation.isPending}`
       : "";
   const fields = authFormFields[module] ?? [];
+  const fieldsMarkup = fields
+    .map((field) => {
+      const input = `<input name="${field.name}" type="${field.type}" autoComplete="${field.autoComplete}" />`;
+      const inputMarkup =
+        input.length + 8 <= 80
+          ? `        ${input}`
+          : `        <input
+          name="${field.name}"
+          type="${field.type}"
+          autoComplete="${field.autoComplete}"
+        />`;
 
-  return `import type { FormEvent } from "react";
+      return `      <label>
+        ${field.label}
+${inputMarkup}
+      </label>`;
+    })
+    .join("\n");
+  const buttonMarkup = disabledProp
+    ? `      <button type="submit" ${disabledProp}>
+        ${authSubmitLabels[module]}
+      </button>`
+    : `      <button type="submit">${authSubmitLabels[module]}</button>`;
+  const formOpening = busyProp
+    ? `<form
+      onSubmit={handleSubmit}
+      className="${module}-form"
+      ${busyProp}
+    >`
+    : `<form onSubmit={handleSubmit} className="${module}-form">`;
+
+  const clientDirective = config.framework === "nextjs" ? '"use client";\n\n' : "";
+
+  return `${clientDirective}import type { FormEvent } from "react";
 ${hookImport}
 type ${componentName}Props = {
   onSubmit?: (event: FormEvent<HTMLFormElement>) => void;
@@ -663,16 +797,86 @@ type ${componentName}Props = {
 export function ${componentName}({ onSubmit }: ${componentName}Props) {
 ${mutationLine}${submitHandler}
   return (
-    <form onSubmit={handleSubmit} className="${module}-form"${busyProp}>
-${fields
-  .map(
-    (field) => `      <label>
+    ${formOpening}
+${fieldsMarkup}
+${buttonMarkup}
+    </form>
+  );
+}
+`;
+}
+
+function hookFormAuthContent(module, config) {
+  const componentName = `${toPascalCase(module)}Form`;
+  const valuesType = `${toPascalCase(module)}FormValues`;
+  const schemaName = authSchemaNames[module];
+  const hookName = authMutationHookNames[module];
+  const mutationName = `${toCamelCase(module)}Mutation`;
+  const hasMutation = config.serverState === "react-query" && hookName;
+  const clientDirective = config.framework === "nextjs" ? '"use client";\n\n' : "";
+  const imports = [
+    'import { zodResolver } from "@hookform/resolvers/zod";',
+    'import { useForm } from "react-hook-form";',
+  ];
+
+  if (hasMutation) {
+    imports.push(`import { ${hookName} } from "../api/auth.query";`);
+  }
+  imports.push(
+    `import { ${schemaName} } from "../model/${module}.schema";`,
+    `import type { ${valuesType} } from "../model/${module}.types";`
+  );
+
+  const fieldsMarkup = (authFormFields[module] ?? [])
+    .map((field) => {
+      const register = `{...form.register("${field.name}")}`;
+      const compactInput = `<input type="${field.type}" autoComplete="${field.autoComplete}" ${register} />`;
+      const inputMarkup =
+        compactInput.length + 8 <= 80
+          ? `        ${compactInput}`
+          : `        <input
+          type="${field.type}"
+          autoComplete="${field.autoComplete}"
+          ${register}
+        />`;
+
+      return `      <label>
         ${field.label}
-        <input name="${field.name}" type="${field.type}" autoComplete="${field.autoComplete}" />
-      </label>`
-  )
-  .join("\n")}
-      <button type="submit"${disabledProp}>${authSubmitLabels[module]}</button>
+${inputMarkup}
+      </label>
+      {form.formState.errors.${field.name} ? (
+        <p role="alert">{form.formState.errors.${field.name}.message}</p>
+      ) : null}`;
+    })
+    .join("\n");
+  const mutationSetup = hasMutation ? `  const ${mutationName} = ${hookName}();\n` : "";
+  const mutationSubmit = hasMutation ? `\n    ${mutationName}.mutate(values);` : "";
+  const formBusy = hasMutation ? ` aria-busy={${mutationName}.isPending}` : "";
+  const buttonDisabled = hasMutation ? ` disabled={${mutationName}.isPending}` : "";
+  const submitButton = hasMutation
+    ? `      <button type="submit"${buttonDisabled}>
+        ${authSubmitLabels[module]}
+      </button>`
+    : `      <button type="submit">${authSubmitLabels[module]}</button>`;
+
+  return `${clientDirective}${imports.join("\n")}
+
+type ${componentName}Props = {
+  onSubmit?: (values: ${valuesType}) => void;
+};
+
+export function ${componentName}({ onSubmit }: ${componentName}Props) {
+${mutationSetup}  const form = useForm<${valuesType}>({
+    resolver: zodResolver(${schemaName}),
+  });
+  const handleSubmit = form.handleSubmit((values) => {
+    onSubmit?.(values);${mutationSubmit}
+  });
+
+  return (
+    <form onSubmit={handleSubmit}${formBusy}>
+${fieldsMarkup}
+${submitButton}
     </form>
   );
 }
