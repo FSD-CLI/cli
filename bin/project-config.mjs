@@ -133,12 +133,14 @@ function writeProviders(targetDir, config) {
   const legacyNextProvider = path.join(providersDir, "providers.tsx");
   if (fs.existsSync(legacyNextProvider)) fs.rmSync(legacyNextProvider);
 
-  const storePath = path.join(targetDir, "src", "app", "store.ts");
+  const storePath = path.join(providersDir, "store.ts");
+  const legacyStorePath = path.join(targetDir, "src", "app", "store.ts");
   if (config.clientState === "redux") {
     fs.writeFileSync(storePath, reduxStoreContent());
   } else if (fs.existsSync(storePath)) {
     fs.rmSync(storePath);
   }
+  if (fs.existsSync(legacyStorePath)) fs.rmSync(legacyStorePath);
 }
 
 function axiosClientContent(framework) {
@@ -216,7 +218,7 @@ function providersContent(config) {
 
   if (config.clientState === "redux") {
     imports.push('import { Provider as ReduxProvider } from "react-redux";');
-    imports.push('import { store } from "@/app/store";');
+    imports.push('import { store } from "./store";');
   }
 
   let returnedTree = "children";

@@ -50,6 +50,11 @@ test("project configuration installs only the selected stack", () => {
     assert.equal(packageJson.dependencies["@tanstack/react-query"], undefined);
     assert.ok(packageJson.dependencies["@reduxjs/toolkit"]);
     assert.ok(packageJson.dependencies["react-redux"]);
+    assert.equal(fs.existsSync(path.join(fixture, "src/app/store.ts")), false);
+    assert.equal(
+      fs.existsSync(path.join(fixture, "src/app/providers/store.ts")),
+      true
+    );
     assert.equal(fs.existsSync(path.join(fixture, "package-lock.json")), false);
     assert.equal(fs.existsSync(path.join(fixture, "bun.lock")), false);
     assert.match(
@@ -118,7 +123,10 @@ test("auth generator creates the complete flow and working mutation submissions"
     assert.match(loginForm, /useForm<LoginFormValues>/);
     assert.match(loginForm, /zodResolver\(loginSchema\)/);
     assert.match(loginForm, /loginMutation\.mutate/);
-    const store = fs.readFileSync(path.join(fixture, "src/app/store.ts"), "utf8");
+    const store = fs.readFileSync(
+      path.join(fixture, "src/app/providers/store.ts"),
+      "utf8"
+    );
     assert.match(store, /import \{ authReducer \} from "@\/features\/auth"/);
     assert.match(store, /auth: authReducer/);
   } finally {

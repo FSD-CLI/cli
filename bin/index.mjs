@@ -224,7 +224,7 @@ function createHuskyHooks(packageManager) {
   const run = (script) =>
     packageManager === "npm" ? `npm run ${script}` : `${packageManager} ${script}`;
   const execCommitlint = {
-    npm: 'npx --no -- commitlint --edit "$1"',
+    npm: './node_modules/.bin/commitlint --edit "$1"',
     pnpm: 'pnpm exec commitlint --edit "$1"',
     yarn: 'yarn exec commitlint --edit "$1"',
     bun: 'bunx commitlint --edit "$1"',

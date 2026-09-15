@@ -1,13 +1,13 @@
 {
   "name": "create-fsd-architecture",
   "author": "Ashraf Mohamed",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Scaffold React and Next.js projects with Feature-Sliced Design architecture.",
   "main": "bin/index.mjs",
   "homepage": "https://fsd-docs.vercel.app",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FSD-CLI/cli.git"
+    "url": "git+https://github.com/FSD-CLI/cli.git"
   },
   "bugs": {
     "url": "https://github.com/FSD-CLI/cli/issues"

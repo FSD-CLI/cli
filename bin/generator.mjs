@@ -152,7 +152,11 @@ export function generateSlice({ cwd, type, name, config, force }) {
 }
 
 function registerReduxReducer(cwd, name) {
-  const storePath = path.join(cwd, "src", "app", "store.ts");
+  const providerStorePath = path.join(cwd, "src", "app", "providers", "store.ts");
+  const legacyStorePath = path.join(cwd, "src", "app", "store.ts");
+  const storePath = fs.existsSync(providerStorePath)
+    ? providerStorePath
+    : legacyStorePath;
   if (!fs.existsSync(storePath)) return;
 
   const reducerName = name === "auth" ? "authReducer" : `${toCamelCase(name)}Reducer`;
