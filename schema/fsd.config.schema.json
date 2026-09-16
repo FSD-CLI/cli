@@ -17,12 +17,12 @@
   "properties": {
     "$schema": { "type": "string" },
     "schemaVersion": { "const": 1 },
-    "framework": { "enum": ["react-vite", "nextjs"] },
+    "framework": { "enum": ["react-vite", "nextjs", "vue-vite"] },
     "packageManager": { "enum": ["npm", "pnpm", "yarn", "bun"] },
     "apiClient": { "enum": ["axios", "fetch"] },
-    "serverState": { "enum": ["react-query", "none"] },
-    "clientState": { "enum": ["zustand", "redux", "none"] },
-    "forms": { "enum": ["react-hook-form-zod", "none"] },
+    "serverState": { "enum": ["react-query", "vue-query", "none"] },
+    "clientState": { "enum": ["zustand", "redux", "pinia", "none"] },
+    "forms": { "enum": ["react-hook-form-zod", "vee-validate-zod", "none"] },
     "ui": { "const": "shared-ui" }
   }
 }

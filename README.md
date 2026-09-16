@@ -71,12 +71,13 @@ to replace a slice.
 | --- | --- | --- |
 | `react-vite` | React + Vite | Stable |
 | `nextjs` | Next.js App Router | Stable |
-| `vue-vite` | Vue + Vite | Planned |
+| `vue-vite` | Vue + Vite | Stable |
 | `nuxt` | Nuxt | Planned |
 | `sveltekit` | SvelteKit | Planned |
 
-Planned templates are registered in the CLI so their framework-specific
-capabilities can be designed and tested without presenting them as available.
+Vue projects use Pinia, TanStack Vue Query, VeeValidate, and Zod through
+framework-native providers and generators. Planned templates are registered in
+the CLI without being presented as available.
 
 ## Generated architecture
 
@@ -142,8 +143,9 @@ bin/
   installation behavior.
 - The CLI entrypoint only parses and routes commands.
 
-This separation is the base for adding Vue, Nuxt, and SvelteKit without spreading
-framework checks across the generator.
+This separation allows React, Next.js, and Vue to share one CLI lifecycle while
+keeping framework-native providers and generated components. Nuxt and SvelteKit
+remain planned.
 
 ## Requirements
 

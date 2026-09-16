@@ -17,6 +17,7 @@ import {
   toPascalCase,
   viewContent,
 } from "./generators/shared.mjs";
+import { createVueFilePlan } from "./generators/vue.mjs";
 import { normalizeProjectConfig } from "./project-config.mjs";
 
 const ALLOWED_TYPES = ["feature", "entity", "widget", "page"];
@@ -144,7 +145,7 @@ export function generateSlice({ cwd, type, name, config, force }) {
   const files = createFilePlan(type, name, config);
   const publicExports = files
     .filter((file) => file.public)
-    .map((file) => exportLine(file.path))
+    .map((file) => file.exportLine ?? exportLine(file.path))
     .sort();
 
   files.push({
@@ -210,6 +211,10 @@ function updateMarkerBlock(content, start, end, newLine) {
 }
 
 function createFilePlan(type, name, config) {
+  if (getFrameworkAdapter(config.framework).family === "vue") {
+    return createVueFilePlan(type, name, config);
+  }
+
   if (type === "feature") {
     return name === "auth"
       ? createAuthFeatureFiles(config)

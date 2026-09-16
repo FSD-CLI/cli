@@ -1,8 +1,8 @@
 {
   "name": "create-fsd-architecture",
   "author": "Ashraf Mohamed",
-  "version": "2.2.0",
-  "description": "Scaffold React and Next.js projects with Feature-Sliced Design architecture.",
+  "version": "2.3.0",
+  "description": "Scaffold React, Next.js, and Vue projects with Feature-Sliced Design architecture.",
   "main": "bin/index.mjs",
   "homepage": "https://fsd-docs.vercel.app",
   "repository": {
@@ -37,6 +37,8 @@
     "fsd",
     "feature-sliced-design",
     "react",
+    "vue",
+    "pinia",
     "vite",
     "nextjs",
     "architecture",

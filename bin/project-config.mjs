@@ -4,7 +4,10 @@ import {
   assertSupportedProjectConfig,
   getDefaultStack,
 } from "./core/capability-matrix.mjs";
-import { getFrameworkAdapter } from "./core/frameworks/index.mjs";
+import {
+  getFrameworkAdapter,
+  listManagedDependencies,
+} from "./core/frameworks/index.mjs";
 import { getLockfiles } from "./core/package-managers.mjs";
 
 export const DEFAULT_PROJECT_CONFIG = {
@@ -15,28 +18,6 @@ export const DEFAULT_PROJECT_CONFIG = {
   clientState: "zustand",
   forms: "react-hook-form-zod",
   ui: "shared-ui",
-};
-
-const OPTIONAL_DEPENDENCIES = [
-  "@hookform/resolvers",
-  "@reduxjs/toolkit",
-  "@tanstack/react-query",
-  "axios",
-  "react-hook-form",
-  "react-redux",
-  "zod",
-  "zustand",
-];
-
-const DEPENDENCY_VERSIONS = {
-  "@hookform/resolvers": "^5.9.1",
-  "@reduxjs/toolkit": "^2.12.0",
-  "@tanstack/react-query": "^5.102.8",
-  axios: "^1.20.0",
-  "react-hook-form": "^7.88.0",
-  "react-redux": "^9.3.0",
-  zod: "^4.6.5",
-  zustand: "^5.0.15",
 };
 
 export function normalizeProjectConfig(framework, answers = {}) {
@@ -75,30 +56,22 @@ function removeForeignLockfiles(targetDir, packageManager) {
 }
 
 function updateDependencies(targetDir, config) {
+  const adapter = getFrameworkAdapter(config.framework);
   const packagePath = path.join(targetDir, "package.json");
   const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
   packageJson.dependencies ??= {};
 
-  for (const name of OPTIONAL_DEPENDENCIES) {
+  for (const name of listManagedDependencies()) {
     delete packageJson.dependencies[name];
     delete packageJson.devDependencies?.[name];
   }
 
-  const selected = [];
-  if (config.apiClient === "axios") selected.push("axios");
-  if (config.serverState === "react-query") {
-    selected.push("@tanstack/react-query");
-  }
-  if (config.clientState === "zustand") selected.push("zustand");
-  if (config.clientState === "redux") {
-    selected.push("@reduxjs/toolkit", "react-redux");
-  }
-  if (config.forms === "react-hook-form-zod") {
-    selected.push("react-hook-form", "zod", "@hookform/resolvers");
-  }
+  const selected = ["apiClient", "serverState", "clientState", "forms"].flatMap(
+    (capability) => adapter.dependencies[capability]?.[config[capability]] ?? []
+  );
 
   for (const name of selected) {
-    packageJson.dependencies[name] = DEPENDENCY_VERSIONS[name];
+    packageJson.dependencies[name] = adapter.dependencyVersions[name];
   }
 
   packageJson.dependencies = sortObject(packageJson.dependencies);
@@ -126,6 +99,16 @@ function writeApiClient(targetDir, config) {
 }
 
 function writeProviders(targetDir, config) {
+  const adapter = getFrameworkAdapter(config.framework);
+  if (adapter.family === "vue") {
+    writeVueProviders(targetDir, config);
+    return;
+  }
+
+  writeReactProviders(targetDir, config);
+}
+
+function writeReactProviders(targetDir, config) {
   const providersDir = path.join(targetDir, "src", "app", "providers");
   fs.mkdirSync(providersDir, { recursive: true });
   fs.writeFileSync(
@@ -147,6 +130,37 @@ function writeProviders(targetDir, config) {
   } else if (fs.existsSync(storePath)) {
     fs.rmSync(storePath);
   }
+  if (fs.existsSync(legacyStorePath)) fs.rmSync(legacyStorePath);
+}
+
+function writeVueProviders(targetDir, config) {
+  const providersDir = path.join(targetDir, "src", "app", "providers");
+  fs.mkdirSync(providersDir, { recursive: true });
+
+  const imports = [];
+  const installs = [];
+  if (config.serverState === "vue-query") {
+    imports.push('import { VueQueryPlugin } from "@tanstack/vue-query";');
+    installs.push("  app.use(VueQueryPlugin);");
+  }
+  if (config.clientState === "pinia") {
+    imports.push('import { createPinia } from "pinia";');
+    installs.push("  app.use(createPinia());");
+  }
+  imports.push('import type { App } from "vue";');
+
+  fs.writeFileSync(
+    path.join(providersDir, "index.ts"),
+    `${imports.join("\n")}\n\nexport function installAppProviders(app: App) {\n${
+      installs.length ? installs.join("\n") : "  void app;"
+    }\n}\n`
+  );
+
+  for (const filename of ["AppProviders.tsx", "providers.tsx", "store.ts"]) {
+    const filePath = path.join(providersDir, filename);
+    if (fs.existsSync(filePath)) fs.rmSync(filePath);
+  }
+  const legacyStorePath = path.join(targetDir, "src", "app", "store.ts");
   if (fs.existsSync(legacyStorePath)) fs.rmSync(legacyStorePath);
 }
 

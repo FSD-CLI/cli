@@ -17,10 +17,7 @@ import {
   getTemplate,
   listTemplates,
 } from "../core/template-registry.mjs";
-import {
-  DEFAULT_PROJECT_CONFIG,
-  normalizeProjectConfig,
-} from "../project-config.mjs";
+import { normalizeProjectConfig } from "../project-config.mjs";
 import { showBanner } from "../cli/output.mjs";
 
 function handleCancel() {
@@ -29,6 +26,10 @@ function handleCancel() {
 }
 
 const onCancel = { onCancel: handleCancel };
+
+export function createDefaultProjectConfig(framework) {
+  return normalizeProjectConfig(framework);
+}
 
 async function selectProjectName(projectName) {
   if (projectName) return projectName;
@@ -110,7 +111,6 @@ async function promptProjectConfig(framework) {
     onCancel
   );
   return normalizeProjectConfig(framework, {
-    ...DEFAULT_PROJECT_CONFIG,
     ...answers,
   });
 }
@@ -136,7 +136,7 @@ export async function runCreateProject(options) {
 
   const template = await selectTemplate(options.framework);
   const projectConfig = options.yes
-    ? normalizeProjectConfig(template.value, DEFAULT_PROJECT_CONFIG)
+    ? createDefaultProjectConfig(template.value)
     : await promptProjectConfig(template.value);
 
   console.log();

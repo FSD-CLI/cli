@@ -1,8 +1,9 @@
 import { nextjsAdapter } from "./nextjs.mjs";
 import { reactViteAdapter } from "./react-vite.mjs";
+import { vueViteAdapter } from "./vue-vite.mjs";
 
 const adapters = new Map(
-  [reactViteAdapter, nextjsAdapter].map((adapter) => [adapter.id, adapter])
+  [reactViteAdapter, nextjsAdapter, vueViteAdapter].map((adapter) => [adapter.id, adapter])
 );
 
 export function getFrameworkAdapter(framework) {
@@ -21,4 +22,16 @@ export function hasFrameworkAdapter(framework) {
 
 export function listFrameworkAdapters() {
   return [...adapters.values()];
+}
+
+export function listManagedDependencies() {
+  return [
+    ...new Set(
+      listFrameworkAdapters().flatMap((adapter) =>
+        Object.values(adapter.dependencies).flatMap((options) =>
+          Object.values(options).flat()
+        )
+      )
+    ),
+  ];
 }

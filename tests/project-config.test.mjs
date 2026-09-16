@@ -163,3 +163,60 @@ test("forms can be generated without a server-state dependency", () => {
     fs.rmSync(fixture, { recursive: true, force: true });
   }
 });
+
+test("Vue projects receive framework-native dependencies, providers, and generators", () => {
+  const fixture = createFixture();
+
+  try {
+    const config = normalizeProjectConfig("vue-vite");
+    configureProject(fixture, config);
+
+    const packageJson = JSON.parse(
+      fs.readFileSync(path.join(fixture, "package.json"), "utf8")
+    );
+    assert.equal(packageJson.dependencies.zustand, undefined);
+    assert.equal(packageJson.dependencies["@tanstack/react-query"], undefined);
+    assert.ok(packageJson.dependencies.pinia);
+    assert.ok(packageJson.dependencies["@tanstack/vue-query"]);
+    assert.ok(packageJson.dependencies["vee-validate"]);
+    assert.equal(packageJson.dependencies.zod, "^3.25.76");
+
+    const providers = fs.readFileSync(
+      path.join(fixture, "src/app/providers/index.ts"),
+      "utf8"
+    );
+    assert.match(providers, /createPinia/);
+    assert.match(providers, /VueQueryPlugin/);
+    assert.equal(
+      fs.existsSync(path.join(fixture, "src/app/providers/AppProviders.tsx")),
+      false
+    );
+
+    const files = generateSlice({
+      cwd: fixture,
+      type: "feature",
+      name: "auth",
+      config: loadProjectConfig(fixture),
+      force: false,
+    });
+    assert.ok(files.includes("src/features/auth/ui/LoginForm.vue"));
+    assert.ok(files.includes("src/features/auth/ui/VerifyCodeForm.vue"));
+    assert.ok(files.includes("src/features/auth/model/auth.store.ts"));
+    assert.ok(files.includes("src/features/auth/api/auth.query.ts"));
+
+    const loginForm = fs.readFileSync(
+      path.join(fixture, "src/features/auth/ui/LoginForm.vue"),
+      "utf8"
+    );
+    const publicApi = fs.readFileSync(
+      path.join(fixture, "src/features/auth/index.ts"),
+      "utf8"
+    );
+    assert.match(loginForm, /useForm<LoginCredentials>/);
+    assert.match(loginForm, /useLoginMutation/);
+    assert.match(publicApi, /default as LoginForm/);
+    assert.doesNotMatch(loginForm, /use client/);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});

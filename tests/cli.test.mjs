@@ -4,6 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { CliUsageError, parseCliArgs } from "../bin/cli/args.mjs";
+import { createDefaultProjectConfig } from "../bin/commands/create-project.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -50,6 +51,16 @@ test("CLI parser supports automation-friendly create flags", () => {
   );
 });
 
+test("--yes resolves defaults from the selected framework", () => {
+  const react = createDefaultProjectConfig("react-vite");
+  const vue = createDefaultProjectConfig("vue-vite");
+  assert.equal(react.serverState, "react-query");
+  assert.equal(react.clientState, "zustand");
+  assert.equal(vue.serverState, "vue-query");
+  assert.equal(vue.clientState, "pinia");
+  assert.equal(vue.forms, "vee-validate-zod");
+});
+
 test("CLI exposes version, help, and template discovery without prompts", () => {
   const run = (...args) =>
     execFileSync(process.execPath, ["bin/index.mjs", ...args], {
@@ -58,11 +69,11 @@ test("CLI exposes version, help, and template discovery without prompts", () => 
       env: { ...process.env, FORCE_COLOR: "0" },
     });
 
-  assert.equal(run("--version").trim(), "2.2.0");
+  assert.equal(run("--version").trim(), "2.3.0");
   assert.match(run("--help"), /--list-templates/);
   const templates = run("--list-templates");
   assert.match(templates, /react-vite\s+stable/);
-  assert.match(templates, /vue-vite\s+planned/);
+  assert.match(templates, /vue-vite\s+stable/);
 });
 
 test("CLI fails before cloning an unknown framework", () => {

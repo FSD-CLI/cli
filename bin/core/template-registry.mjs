@@ -20,8 +20,8 @@ const templates = [
     title: "Vue + Vite",
     value: "vue-vite",
     description: "Vue with Vite and framework-native FSD segments",
-    repo: null,
-    status: "planned",
+    repo: "FSD-CLI/FSD-VUE",
+    status: "stable",
   },
   {
     title: "Nuxt",
