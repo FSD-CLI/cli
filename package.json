@@ -1,7 +1,7 @@
 {
   "name": "create-fsd-architecture",
   "author": "Ashraf Mohamed",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Scaffold React and Next.js projects with Feature-Sliced Design architecture.",
   "main": "bin/index.mjs",
   "homepage": "https://fsd-docs.vercel.app",
@@ -16,7 +16,8 @@
     "create-fsd-architecture": "bin/index.mjs"
   },
   "scripts": {
-    "test": "node --check bin/index.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
+    "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
+    "check": "npm test && npm pack --dry-run",
     "start": "node ./bin/index.mjs"
   },
   "dependencies": {
@@ -28,7 +29,9 @@
   "files": [
     "bin",
     "schema",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "keywords": [
     "fsd",

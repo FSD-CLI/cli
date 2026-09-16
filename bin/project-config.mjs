@@ -1,5 +1,11 @@
 import fs from "fs";
 import path from "path";
+import {
+  assertSupportedProjectConfig,
+  getDefaultStack,
+} from "./core/capability-matrix.mjs";
+import { getFrameworkAdapter } from "./core/frameworks/index.mjs";
+import { getLockfiles } from "./core/package-managers.mjs";
 
 export const DEFAULT_PROJECT_CONFIG = {
   schemaVersion: 1,
@@ -34,16 +40,21 @@ const DEPENDENCY_VERSIONS = {
 };
 
 export function normalizeProjectConfig(framework, answers = {}) {
-  return {
+  const config = {
     $schema:
       "https://raw.githubusercontent.com/FSD-CLI/cli/main/schema/fsd.config.schema.json",
     ...DEFAULT_PROJECT_CONFIG,
+    ...getDefaultStack(framework),
     ...answers,
     framework,
   };
+
+  return assertSupportedProjectConfig(config);
 }
 
 export function configureProject(targetDir, config) {
+  assertSupportedProjectConfig(config);
+  getFrameworkAdapter(config.framework);
   updateDependencies(targetDir, config);
   removeForeignLockfiles(targetDir, config.packageManager);
   writeJson(path.join(targetDir, "fsd.config.json"), config);
@@ -52,15 +63,10 @@ export function configureProject(targetDir, config) {
 }
 
 function removeForeignLockfiles(targetDir, packageManager) {
-  const lockfiles = {
-    npm: ["package-lock.json"],
-    pnpm: ["pnpm-lock.yaml"],
-    yarn: ["yarn.lock"],
-    bun: ["bun.lock", "bun.lockb"],
-  };
-  const keep = new Set(lockfiles[packageManager] ?? []);
+  const lockfiles = getLockfiles(packageManager);
+  const keep = new Set(lockfiles.keep);
 
-  for (const name of Object.values(lockfiles).flat()) {
+  for (const name of lockfiles.all) {
     const lockPath = path.join(targetDir, name);
     if (!keep.has(name) && fs.existsSync(lockPath)) {
       fs.rmSync(lockPath);
@@ -104,13 +110,14 @@ function updateDependencies(targetDir, config) {
 }
 
 function writeApiClient(targetDir, config) {
+  const adapter = getFrameworkAdapter(config.framework);
   const apiDir = path.join(targetDir, "src", "shared", "api");
   fs.mkdirSync(apiDir, { recursive: true });
   fs.writeFileSync(
     path.join(apiDir, "client.ts"),
     config.apiClient === "axios"
-      ? axiosClientContent(config.framework)
-      : fetchClientContent(config.framework)
+      ? axiosClientContent(adapter)
+      : fetchClientContent(adapter)
   );
   fs.writeFileSync(
     path.join(apiDir, "index.ts"),
@@ -143,30 +150,20 @@ function writeProviders(targetDir, config) {
   if (fs.existsSync(legacyStorePath)) fs.rmSync(legacyStorePath);
 }
 
-function axiosClientContent(framework) {
-  const baseUrl =
-    framework === "nextjs"
-      ? 'process.env.NEXT_PUBLIC_API_URL ?? "/api"'
-      : 'import.meta.env.VITE_API_URL ?? "/api"';
-
+function axiosClientContent(adapter) {
   return `import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: ${baseUrl},
+  baseURL: ${adapter.publicApiBaseUrlExpression},
   headers: { "Content-Type": "application/json" },
 });
 `;
 }
 
-function fetchClientContent(framework) {
-  const baseUrl =
-    framework === "nextjs"
-      ? 'process.env.NEXT_PUBLIC_API_URL ?? "/api"'
-      : 'import.meta.env.VITE_API_URL ?? "/api"';
-
+function fetchClientContent(adapter) {
   return `type ApiResponse<T> = { data: T };
 
-const baseUrl = ${baseUrl};
+const baseUrl = ${adapter.publicApiBaseUrlExpression};
 
 async function request<T>(
   pathname: string,
@@ -201,7 +198,7 @@ export const apiClient = {
 }
 
 function providersContent(config) {
-  const clientDirective = config.framework === "nextjs" ? '"use client";\n\n' : "";
+  const clientDirective = getFrameworkAdapter(config.framework).clientDirective;
   const imports = [];
   const setup = [];
 

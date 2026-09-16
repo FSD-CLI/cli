@@ -1,6 +1,23 @@
 import fs from "fs";
 import path from "path";
 import chalk from "chalk";
+import { assertGeneratorSupported } from "./core/capability-matrix.mjs";
+import { getFrameworkAdapter } from "./core/frameworks/index.mjs";
+import {
+  createEntityFiles,
+  createPageFiles,
+  createWidgetFiles,
+} from "./generators/basic-slices.mjs";
+import {
+  dedupeFiles,
+  exportLine,
+  file,
+  toCamelCase,
+  toKebabCase,
+  toPascalCase,
+  viewContent,
+} from "./generators/shared.mjs";
+import { normalizeProjectConfig } from "./project-config.mjs";
 
 const ALLOWED_TYPES = ["feature", "entity", "widget", "page"];
 
@@ -33,24 +50,20 @@ export function parseGenerateArgs(args) {
 }
 
 export async function runGenerator(options) {
-  try {
-    validateGenerateOptions(options);
+  validateGenerateOptions(options);
 
-    const normalizedName = toKebabCase(options.name);
-    const config = loadProjectConfig(process.cwd());
-    const createdFiles = generateSlice({
-      cwd: process.cwd(),
-      type: options.type,
-      name: normalizedName,
-      config,
-      force: options.force,
-    });
+  const normalizedName = toKebabCase(options.name);
+  const config = loadProjectConfig(process.cwd());
+  assertGeneratorSupported(config.framework, options.type);
+  const createdFiles = generateSlice({
+    cwd: process.cwd(),
+    type: options.type,
+    name: normalizedName,
+    config,
+    force: options.force,
+  });
 
-    printSuccess(createdFiles);
-  } catch (err) {
-    console.log(chalk.red(`  Error: ${err.message}`));
-    process.exit(1);
-  }
+  printSuccess(createdFiles);
 }
 
 function validateGenerateOptions({ type, name }) {
@@ -79,7 +92,7 @@ export function loadProjectConfig(cwd) {
     if (config.schemaVersion !== 1) {
       throw new Error(`Unsupported fsd.config.json schemaVersion: ${config.schemaVersion}.`);
     }
-    return config;
+    return normalizeProjectConfig(config.framework, config);
   }
 
   const packagePath = path.join(cwd, "package.json");
@@ -91,9 +104,8 @@ export function loadProjectConfig(cwd) {
     ...packageJson.devDependencies,
   };
 
-  return {
-    schemaVersion: 1,
-    framework: dependencies.next ? "nextjs" : "react-vite",
+  const framework = dependencies.next ? "nextjs" : "react-vite";
+  return normalizeProjectConfig(framework, {
     apiClient: dependencies.axios ? "axios" : "fetch",
     serverState: dependencies["@tanstack/react-query"] ? "react-query" : "none",
     clientState: dependencies.zustand
@@ -106,13 +118,16 @@ export function loadProjectConfig(cwd) {
         ? "react-hook-form-zod"
         : "none",
     ui: "shared-ui",
-  };
+  });
 }
 
 export function generateSlice({ cwd, type, name, config, force }) {
+  assertGeneratorSupported(config.framework, type);
+  const adapter = getFrameworkAdapter(config.framework);
   const layerDir = LAYER_DIRS[type];
-  const baseDir = fs.existsSync(path.join(cwd, "src"))
-    ? path.join(cwd, "src", layerDir)
+  const sourceRoot = path.join(cwd, adapter.sourceDirectory);
+  const baseDir = fs.existsSync(sourceRoot)
+    ? path.join(sourceRoot, layerDir)
     : path.join(cwd, layerDir);
   const sliceDir = path.join(baseDir, name);
 
@@ -340,47 +355,6 @@ function createGenericFeatureFiles(name, config) {
   }
 
   return files;
-}
-
-function createEntityFiles(name) {
-  const pascalName = toPascalCase(name);
-
-  return [
-    file(`model/${name}.types.ts`, entityTypesContent(pascalName), true),
-    file(`ui/${name}-card.tsx`, entityCardContent(name, pascalName), true),
-  ];
-}
-
-function createWidgetFiles(name) {
-  return [
-    file(`ui/${name}.tsx`, viewContent(toPascalCase(name), `${toTitle(name)} widget`), true),
-  ];
-}
-
-function createPageFiles(name) {
-  return [
-    file(
-      `ui/${name}-page.tsx`,
-      viewContent(`${toPascalCase(name)}Page`, `${toTitle(name)} page`),
-      true
-    ),
-  ];
-}
-
-function file(pathname, content, isPublic) {
-  return {
-    path: pathname,
-    content,
-    public: isPublic,
-  };
-}
-
-function dedupeFiles(files) {
-  return [...new Map(files.map((item) => [item.path, item])).values()];
-}
-
-function exportLine(filePath) {
-  return `export * from "./${filePath.replace(/\.(tsx|ts)$/, "")}";`;
 }
 
 function expandAuthModules(modules) {
@@ -790,7 +764,7 @@ ${inputMarkup}
     >`
     : `<form onSubmit={handleSubmit} className="${module}-form">`;
 
-  const clientDirective = config.framework === "nextjs" ? '"use client";\n\n' : "";
+  const clientDirective = getFrameworkAdapter(config.framework).clientDirective;
 
   return `${clientDirective}import type { FormEvent } from "react";
 ${hookImport}
@@ -817,7 +791,7 @@ function hookFormAuthContent(module, config) {
   const hookName = authMutationHookNames[module];
   const mutationName = `${toCamelCase(module)}Mutation`;
   const hasMutation = config.serverState === "react-query" && hookName;
-  const clientDirective = config.framework === "nextjs" ? '"use client";\n\n' : "";
+  const clientDirective = getFrameworkAdapter(config.framework).clientDirective;
   const imports = [
     'import { zodResolver } from "@hookform/resolvers/zod";',
     'import { useForm } from "react-hook-form";',
@@ -1077,79 +1051,6 @@ export const select${pascalName}State = (state: RootState) => state.${camelName}
 export const select${pascalName} = (state: RootState) => state.${camelName}.item;
 export const select${pascalName}Status = (state: RootState) => state.${camelName}.status;
 `;
-}
-
-function viewContent(componentName, title) {
-  return `type ${componentName}Props = {
-  title?: string;
-};
-
-export function ${componentName}({ title = "${title}" }: ${componentName}Props) {
-  return (
-    <section>
-      <h2>{title}</h2>
-    </section>
-  );
-}
-`;
-}
-
-function entityTypesContent(pascalName) {
-  return `export type ${pascalName} = {
-  id: string;
-  name: string;
-  description?: string;
-};
-`;
-}
-
-function entityCardContent(name, pascalName) {
-  return `import type { ${pascalName} } from "../model/${name}.types";
-
-type ${pascalName}CardProps = {
-  ${toCamelCase(name)}: ${pascalName};
-};
-
-export function ${pascalName}Card({ ${toCamelCase(name)} }: ${pascalName}CardProps) {
-  return (
-    <article>
-      <h3>{${toCamelCase(name)}.name}</h3>
-      {${toCamelCase(name)}.description ? <p>{${toCamelCase(name)}.description}</p> : null}
-    </article>
-  );
-}
-`;
-}
-
-function toKebabCase(value) {
-  return value
-    .trim()
-    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-    .replace(/[^a-zA-Z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .toLowerCase();
-}
-
-function toPascalCase(value) {
-  return toKebabCase(value)
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
-}
-
-function toCamelCase(value) {
-  const pascal = toPascalCase(value);
-
-  return pascal.charAt(0).toLowerCase() + pascal.slice(1);
-}
-
-function toTitle(value) {
-  return toKebabCase(value)
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
 }
 
 function printSuccess(files) {

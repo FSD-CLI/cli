@@ -35,6 +35,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify release quality
+        run: |
+          npm test
+          npm audit --audit-level=moderate
+          npm pack --dry-run
+
       - name: Check npm version
         id: npm-version
         shell: bash
