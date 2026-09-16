@@ -29,6 +29,35 @@ export async function cloneTemplate(template, targetDir) {
   await emitter.clone(targetDir);
 }
 
+export function beginProjectTransaction(targetDir, { force = false } = {}) {
+  const targetExists = fs.existsSync(targetDir);
+  if (targetExists && !force) {
+    throw new Error(
+      `Folder "${path.basename(targetDir)}" already exists. Re-run with --force to replace it.`
+    );
+  }
+
+  const backupDir = targetExists
+    ? `${targetDir}.fsd-cli-backup-${process.pid}-${Date.now()}`
+    : null;
+  if (backupDir) fs.renameSync(targetDir, backupDir);
+
+  let finished = false;
+  return {
+    commit() {
+      if (finished) return;
+      if (backupDir) fs.rmSync(backupDir, { recursive: true, force: true });
+      finished = true;
+    },
+    rollback() {
+      if (finished) return;
+      fs.rmSync(targetDir, { recursive: true, force: true });
+      if (backupDir && fs.existsSync(backupDir)) fs.renameSync(backupDir, targetDir);
+      finished = true;
+    },
+  };
+}
+
 export function prepareProject(targetDir, config) {
   configureProject(targetDir, config);
   ensureCommitlintDependencies(targetDir);
@@ -84,7 +113,9 @@ export function ensureCommitlintConfig(targetDir) {
 
 export function createHuskyHooks(packageManager) {
   const run = (script) =>
-    packageManager === "npm" ? `npm run ${script}` : `${packageManager} ${script}`;
+    packageManager === "npm" || packageManager === "bun"
+      ? `${packageManager} run ${script}`
+      : `${packageManager} ${script}`;
   const execCommitlint = {
     npm: './node_modules/.bin/commitlint --edit "$1"',
     pnpm: 'pnpm exec commitlint --edit "$1"',

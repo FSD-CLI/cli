@@ -56,13 +56,20 @@ export async function runGenerator(options) {
   const normalizedName = toKebabCase(options.name);
   const config = loadProjectConfig(process.cwd());
   assertGeneratorSupported(config.framework, options.type);
-  const createdFiles = generateSlice({
+  const generatorOptions = {
     cwd: process.cwd(),
     type: options.type,
     name: normalizedName,
     config,
     force: options.force,
-  });
+  };
+
+  if (options.dryRun) {
+    printFilePlan(createGeneratorPlan(generatorOptions));
+    return;
+  }
+
+  const createdFiles = generateSlice(generatorOptions);
 
   printSuccess(createdFiles);
 }
@@ -105,24 +112,35 @@ export function loadProjectConfig(cwd) {
     ...packageJson.devDependencies,
   };
 
-  const framework = dependencies.next ? "nextjs" : "react-vite";
+  const framework = dependencies.next
+    ? "nextjs"
+    : dependencies.vue
+      ? "vue-vite"
+      : "react-vite";
   return normalizeProjectConfig(framework, {
     apiClient: dependencies.axios ? "axios" : "fetch",
-    serverState: dependencies["@tanstack/react-query"] ? "react-query" : "none",
-    clientState: dependencies.zustand
-      ? "zustand"
-      : dependencies["@reduxjs/toolkit"]
-        ? "redux"
+    serverState: dependencies["@tanstack/vue-query"]
+      ? "vue-query"
+      : dependencies["@tanstack/react-query"]
+        ? "react-query"
         : "none",
-    forms:
-      dependencies["react-hook-form"] && dependencies.zod
+    clientState: dependencies.pinia
+      ? "pinia"
+      : dependencies.zustand
+        ? "zustand"
+        : dependencies["@reduxjs/toolkit"]
+          ? "redux"
+          : "none",
+    forms: dependencies["vee-validate"] && dependencies.zod
+      ? "vee-validate-zod"
+      : dependencies["react-hook-form"] && dependencies.zod
         ? "react-hook-form-zod"
         : "none",
     ui: "shared-ui",
   });
 }
 
-export function generateSlice({ cwd, type, name, config, force }) {
+export function createGeneratorPlan({ cwd, type, name, config, force = false }) {
   assertGeneratorSupported(config.framework, type);
   const adapter = getFrameworkAdapter(config.framework);
   const layerDir = LAYER_DIRS[type];
@@ -138,10 +156,6 @@ export function generateSlice({ cwd, type, name, config, force }) {
     );
   }
 
-  if (force) {
-    fs.rmSync(sliceDir, { recursive: true, force: true });
-  }
-
   const files = createFilePlan(type, name, config);
   const publicExports = files
     .filter((file) => file.public)
@@ -154,26 +168,70 @@ export function generateSlice({ cwd, type, name, config, force }) {
     public: false,
   });
 
-  for (const file of files) {
-    const filePath = path.join(sliceDir, file.path);
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    fs.writeFileSync(filePath, file.content);
-  }
+  const generatedFiles = files.map((item) =>
+    path.relative(cwd, path.join(sliceDir, item.path))
+  );
+  const changedFiles = [];
 
   if (type === "feature" && config.clientState === "redux") {
-    registerReduxReducer(cwd, name);
+    const storePath = getReduxStorePath(cwd);
+    if (storePath) changedFiles.push(path.relative(cwd, storePath));
   }
 
-  return files.map((file) => path.relative(cwd, path.join(sliceDir, file.path)));
+  if (type === "page") {
+    changedFiles.push(...getPageRouteFiles(cwd, name, config, force));
+  }
+
+  return { cwd, type, name, config, force, sliceDir, files, generatedFiles, changedFiles };
+}
+
+export function generateSlice(options) {
+  const plan = createGeneratorPlan(options);
+  const { cwd, type, name, config, force, sliceDir, files } = plan;
+  const backupDir = fs.existsSync(sliceDir)
+    ? `${sliceDir}.fsd-cli-backup-${process.pid}-${Date.now()}`
+    : null;
+  const snapshots = snapshotFiles(
+    plan.changedFiles.map((filePath) => path.join(cwd, filePath))
+  );
+
+  if (backupDir) fs.renameSync(sliceDir, backupDir);
+
+  try {
+    for (const item of files) {
+      const filePath = path.join(sliceDir, item.path);
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, item.content);
+    }
+
+    if (type === "feature" && config.clientState === "redux") {
+      registerReduxReducer(cwd, name);
+    }
+    if (type === "page") registerPageRoute(cwd, name, config, force);
+
+    if (backupDir) fs.rmSync(backupDir, { recursive: true, force: true });
+    return [...plan.generatedFiles, ...plan.changedFiles];
+  } catch (error) {
+    fs.rmSync(sliceDir, { recursive: true, force: true });
+    if (backupDir && fs.existsSync(backupDir)) fs.renameSync(backupDir, sliceDir);
+    restoreFiles(snapshots);
+    throw error;
+  }
+}
+
+function getReduxStorePath(cwd) {
+  const providerStorePath = path.join(cwd, "src", "app", "providers", "store.ts");
+  const legacyStorePath = path.join(cwd, "src", "app", "store.ts");
+  return fs.existsSync(providerStorePath)
+    ? providerStorePath
+    : fs.existsSync(legacyStorePath)
+      ? legacyStorePath
+      : null;
 }
 
 function registerReduxReducer(cwd, name) {
-  const providerStorePath = path.join(cwd, "src", "app", "providers", "store.ts");
-  const legacyStorePath = path.join(cwd, "src", "app", "store.ts");
-  const storePath = fs.existsSync(providerStorePath)
-    ? providerStorePath
-    : legacyStorePath;
-  if (!fs.existsSync(storePath)) return;
+  const storePath = getReduxStorePath(cwd);
+  if (!storePath) return;
 
   const reducerName = name === "auth" ? "authReducer" : `${toCamelCase(name)}Reducer`;
   const importLine = `import { ${reducerName} } from "@/features/${name}";`;
@@ -195,6 +253,91 @@ function registerReduxReducer(cwd, name) {
   fs.writeFileSync(storePath, content);
 }
 
+function getPageRouteFiles(cwd, name, config, force) {
+  if (config.framework === "nextjs") {
+    const routeFile = path.join(cwd, "src", "app", name, "page.route.tsx");
+    if (fs.existsSync(routeFile) && !force) {
+      throw new Error(
+        `Route "${path.relative(cwd, routeFile)}" already exists. Re-run with --force to overwrite it.`
+      );
+    }
+    return [path.relative(cwd, routeFile)];
+  }
+
+  const extension = config.framework === "vue-vite" ? "ts" : "tsx";
+  const routeFile = path.join(cwd, "src", "app", "routing", `index.${extension}`);
+  if (!fs.existsSync(routeFile)) {
+    throw new Error(
+      `Routing entry "${path.relative(cwd, routeFile)}" is missing. Update the project template before generating pages.`
+    );
+  }
+  return [path.relative(cwd, routeFile)];
+}
+
+function registerPageRoute(cwd, name, config) {
+  const componentName = `${toPascalCase(name)}Page`;
+  if (config.framework === "nextjs") {
+    const routeFile = path.join(cwd, "src", "app", name, "page.route.tsx");
+    fs.mkdirSync(path.dirname(routeFile), { recursive: true });
+    fs.writeFileSync(
+      routeFile,
+      `import { ${componentName} } from "@/pages/${name}";\n\nexport default function ${componentName}Route() {\n  return <${componentName} />;\n}\n`
+    );
+    return;
+  }
+
+  const extension = config.framework === "vue-vite" ? "ts" : "tsx";
+  const routeFile = path.join(cwd, "src", "app", "routing", `index.${extension}`);
+  const importLine = `import { ${componentName} } from "@/pages/${name}";`;
+  const routeLine =
+    config.framework === "vue-vite"
+      ? `  { path: "/${name}", name: "${name}", component: ${componentName} },`
+      : `  { path: "/${name}", element: <${componentName} /> },`;
+  let content = fs.readFileSync(routeFile, "utf8");
+  for (const marker of [
+    "// fsd-cli:route-imports:start",
+    "// fsd-cli:route-imports:end",
+    "// fsd-cli:routes:start",
+    "// fsd-cli:routes:end",
+  ]) {
+    if (!content.includes(marker)) {
+      throw new Error(`Routing entry "${path.relative(cwd, routeFile)}" is missing ${marker}.`);
+    }
+  }
+  content = updateMarkerBlock(
+    content,
+    "// fsd-cli:route-imports:start",
+    "// fsd-cli:route-imports:end",
+    importLine
+  );
+  content = updateMarkerBlock(
+    content,
+    "  // fsd-cli:routes:start",
+    "  // fsd-cli:routes:end",
+    routeLine
+  );
+  fs.writeFileSync(routeFile, content);
+}
+
+function snapshotFiles(filePaths) {
+  return filePaths.map((filePath) => ({
+    filePath,
+    exists: fs.existsSync(filePath),
+    content: fs.existsSync(filePath) ? fs.readFileSync(filePath) : null,
+  }));
+}
+
+function restoreFiles(snapshots) {
+  for (const snapshot of snapshots) {
+    if (snapshot.exists) {
+      fs.mkdirSync(path.dirname(snapshot.filePath), { recursive: true });
+      fs.writeFileSync(snapshot.filePath, snapshot.content);
+    } else {
+      fs.rmSync(snapshot.filePath, { force: true });
+    }
+  }
+}
+
 function updateMarkerBlock(content, start, end, newLine) {
   if (!content.includes(start) || !content.includes(end)) return content;
 
@@ -208,6 +351,13 @@ function updateMarkerBlock(content, start, end, newLine) {
   const uniqueLines = [...new Set(lines)].sort((a, b) => a.trim().localeCompare(b.trim()));
 
   return `${before}${start}\n${uniqueLines.join("\n")}\n${end}${after}`;
+}
+
+function printFilePlan(plan) {
+  console.log(chalk.bold("\n  File plan (dry run)\n"));
+  for (const filePath of plan.generatedFiles) console.log(`  CREATE  ${filePath}`);
+  for (const filePath of plan.changedFiles) console.log(`  UPDATE  ${filePath}`);
+  console.log(chalk.dim("\n  No files were changed.\n"));
 }
 
 function createFilePlan(type, name, config) {

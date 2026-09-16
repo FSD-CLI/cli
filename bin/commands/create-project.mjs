@@ -8,6 +8,7 @@ import { getRunScriptCommand } from "../core/package-managers.mjs";
 import { resolveProjectPath } from "../core/project-path.mjs";
 import {
   cloneTemplate,
+  beginProjectTransaction,
   installProjectDependencies,
   prepareProject,
   verifyCommitlintRejectsInvalidMessage,
@@ -27,8 +28,16 @@ function handleCancel() {
 
 const onCancel = { onCancel: handleCancel };
 
-export function createDefaultProjectConfig(framework) {
-  return normalizeProjectConfig(framework);
+export function createDefaultProjectConfig(framework, overrides = {}) {
+  return normalizeProjectConfig(framework, overrides);
+}
+
+function getConfigOverrides(options) {
+  return Object.fromEntries(
+    ["packageManager", "apiClient", "serverState", "clientState", "forms"]
+      .filter((key) => options[key] !== undefined)
+      .map((key) => [key, options[key]])
+  );
 }
 
 async function selectProjectName(projectName) {
@@ -124,20 +133,60 @@ function showNextSteps(projectName, depsInstalled, packageManager) {
   console.log();
 }
 
+function showProjectPlan({ projectName, targetDir, template, projectConfig, options }) {
+  const replace = fs.existsSync(targetDir) && options.force;
+  console.log(chalk.bold("  Project plan (dry run)\n"));
+  console.log(`  Target: ${targetDir}`);
+  console.log(`  Template: ${template.title} (${template.repo})`);
+  console.log(`  Package manager: ${projectConfig.packageManager}`);
+  console.log(`  API client: ${projectConfig.apiClient}`);
+  console.log(`  Server state: ${projectConfig.serverState}`);
+  console.log(`  Client state: ${projectConfig.clientState}`);
+  console.log(`  Forms: ${projectConfig.forms}\n`);
+  console.log(`  ${replace ? "1. Back up and replace the existing target" : "1. Create the target directory"}`);
+  console.log("  2. Download the selected template");
+  console.log("  3. Write fsd.config.json and configure the selected stack");
+  console.log("  4. Initialize Git, Husky, and Commitlint");
+  console.log(
+    options.noInstall ? "  5. Skip dependency installation" : "  5. Install dependencies"
+  );
+  console.log("  6. Roll back all changes if project setup fails\n");
+  console.log(chalk.dim(`  No files were changed for ${projectName}.`));
+}
+
 export async function runCreateProject(options) {
   showBanner();
   const projectName = await selectProjectName(options.projectName);
   if (!projectName) throw new Error("Project name is required.");
 
   const targetDir = resolveProjectPath(process.cwd(), projectName);
-  if (fs.existsSync(targetDir)) {
-    throw new Error(`Folder "${projectName}" already exists.`);
+  if (fs.existsSync(targetDir) && !options.force) {
+    throw new Error(
+      `Folder "${projectName}" already exists. Re-run with --force to replace it.`
+    );
   }
 
   const template = await selectTemplate(options.framework);
+  const overrides = getConfigOverrides(options);
   const projectConfig = options.yes
-    ? createDefaultProjectConfig(template.value)
-    : await promptProjectConfig(template.value);
+    ? createDefaultProjectConfig(template.value, overrides)
+    : normalizeProjectConfig(template.value, {
+        ...(await promptProjectConfig(template.value)),
+        ...overrides,
+      });
+
+  if (options.dryRun) {
+    showProjectPlan({ projectName, targetDir, template, projectConfig, options });
+    return;
+  }
+
+  const transaction = beginProjectTransaction(targetDir, { force: options.force });
+  const rollbackOnCancel = {
+    onCancel: () => {
+      transaction.rollback();
+      handleCancel();
+    },
+  };
 
   console.log();
   const downloadSpinner = ora({ text: "Downloading template...", color: "cyan" }).start();
@@ -146,9 +195,7 @@ export async function runCreateProject(options) {
     downloadSpinner.succeed(chalk.green("Template downloaded."));
   } catch (error) {
     downloadSpinner.fail(chalk.red("Failed to download template."));
-    if (fs.existsSync(targetDir)) {
-      fs.rmSync(targetDir, { recursive: true, force: true });
-    }
+    transaction.rollback();
     throw error;
   }
 
@@ -161,6 +208,7 @@ export async function runCreateProject(options) {
     setupSpinner.succeed(chalk.green("FSD stack, Git, and Husky configured."));
   } catch (error) {
     setupSpinner.fail(chalk.red("Project configuration failed."));
+    transaction.rollback();
     throw error;
   }
 
@@ -173,7 +221,7 @@ export async function runCreateProject(options) {
         message: "Install dependencies now?",
         initial: true,
       },
-      onCancel
+      rollbackOnCancel
     );
     shouldInstall = answer.installDeps;
   }
@@ -198,6 +246,7 @@ export async function runCreateProject(options) {
       commitlintSpinner.succeed(chalk.green('Commitlint rejected invalid message "test".'));
     } catch (error) {
       commitlintSpinner.fail(chalk.red("Commitlint verification failed."));
+      transaction.rollback();
       throw error;
     }
   } else {
@@ -213,12 +262,13 @@ export async function runCreateProject(options) {
         message: "Start development server now?",
         initial: true,
       },
-      onCancel
+      rollbackOnCancel
     );
     shouldStart = answer.startDev;
   }
 
   if (shouldStart) {
+    transaction.commit();
     console.log(`\n${chalk.cyan("  Starting development server...")}\n`);
     const dev = getRunScriptCommand(projectConfig.packageManager, "dev");
     const child = spawn(dev.command, dev.args, {
@@ -233,6 +283,7 @@ export async function runCreateProject(options) {
     return;
   }
 
+  transaction.commit();
   console.log(`\n${chalk.green.bold("  Project created successfully!")}`);
   showNextSteps(projectName, depsInstalled, projectConfig.packageManager);
 }

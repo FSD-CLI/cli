@@ -91,4 +91,7 @@ test("project paths cannot escape the working directory", () => {
   assert.equal(resolveProjectPath("/workspace", "apps/store"), "/workspace/apps/store");
   assert.throws(() => resolveProjectPath("/workspace", "../outside"), /inside the current directory/);
   assert.throws(() => resolveProjectPath("/workspace", "/tmp/outside"), /inside the current directory/);
+  assert.throws(() => resolveProjectPath("/workspace", "bad project"), /Invalid project name/);
+  assert.throws(() => resolveProjectPath("/workspace", "node_modules"), /Invalid project name/);
+  assert.throws(() => resolveProjectPath("/workspace", ".hidden"), /Invalid project name/);
 });

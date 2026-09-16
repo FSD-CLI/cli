@@ -61,6 +61,13 @@ test("project configuration installs only the selected stack", () => {
       fs.readFileSync(path.join(fixture, "src/shared/api/client.ts"), "utf8"),
       /export const apiClient/
     );
+    const generatedStack = fs.readFileSync(
+      path.join(fixture, "src/shared/config/fsd-stack.ts"),
+      "utf8"
+    );
+    assert.match(generatedStack, /"frameworkLabel": "React \+ Vite"/);
+    assert.match(generatedStack, /"packageManager": "pnpm"/);
+    assert.match(generatedStack, /"dev": "pnpm dev"/);
     assert.deepEqual(loadProjectConfig(fixture), config);
   } finally {
     fs.rmSync(fixture, { recursive: true, force: true });

@@ -28,9 +28,12 @@ export function listManagedDependencies() {
   return [
     ...new Set(
       listFrameworkAdapters().flatMap((adapter) =>
-        Object.values(adapter.dependencies).flatMap((options) =>
-          Object.values(options).flat()
-        )
+        [
+          ...(adapter.baseDependencies ?? []),
+          ...Object.values(adapter.dependencies).flatMap((options) =>
+            Object.values(options).flat()
+          ),
+        ]
       )
     ),
   ];

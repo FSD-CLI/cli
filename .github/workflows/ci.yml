@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cli:
+    name: CLI / Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm pack --dry-run
+
+  framework-smoke:
+    name: ${{ matrix.framework }} build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        framework: [react-vite, nextjs, vue-vite]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Create project
+        run: >-
+          node bin/index.mjs e2e-app
+          --framework ${{ matrix.framework }}
+          --package-manager npm
+          --yes --no-start
+      - name: Generate and register a page
+        working-directory: e2e-app
+        run: node ../bin/index.mjs --generate page account
+      - name: Validate generated project
+        working-directory: e2e-app
+        run: npm run ci
+
+  package-manager-smoke:
+    name: React / ${{ matrix.package-manager }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package-manager: [npm, pnpm, yarn, bun]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        if: matrix.package-manager == 'pnpm'
+        with:
+          version: 10
+      - uses: oven-sh/setup-bun@v2
+        if: matrix.package-manager == 'bun'
+      - name: Install Yarn
+        if: matrix.package-manager == 'yarn'
+        run: npm install --global yarn
+      - run: npm ci
+      - name: Create and install project
+        run: >-
+          node bin/index.mjs e2e-app
+          --framework react-vite
+          --package-manager ${{ matrix.package-manager }}
+          --yes --no-start
+      - name: Build with selected package manager
+        working-directory: e2e-app
+        run: |
+          case "${{ matrix.package-manager }}" in
+            npm) npm run build ;;
+            pnpm) pnpm build ;;
+            yarn) yarn build ;;
+            bun) bun run build ;;
+          esac

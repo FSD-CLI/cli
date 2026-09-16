@@ -2,6 +2,30 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## 2.3.1 - 2026-09-16
+
+### Added
+
+- `--dry-run` file and project plans that make no filesystem changes.
+- Transactional `--force` replacement with rollback for projects and generated slices.
+- `check`, `doctor`, and `config` project-inspection commands.
+- Framework-native page route registration for React Router, Vue Router, and Next.js.
+- Package-manager contract tests for npm, pnpm, Yarn, and Bun.
+- Route generation, conflict protection, rollback, and structure validation tests.
+- Tag-gated Trusted Publishing and automatic GitHub Release creation.
+
+### Changed
+
+- React + Vite projects now include React Router.
+- Vue + Vite projects now include Vue Router.
+- Project setup rolls back incomplete downloads, configuration, and Commitlint failures.
+
+### Compatibility
+
+- Node.js 20 remains the minimum supported runtime.
+- Existing creation and generation syntax remains supported.
+- Configuration schema version remains `1`.
+
 ## 2.3.0 - 2026-09-16
 
 ### Added

@@ -4,6 +4,7 @@ export const vueViteAdapter = Object.freeze({
   sourceDirectory: "src",
   clientDirective: "",
   publicApiBaseUrlExpression: 'import.meta.env.VITE_API_URL ?? "/api"',
+  baseDependencies: ["vue-router"],
   dependencies: {
     apiClient: { axios: ["axios"], fetch: [] },
     serverState: { "vue-query": ["@tanstack/vue-query"], none: [] },
@@ -19,6 +20,7 @@ export const vueViteAdapter = Object.freeze({
     axios: "^1.20.0",
     pinia: "^4.0.3",
     "vee-validate": "^4.15.1",
+    "vue-router": "^5.3.1",
     zod: "^3.25.76",
   },
 });

@@ -3,12 +3,19 @@ const BOOLEAN_FLAGS = new Map([
   ["-y", "yes"],
   ["--no-install", "noInstall"],
   ["--no-start", "noStart"],
+  ["--dry-run", "dryRun"],
+  ["--force", "force"],
 ]);
 
 const VALUE_FLAGS = new Map([
   ["--framework", "framework"],
   ["--template", "framework"],
   ["-f", "framework"],
+  ["--package-manager", "packageManager"],
+  ["--api-client", "apiClient"],
+  ["--server-state", "serverState"],
+  ["--client-state", "clientState"],
+  ["--forms", "forms"],
 ]);
 
 export class CliUsageError extends Error {}
@@ -18,13 +25,23 @@ export function parseCliArgs(args) {
   if (args.includes("--version") || args.includes("-v")) return { command: "version" };
   if (args.includes("--list-templates")) return { command: "list-templates" };
 
+  if (["check", "doctor", "config"].includes(args[0])) {
+    if (args.length > 1) {
+      throw new CliUsageError(`Unexpected argument "${args[1]}".`);
+    }
+    return { command: args[0] };
+  }
+
   const generateIndex = args.findIndex((arg) => arg === "--generate" || arg === "-g");
   if (generateIndex !== -1) {
     const values = [];
     let force = false;
+    let dryRun = false;
     for (const argument of args.slice(generateIndex + 1)) {
       if (argument === "--force") {
         force = true;
+      } else if (argument === "--dry-run") {
+        dryRun = true;
       } else if (argument.startsWith("-")) {
         throw new CliUsageError(`Unknown generate option "${argument}".`);
       } else {
@@ -39,6 +56,7 @@ export function parseCliArgs(args) {
       type: values[0],
       name: values[1],
       force,
+      dryRun,
     };
   }
 
@@ -46,9 +64,16 @@ export function parseCliArgs(args) {
     command: "create",
     projectName: undefined,
     framework: undefined,
+    packageManager: undefined,
+    apiClient: undefined,
+    serverState: undefined,
+    clientState: undefined,
+    forms: undefined,
     yes: false,
     noInstall: false,
     noStart: false,
+    dryRun: false,
+    force: false,
   };
 
   for (let index = 0; index < args.length; index += 1) {

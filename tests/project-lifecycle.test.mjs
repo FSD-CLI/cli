@@ -4,11 +4,37 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import {
+  beginProjectTransaction,
   createHuskyHooks,
   ensureCommitlintConfig,
   ensureCommitlintDependencies,
   ensureHuskyHooks,
 } from "../bin/core/project-lifecycle.mjs";
+
+test("project replacement can be committed or rolled back atomically", () => {
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-transaction-"));
+  const target = path.join(fixtureRoot, "app");
+  fs.mkdirSync(target);
+  fs.writeFileSync(path.join(target, "original.txt"), "keep me\n");
+
+  try {
+    const rollback = beginProjectTransaction(target, { force: true });
+    fs.mkdirSync(target);
+    fs.writeFileSync(path.join(target, "partial.txt"), "partial\n");
+    rollback.rollback();
+    assert.equal(fs.readFileSync(path.join(target, "original.txt"), "utf8"), "keep me\n");
+    assert.equal(fs.existsSync(path.join(target, "partial.txt")), false);
+
+    const commit = beginProjectTransaction(target, { force: true });
+    fs.mkdirSync(target);
+    fs.writeFileSync(path.join(target, "complete.txt"), "complete\n");
+    commit.commit();
+    assert.equal(fs.existsSync(path.join(target, "original.txt")), false);
+    assert.equal(fs.readFileSync(path.join(target, "complete.txt"), "utf8"), "complete\n");
+  } finally {
+    fs.rmSync(fixtureRoot, { recursive: true, force: true });
+  }
+});
 
 test("project lifecycle creates deterministic commit tooling", () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-lifecycle-"));

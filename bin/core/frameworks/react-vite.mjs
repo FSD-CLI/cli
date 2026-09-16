@@ -4,6 +4,7 @@ export const reactViteAdapter = Object.freeze({
   sourceDirectory: "src",
   clientDirective: "",
   publicApiBaseUrlExpression: 'import.meta.env.VITE_API_URL ?? "/api"',
+  baseDependencies: ["react-router-dom"],
   dependencies: {
     apiClient: { axios: ["axios"], fetch: [] },
     serverState: { "react-query": ["@tanstack/react-query"], none: [] },
@@ -24,6 +25,7 @@ export const reactViteAdapter = Object.freeze({
     axios: "^1.20.0",
     "react-hook-form": "^7.88.0",
     "react-redux": "^9.3.0",
+    "react-router-dom": "^7.18.4",
     zod: "^4.6.5",
     zustand: "^5.0.15",
   },

@@ -6,6 +6,7 @@ import { parseCliArgs, CliUsageError } from "./cli/args.mjs";
 import { showHelp, showTemplateList } from "./cli/output.mjs";
 import { runCreateProject } from "./commands/create-project.mjs";
 import { runGenerator } from "./generator.mjs";
+import { runProjectInspection } from "./commands/inspect-project.mjs";
 import { listTemplates } from "./core/template-registry.mjs";
 
 function readPackageVersion() {
@@ -34,7 +35,12 @@ export async function runCli(args = process.argv.slice(2)) {
       type: command.type,
       name: command.name,
       force: command.force,
+      dryRun: command.dryRun,
     });
+    return;
+  }
+  if (["check", "doctor", "config"].includes(command.command)) {
+    await runProjectInspection(command.command);
     return;
   }
 

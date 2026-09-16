@@ -16,9 +16,10 @@ export function getPackageManager(packageManager) {
 
 export function getRunScriptCommand(packageManager, script) {
   getPackageManager(packageManager);
-  return packageManager === "npm"
-    ? { command: "npm", args: ["run", script] }
-    : { command: packageManager, args: [script] };
+  if (packageManager === "npm" || packageManager === "bun") {
+    return { command: packageManager, args: ["run", script] };
+  }
+  return { command: packageManager, args: [script] };
 }
 
 export function getInstallCommand(packageManager) {

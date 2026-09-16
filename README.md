@@ -44,6 +44,15 @@ npx create-fsd-architecture@latest --list-templates
 # Generate inside an existing project
 npx create-fsd-architecture@latest --generate feature auth
 npx create-fsd-architecture@latest -g entity product
+
+# Preview creation or generation without writing files
+npx create-fsd-architecture@latest my-app --framework vue-vite --yes --dry-run
+npx create-fsd-architecture@latest -g page settings --dry-run
+
+# Inspect an existing FSD project
+npx create-fsd-architecture@latest check
+npx create-fsd-architecture@latest doctor
+npx create-fsd-architecture@latest config
 ```
 
 Create options:
@@ -52,8 +61,15 @@ Create options:
 | --- | --- |
 | `-f, --framework <id>` | Skip the framework prompt |
 | `-y, --yes` | Accept the default stack and skip interactive prompts |
+| `--package-manager <id>` | Select npm, pnpm, Yarn, or Bun non-interactively |
+| `--api-client <id>` | Select Axios or native Fetch |
+| `--server-state <id>` | Override the framework server-state choice |
+| `--client-state <id>` | Override the framework client-state choice |
+| `--forms <id>` | Override the framework forms choice |
 | `--no-install` | Do not install dependencies |
 | `--no-start` | Do not start the development server |
+| `--dry-run` | Print the complete plan without changing files |
+| `--force` | Replace an existing target with automatic rollback on failure |
 
 Generator types:
 
@@ -63,7 +79,9 @@ Generator types:
 - `page`
 
 Existing slices are protected. Use `--force` only when you intentionally want
-to replace a slice.
+to replace a slice. Page generators also register framework-native routes:
+React Router for React + Vite, Vue Router for Vue + Vite, and App Router route
+files for Next.js.
 
 ## Templates
 
