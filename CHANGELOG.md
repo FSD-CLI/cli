@@ -2,6 +2,21 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## 2.3.2 - 2026-09-17
+
+### Fixed
+
+- Generated `fsd-stack.ts` files now match Biome formatting, so freshly created
+  Next.js projects pass their complete `npm run ci` pipeline.
+- Yarn 4 projects now use the `node-modules` linker instead of Plug'n'Play,
+  keeping Vite and the generated developer tooling compatible in CI.
+
+### Changed
+
+- npm publishing is maintainer-only and manual. GitHub tags validate the release
+  and create the GitHub Release without publishing to npm.
+- CI pins Yarn 4 instead of installing the legacy Yarn Classic package.
+
 ## 2.3.1 - 2026-09-16
 
 ### Added

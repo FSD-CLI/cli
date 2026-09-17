@@ -177,6 +177,11 @@ npm test
 npm run check
 ```
 
+## Releases
+
+npm publishing is a manual maintainer-only step. Pushing a version tag runs the
+release checks and creates a GitHub Release, but it never publishes to npm.
+
 ## License
 
 MIT

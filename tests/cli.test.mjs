@@ -9,6 +9,9 @@ import { CliUsageError, parseCliArgs } from "../bin/cli/args.mjs";
 import { createDefaultProjectConfig } from "../bin/commands/create-project.mjs";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const packageVersion = JSON.parse(
+  fs.readFileSync(path.join(repoRoot, "package.json"), "utf8")
+).version;
 
 test("CLI parser keeps legacy creation and generation syntax", () => {
   assert.deepEqual(parseCliArgs(["shop"]), {
@@ -140,7 +143,7 @@ test("CLI exposes version, help, and template discovery without prompts", () => 
       env: { ...process.env, FORCE_COLOR: "0" },
     });
 
-  assert.equal(run("--version").trim(), "2.3.1");
+  assert.equal(run("--version").trim(), packageVersion);
   assert.match(run("--help"), /--list-templates/);
   const templates = run("--list-templates");
   assert.match(templates, /react-vite\s+stable/);

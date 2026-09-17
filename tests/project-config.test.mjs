@@ -65,10 +65,32 @@ test("project configuration installs only the selected stack", () => {
       path.join(fixture, "src/shared/config/fsd-stack.ts"),
       "utf8"
     );
-    assert.match(generatedStack, /"frameworkLabel": "React \+ Vite"/);
-    assert.match(generatedStack, /"packageManager": "pnpm"/);
-    assert.match(generatedStack, /"dev": "pnpm dev"/);
+    assert.match(generatedStack, /frameworkLabel: "React \+ Vite",/);
+    assert.match(generatedStack, /packageManager: "pnpm",/);
+    assert.match(generatedStack, /dev: "pnpm dev",/);
+    assert.doesNotMatch(generatedStack, /"frameworkLabel":/);
     assert.deepEqual(loadProjectConfig(fixture), config);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
+test("Yarn projects use the node-modules linker required by the supported toolchain", () => {
+  const fixture = createFixture();
+
+  try {
+    const config = normalizeProjectConfig("react-vite", {
+      packageManager: "yarn",
+    });
+    configureProject(fixture, config);
+
+    assert.equal(
+      fs.readFileSync(path.join(fixture, ".yarnrc.yml"), "utf8"),
+      "nodeLinker: node-modules\n"
+    );
+
+    configureProject(fixture, { ...config, packageManager: "npm" });
+    assert.equal(fs.existsSync(path.join(fixture, ".yarnrc.yml")), false);
   } finally {
     fs.rmSync(fixture, { recursive: true, force: true });
   }
