@@ -72,9 +72,11 @@ jobs:
           version: 10
       - uses: oven-sh/setup-bun@v2
         if: matrix.package-manager == 'bun'
-      - name: Install Yarn
+      - name: Install Yarn 4
         if: matrix.package-manager == 'yarn'
-        run: npm install --global yarn
+        run: |
+          npm install --global @yarnpkg/cli-dist@4.18.0
+          yarn --version
       - run: npm ci
       - name: Create and install project
         run: >-

@@ -1,4 +1,4 @@
-name: Release
+name: GitHub Release
 
 on:
   push:
@@ -7,10 +7,9 @@ on:
 
 permissions:
   contents: write
-  id-token: write
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,15 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - name: Debug versions
-        run: |
-          node -v
-          npm -v
-          npm config get registry
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -48,25 +39,6 @@ jobs:
             echo "Tag ${GITHUB_REF_NAME} does not match package version v${PACKAGE_VERSION}."
             exit 1
           fi
-
-      - name: Check npm version
-        id: npm-version
-        shell: bash
-        run: |
-          PACKAGE_NAME="$(node -p "require('./package.json').name")"
-          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
-
-          if npm view "${PACKAGE_NAME}@${PACKAGE_VERSION}" version >/dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "${PACKAGE_NAME}@${PACKAGE_VERSION} already exists on npm."
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "${PACKAGE_NAME}@${PACKAGE_VERSION} will be published."
-          fi
-
-      - name: Publish package
-        if: steps.npm-version.outputs.exists == 'false'
-        run: npm publish
 
       - name: Create GitHub Release
         env:
