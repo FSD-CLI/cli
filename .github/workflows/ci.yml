@@ -86,10 +86,31 @@ jobs:
           --yes --no-start
       - name: Build with selected package manager
         working-directory: e2e-app
+        shell: bash
         run: |
-          case "${{ matrix.package-manager }}" in
-            npm) npm run build ;;
-            pnpm) pnpm build ;;
-            yarn) yarn build ;;
-            bun) bun run build ;;
-          esac
+          build_project() {
+            case "${{ matrix.package-manager }}" in
+              npm) npm run build ;;
+              pnpm) pnpm build ;;
+              yarn) yarn build ;;
+              bun) bun run build ;;
+            esac
+          }
+
+          set +e
+          build_project 2>&1 | tee build-output.log
+          build_exit_code=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$build_exit_code" -ne 0 ]; then
+            BUILD_LOG_PATH="$PWD/build-output.log" python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          output = Path(os.environ["BUILD_LOG_PATH"]).read_text(errors="replace")[-12000:]
+          escaped = output.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+          print(f"::error title=Package-manager build failed::{escaped}")
+          PY
+          fi
+
+          exit "$build_exit_code"
