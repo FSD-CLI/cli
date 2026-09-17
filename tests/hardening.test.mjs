@@ -43,7 +43,10 @@ for (const packageManager of ["npm", "pnpm", "yarn", "bun"]) {
   test(`package-manager contract supports ${packageManager}`, () => {
     assert.deepEqual(getInstallCommand(packageManager), {
       command: packageManager,
-      args: ["install"],
+      args:
+        packageManager === "yarn"
+          ? ["install", "--no-immutable"]
+          : ["install"],
     });
     const run = getRunScriptCommand(packageManager, "build");
     assert.equal(run.command, packageManager);

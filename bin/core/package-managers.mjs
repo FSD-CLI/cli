@@ -24,7 +24,13 @@ export function getRunScriptCommand(packageManager, script) {
 
 export function getInstallCommand(packageManager) {
   getPackageManager(packageManager);
-  return { command: packageManager, args: ["install"] };
+  return {
+    command: packageManager,
+    args:
+      packageManager === "yarn"
+        ? ["install", "--no-immutable"]
+        : ["install"],
+  };
 }
 
 export function getLockfiles(packageManager) {

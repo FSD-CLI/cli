@@ -11,6 +11,8 @@ All notable changes to `create-fsd-architecture` are documented here.
 - Yarn 4 projects now establish their own lockfile boundary and use the
   `node-modules` linker instead of Plug'n'Play, keeping nested project creation,
   Vite, and the generated developer tooling compatible in CI.
+- The initial Yarn install can populate a new lockfile even when the CLI itself
+  runs inside an immutable CI environment.
 
 ### Changed
 
