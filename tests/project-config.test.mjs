@@ -75,7 +75,7 @@ test("project configuration installs only the selected stack", () => {
   }
 });
 
-test("Yarn projects use the node-modules linker required by the supported toolchain", () => {
+test("Yarn projects establish an isolated node-modules workspace", () => {
   const fixture = createFixture();
 
   try {
@@ -88,9 +88,11 @@ test("Yarn projects use the node-modules linker required by the supported toolch
       fs.readFileSync(path.join(fixture, ".yarnrc.yml"), "utf8"),
       "nodeLinker: node-modules\n"
     );
+    assert.equal(fs.readFileSync(path.join(fixture, "yarn.lock"), "utf8"), "");
 
     configureProject(fixture, { ...config, packageManager: "npm" });
     assert.equal(fs.existsSync(path.join(fixture, ".yarnrc.yml")), false);
+    assert.equal(fs.existsSync(path.join(fixture, "yarn.lock")), false);
   } finally {
     fs.rmSync(fixture, { recursive: true, force: true });
   }

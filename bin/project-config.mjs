@@ -102,6 +102,8 @@ function configurePackageManager(targetDir, packageManager) {
   const yarnConfigPath = path.join(targetDir, ".yarnrc.yml");
   if (packageManager === "yarn") {
     fs.writeFileSync(yarnConfigPath, "nodeLinker: node-modules\n");
+    const yarnLockPath = path.join(targetDir, "yarn.lock");
+    if (!fs.existsSync(yarnLockPath)) fs.writeFileSync(yarnLockPath, "");
     return;
   }
 
