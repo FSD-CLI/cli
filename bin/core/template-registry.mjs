@@ -34,8 +34,8 @@ const templates = [
     title: "SvelteKit",
     value: "sveltekit",
     description: "SvelteKit with framework-native FSD segments",
-    repo: null,
-    status: "planned",
+    repo: "FSD-CLI/fsd-sveltekit",
+    status: "stable",
   },
 ];
 

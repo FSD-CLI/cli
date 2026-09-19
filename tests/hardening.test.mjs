@@ -17,7 +17,7 @@ function fixture(framework) {
   }
   fs.writeFileSync(
     path.join(cwd, "package.json"),
-    `${JSON.stringify({ dependencies: framework === "nuxt" ? { nuxt: "latest", vue: "latest", "vue-router": "latest" } : framework === "vue-vite" ? { vue: "latest" } : { react: "latest" } })}\n`
+    `${JSON.stringify({ dependencies: framework === "nuxt" ? { nuxt: "latest", vue: "latest", "vue-router": "latest" } : framework === "sveltekit" ? { "@sveltejs/kit": "latest", svelte: "latest" } : framework === "vue-vite" ? { vue: "latest" } : { react: "latest" } })}\n`
   );
 
   if (framework === "nuxt") {
@@ -81,7 +81,7 @@ test("dry-run file plans are exact and do not write files", () => {
 });
 
 test("page generators register framework-native routes", () => {
-  for (const framework of ["react-vite", "vue-vite", "nextjs", "nuxt"]) {
+  for (const framework of ["react-vite", "vue-vite", "nextjs", "nuxt", "sveltekit"]) {
     const { cwd, config } = fixture(framework);
     try {
       const files = generateSlice({ cwd, type: "page", name: "account", config });
@@ -98,6 +98,14 @@ test("page generators register framework-native routes", () => {
           "utf8"
         );
         assert.match(route, /@\/pages\/account/);
+        assert.match(route, /<AccountPage \/>/);
+      } else if (framework === "sveltekit") {
+        assert.ok(files.includes("src/routes/account/+page.svelte"));
+        const route = fs.readFileSync(
+          path.join(cwd, "src/routes/account/+page.svelte"),
+          "utf8"
+        );
+        assert.match(route, /\$pages\/account/);
         assert.match(route, /<AccountPage \/>/);
       } else {
         const extension = framework === "vue-vite" ? "ts" : "tsx";
@@ -184,7 +192,7 @@ test("legacy Vue projects are detected without fsd.config.json", () => {
 });
 
 test("smart E2E matrix exercises every supported stack choice", () => {
-  for (const framework of ["react-vite", "nextjs", "vue-vite", "nuxt"]) {
+  for (const framework of ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"]) {
     const capabilities = getCapabilities(framework);
     const defaults = getDefaultStack(framework);
     for (const capability of [

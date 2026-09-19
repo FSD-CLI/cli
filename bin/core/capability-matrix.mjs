@@ -95,7 +95,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
   }),
   sveltekit: Object.freeze({
     defaults: Object.freeze({
-      apiClient: "axios",
+      apiClient: "fetch",
       serverState: "svelte-query",
       clientState: "svelte-store",
       forms: "sveltekit-superforms-zod",

@@ -252,6 +252,101 @@ test("Vue projects receive framework-native dependencies, providers, and generat
   }
 });
 
+test("SvelteKit projects receive native dependencies, providers, stores, forms, and routes", () => {
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-sveltekit-test-"));
+
+  try {
+    fs.mkdirSync(path.join(fixture, "src/routes"), { recursive: true });
+    fs.writeFileSync(
+      path.join(fixture, "package.json"),
+      `${JSON.stringify({
+        dependencies: {
+          "@sveltejs/kit": "^2.70.3",
+          svelte: "^5.57.1",
+          axios: "old",
+        },
+      })}\n`
+    );
+
+    const config = normalizeProjectConfig("sveltekit");
+    configureProject(fixture, config);
+
+    const packageJson = JSON.parse(
+      fs.readFileSync(path.join(fixture, "package.json"), "utf8")
+    );
+    assert.equal(packageJson.dependencies.axios, undefined);
+    assert.ok(packageJson.dependencies["@tanstack/svelte-query"]);
+    assert.ok(packageJson.dependencies["sveltekit-superforms"]);
+    assert.equal(packageJson.dependencies.zod, "^4.6.5");
+
+    const provider = fs.readFileSync(
+      path.join(fixture, "src/app/providers/query/QueryProvider.svelte"),
+      "utf8"
+    );
+    assert.match(provider, /QueryClientProvider/);
+    assert.match(provider, /\$props\(\)/);
+
+    const apiClient = fs.readFileSync(
+      path.join(fixture, "src/shared/api/client.ts"),
+      "utf8"
+    );
+    assert.match(apiClient, /\$env\/dynamic\/public/);
+    assert.match(apiClient, /PUBLIC_API_BASE/);
+    assert.match(apiClient, /fetcher: Fetcher = fetch/);
+
+    const authFiles = generateSlice({
+      cwd: fixture,
+      type: "feature",
+      name: "auth",
+      config: loadProjectConfig(fixture),
+      force: false,
+    });
+    assert.ok(authFiles.includes("src/features/auth/ui/LoginForm.svelte"));
+    assert.ok(authFiles.includes("src/features/auth/ui/VerifyCodeForm.svelte"));
+    assert.ok(authFiles.includes("src/features/auth/model/auth.store.ts"));
+    assert.ok(authFiles.includes("src/features/auth/api/auth.query.ts"));
+    assert.ok(authFiles.includes("src/features/auth/model/login.schema.ts"));
+
+    const loginForm = fs.readFileSync(
+      path.join(fixture, "src/features/auth/ui/LoginForm.svelte"),
+      "utf8"
+    );
+    const publicApi = fs.readFileSync(
+      path.join(fixture, "src/features/auth/index.ts"),
+      "utf8"
+    );
+    assert.match(loginForm, /superForm/);
+    assert.match(loginForm, /zod4Client/);
+    assert.match(loginForm, /use:enhance/);
+    assert.match(publicApi, /default as LoginForm/);
+
+    const pageFiles = generateSlice({
+      cwd: fixture,
+      type: "page",
+      name: "account",
+      config: loadProjectConfig(fixture),
+      force: false,
+    });
+    assert.ok(pageFiles.includes("src/pages/account/ui/AccountPage.svelte"));
+    assert.ok(pageFiles.includes("src/routes/account/+page.svelte"));
+
+    configureProject(fixture, {
+      ...config,
+      serverState: "none",
+      clientState: "none",
+      forms: "none",
+    });
+    const passthroughProvider = fs.readFileSync(
+      path.join(fixture, "src/app/providers/query/QueryProvider.svelte"),
+      "utf8"
+    );
+    assert.doesNotMatch(passthroughProvider, /@tanstack\/svelte-query/);
+    assert.match(passthroughProvider, /@render children/);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
 test("Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators", () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-nuxt-test-"));
 

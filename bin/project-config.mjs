@@ -52,6 +52,7 @@ function writeFsdStackConfig(targetDir, config) {
     nextjs: "Next.js",
     "vue-vite": "Vue + Vite",
     nuxt: "Nuxt",
+    sveltekit: "SvelteKit",
   };
   const run = (script) =>
     config.packageManager === "npm" || config.packageManager === "bun"
@@ -169,6 +170,10 @@ function writeApiClient(targetDir, config) {
       ? config.apiClient === "axios"
         ? nuxtAxiosClientContent()
         : nuxtFetchClientContent()
+      : adapter.runtime === "sveltekit"
+      ? config.apiClient === "axios"
+        ? sveltekitAxiosClientContent(adapter)
+        : sveltekitFetchClientContent(adapter)
       : config.apiClient === "axios"
       ? axiosClientContent(adapter)
       : fetchClientContent(adapter)
@@ -183,6 +188,10 @@ function writeProviders(targetDir, config) {
   const adapter = getFrameworkAdapter(config.framework);
   if (adapter.runtime === "nuxt") {
     writeNuxtProviders(targetDir, config);
+    return;
+  }
+  if (adapter.runtime === "sveltekit") {
+    writeSvelteKitProviders(targetDir, config);
     return;
   }
   if (adapter.family === "vue") {
@@ -218,6 +227,22 @@ function writeNuxtProviders(targetDir, config) {
   } else if (fs.existsSync(pluginPath)) {
     fs.rmSync(pluginPath);
   }
+}
+
+function writeSvelteKitProviders(targetDir, config) {
+  const providerDir = path.join(targetDir, "src", "app", "providers", "query");
+  const providerPath = path.join(providerDir, "QueryProvider.svelte");
+  fs.mkdirSync(providerDir, { recursive: true });
+  fs.writeFileSync(
+    providerPath,
+    config.serverState === "svelte-query"
+      ? svelteQueryProviderContent()
+      : sveltePassthroughProviderContent()
+  );
+  fs.writeFileSync(
+    path.join(providerDir, "index.ts"),
+    'export { default as QueryProvider } from "./QueryProvider.svelte";\n'
+  );
 }
 
 function writeReactProviders(targetDir, config) {
@@ -391,6 +416,59 @@ export const apiClient = {
 `;
 }
 
+function sveltekitAxiosClientContent(adapter) {
+  return `import { env } from "$env/dynamic/public";
+import axios from "axios";
+
+export const apiClient = axios.create({
+  baseURL: ${adapter.publicApiBaseUrlExpression},
+  headers: { "Content-Type": "application/json" },
+});
+`;
+}
+
+function sveltekitFetchClientContent(adapter) {
+  return `import { env } from "$env/dynamic/public";
+
+type ApiResponse<T> = { data: T };
+type Fetcher = typeof fetch;
+
+const baseUrl = ${adapter.publicApiBaseUrlExpression};
+
+async function request<T>(
+  method: string,
+  pathname: string,
+  payload?: unknown,
+  fetcher: Fetcher = fetch,
+): Promise<ApiResponse<T>> {
+  const response = await fetcher(\`\${baseUrl}\${pathname}\`, {
+    method,
+    body: payload === undefined ? undefined : JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error(\`API request failed with status \${response.status}\`);
+  }
+
+  return { data: (await response.json()) as T };
+}
+
+export const apiClient = {
+  get: <T>(pathname: string, fetcher?: Fetcher) =>
+    request<T>("GET", pathname, undefined, fetcher),
+  post: <T>(pathname: string, payload?: unknown, fetcher?: Fetcher) =>
+    request<T>("POST", pathname, payload, fetcher),
+  put: <T>(pathname: string, payload?: unknown, fetcher?: Fetcher) =>
+    request<T>("PUT", pathname, payload, fetcher),
+  patch: <T>(pathname: string, payload?: unknown, fetcher?: Fetcher) =>
+    request<T>("PATCH", pathname, payload, fetcher),
+  delete: <T>(pathname: string, fetcher?: Fetcher) =>
+    request<T>("DELETE", pathname, undefined, fetcher),
+};
+`;
+}
+
 function nuxtVueQueryPluginContent() {
   return `import type { DehydratedState, VueQueryPluginOptions } from "@tanstack/vue-query";
 import { QueryClient, VueQueryPlugin, dehydrate, hydrate } from "@tanstack/vue-query";
@@ -419,6 +497,37 @@ export default defineNuxtPlugin((nuxtApp) => {
     });
   }
 });
+`;
+}
+
+function svelteQueryProviderContent() {
+  return `<script lang="ts">
+  import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
+  import type { Snippet } from "svelte";
+
+  let { children }: { children: Snippet } = $props();
+
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { staleTime: 60_000, retry: 1 },
+    },
+  });
+</script>
+
+<QueryClientProvider client={queryClient}>
+  {@render children()}
+</QueryClientProvider>
+`;
+}
+
+function sveltePassthroughProviderContent() {
+  return `<script lang="ts">
+  import type { Snippet } from "svelte";
+
+  let { children }: { children: Snippet } = $props();
+</script>
+
+{@render children()}
 `;
 }
 

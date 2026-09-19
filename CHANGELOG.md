@@ -2,6 +2,33 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## 2.5.0 - 2026-09-19
+
+### Added
+
+- Stable Svelte 5 and SvelteKit 2 template support through
+  `--framework sveltekit`.
+- SvelteKit framework adapter with Fetch and Axios clients backed by
+  `PUBLIC_API_BASE`.
+- Request-scoped TanStack Svelte Query v6 provider generation.
+- Svelte store, SvelteKit Superforms, and Zod 4 capability contracts.
+- Svelte-native feature, entity, widget, page, and complete auth generators.
+- SvelteKit file-based page route wrappers in `src/routes`.
+- SvelteKit coverage in the configuration schema, smart stack matrix, project
+  inspection, and framework build CI.
+
+### Changed
+
+- SvelteKit is promoted from planned to stable in the Template Registry.
+- The default SvelteKit API client is native Fetch while Axios remains optional.
+- Framework build CI now validates all five stable templates.
+
+### Compatibility
+
+- React + Vite, Next.js, Vue + Vite, and Nuxt behavior remains unchanged.
+- Configuration schema version remains `1`; SvelteKit support is additive.
+- Generated SvelteKit projects require Node.js 22.22.2 or later.
+
 ## 2.4.0 - 2026-09-19
 
 ### Added

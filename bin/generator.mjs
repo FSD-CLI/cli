@@ -18,6 +18,7 @@ import {
   viewContent,
 } from "./generators/shared.mjs";
 import { createVueFilePlan } from "./generators/vue.mjs";
+import { createSvelteFilePlan } from "./generators/svelte.mjs";
 import { normalizeProjectConfig } from "./project-config.mjs";
 
 const ALLOWED_TYPES = ["feature", "entity", "widget", "page"];
@@ -112,7 +113,9 @@ export function loadProjectConfig(cwd) {
     ...packageJson.devDependencies,
   };
 
-  const framework = dependencies.nuxt
+  const framework = dependencies["@sveltejs/kit"]
+    ? "sveltekit"
+    : dependencies.nuxt
     ? "nuxt"
     : dependencies.next
       ? "nextjs"
@@ -121,19 +124,25 @@ export function loadProjectConfig(cwd) {
       : "react-vite";
   return normalizeProjectConfig(framework, {
     apiClient: dependencies.axios ? "axios" : "fetch",
-    serverState: dependencies["@tanstack/vue-query"]
+    serverState: dependencies["@tanstack/svelte-query"]
+      ? "svelte-query"
+      : dependencies["@tanstack/vue-query"]
       ? "vue-query"
       : dependencies["@tanstack/react-query"]
         ? "react-query"
         : "none",
-    clientState: dependencies.pinia
+    clientState: framework === "sveltekit"
+      ? "svelte-store"
+      : dependencies.pinia
       ? "pinia"
       : dependencies.zustand
         ? "zustand"
         : dependencies["@reduxjs/toolkit"]
           ? "redux"
           : "none",
-    forms: dependencies["vee-validate"] && dependencies.zod
+    forms: dependencies["sveltekit-superforms"] && dependencies.zod
+      ? "sveltekit-superforms-zod"
+      : dependencies["vee-validate"] && dependencies.zod
       ? "vee-validate-zod"
       : dependencies["react-hook-form"] && dependencies.zod
         ? "react-hook-form-zod"
@@ -276,6 +285,16 @@ function getPageRouteFiles(cwd, name, config, force) {
     return [path.relative(cwd, routeFile)];
   }
 
+  if (config.framework === "sveltekit") {
+    const routeFile = path.join(cwd, "src", "routes", name, "+page.svelte");
+    if (fs.existsSync(routeFile) && !force) {
+      throw new Error(
+        `Route "${path.relative(cwd, routeFile)}" already exists. Re-run with --force to overwrite it.`
+      );
+    }
+    return [path.relative(cwd, routeFile)];
+  }
+
   const extension = config.framework === "vue-vite" ? "ts" : "tsx";
   const routeFile = path.join(cwd, "src", "app", "routing", `index.${extension}`);
   if (!fs.existsSync(routeFile)) {
@@ -304,6 +323,16 @@ function registerPageRoute(cwd, name, config) {
     fs.writeFileSync(
       routeFile,
       `<script setup lang="ts">\nimport { ${componentName} } from "@/pages/${name}";\n</script>\n\n<template>\n  <${componentName} />\n</template>\n`
+    );
+    return;
+  }
+
+  if (config.framework === "sveltekit") {
+    const routeFile = path.join(cwd, "src", "routes", name, "+page.svelte");
+    fs.mkdirSync(path.dirname(routeFile), { recursive: true });
+    fs.writeFileSync(
+      routeFile,
+      `<script lang="ts">\n  import { ${componentName} } from "$pages/${name}";\n</script>\n\n<${componentName} />\n`
     );
     return;
   }
@@ -383,8 +412,12 @@ function printFilePlan(plan) {
 }
 
 function createFilePlan(type, name, config) {
-  if (getFrameworkAdapter(config.framework).family === "vue") {
+  const family = getFrameworkAdapter(config.framework).family;
+  if (family === "vue") {
     return createVueFilePlan(type, name, config);
+  }
+  if (family === "svelte") {
+    return createSvelteFilePlan(type, name, config);
   }
 
   if (type === "feature") {

@@ -81,8 +81,8 @@ Generator types:
 Existing slices are protected. Use `--force` only when you intentionally want
 to replace a slice. Page generators also register framework-native routes:
 React Router for React + Vite, Vue Router for Vue + Vite, and App Router route
-files for Next.js. Nuxt pages get file-based route wrappers without turning FSD
-page slices into route directories.
+files for Next.js. Nuxt and SvelteKit pages get thin file-based route wrappers
+without turning FSD page slices into route directories.
 
 ## Templates
 
@@ -92,11 +92,15 @@ page slices into route directories.
 | `nextjs` | Next.js App Router | Stable |
 | `vue-vite` | Vue + Vite | Stable |
 | `nuxt` | Nuxt 4 | Stable |
-| `sveltekit` | SvelteKit | Planned |
+| `sveltekit` | SvelteKit | Stable |
 
 Vue and Nuxt projects use Pinia, TanStack Vue Query, VeeValidate, and Zod
 through framework-native modules, providers, and generators. Nuxt defaults to
 its native `$fetch` client and includes SSR hydration for Vue Query.
+
+SvelteKit projects use Svelte 5 runes, TanStack Svelte Query, Svelte stores,
+SvelteKit Superforms, and Zod 4. They default to native Fetch and use
+`PUBLIC_API_BASE` for public runtime API configuration.
 
 ## Generated architecture
 
@@ -113,6 +117,11 @@ src/
 Nuxt uses the same complete layers under its official `app/` source directory.
 Its file-based route wrappers live in `app/app/routes`, separate from the FSD
 `app/pages` layer.
+
+SvelteKit keeps the layers under `src/` and reserves `src/routes` for thin
+file-based route wrappers. Because SvelteKit owns the `$app` alias, generated
+projects use `$fsd-app` for the FSD app layer and layer-specific aliases such as
+`$pages` and `$shared` everywhere else.
 
 Every layer and its core segments exist from day one. Documentation placeholders
 keep empty architectural folders present across Git clones.
@@ -166,14 +175,13 @@ bin/
   installation behavior.
 - The CLI entrypoint only parses and routes commands.
 
-This separation allows React, Next.js, Vue, and Nuxt to share one CLI lifecycle
-while keeping framework-native providers and generated components. SvelteKit
-remains planned.
+This separation allows React, Next.js, Vue, Nuxt, and SvelteKit to share one CLI
+lifecycle while keeping framework-native providers and generated components.
 
 ## Requirements
 
 - Node.js 20 or later for the CLI
-- Node.js 22.22.2 or later for generated Nuxt projects
+- Node.js 22.22.2 or later for generated Nuxt and SvelteKit projects
 
 ## Development
 

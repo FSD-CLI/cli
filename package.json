@@ -1,8 +1,8 @@
 {
   "name": "create-fsd-architecture",
   "author": "Ashraf Mohamed",
-  "version": "2.4.0",
-  "description": "Scaffold React, Next.js, Vue, and Nuxt projects with Feature-Sliced Design architecture.",
+  "version": "2.5.0",
+  "description": "Scaffold React, Next.js, Vue, Nuxt, and SvelteKit projects with Feature-Sliced Design architecture.",
   "main": "bin/index.mjs",
   "homepage": "https://fsd-docs.vercel.app",
   "repository": {
@@ -42,6 +42,8 @@
     "vite",
     "nextjs",
     "nuxt",
+    "svelte",
+    "sveltekit",
     "architecture",
     "frontend",
     "scaffolding",
