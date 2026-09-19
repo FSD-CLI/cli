@@ -251,3 +251,90 @@ test("Vue projects receive framework-native dependencies, providers, and generat
     fs.rmSync(fixture, { recursive: true, force: true });
   }
 });
+
+test("Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators", () => {
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-nuxt-test-"));
+
+  try {
+    fs.mkdirSync(path.join(fixture, "app/app/routes"), { recursive: true });
+    fs.writeFileSync(
+      path.join(fixture, "package.json"),
+      `${JSON.stringify({
+        dependencies: {
+          nuxt: "^4.5.2",
+          vue: "^3.5.42",
+          "vue-router": "^5.3.1",
+          axios: "old",
+        },
+      })}\n`
+    );
+    fs.writeFileSync(
+      path.join(fixture, "nuxt.config.ts"),
+      `export default defineNuxtConfig({\n  modules: [\n    "@nuxt/eslint",\n    // fsd-cli:modules:start\n    // fsd-cli:modules:end\n  ],\n});\n`
+    );
+
+    const config = normalizeProjectConfig("nuxt");
+    configureProject(fixture, config);
+
+    const packageJson = JSON.parse(
+      fs.readFileSync(path.join(fixture, "package.json"), "utf8")
+    );
+    assert.equal(packageJson.dependencies.axios, undefined);
+    assert.ok(packageJson.dependencies["@pinia/nuxt"]);
+    assert.ok(packageJson.dependencies["@tanstack/vue-query"]);
+    assert.ok(packageJson.dependencies["@vee-validate/nuxt"]);
+    assert.ok(packageJson.dependencies["vue-router"]);
+
+    const nuxtConfig = fs.readFileSync(
+      path.join(fixture, "nuxt.config.ts"),
+      "utf8"
+    );
+    assert.match(nuxtConfig, /"@nuxt\/eslint"/);
+    assert.match(nuxtConfig, /'@pinia\/nuxt'/);
+    assert.match(nuxtConfig, /'@vee-validate\/nuxt'/);
+    assert.equal(
+      fs.existsSync(path.join(fixture, "app/plugins/vue-query.ts")),
+      true
+    );
+
+    const apiClient = fs.readFileSync(
+      path.join(fixture, "app/shared/api/client.ts"),
+      "utf8"
+    );
+    assert.match(apiClient, /useRuntimeConfig\(\)/);
+    assert.match(apiClient, /\$fetch<T>/);
+    assert.equal(
+      fs.existsSync(path.join(fixture, "app/shared/config/fsd-stack.ts")),
+      true
+    );
+
+    const files = generateSlice({
+      cwd: fixture,
+      type: "page",
+      name: "account",
+      config: loadProjectConfig(fixture),
+      force: false,
+    });
+    assert.ok(files.includes("app/pages/account/ui/AccountPage.vue"));
+    assert.ok(files.includes("app/app/routes/account.vue"));
+
+    configureProject(fixture, {
+      ...config,
+      serverState: "none",
+      clientState: "none",
+      forms: "none",
+    });
+    assert.equal(
+      fs.existsSync(path.join(fixture, "app/plugins/vue-query.ts")),
+      false
+    );
+    const strippedNuxtConfig = fs.readFileSync(
+      path.join(fixture, "nuxt.config.ts"),
+      "utf8"
+    );
+    assert.doesNotMatch(strippedNuxtConfig, /'@pinia\/nuxt'/);
+    assert.doesNotMatch(strippedNuxtConfig, /'@vee-validate\/nuxt'/);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});

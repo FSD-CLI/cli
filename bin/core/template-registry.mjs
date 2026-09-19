@@ -27,8 +27,8 @@ const templates = [
     title: "Nuxt",
     value: "nuxt",
     description: "Nuxt with framework-native FSD segments",
-    repo: null,
-    status: "planned",
+    repo: "FSD-CLI/FSD-NUXT",
+    status: "stable",
   },
   {
     title: "SvelteKit",

@@ -27,14 +27,15 @@ test("template registry exposes stable and planned frameworks", () => {
       ["react-vite", "stable"],
       ["nextjs", "stable"],
       ["vue-vite", "stable"],
-      ["nuxt", "planned"],
+      ["nuxt", "stable"],
       ["sveltekit", "planned"],
     ]
   );
-  assert.equal(listTemplates({ includePlanned: false }).length, 3);
+  assert.equal(listTemplates({ includePlanned: false }).length, 4);
   assert.equal(getAvailableTemplate("nextjs").repo, "FSD-CLI/FSD-NEXTJS");
   assert.equal(getTemplate("vue-vite").available, true);
   assert.equal(getAvailableTemplate("vue-vite").repo, "FSD-CLI/FSD-VUE");
+  assert.equal(getAvailableTemplate("nuxt").repo, "FSD-CLI/FSD-NUXT");
   assert.throws(() => getAvailableTemplate("unknown"), /Unknown framework/);
 });
 
@@ -80,11 +81,15 @@ test("framework adapters isolate runtime-specific source generation", () => {
   assert.equal(next.clientDirective, '"use client";\n\n');
   assert.equal(vue.family, "vue");
   assert.match(vue.publicApiBaseUrlExpression, /VITE_API_URL/);
+  const nuxt = getFrameworkAdapter("nuxt");
+  assert.equal(nuxt.family, "vue");
+  assert.equal(nuxt.runtime, "nuxt");
+  assert.equal(nuxt.sourceDirectory, "app");
   assert.deepEqual(
     listFrameworkAdapters().map(({ id }) => id),
-    ["react-vite", "nextjs", "vue-vite"]
+    ["react-vite", "nextjs", "vue-vite", "nuxt"]
   );
-  assert.throws(() => getFrameworkAdapter("nuxt"), /does not have an implementation adapter/);
+  assert.throws(() => getFrameworkAdapter("sveltekit"), /does not have an implementation adapter/);
 });
 
 test("project paths cannot escape the working directory", () => {

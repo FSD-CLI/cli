@@ -2,6 +2,32 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## 2.4.0 - 2026-09-19
+
+### Added
+
+- Stable Nuxt 4 template support through `--framework nuxt`.
+- Nuxt framework adapter with an `app/`-rooted Feature-Sliced Design structure.
+- Nuxt-native `$fetch` and Axios API clients backed by public runtime config.
+- Pinia and VeeValidate module configuration with deterministic marker updates.
+- TanStack Vue Query SSR hydration through a generated Nuxt plugin.
+- Nuxt-native page generation through file-based route wrappers in
+  `app/app/routes`.
+- Nuxt coverage in the capability matrix, configuration schema, smart stack
+  matrix, project inspection, and framework build CI.
+
+### Changed
+
+- Framework-owned source directories now control generated shared config and API
+  paths instead of assuming every framework uses `src/`.
+- Nuxt defaults to native Fetch while retaining Axios as an opt-in choice.
+
+### Compatibility
+
+- React + Vite, Next.js, and Vue + Vite behavior remains unchanged.
+- Configuration schema version remains `1`; Nuxt support is additive.
+- Generated Nuxt projects require Node.js 22.22.2 or later.
+
 ## 2.3.2 - 2026-09-17
 
 ### Fixed

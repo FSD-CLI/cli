@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        framework: [react-vite, nextjs, vue-vite]
+        framework: [react-vite, nextjs, vue-vite, nuxt]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

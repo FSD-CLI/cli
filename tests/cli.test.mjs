@@ -128,11 +128,14 @@ test("CLI parser accepts explicit stack choices for repeatable E2E creation", ()
 test("--yes resolves defaults from the selected framework", () => {
   const react = createDefaultProjectConfig("react-vite");
   const vue = createDefaultProjectConfig("vue-vite");
+  const nuxt = createDefaultProjectConfig("nuxt");
   assert.equal(react.serverState, "react-query");
   assert.equal(react.clientState, "zustand");
   assert.equal(vue.serverState, "vue-query");
   assert.equal(vue.clientState, "pinia");
   assert.equal(vue.forms, "vee-validate-zod");
+  assert.equal(nuxt.apiClient, "fetch");
+  assert.equal(nuxt.serverState, "vue-query");
 });
 
 test("CLI exposes version, help, and template discovery without prompts", () => {
@@ -148,6 +151,7 @@ test("CLI exposes version, help, and template discovery without prompts", () => 
   const templates = run("--list-templates");
   assert.match(templates, /react-vite\s+stable/);
   assert.match(templates, /vue-vite\s+stable/);
+  assert.match(templates, /nuxt\s+stable/);
 });
 
 test("CLI fails before cloning an unknown framework", () => {

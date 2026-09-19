@@ -81,7 +81,8 @@ Generator types:
 Existing slices are protected. Use `--force` only when you intentionally want
 to replace a slice. Page generators also register framework-native routes:
 React Router for React + Vite, Vue Router for Vue + Vite, and App Router route
-files for Next.js.
+files for Next.js. Nuxt pages get file-based route wrappers without turning FSD
+page slices into route directories.
 
 ## Templates
 
@@ -90,12 +91,12 @@ files for Next.js.
 | `react-vite` | React + Vite | Stable |
 | `nextjs` | Next.js App Router | Stable |
 | `vue-vite` | Vue + Vite | Stable |
-| `nuxt` | Nuxt | Planned |
+| `nuxt` | Nuxt 4 | Stable |
 | `sveltekit` | SvelteKit | Planned |
 
-Vue projects use Pinia, TanStack Vue Query, VeeValidate, and Zod through
-framework-native providers and generators. Planned templates are registered in
-the CLI without being presented as available.
+Vue and Nuxt projects use Pinia, TanStack Vue Query, VeeValidate, and Zod
+through framework-native modules, providers, and generators. Nuxt defaults to
+its native `$fetch` client and includes SSR hydration for Vue Query.
 
 ## Generated architecture
 
@@ -108,6 +109,10 @@ src/
 ├── entities/     # Business entities and their representations
 └── shared/       # API, assets, config, utilities, types, and UI
 ```
+
+Nuxt uses the same complete layers under its official `app/` source directory.
+Its file-based route wrappers live in `app/app/routes`, separate from the FSD
+`app/pages` layer.
 
 Every layer and its core segments exist from day one. Documentation placeholders
 keep empty architectural folders present across Git clones.
@@ -161,13 +166,14 @@ bin/
   installation behavior.
 - The CLI entrypoint only parses and routes commands.
 
-This separation allows React, Next.js, and Vue to share one CLI lifecycle while
-keeping framework-native providers and generated components. Nuxt and SvelteKit
-remain planned.
+This separation allows React, Next.js, Vue, and Nuxt to share one CLI lifecycle
+while keeping framework-native providers and generated components. SvelteKit
+remains planned.
 
 ## Requirements
 
-- Node.js 20 or later
+- Node.js 20 or later for the CLI
+- Node.js 22.22.2 or later for generated Nuxt projects
 
 ## Development
 

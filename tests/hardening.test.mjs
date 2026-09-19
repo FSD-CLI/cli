@@ -11,13 +11,22 @@ import { configureProject, normalizeProjectConfig } from "../bin/project-config.
 
 function fixture(framework) {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), `fsd-cli-${framework}-`));
+  const sourceDirectory = framework === "nuxt" ? "app" : "src";
   for (const layer of ["app", "pages", "widgets", "features", "entities", "shared"]) {
-    fs.mkdirSync(path.join(cwd, "src", layer), { recursive: true });
+    fs.mkdirSync(path.join(cwd, sourceDirectory, layer), { recursive: true });
   }
   fs.writeFileSync(
     path.join(cwd, "package.json"),
-    `${JSON.stringify({ dependencies: framework === "vue-vite" ? { vue: "latest" } : { react: "latest" } })}\n`
+    `${JSON.stringify({ dependencies: framework === "nuxt" ? { nuxt: "latest", vue: "latest", "vue-router": "latest" } : framework === "vue-vite" ? { vue: "latest" } : { react: "latest" } })}\n`
   );
+
+  if (framework === "nuxt") {
+    fs.writeFileSync(
+      path.join(cwd, "nuxt.config.ts"),
+      `export default defineNuxtConfig({\n  dir: { pages: "app/routes" },\n  modules: [\n    // fsd-cli:modules:start\n    // fsd-cli:modules:end\n  ],\n});\n`
+    );
+    fs.mkdirSync(path.join(cwd, "app/app/routes"), { recursive: true });
+  }
 
   if (framework === "react-vite") {
     fs.mkdirSync(path.join(cwd, "src/app/routing"), { recursive: true });
@@ -72,7 +81,7 @@ test("dry-run file plans are exact and do not write files", () => {
 });
 
 test("page generators register framework-native routes", () => {
-  for (const framework of ["react-vite", "vue-vite", "nextjs"]) {
+  for (const framework of ["react-vite", "vue-vite", "nextjs", "nuxt"]) {
     const { cwd, config } = fixture(framework);
     try {
       const files = generateSlice({ cwd, type: "page", name: "account", config });
@@ -82,6 +91,14 @@ test("page generators register framework-native routes", () => {
           fs.readFileSync(path.join(cwd, "src/app/account/page.route.tsx"), "utf8"),
           /AccountPage/
         );
+      } else if (framework === "nuxt") {
+        assert.ok(files.includes("app/app/routes/account.vue"));
+        const route = fs.readFileSync(
+          path.join(cwd, "app/app/routes/account.vue"),
+          "utf8"
+        );
+        assert.match(route, /@\/pages\/account/);
+        assert.match(route, /<AccountPage \/>/);
       } else {
         const extension = framework === "vue-vite" ? "ts" : "tsx";
         const routing = fs.readFileSync(
@@ -167,7 +184,7 @@ test("legacy Vue projects are detected without fsd.config.json", () => {
 });
 
 test("smart E2E matrix exercises every supported stack choice", () => {
-  for (const framework of ["react-vite", "nextjs", "vue-vite"]) {
+  for (const framework of ["react-vite", "nextjs", "vue-vite", "nuxt"]) {
     const capabilities = getCapabilities(framework);
     const defaults = getDefaultStack(framework);
     for (const capability of [

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import chalk from "chalk";
+import { getFrameworkAdapter } from "../core/frameworks/index.mjs";
 import { loadProjectConfig } from "../generator.mjs";
 
 const REQUIRED_LAYERS = ["app", "pages", "widgets", "features", "entities", "shared"];
@@ -36,7 +37,10 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
     )
   );
 
-  const sourceRoot = path.join(cwd, "src");
+  const sourceRoot = path.join(
+    cwd,
+    getFrameworkAdapter(config.framework).sourceDirectory
+  );
   for (const layer of REQUIRED_LAYERS) {
     const layerPath = path.join(sourceRoot, layer);
     checks.push(

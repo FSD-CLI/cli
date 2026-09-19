@@ -112,9 +112,11 @@ export function loadProjectConfig(cwd) {
     ...packageJson.devDependencies,
   };
 
-  const framework = dependencies.next
-    ? "nextjs"
-    : dependencies.vue
+  const framework = dependencies.nuxt
+    ? "nuxt"
+    : dependencies.next
+      ? "nextjs"
+      : dependencies.vue
       ? "vue-vite"
       : "react-vite";
   return normalizeProjectConfig(framework, {
@@ -264,6 +266,16 @@ function getPageRouteFiles(cwd, name, config, force) {
     return [path.relative(cwd, routeFile)];
   }
 
+  if (config.framework === "nuxt") {
+    const routeFile = path.join(cwd, "app", "app", "routes", `${name}.vue`);
+    if (fs.existsSync(routeFile) && !force) {
+      throw new Error(
+        `Route "${path.relative(cwd, routeFile)}" already exists. Re-run with --force to overwrite it.`
+      );
+    }
+    return [path.relative(cwd, routeFile)];
+  }
+
   const extension = config.framework === "vue-vite" ? "ts" : "tsx";
   const routeFile = path.join(cwd, "src", "app", "routing", `index.${extension}`);
   if (!fs.existsSync(routeFile)) {
@@ -282,6 +294,16 @@ function registerPageRoute(cwd, name, config) {
     fs.writeFileSync(
       routeFile,
       `import { ${componentName} } from "@/pages/${name}";\n\nexport default function ${componentName}Route() {\n  return <${componentName} />;\n}\n`
+    );
+    return;
+  }
+
+  if (config.framework === "nuxt") {
+    const routeFile = path.join(cwd, "app", "app", "routes", `${name}.vue`);
+    fs.mkdirSync(path.dirname(routeFile), { recursive: true });
+    fs.writeFileSync(
+      routeFile,
+      `<script setup lang="ts">\nimport { ${componentName} } from "@/pages/${name}";\n</script>\n\n<template>\n  <${componentName} />\n</template>\n`
     );
     return;
   }

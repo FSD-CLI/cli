@@ -46,10 +46,12 @@ export function configureProject(targetDir, config) {
 }
 
 function writeFsdStackConfig(targetDir, config) {
+  const adapter = getFrameworkAdapter(config.framework);
   const frameworkLabels = {
     "react-vite": "React + Vite",
     nextjs: "Next.js",
     "vue-vite": "Vue + Vite",
+    nuxt: "Nuxt",
   };
   const run = (script) =>
     config.packageManager === "npm" || config.packageManager === "bun"
@@ -72,7 +74,13 @@ function writeFsdStackConfig(targetDir, config) {
       generatePage: "npx create-fsd-architecture@latest -g page dashboard",
     },
   };
-  const outputPath = path.join(targetDir, "src", "shared", "config", "fsd-stack.ts");
+  const outputPath = path.join(
+    targetDir,
+    adapter.sourceDirectory,
+    "shared",
+    "config",
+    "fsd-stack.ts"
+  );
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(
     outputPath,
@@ -153,11 +161,15 @@ function updateDependencies(targetDir, config) {
 
 function writeApiClient(targetDir, config) {
   const adapter = getFrameworkAdapter(config.framework);
-  const apiDir = path.join(targetDir, "src", "shared", "api");
+  const apiDir = path.join(targetDir, adapter.sourceDirectory, "shared", "api");
   fs.mkdirSync(apiDir, { recursive: true });
   fs.writeFileSync(
     path.join(apiDir, "client.ts"),
-    config.apiClient === "axios"
+    adapter.runtime === "nuxt"
+      ? config.apiClient === "axios"
+        ? nuxtAxiosClientContent()
+        : nuxtFetchClientContent()
+      : config.apiClient === "axios"
       ? axiosClientContent(adapter)
       : fetchClientContent(adapter)
   );
@@ -169,12 +181,43 @@ function writeApiClient(targetDir, config) {
 
 function writeProviders(targetDir, config) {
   const adapter = getFrameworkAdapter(config.framework);
+  if (adapter.runtime === "nuxt") {
+    writeNuxtProviders(targetDir, config);
+    return;
+  }
   if (adapter.family === "vue") {
     writeVueProviders(targetDir, config);
     return;
   }
 
   writeReactProviders(targetDir, config);
+}
+
+function writeNuxtProviders(targetDir, config) {
+  const nuxtConfigPath = path.join(targetDir, "nuxt.config.ts");
+  if (!fs.existsSync(nuxtConfigPath)) {
+    throw new Error("Nuxt template is missing nuxt.config.ts.");
+  }
+
+  const selectedModules = [];
+  if (config.clientState === "pinia") selectedModules.push("'@pinia/nuxt',");
+  if (config.forms === "vee-validate-zod") {
+    selectedModules.push("'@vee-validate/nuxt',");
+  }
+  replaceMarkerBlock(
+    nuxtConfigPath,
+    "// fsd-cli:modules:start",
+    "// fsd-cli:modules:end",
+    selectedModules
+  );
+
+  const pluginPath = path.join(targetDir, "app", "plugins", "vue-query.ts");
+  if (config.serverState === "vue-query") {
+    fs.mkdirSync(path.dirname(pluginPath), { recursive: true });
+    fs.writeFileSync(pluginPath, nuxtVueQueryPluginContent());
+  } else if (fs.existsSync(pluginPath)) {
+    fs.rmSync(pluginPath);
+  }
 }
 
 function writeReactProviders(targetDir, config) {
@@ -278,6 +321,122 @@ export const apiClient = {
   delete: <T>(pathname: string) => request<T>(pathname, { method: "DELETE" }),
 };
 `;
+}
+
+function nuxtAxiosClientContent() {
+  return `import axios from "axios";
+
+type ApiResponse<T> = { data: T };
+type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+async function request<T>(
+  method: Method,
+  pathname: string,
+  payload?: unknown,
+): Promise<ApiResponse<T>> {
+  const runtimeConfig = useRuntimeConfig();
+  const { data } = await axios.request<T>({
+    baseURL: runtimeConfig.public.apiBase,
+    url: pathname,
+    method,
+    data: payload,
+    headers: { "Content-Type": "application/json" },
+  });
+
+  return { data };
+}
+
+export const apiClient = {
+  get: <T>(pathname: string) => request<T>("GET", pathname),
+  post: <T>(pathname: string, payload?: unknown) =>
+    request<T>("POST", pathname, payload),
+  put: <T>(pathname: string, payload?: unknown) =>
+    request<T>("PUT", pathname, payload),
+  patch: <T>(pathname: string, payload?: unknown) =>
+    request<T>("PATCH", pathname, payload),
+  delete: <T>(pathname: string) => request<T>("DELETE", pathname),
+};
+`;
+}
+
+function nuxtFetchClientContent() {
+  return `type ApiResponse<T> = { data: T };
+type Method = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+
+async function request<T>(
+  method: Method,
+  pathname: string,
+  payload?: unknown,
+): Promise<ApiResponse<T>> {
+  const runtimeConfig = useRuntimeConfig();
+  const data = await $fetch<T>(pathname, {
+    baseURL: runtimeConfig.public.apiBase,
+    method,
+    body: payload as Record<string, unknown> | undefined,
+  });
+
+  return { data };
+}
+
+export const apiClient = {
+  get: <T>(pathname: string) => request<T>("GET", pathname),
+  post: <T>(pathname: string, payload?: unknown) =>
+    request<T>("POST", pathname, payload),
+  put: <T>(pathname: string, payload?: unknown) =>
+    request<T>("PUT", pathname, payload),
+  patch: <T>(pathname: string, payload?: unknown) =>
+    request<T>("PATCH", pathname, payload),
+  delete: <T>(pathname: string) => request<T>("DELETE", pathname),
+};
+`;
+}
+
+function nuxtVueQueryPluginContent() {
+  return `import type { DehydratedState, VueQueryPluginOptions } from "@tanstack/vue-query";
+import { QueryClient, VueQueryPlugin, dehydrate, hydrate } from "@tanstack/vue-query";
+
+export default defineNuxtPlugin((nuxtApp) => {
+  const vueQueryState = useState<DehydratedState | null>("vue-query", () => null);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { staleTime: 5_000 },
+    },
+  });
+  const options: VueQueryPluginOptions = { queryClient };
+
+  nuxtApp.vueApp.use(VueQueryPlugin, options);
+
+  if (import.meta.server) {
+    nuxtApp.hooks.hook("app:rendered", () => {
+      vueQueryState.value = dehydrate(queryClient);
+    });
+  }
+
+  if (import.meta.client && vueQueryState.value) {
+    const dehydratedState = vueQueryState.value;
+    nuxtApp.hooks.hook("app:created", () => {
+      hydrate(queryClient, dehydratedState);
+    });
+  }
+});
+`;
+}
+
+function replaceMarkerBlock(filePath, start, end, lines) {
+  const content = fs.readFileSync(filePath, "utf8");
+  if (!content.includes(start) || !content.includes(end)) {
+    throw new Error(
+      `${path.basename(filePath)} is missing the ${start} / ${end} integration markers.`
+    );
+  }
+
+  const [before, remainder] = content.split(start);
+  const [, after] = remainder.split(end);
+  const indentation = before.match(/(^|\n)([ \t]*)$/)?.[2] ?? "";
+  const block = lines.length
+    ? `\n${lines.map((line) => `${indentation}${line}`).join("\n")}\n${indentation}`
+    : `\n${indentation}`;
+  fs.writeFileSync(filePath, `${before}${start}${block}${end}${after}`);
 }
 
 function providersContent(config) {

@@ -1,9 +1,13 @@
 import { nextjsAdapter } from "./nextjs.mjs";
+import { nuxtAdapter } from "./nuxt.mjs";
 import { reactViteAdapter } from "./react-vite.mjs";
 import { vueViteAdapter } from "./vue-vite.mjs";
 
 const adapters = new Map(
-  [reactViteAdapter, nextjsAdapter, vueViteAdapter].map((adapter) => [adapter.id, adapter])
+  [reactViteAdapter, nextjsAdapter, vueViteAdapter, nuxtAdapter].map((adapter) => [
+    adapter.id,
+    adapter,
+  ])
 );
 
 export function getFrameworkAdapter(framework) {

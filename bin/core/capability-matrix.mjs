@@ -80,7 +80,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
   }),
   nuxt: Object.freeze({
     defaults: Object.freeze({
-      apiClient: "axios",
+      apiClient: "fetch",
       serverState: "vue-query",
       clientState: "pinia",
       forms: "vee-validate-zod",
