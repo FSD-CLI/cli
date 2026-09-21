@@ -152,7 +152,10 @@ test("CLI exposes version, help, and template discovery without prompts", () => 
     });
 
   assert.equal(run("--version").trim(), packageVersion);
-  assert.match(run("--help"), /--list-templates/);
+  const help = run("--help");
+  assert.match(help, /--list-templates/);
+  assert.ok(help.includes("https://buymeacoffee.com/ashrafqopiah"));
+  assert.ok(help.includes("InstaPay (Egypt): ashrafmo-1"));
   const templates = run("--list-templates");
   assert.match(templates, /react-vite\s+stable/);
   assert.match(templates, /vue-vite\s+stable/);

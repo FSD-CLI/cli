@@ -56,7 +56,12 @@ Global options:
 Examples:
   npx create-fsd-architecture my-app
   npx create-fsd-architecture my-app --framework react-vite --yes --no-install
-  npx create-fsd-architecture --generate feature auth`);
+  npx create-fsd-architecture --generate feature auth
+
+Support FSD CLI (optional):
+  Buy Me a Coffee: https://buymeacoffee.com/ashrafqopiah
+  InstaPay (Egypt): ashrafmo-1
+  Verify the recipient details before confirming a transfer.`);
 }
 
 export function showTemplateList(templates) {

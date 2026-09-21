@@ -199,3 +199,13 @@ release checks and creates a GitHub Release, but it never publishes to npm.
 ## License
 
 MIT
+
+## Support FSD CLI
+
+If this project helps you, you can optionally support its development:
+
+- [Buy Me a Coffee](https://buymeacoffee.com/ashrafqopiah)
+- **InstaPay (Egypt):** `ashrafmo-1`
+
+For InstaPay, use the username exactly as shown and verify the recipient details
+in the app before confirming a transfer. Donations are optional.
