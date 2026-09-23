@@ -47,9 +47,14 @@ jobs:
           --framework ${{ matrix.framework }}
           --package-manager npm
           --yes --no-start
-      - name: Generate and register a page
+      - name: Generate all slice types and auth
         working-directory: e2e-app
-        run: node ../bin/index.mjs --generate page account
+        run: |
+          node ../bin/index.mjs --generate feature checkout
+          node ../bin/index.mjs --generate entity product
+          node ../bin/index.mjs --generate widget cart-summary
+          node ../bin/index.mjs --generate page account
+          node ../bin/index.mjs --generate feature auth
       - name: Validate generated project
         working-directory: e2e-app
         run: npm run ci
@@ -114,3 +119,31 @@ jobs:
           fi
 
           exit "$build_exit_code"
+
+  pnpm-build-policy:
+    name: pnpm ${{ matrix.pnpm }} / ${{ matrix.framework }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pnpm: ['10.26.0', '11']
+        framework: [react-vite, nuxt]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ matrix.pnpm }}
+      - run: npm ci
+      - name: Create with explicit build approvals
+        run: >-
+          node bin/index.mjs e2e-app
+          --framework ${{ matrix.framework }}
+          --package-manager pnpm --yes --no-start
+      - name: Generate and validate
+        working-directory: e2e-app
+        run: |
+          node ../bin/index.mjs -g feature checkout
+          pnpm run ci

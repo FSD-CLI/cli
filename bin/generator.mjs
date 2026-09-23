@@ -91,6 +91,9 @@ function validateGenerateOptions({ type, name }) {
   if (!toKebabCase(name)) {
     throw new Error("Slice name must contain at least one letter or number.");
   }
+  if (!/^[a-z]/.test(toKebabCase(name))) {
+    throw new Error("Slice name must start with a letter after normalization (for example, product-123).");
+  }
 }
 
 export function loadProjectConfig(cwd) {
@@ -152,6 +155,7 @@ export function loadProjectConfig(cwd) {
 }
 
 export function createGeneratorPlan({ cwd, type, name, config, force = false }) {
+  validateGenerateOptions({ type, name });
   assertGeneratorSupported(config.framework, type);
   const adapter = getFrameworkAdapter(config.framework);
   const layerDir = LAYER_DIRS[type];

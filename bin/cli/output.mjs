@@ -38,7 +38,7 @@ Commands:
 
 Create options:
   -f, --framework <id>          Select a framework without the template prompt
-  -y, --yes                     Accept defaults and skip interactive prompts
+  -y, --yes                     Accept defaults (requires name and --framework)
       --package-manager <id>    Select npm, pnpm, yarn, or bun
       --api-client <id>         Select axios or fetch
       --server-state <id>       Override the framework server-state default
@@ -56,7 +56,12 @@ Global options:
 Examples:
   npx create-fsd-architecture my-app
   npx create-fsd-architecture my-app --framework react-vite --yes --no-install
-  npx create-fsd-architecture --generate feature auth`);
+  npx create-fsd-architecture --generate feature auth
+
+Support FSD CLI (optional):
+  Buy Me a Coffee: https://buymeacoffee.com/ashrafqopiah
+  InstaPay (Egypt): ashrafmo-1
+  Verify the recipient details before confirming a transfer.`);
 }
 
 export function showTemplateList(templates) {

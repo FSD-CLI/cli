@@ -28,6 +28,26 @@ function createFixture() {
   return fixture;
 }
 
+test("pnpm uses a narrow build allowlist without replacing existing workspace policy", () => {
+  const fixture = createFixture();
+  try {
+    const config = normalizeProjectConfig("react-vite", { packageManager: "pnpm" });
+    configureProject(fixture, config);
+    const workspace = path.join(fixture, "pnpm-workspace.yaml");
+    const policy = fs.readFileSync(workspace, "utf8");
+    assert.match(policy, /strictDepBuilds: true/);
+    assert.match(policy, /"@swc\/core": true/);
+    assert.match(policy, /"esbuild": true/);
+    assert.doesNotMatch(policy, /dangerouslyAllowAllBuilds|onlyBuiltDependencies|minimumReleaseAge/);
+    const existing = "packages:\n  - apps/*\nallowBuilds:\n  esbuild: false\n";
+    fs.writeFileSync(workspace, existing);
+    configureProject(fixture, config);
+    assert.equal(fs.readFileSync(workspace, "utf8"), existing);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
 test("project configuration installs only the selected stack", () => {
   const fixture = createFixture();
 

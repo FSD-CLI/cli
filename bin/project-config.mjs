@@ -38,7 +38,7 @@ export function configureProject(targetDir, config) {
   getFrameworkAdapter(config.framework);
   updateDependencies(targetDir, config);
   removeForeignLockfiles(targetDir, config.packageManager);
-  configurePackageManager(targetDir, config.packageManager);
+  configurePackageManager(targetDir, config.packageManager, config.framework);
   writeJson(path.join(targetDir, "fsd.config.json"), config);
   writeFsdStackConfig(targetDir, config);
   writeApiClient(targetDir, config);
@@ -107,7 +107,29 @@ function toTypeScriptLiteral(value, depth = 0) {
   return JSON.stringify(value);
 }
 
-function configurePackageManager(targetDir, packageManager) {
+function configurePackageManager(targetDir, packageManager, framework) {
+  if (packageManager === "pnpm") {
+    const workspacePath = path.join(targetDir, "pnpm-workspace.yaml");
+    // pnpm >=10.26 and 11 use allowBuilds. Do not replace a template-owned
+    // workspace or approval policy, and never approve arbitrary dependencies.
+    if (!fs.existsSync(workspacePath)) {
+      const buildDependencies = {
+        "react-vite": ["@swc/core", "esbuild"],
+        nextjs: ["sharp", "unrs-resolver"],
+        "vue-vite": ["esbuild", "vue-demi"],
+        nuxt: ["esbuild", "unrs-resolver", "vue-demi"],
+        sveltekit: ["esbuild"],
+      }[framework];
+      fs.writeFileSync(workspacePath, [
+        "# pnpm >=10.26: only these framework build dependencies may run scripts.",
+        "# Review new dependencies explicitly with pnpm approve-builds.",
+        "strictDepBuilds: true",
+        "allowBuilds:",
+        ...buildDependencies.map((name) => `  ${JSON.stringify(name)}: true`),
+        "",
+      ].join("\n"));
+    }
+  }
   const yarnConfigPath = path.join(targetDir, ".yarnrc.yml");
   if (packageManager === "yarn") {
     fs.writeFileSync(yarnConfigPath, "nodeLinker: node-modules\n");
