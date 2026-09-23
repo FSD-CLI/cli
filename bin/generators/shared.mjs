@@ -41,11 +41,14 @@ export function toTitle(value) {
 }
 
 export function viewContent(componentName, title) {
+  const inlineSignature = `export function ${componentName}({ title = "${title}" }: ${componentName}Props) {`;
+  const signature = inlineSignature.length <= 80 ? inlineSignature :
+    `export function ${componentName}({\n  title = "${title}",\n}: ${componentName}Props) {`;
   return `type ${componentName}Props = {
   title?: string;
 };
 
-export function ${componentName}({ title = "${title}" }: ${componentName}Props) {
+${signature}
   return (
     <section>
       <h2>{title}</h2>

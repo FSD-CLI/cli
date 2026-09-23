@@ -108,6 +108,9 @@ export function parseCliArgs(args) {
   if (options.yes && !options.projectName) {
     throw new CliUsageError("A project name is required when using --yes.");
   }
+  if (options.yes && !options.framework) {
+    throw new CliUsageError("--framework is required when using --yes (for example, --framework react-vite).");
+  }
 
   return options;
 }

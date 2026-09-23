@@ -60,7 +60,7 @@ Create options:
 | Option | Purpose |
 | --- | --- |
 | `-f, --framework <id>` | Skip the framework prompt |
-| `-y, --yes` | Accept the default stack and skip interactive prompts |
+| `-y, --yes` | Accept framework defaults without prompts; requires a project name and `--framework` |
 | `--package-manager <id>` | Select npm, pnpm, Yarn, or Bun non-interactively |
 | `--api-client <id>` | Select Axios or native Fetch |
 | `--server-state <id>` | Override the framework server-state choice |
@@ -69,7 +69,19 @@ Create options:
 | `--no-install` | Do not install dependencies |
 | `--no-start` | Do not start the development server |
 | `--dry-run` | Print the complete plan without changing files |
-| `--force` | Replace an existing target with automatic rollback on failure |
+| `--force` | Replace an existing target; restore it if cloning, setup, or installation fails |
+
+For pnpm, use **10.26 or newer** (pnpm 11 also requires Node 22+).
+New pnpm projects receive a framework-specific `allowBuilds` list in
+`pnpm-workspace.yaml`. Only the listed build dependencies may execute scripts;
+unreviewed scripts fail installation instead of being silently trusted.
+An existing template-owned workspace policy is preserved. Review additional
+dependencies with `pnpm approve-builds`; no global approval settings are changed.
+See the [pnpm build settings](https://github.com/pnpm/pnpm.io/blob/main/versioned_docs/version-10.x/settings.md#allowbuilds).
+
+If installation fails, the CLI exits nonzero and rolls back the target. To review
+package-manager policy before installing, create with `--no-install`, then run
+the selected manager manually inside the generated project.
 
 Generator types:
 

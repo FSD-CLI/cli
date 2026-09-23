@@ -38,7 +38,7 @@ Commands:
 
 Create options:
   -f, --framework <id>          Select a framework without the template prompt
-  -y, --yes                     Accept defaults and skip interactive prompts
+  -y, --yes                     Accept defaults (requires name and --framework)
       --package-manager <id>    Select npm, pnpm, yarn, or bun
       --api-client <id>         Select axios or fetch
       --server-state <id>       Override the framework server-state default

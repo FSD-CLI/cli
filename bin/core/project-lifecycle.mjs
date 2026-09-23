@@ -128,9 +128,9 @@ export function createHuskyHooks(packageManager) {
   }
 
   return {
-    "pre-commit": `${run("lint")}\ngit diff --check\n${run("build")}\n`,
-    "commit-msg": `#!/bin/sh\n${execCommitlint}\n`,
-    "pre-push": `${run("build")}\n`,
+    "pre-commit": `#!/bin/sh\nset -e\n${run("lint")}\ngit diff --cached --check\ngit diff --check\n${run("build")}\n`,
+    "commit-msg": `#!/bin/sh\nset -e\n${execCommitlint}\n`,
+    "pre-push": `#!/bin/sh\nset -e\n${run("build")}\n`,
   };
 }
 

@@ -78,47 +78,28 @@ async function selectTemplate(framework) {
   return template;
 }
 
+export function getProjectQuestions(framework) {
+  const defaults = createDefaultProjectConfig(framework);
+  return [
+    ["apiClient", "API client"],
+    ["serverState", "Server state"],
+    ["clientState", "Client state"],
+    ["forms", "Forms and validation"],
+    ["packageManager", "Package manager"],
+  ].map(([name, message]) => {
+    const choices = getCapabilityChoices(framework, name);
+    return {
+      type: "select",
+      name,
+      message,
+      choices,
+      initial: choices.findIndex(({ value }) => value === defaults[name]),
+    };
+  });
+}
+
 async function promptProjectConfig(framework) {
-  const answers = await prompts(
-    [
-      {
-        type: "select",
-        name: "apiClient",
-        message: "API client",
-        initial: 0,
-        choices: getCapabilityChoices(framework, "apiClient"),
-      },
-      {
-        type: "select",
-        name: "serverState",
-        message: "Server state",
-        initial: 0,
-        choices: getCapabilityChoices(framework, "serverState"),
-      },
-      {
-        type: "select",
-        name: "clientState",
-        message: "Client state",
-        initial: 0,
-        choices: getCapabilityChoices(framework, "clientState"),
-      },
-      {
-        type: "select",
-        name: "forms",
-        message: "Forms and validation",
-        initial: 0,
-        choices: getCapabilityChoices(framework, "forms"),
-      },
-      {
-        type: "select",
-        name: "packageManager",
-        message: "Package manager",
-        initial: 0,
-        choices: getCapabilityChoices(framework, "packageManager"),
-      },
-    ],
-    onCancel
-  );
+  const answers = await prompts(getProjectQuestions(framework), onCancel);
   return normalizeProjectConfig(framework, {
     ...answers,
   });
@@ -233,9 +214,17 @@ export async function runCreateProject(options) {
       installProjectDependencies(targetDir, projectConfig.packageManager);
       installSpinner.succeed(chalk.green("Dependencies installed."));
       depsInstalled = true;
-    } catch {
+    } catch (error) {
       installSpinner.fail(chalk.red("Failed to install dependencies."));
-      console.log(chalk.dim("  You can install them manually later."));
+      transaction.rollback();
+      const detail = [error.stderr, error.stdout, error.message]
+        .filter(Boolean)
+        .map(String)
+        .join("\n");
+      throw new Error(
+        `Dependency installation failed; project changes were rolled back.\n${detail}`,
+        { cause: error }
+      );
     }
   }
 

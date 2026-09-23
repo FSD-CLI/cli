@@ -2,6 +2,29 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## 2.5.1 - 2026-09-23
+
+### Fixed
+
+- Failed dependency installation now exits nonzero, preserves its diagnostic,
+  and rolls back new or forced project creation.
+- Generated Git hooks stop on lint, staged/unstaged whitespace, or build errors.
+- Numeric-leading slice names are rejected before files are written.
+- Generic React-family view formatting now matches the Next.js template's
+  formatter for the audited feature and widget output.
+- Interactive defaults match each framework's unattended defaults.
+- `--yes` requires an explicit project name and framework rather than prompting
+  or silently exiting without creating a project.
+- New pnpm projects have framework-scoped build-script approvals for pnpm
+  10.26+ and 11; existing workspace policies remain untouched.
+
+### Tests
+
+- Added rollback and behavioral Git-hook regression tests, numeric-name checks
+  across all frameworks, and interactive-default parity checks.
+- CI framework smoke tests now generate every slice type plus auth; added
+  React/Nuxt build-policy coverage on pnpm 10.26 and 11.
+
 ## 2.5.0 - 2026-09-19
 
 ### Added
