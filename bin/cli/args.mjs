@@ -20,10 +20,46 @@ const VALUE_FLAGS = new Map([
 
 export class CliUsageError extends Error {}
 
+function parseUpgradeArgs(args) {
+  const options = {
+    command: "upgrade",
+    dryRun: false,
+    check: false,
+    yes: false,
+    noInstall: false,
+    allowDirty: false,
+  };
+  const flags = new Map([
+    ["--dry-run", "dryRun"],
+    ["--check", "check"],
+    ["--yes", "yes"],
+    ["-y", "yes"],
+    ["--no-install", "noInstall"],
+    ["--allow-dirty", "allowDirty"],
+  ]);
+
+  for (const argument of args.slice(1)) {
+    if (!flags.has(argument)) {
+      if (argument.startsWith("-")) {
+        throw new CliUsageError(`Unknown upgrade option "${argument}".`);
+      }
+      throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    options[flags.get(argument)] = true;
+  }
+
+  if (options.check && (options.yes || options.noInstall)) {
+    throw new CliUsageError("--check cannot be combined with --yes or --no-install.");
+  }
+  return options;
+}
+
 export function parseCliArgs(args) {
   if (args.includes("--help") || args.includes("-h")) return { command: "help" };
   if (args.includes("--version") || args.includes("-v")) return { command: "version" };
   if (args.includes("--list-templates")) return { command: "list-templates" };
+
+  if (args[0] === "upgrade") return parseUpgradeArgs(args);
 
   if (["check", "doctor", "config"].includes(args[0])) {
     if (args.length > 1) {

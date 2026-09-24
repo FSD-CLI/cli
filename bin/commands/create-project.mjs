@@ -19,6 +19,7 @@ import {
   listTemplates,
 } from "../core/template-registry.mjs";
 import { normalizeProjectConfig } from "../project-config.mjs";
+import { writeInitialManifest } from "../upgrade/manifest.mjs";
 import { showBanner } from "../cli/output.mjs";
 
 function handleCancel() {
@@ -30,6 +31,12 @@ const onCancel = { onCancel: handleCancel };
 
 export function createDefaultProjectConfig(framework, overrides = {}) {
   return normalizeProjectConfig(framework, overrides);
+}
+
+function readCliVersion() {
+  return JSON.parse(
+    fs.readFileSync(new URL("../../package.json", import.meta.url), "utf8")
+  ).version;
 }
 
 function getConfigOverrides(options) {
@@ -186,6 +193,7 @@ export async function runCreateProject(options) {
   }).start();
   try {
     prepareProject(targetDir, projectConfig);
+    writeInitialManifest(targetDir, projectConfig, readCliVersion());
     setupSpinner.succeed(chalk.green("FSD stack, Git, and Husky configured."));
   } catch (error) {
     setupSpinner.fail(chalk.red("Project configuration failed."));

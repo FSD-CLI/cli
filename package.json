@@ -16,7 +16,7 @@
     "create-fsd-architecture": "bin/index.mjs"
   },
   "scripts": {
-    "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
+    "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
     "check": "npm test && npm pack --dry-run",
     "start": "node ./bin/index.mjs"
   },
@@ -30,6 +30,8 @@
     "bin",
     "schema",
     "README.md",
+    "UPGRADE-ARCHITECTURE.md",
+    "PUBLIC-DOCUMENTATION-OUTLINE.md",
     "CHANGELOG.md",
     "LICENSE"
   ],

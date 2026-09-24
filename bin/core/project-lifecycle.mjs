@@ -6,7 +6,7 @@ import { configureProject } from "../project-config.mjs";
 import { getInstallCommand } from "./package-managers.mjs";
 
 const REQUIRED_HUSKY_HOOKS = ["pre-commit", "commit-msg", "pre-push"];
-const COMMITLINT_DEV_DEPENDENCIES = {
+export const COMMITLINT_DEV_DEPENDENCIES = {
   "@commitlint/cli": "^20.5.3",
   "@commitlint/config-conventional": "^20.5.3",
 };
