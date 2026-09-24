@@ -311,6 +311,26 @@ test("transaction rollback restores files and retains an internal recovery backu
   }
 });
 
+test("manifest-write failure rolls back prior hook updates", () => {
+  const { root } = createFixture("react-vite");
+  try {
+    const oldHook = fs.readFileSync(path.join(root, ".husky", "pre-commit"), "utf8");
+    assert.throws(
+      () =>
+        applyUpgradePlan(buildUpgradePlan(root, CLI_VERSION), {
+          noInstall: true,
+          failureInjection: ({ stage, operation }) =>
+            stage === "after-write" && operation.path === ".fsd/manifest.json",
+        }),
+      /affected source, configuration, manifest, and lockfile paths were rolled back/i
+    );
+    assert.equal(fs.readFileSync(path.join(root, ".husky", "pre-commit"), "utf8"), oldHook);
+    assert.equal(fs.existsSync(path.join(root, ".fsd", "manifest.json")), false);
+  } finally {
+    removeFixture(root);
+  }
+});
+
 test("migration graph rejects gaps, duplicate IDs, cycles, and downgrades", () => {
   assert.equal(selectMigrationPath(0).length, 2);
   assert.throws(

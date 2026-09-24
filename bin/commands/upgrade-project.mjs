@@ -159,7 +159,7 @@ export function applyUpgradePlan(plan, { noInstall = false, failureInjection, co
       ? ` node_modules may require recovery with: ${plan.config.packageManager} install.`
       : "";
     throw new Error(
-      `Upgrade failed; affected source, configuration, manifest, and lockfile paths were rolled back.${installRecovery}${recovery}`,
+      `Upgrade failed: ${error.message} Affected source, configuration, manifest, and lockfile paths were rolled back.${installRecovery}${recovery}`,
       { cause: error }
     );
   }
