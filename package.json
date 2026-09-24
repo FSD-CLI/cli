@@ -30,9 +30,10 @@
     "bin",
     "schema",
     "README.md",
-    "UPGRADE-ARCHITECTURE.md",
-    "PUBLIC-DOCUMENTATION-OUTLINE.md",
-    "CHANGELOG.md",
+    "SECURITY.md",
+    "docs/UPGRADE-ARCHITECTURE.md",
+    "docs/PUBLIC-DOCUMENTATION-OUTLINE.md",
+    "docs/CHANGELOG.md",
     "LICENSE"
   ],
   "keywords": [

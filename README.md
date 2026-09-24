@@ -9,6 +9,13 @@ Create production-ready frontend projects with a complete
 - Documentation: https://fsd-docs.vercel.app
 - GitHub: https://github.com/FSD-CLI/cli
 
+## Repository documentation
+
+- [Changelog](./docs/CHANGELOG.md)
+- [Safe upgrade architecture](./docs/UPGRADE-ARCHITECTURE.md)
+- [Public documentation outline](./docs/PUBLIC-DOCUMENTATION-OUTLINE.md)
+- [Security policy](./SECURITY.md)
+
 ## Quick start
 
 ```bash
@@ -146,8 +153,8 @@ npm, pnpm, Yarn, or Bun. It installs the ownership manifest, hardens verified
 legacy Husky hooks, and adds the CLI-owned pnpm build policy only when the path
 does not already exist. No dependency version migration is currently declared;
 the installer runs only when a future migration changes managed dependencies.
-See [UPGRADE-ARCHITECTURE.md](./UPGRADE-ARCHITECTURE.md) for the exact compatibility
-table, recovery guidance, and extension rules.
+See [the upgrade architecture](./docs/UPGRADE-ARCHITECTURE.md) for the exact
+compatibility table, recovery guidance, and extension rules.
 
 For pnpm, use **10.26 or newer** (pnpm 11 also requires Node 22+).
 New pnpm projects receive a framework-specific `allowBuilds` list in

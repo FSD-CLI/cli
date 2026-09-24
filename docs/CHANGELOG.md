@@ -2,6 +2,15 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## Unreleased
+
+### Added
+
+- Safe `upgrade` command with read-only planning, ownership manifests, conflict
+  detection, transactional rollback, and CI-friendly status codes.
+- Upgrade documentation, compatibility guidance, and a responsible disclosure
+  policy.
+
 ## 2.5.1 - 2026-09-23
 
 ### Fixed
