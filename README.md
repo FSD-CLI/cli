@@ -53,6 +53,11 @@ npx create-fsd-architecture@latest -g page settings --dry-run
 npx create-fsd-architecture@latest check
 npx create-fsd-architecture@latest doctor
 npx create-fsd-architecture@latest config
+
+# Safely inspect or migrate CLI-owned tooling in an existing project
+npx create-fsd-architecture@latest upgrade --dry-run
+npx create-fsd-architecture@latest upgrade --check
+npx create-fsd-architecture@latest upgrade --yes --no-install
 ```
 
 Create options:
@@ -70,6 +75,79 @@ Create options:
 | `--no-start` | Do not start the development server |
 | `--dry-run` | Print the complete plan without changing files |
 | `--force` | Replace an existing target; restore it if cloning, setup, or installation fails |
+
+## Safe upgrades
+
+`upgrade` evolves only tooling that the CLI can prove it owns. It never
+re-scaffolds a project and never rewrites feature, entity, widget, page,
+component, style, route implementation, environment file, secret, custom script,
+or unrelated dependency.
+
+```bash
+# Inspect the complete plan. This is always read-only.
+npx create-fsd-architecture@latest upgrade --dry-run
+
+# CI status check. It is always non-interactive and read-only.
+npx create-fsd-architecture@latest upgrade --check
+
+# Apply only a conflict-free plan without prompting.
+npx create-fsd-architecture@latest upgrade --yes
+
+# Apply source/configuration changes without dependency installation.
+npx create-fsd-architecture@latest upgrade --yes --no-install
+
+# Apply after explicitly accepting the risk of a dirty Git worktree.
+npx create-fsd-architecture@latest upgrade --allow-dirty
+```
+
+The command locates the nearest reliable project root from nested directories,
+then prints the selected root, migration path, every create/update/preserve/
+conflict/manual action, and validations. `--dry-run` and `--check` do not create
+backups, manifests, logs, lockfiles, or temporary project files.
+
+New projects contain `.fsd/manifest.json`, an atomically written ownership
+manifest. It records SHA-256 hashes only for CLI-owned files, marker regions, and
+specific managed dependency entries. It contains no environment values, secrets,
+or `node_modules` data. A changed tracked file or marker is a conflict, not an
+overwrite permission. There is intentionally no `--force` or blind `--adopt`
+mode for upgrades.
+
+Projects created before the manifest use conservative legacy mode. The CLI adopts
+only exact released signatures for generated artifacts, managed dependencies, and
+Nuxt marker regions. Missing, custom, or ambiguous managed paths are reported as
+`CONFLICT` or `MANUAL`; resolve them before retrying. Application code outside
+CLI-owned surfaces remains untouched byte-for-byte.
+
+By default an apply is refused in a dirty Git worktree. `--dry-run` and `--check`
+remain available. `--allow-dirty` prints a warning and uses the internal
+affected-path backup; the command never resets, stashes, commits, switches
+branches, or otherwise changes Git state. Projects without Git are supported.
+
+Before writes, upgrade snapshots every affected regular file under
+`.fsd/backups/`. Writes use sibling temporary files and atomic rename, preserve
+hook permissions, reject traversal and symlinked managed paths, and roll back in
+reverse order on an error. The backup is retained after a failed upgrade and its
+location is printed. If dependency installation failed, source/configuration,
+manifest, and lockfile paths are restored; run the selected package manager's
+`install` command to restore `node_modules`.
+
+`upgrade --check` exit codes are stable for CI:
+
+| Code | Meaning |
+| --- | --- |
+| `0` | Project is current |
+| `2` | A conflict-free upgrade is available |
+| `3` | Conflicts or manual work block an upgrade |
+| `4` | Project state or configuration is unsupported or invalid |
+
+The first managed-state release supports clean signature-matching projects from
+the tested React + Vite, Next.js, Vue + Vite, Nuxt, and SvelteKit stacks using
+npm, pnpm, Yarn, or Bun. It installs the ownership manifest, hardens verified
+legacy Husky hooks, and adds the CLI-owned pnpm build policy only when the path
+does not already exist. No dependency version migration is currently declared;
+the installer runs only when a future migration changes managed dependencies.
+See [UPGRADE-ARCHITECTURE.md](./UPGRADE-ARCHITECTURE.md) for the exact compatibility
+table, recovery guidance, and extension rules.
 
 For pnpm, use **10.26 or newer** (pnpm 11 also requires Node 22+).
 New pnpm projects receive a framework-specific `allowBuilds` list in
