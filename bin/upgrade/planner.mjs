@@ -14,6 +14,7 @@ import {
   readMarkerRegion,
   readUtf8,
   renderMarkerRegion,
+  serializeManifest,
   sha256,
   validateManifest,
 } from "./manifest.mjs";
@@ -99,6 +100,7 @@ function inspectManagedFile({
   operations,
   allowUpdate = false,
   allowCreate = false,
+  allowRecordedContent = false,
   legacyBase,
 }) {
   const entry = manifest?.managedFiles[relativePath];
@@ -123,6 +125,16 @@ function inspectManagedFile({
   const currentHash = sha256(current);
   if (current === target) {
     addOperation(operations, "ALREADY_APPLIED", relativePath, "Current content already matches the target.");
+    addTrackedFile(targetManifest, relativePath, owner, current);
+    return;
+  }
+  if (entry && currentHash === entry.contentHash && allowRecordedContent) {
+    addOperation(
+      operations,
+      "ALREADY_APPLIED",
+      relativePath,
+      "Verified managed content includes CLI-generated registrations."
+    );
     addTrackedFile(targetManifest, relativePath, owner, current);
     return;
   }
@@ -205,13 +217,11 @@ function inspectDependencies({ projectRoot, config, manifest, targetManifest, op
     ...getManagedDependencyEntries(config),
     ...getCommitlintDependencyEntries(),
   };
-  const keys = new Set([
-    ...Object.keys(expected),
-    ...Object.keys(manifest?.managedPackageEntries ?? {}),
-  ]);
+  const managedEntries = manifest?.managedPackageEntries ?? expected;
+  const keys = new Set(Object.keys(managedEntries));
 
   for (const key of [...keys].sort((left, right) => left.localeCompare(right))) {
-    const entry = manifest?.managedPackageEntries[key] ?? expected[key];
+    const entry = managedEntries[key];
     if (!entry) continue;
     const [section, name] = key.split(":", 2);
     const actual = packageJson[section]?.[name];
@@ -308,6 +318,7 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
       manifest,
       targetManifest,
       operations,
+      allowRecordedContent: artifacts.mutableFiles?.includes(relativePath),
     });
   }
   for (const [relativePath, definition] of Object.entries(artifacts.markerRegions)) {
@@ -390,7 +401,8 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
         ? "Migration state will be committed only after validation succeeds."
         : "A new ownership manifest will be created after all safety checks succeed.",
       {
-        content: `${JSON.stringify(targetManifest, null, 2)}\n`,
+        content: serializeManifest(targetManifest),
+        current: manifest ? readUtf8(projectRoot, MANIFEST_PATH) : undefined,
         mode: 0o600,
       }
     );

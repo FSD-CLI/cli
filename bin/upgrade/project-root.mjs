@@ -46,19 +46,22 @@ export function findProjectRoot(startDirectory = process.cwd()) {
     throw new UpgradeStateError(`Cannot resolve working directory: ${error.message}`);
   }
   const roots = [];
+  const incompleteRoots = [];
 
   while (true) {
     const hasConfig = fs.existsSync(path.join(current, "fsd.config.json"));
     const hasPackage = fs.existsSync(path.join(current, "package.json"));
     if (hasConfig && hasPackage) roots.push(current);
-    if (hasConfig !== hasPackage) {
-      throw new UpgradeStateError(
-        `Cannot use ${current} as an upgrade root: fsd.config.json and package.json must both exist.`
-      );
-    }
+    if (hasConfig !== hasPackage && roots.length === 0) incompleteRoots.push(current);
     const parent = path.dirname(current);
     if (parent === current) break;
     current = parent;
+  }
+
+  if (incompleteRoots.length) {
+    throw new UpgradeStateError(
+      `Cannot use ${incompleteRoots[0]} as an upgrade root: fsd.config.json and package.json must both exist.`
+    );
   }
 
   if (!roots.length) {

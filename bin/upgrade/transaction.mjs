@@ -91,6 +91,41 @@ export class UpgradeTransaction {
     }
   }
 
+  assertOperationPrecondition(operation, relativePath) {
+    const snapshot = this.snapshots.get(relativePath);
+    const target = resolveManagedPath(this.projectRoot, relativePath);
+    if (operation.status === "CREATE") {
+      if (snapshot.exists || fs.existsSync(target)) {
+        throw new UpgradeStateError(
+          `Refusing to create ${relativePath}: it changed after the upgrade plan was created.`
+        );
+      }
+      return;
+    }
+    if (!snapshot.exists || operation.current === undefined) {
+      throw new UpgradeStateError(
+        `Refusing to ${operation.status.toLowerCase()} ${relativePath}: the plan has no verified current content.`
+      );
+    }
+    if (!fs.existsSync(target) || !fs.lstatSync(target).isFile()) {
+      throw new UpgradeStateError(
+        `Refusing to ${operation.status.toLowerCase()} ${relativePath}: it changed after the upgrade plan was created.`
+      );
+    }
+    const planned = Buffer.isBuffer(operation.current)
+      ? operation.current
+      : Buffer.from(operation.current);
+    const snapshotted = fs.readFileSync(
+      path.join(this.backupLocation, snapshot.backupFile)
+    );
+    const live = fs.readFileSync(target);
+    if (!planned.equals(snapshotted) || !snapshotted.equals(live)) {
+      throw new UpgradeStateError(
+        `Refusing to ${operation.status.toLowerCase()} ${relativePath}: it changed after the upgrade plan was created.`
+      );
+    }
+  }
+
   apply(operations) {
     if (!this.started || this.finished) throw new UpgradeStateError("Upgrade transaction is not active.");
     for (const operation of operations) {
@@ -99,6 +134,7 @@ export class UpgradeTransaction {
       if (!this.snapshots.has(relativePath)) {
         throw new UpgradeStateError(`Operation was not included in the backup: ${relativePath}`);
       }
+      this.assertOperationPrecondition(operation, relativePath);
       this.inject("before-write", operation);
       const snapshot = this.snapshots.get(relativePath);
       if (operation.status === "DELETE") {

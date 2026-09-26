@@ -112,6 +112,7 @@ async function confirmUpgrade() {
 
 export function buildUpgradePlan(cwd = process.cwd(), cliVersion = "unknown") {
   const projectRoot = findProjectRoot(cwd);
+  validateProjectStructure(projectRoot);
   const config = readProjectConfig(projectRoot);
   const manifest = readManifest(projectRoot);
   return createUpgradePlan({ projectRoot, config, manifest, cliVersion });

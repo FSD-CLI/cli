@@ -18,12 +18,17 @@ import {
   ensureCommitlintDependencies,
 } from "../bin/core/project-lifecycle.mjs";
 import { configureProject, normalizeProjectConfig } from "../bin/project-config.mjs";
-import { readManifest, writeInitialManifest } from "../bin/upgrade/manifest.mjs";
+import { generateSlice } from "../bin/generator.mjs";
+import {
+  readManifest,
+  serializeManifest,
+  writeInitialManifest,
+} from "../bin/upgrade/manifest.mjs";
 import { selectMigrationPath, validateMigrationGraph } from "../bin/upgrade/migrations/index.mjs";
 import { findProjectRoot } from "../bin/upgrade/project-root.mjs";
 import { UpgradeTransaction } from "../bin/upgrade/transaction.mjs";
 
-const CLI_VERSION = "2.5.1";
+const CLI_VERSION = "2.6.0";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 function oldHuskyHooks(packageManager) {
@@ -138,6 +143,22 @@ test("root discovery works from nested directories and rejects nested projects",
   }
 });
 
+test("root discovery ignores a package-only workspace above a complete FSD project", () => {
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-workspace-"));
+  const fixture = createFixture("react-vite");
+  const project = path.join(workspace, "apps", "web");
+  try {
+    fs.writeFileSync(path.join(workspace, "package.json"), '{"private":true}\n');
+    fs.mkdirSync(path.dirname(project), { recursive: true });
+    fs.renameSync(fixture.root, project);
+    const nested = path.join(project, "src", "features");
+    assert.equal(findProjectRoot(nested), fs.realpathSync(project));
+  } finally {
+    removeFixture(workspace);
+    if (fs.existsSync(fixture.root)) removeFixture(fixture.root);
+  }
+});
+
 test("all supported framework and package-manager legacy fixtures have a deterministic plan", () => {
   for (const framework of ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"]) {
     const { root } = createFixture(framework);
@@ -197,6 +218,113 @@ test("dry-run and check are read-only, then a clean legacy upgrade is idempotent
       { cwd: root, cliVersion: CLI_VERSION }
     );
     assert.equal(current.exitCode, UPGRADE_CHECK_EXIT_CODES.CURRENT);
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("manifest serialization is accepted by the Next.js Biome array style", () => {
+  const { root, config } = createFixture("nextjs", { legacyHooks: false });
+  try {
+    writeInitialManifest(root, config, CLI_VERSION);
+    const manifest = readManifest(root);
+    const content = fs.readFileSync(path.join(root, ".fsd", "manifest.json"), "utf8");
+    assert.match(
+      content,
+      /"appliedMigrations": \["managed-state-v1", "tooling-hardening-v1"\]/
+    );
+    assert.equal(content, serializeManifest(manifest));
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("a stale plan refuses to overwrite a file changed after planning", () => {
+  const { root } = createFixture("react-vite");
+  try {
+    const plan = buildUpgradePlan(root, CLI_VERSION);
+    const hookPath = path.join(root, ".husky", "pre-commit");
+    fs.appendFileSync(hookPath, "echo user-check\n");
+    const changed = fs.readFileSync(hookPath, "utf8");
+    assert.throws(
+      () => applyUpgradePlan(plan, { noInstall: true }),
+      /changed after the upgrade plan was created/
+    );
+    assert.equal(fs.readFileSync(hookPath, "utf8"), changed);
+    assert.equal(fs.existsSync(path.join(root, ".fsd", "manifest.json")), false);
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("Redux generation refreshes its managed store hash", () => {
+  const { root, config } = createFixture("react-vite", {
+    manifest: true,
+    legacyHooks: false,
+  });
+  try {
+    const reduxConfig = normalizeProjectConfig("react-vite", { clientState: "redux" });
+    configureProject(root, reduxConfig);
+    writeInitialManifest(root, reduxConfig, CLI_VERSION);
+    generateSlice({ cwd: root, type: "feature", name: "checkout", config: reduxConfig });
+    const plan = buildUpgradePlan(root, CLI_VERSION);
+    assert.deepEqual(plan.conflicts, []);
+    assert.equal(plan.writes.length, 0);
+    assert.match(
+      fs.readFileSync(path.join(root, "src", "app", "providers", "store.ts"), "utf8"),
+      /checkoutReducer/
+    );
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("Redux generation refuses a user-modified managed store", () => {
+  const { root } = createFixture("react-vite");
+  try {
+    const config = normalizeProjectConfig("react-vite", { clientState: "redux" });
+    configureProject(root, config);
+    writeInitialManifest(root, config, CLI_VERSION);
+    const storePath = path.join(root, "src", "app", "providers", "store.ts");
+    fs.appendFileSync(storePath, "// user customization\n");
+    const original = fs.readFileSync(storePath, "utf8");
+    assert.throws(
+      () => generateSlice({ cwd: root, type: "feature", name: "checkout", config }),
+      /differs from the ownership manifest/
+    );
+    assert.equal(fs.readFileSync(storePath, "utf8"), original);
+    assert.equal(fs.existsSync(path.join(root, "src", "features", "checkout")), false);
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("check reports a missing required FSD layer as invalid", async () => {
+  const { root } = createFixture("react-vite", { manifest: true, legacyHooks: false });
+  try {
+    fs.rmdirSync(path.join(root, "src", "widgets"));
+    const result = await runUpgradeProject(
+      { dryRun: false, check: true, yes: false, noInstall: false, allowDirty: false },
+      { cwd: root, cliVersion: CLI_VERSION }
+    );
+    assert.equal(result.exitCode, UPGRADE_CHECK_EXIT_CODES.INVALID);
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("manifest projects preserve unclaimed dependency versions", () => {
+  const { root, config } = createFixture("vue-vite", { legacyHooks: false });
+  try {
+    const packagePath = path.join(root, "package.json");
+    const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+    packageJson.devDependencies["@commitlint/cli"] = "^21.2.2";
+    packageJson.devDependencies["@commitlint/config-conventional"] = "^21.2.2";
+    fs.writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`);
+    writeInitialManifest(root, config, CLI_VERSION);
+    const plan = buildUpgradePlan(root, CLI_VERSION);
+    assert.deepEqual(plan.conflicts, []);
+    assert.equal(plan.writes.length, 0);
   } finally {
     removeFixture(root);
   }
@@ -296,7 +424,7 @@ test("transaction rollback restores files and retains an internal recovery backu
     assert.throws(
       () =>
         transaction.apply([
-          { status: "UPDATE", path: "one.txt", content: "changed\n" },
+          { status: "UPDATE", path: "one.txt", current: "one\n", content: "changed\n" },
           { status: "CREATE", path: "two.txt", content: "created\n" },
         ]),
       /Injected upgrade failure/

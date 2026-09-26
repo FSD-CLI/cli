@@ -17,6 +17,19 @@ export function sha256(value) {
   return `sha256:${crypto.createHash("sha256").update(value).digest("hex")}`;
 }
 
+export function serializeManifest(manifest) {
+  validateManifest(manifest);
+  const migrationsPlaceholder = "__FSD_CLI_APPLIED_MIGRATIONS__";
+  const serializable = {
+    ...manifest,
+    appliedMigrations: migrationsPlaceholder,
+  };
+  return `${JSON.stringify(serializable, null, 2).replace(
+    JSON.stringify(migrationsPlaceholder),
+    `[${manifest.appliedMigrations.map((id) => JSON.stringify(id)).join(", ")}]`
+  )}\n`;
+}
+
 export function readUtf8(projectRoot, relativePath) {
   return fs.readFileSync(resolveManagedPath(projectRoot, relativePath), "utf8");
 }
@@ -66,7 +79,7 @@ export function readManifest(projectRoot) {
 }
 
 export function writeManifestAtomically(projectRoot, manifest) {
-  validateManifest(manifest);
+  const content = serializeManifest(manifest);
   const target = resolveManagedPath(projectRoot, MANIFEST_PATH);
   fs.mkdirSync(path.dirname(target), { recursive: true });
   const temporary = path.join(
@@ -74,11 +87,34 @@ export function writeManifestAtomically(projectRoot, manifest) {
     `.${path.basename(target)}.fsd-upgrade-${process.pid}-${crypto.randomUUID()}.tmp`
   );
   try {
-    fs.writeFileSync(temporary, `${JSON.stringify(manifest, null, 2)}\n`, { mode: 0o600 });
+    fs.writeFileSync(temporary, content, { mode: 0o600 });
     fs.renameSync(temporary, target);
   } finally {
     if (fs.existsSync(temporary)) fs.rmSync(temporary, { force: true });
   }
+}
+
+export function assertManagedFileUnchanged(projectRoot, relativePath, content) {
+  const manifest = readManifest(projectRoot);
+  if (!manifest) return false;
+  const normalized = normalizeRelativePath(relativePath);
+  const entry = manifest.managedFiles[normalized];
+  if (!entry) return false;
+  if (sha256(content) !== entry.contentHash) {
+    throw new UpgradeStateError(
+      `Refusing to update ${normalized}: it differs from the ownership manifest.`
+    );
+  }
+  return true;
+}
+
+export function recordManagedFileContent(projectRoot, relativePath, content) {
+  const manifest = readManifest(projectRoot);
+  if (!manifest) return;
+  const normalized = normalizeRelativePath(relativePath);
+  if (!manifest.managedFiles[normalized]) return;
+  manifest.managedFiles[normalized].contentHash = sha256(content);
+  writeManifestAtomically(projectRoot, manifest);
 }
 
 export function getManagedDependencyEntries(config) {

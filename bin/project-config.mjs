@@ -140,7 +140,12 @@ export function getManagedProjectArtifacts(config) {
   if (config.clientState === "redux") {
     files["src/app/providers/store.ts"] = reduxStoreContent();
   }
-  return { files, markerRegions: {} };
+  return {
+    files,
+    markerRegions: {},
+    mutableFiles:
+      config.clientState === "redux" ? ["src/app/providers/store.ts"] : [],
+  };
 }
 
 function apiClientArtifactContent(config, adapter) {

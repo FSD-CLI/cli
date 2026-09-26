@@ -2,7 +2,7 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## Unreleased
+## 2.6.0 - 2026-09-26
 
 ### Added
 
@@ -10,6 +10,19 @@ All notable changes to `create-fsd-architecture` are documented here.
   detection, transactional rollback, and CI-friendly status codes.
 - Upgrade documentation, compatibility guidance, and a responsible disclosure
   policy.
+
+### Fixed
+
+- Revalidate every planned write immediately before applying it, preventing a
+  stale interactive plan from overwriting files changed after review.
+- Serialize ownership manifests in a format accepted by the Next.js template's
+  Biome configuration.
+- Refresh Redux store ownership after CLI-generated reducer registration.
+- Allow an FSD project to live below a package-only workspace root while still
+  rejecting conflicting nested FSD roots.
+- Report missing required FSD layers as invalid during `upgrade --check`.
+- Preserve dependency versions that the ownership manifest deliberately leaves
+  unmanaged, including newer template-provided Commitlint releases.
 
 ## 2.5.1 - 2026-09-23
 
