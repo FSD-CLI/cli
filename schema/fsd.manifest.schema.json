@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/FSD-CLI/cli/main/schema/fsd.manifest.schema.json",
+  "title": "FSD CLI ownership manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifestVersion",
+    "stateVersion",
+    "framework",
+    "configSchemaVersion",
+    "createdWithCliVersion",
+    "lastUpgradedWithCliVersion",
+    "appliedMigrations",
+    "managedFiles",
+    "managedPackageEntries",
+    "markerRegions"
+  ],
+  "properties": {
+    "manifestVersion": { "const": 1 },
+    "stateVersion": { "type": "integer", "minimum": 1 },
+    "framework": { "enum": ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"] },
+    "configSchemaVersion": { "const": 1 },
+    "createdWithCliVersion": { "type": "string", "minLength": 1 },
+    "lastUpgradedWithCliVersion": { "type": "string", "minLength": 1 },
+    "appliedMigrations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "managedFiles": {
+      "type": "object",
+      "propertyNames": { "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$" },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["owner", "contentHash"],
+        "properties": {
+          "owner": { "type": "string", "minLength": 1 },
+          "contentHash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "managedPackageEntries": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["owner", "value"],
+        "properties": {
+          "owner": { "type": "string", "minLength": 1 },
+          "value": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "markerRegions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["owner", "contentHash"],
+        "properties": {
+          "owner": { "type": "string", "minLength": 1 },
+          "contentHash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+        }
+      }
+    }
+  }
+}

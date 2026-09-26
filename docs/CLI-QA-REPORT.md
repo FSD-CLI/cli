@@ -1,7 +1,7 @@
 # CLI exploratory QA report — 2026-09-23
 
 > Historical pre-fix audit. For subsequent local fixes and their verification,
-> see [QA-FIX-VERIFICATION.md](/Users/ashraf/FSD-Platform/create-fsd-architecture/QA-FIX-VERIFICATION.md).
+> see [QA-FIX-VERIFICATION.md](./QA-FIX-VERIFICATION.md).
 
 ## Release recommendation
 
@@ -58,7 +58,7 @@ Initial working tree contained the user's untracked `TASK-CLI-END-TO-END-QA.md` 
 
 ## Evidence and reproduction conventions
 
-- [Full case matrix](/Users/ashraf/FSD-Platform/create-fsd-architecture/CLI-QA-MATRIX.md)
+- [Full case matrix](./CLI-QA-MATRIX.md)
 - Durable logs, browser screenshots, JSON results, and test harnesses: `/Users/ashraf/FSD-Platform/qa-reports/2026-09-23-cli-2.5.0/`.
 - Disposable generated projects remain under the temporary root above; they are not included in the npm package. Temporary fixtures can be removed by the OS, but the copied logs/harnesses survive separately.
 - `results.jsonl` retains all 446 raw execution entries. The matrix consolidates repeated IDs and adds explicit coverage/documentation assertions. Initial IPv4 readiness failures were harness errors: Vite/Nuxt listened on localhost. Reruns using localhost established the actual product results. Initial Next HMR errors on the IPv4 URL did not recur on localhost and are not reported as a product bug.

@@ -1,7 +1,7 @@
 # CLI QA matrix — 2026-09-23
 
 > Historical pre-fix results. Current local fix status is in
-> [QA-FIX-VERIFICATION.md](/Users/ashraf/FSD-Platform/create-fsd-architecture/QA-FIX-VERIFICATION.md).
+> [QA-FIX-VERIFICATION.md](./QA-FIX-VERIFICATION.md).
 
 Tested CLI 2.5.0, commit `8f24a2812f3cd79099b1290dbb2cca1bb2a20386`. Audit only; no product fixes.
 
@@ -15,7 +15,7 @@ Tested CLI 2.5.0, commit `8f24a2812f3cd79099b1290dbb2cca1bb2a20386`. Audit only;
 - Durable raw evidence and all harness files: [evidence directory](/Users/ashraf/FSD-Platform/qa-reports/2026-09-23-cli-2.5.0). Harnesses contain exact fixture setup, environment, assertions, PTY key presses, and commands; they currently embed the original temporary root and are audit artifacts, not general reusable test runners.
 - Rows use the last execution per ID. All 446 raw entries are retained in results.jsonl, including initial localhost/IPv4 harness failures superseded by localhost reruns. These initial harness connection failures are not product findings. Existing-target collisions on repeated interactive runs were rerun against fresh disposable targets.
 - PASS is local to each row: a successful generation command is not proof of a passing build; downstream build/lint/runtime rows are separate. Missing-dependency/deep-import inspection rows characterize the command's limited scope, not validation of those projects.
-- Expected nonzero exits are PASS when rejection is intended. BLOCKED means the stated area was not established, not a pass. Finding details and safe repros are in [CLI-QA-REPORT.md](/Users/ashraf/FSD-Platform/create-fsd-architecture/CLI-QA-REPORT.md).
+- Expected nonzero exits are PASS when rejection is intended. BLOCKED means the stated area was not established, not a pass. Finding details and safe repros are in [CLI-QA-REPORT.md](./CLI-QA-REPORT.md).
 - Duplicate raw ID for the clean packed Next commit pair was consolidated; behaviorally distinct invalid/valid commit cases for the normal Next project remain separately logged.
 
 | ID | Area | Framework | Package manager | Exact command / steps | Expected | Actual | Status | Evidence | Issue ID |

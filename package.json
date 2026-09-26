@@ -1,7 +1,7 @@
 {
   "name": "create-fsd-architecture",
   "author": "Ashraf Mohamed",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Scaffold React, Next.js, Vue, Nuxt, and SvelteKit projects with Feature-Sliced Design architecture.",
   "main": "bin/index.mjs",
   "homepage": "https://fsd-docs.vercel.app",
@@ -16,7 +16,7 @@
     "create-fsd-architecture": "bin/index.mjs"
   },
   "scripts": {
-    "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
+    "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
     "check": "npm test && npm pack --dry-run",
     "start": "node ./bin/index.mjs"
   },
@@ -30,7 +30,10 @@
     "bin",
     "schema",
     "README.md",
-    "CHANGELOG.md",
+    "SECURITY.md",
+    "docs/UPGRADE-ARCHITECTURE.md",
+    "docs/PUBLIC-DOCUMENTATION-OUTLINE.md",
+    "docs/CHANGELOG.md",
     "LICENSE"
   ],
   "keywords": [

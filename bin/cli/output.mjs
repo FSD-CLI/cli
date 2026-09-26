@@ -28,13 +28,15 @@ Usage:
   create-fsd-architecture [project-name] [options]
   create-fsd-architecture --generate <type> <name> [--force] [--dry-run]
   create-fsd-architecture <check|doctor|config>
+  create-fsd-architecture upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
 Commands:
   -g, --generate <type> <name>  Generate an FSD slice in the current project
       --list-templates          Show stable and planned framework templates
       check                     Validate the current FSD project
-      doctor                    Diagnose the local project and toolchain
-      config                    Print the resolved FSD configuration
+       doctor                    Diagnose the local project and toolchain
+       config                    Print the resolved FSD configuration
+       upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:
   -f, --framework <id>          Select a framework without the template prompt
@@ -47,7 +49,14 @@ Create options:
       --no-install              Create the project without installing packages
       --no-start                Do not start the development server
       --dry-run                 Preview every planned change without writing files
-      --force                   Replace an existing target with automatic rollback
+       --force                   Replace an existing target with automatic rollback
+
+Upgrade options:
+       --dry-run                 Show the upgrade plan and make no changes
+       --check                   Read-only CI status (0 current, 2 available, 3 blocked, 4 invalid)
+   -y, --yes                     Apply only when the complete plan has no conflicts
+       --no-install              Do not install dependencies after a dependency migration
+       --allow-dirty             Permit apply in a dirty Git worktree after a warning
 
 Global options:
   -h, --help                    Show this help

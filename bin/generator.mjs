@@ -20,6 +20,10 @@ import {
 import { createVueFilePlan } from "./generators/vue.mjs";
 import { createSvelteFilePlan } from "./generators/svelte.mjs";
 import { normalizeProjectConfig } from "./project-config.mjs";
+import {
+  assertManagedFileUnchanged,
+  recordManagedFileContent,
+} from "./upgrade/manifest.mjs";
 
 const ALLOWED_TYPES = ["feature", "entity", "widget", "page"];
 
@@ -252,6 +256,8 @@ function registerReduxReducer(cwd, name) {
   const importLine = `import { ${reducerName} } from "@/features/${name}";`;
   const reducerLine = `    ${toCamelCase(name)}: ${reducerName},`;
   let content = fs.readFileSync(storePath, "utf8");
+  const relativeStorePath = path.relative(cwd, storePath);
+  const isManaged = assertManagedFileUnchanged(cwd, relativeStorePath, content);
 
   content = updateMarkerBlock(
     content,
@@ -266,6 +272,7 @@ function registerReduxReducer(cwd, name) {
     reducerLine
   );
   fs.writeFileSync(storePath, content);
+  if (isManaged) recordManagedFileContent(cwd, relativeStorePath, content);
 }
 
 function getPageRouteFiles(cwd, name, config, force) {

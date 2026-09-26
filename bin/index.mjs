@@ -7,6 +7,7 @@ import { showHelp, showTemplateList } from "./cli/output.mjs";
 import { runCreateProject } from "./commands/create-project.mjs";
 import { runGenerator } from "./generator.mjs";
 import { runProjectInspection } from "./commands/inspect-project.mjs";
+import { runUpgradeProject } from "./commands/upgrade-project.mjs";
 import { listTemplates } from "./core/template-registry.mjs";
 
 function readPackageVersion() {
@@ -43,14 +44,21 @@ export async function runCli(args = process.argv.slice(2)) {
     await runProjectInspection(command.command);
     return;
   }
+  if (command.command === "upgrade") {
+    return runUpgradeProject(command, { cliVersion: readPackageVersion() });
+  }
 
   await runCreateProject(command);
 }
 
-runCli().catch((error) => {
-  console.error(chalk.red(`  Error: ${error.message}`));
-  if (error instanceof CliUsageError) {
-    console.error(chalk.dim("  Run with --help to see the available commands."));
-  }
-  process.exitCode = 1;
-});
+runCli()
+  .then((result) => {
+    if (result?.exitCode !== undefined) process.exitCode = result.exitCode;
+  })
+  .catch((error) => {
+    console.error(chalk.red(`  Error: ${error.message}`));
+    if (error instanceof CliUsageError) {
+      console.error(chalk.dim("  Run with --help to see the available commands."));
+    }
+    process.exitCode = error.exitCode ?? 1;
+  });
