@@ -9,6 +9,7 @@ import {
   ensureCommitlintConfig,
   ensureCommitlintDependencies,
   ensureHuskyHooks,
+  runCommand,
 } from "../bin/core/project-lifecycle.mjs";
 
 test("project replacement can be committed or rolled back atomically", () => {
@@ -64,4 +65,13 @@ test("project lifecycle creates deterministic commit tooling", () => {
 
 test("hook generation rejects unknown package managers", () => {
   assert.throws(() => createHuskyHooks("unknown"), /Unsupported package manager/);
+});
+
+test("project lifecycle runs executable paths from working directories with spaces", () => {
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "fsd cli lifecycle "));
+  try {
+    assert.match(runCommand(process.execPath, ["--version"], fixture), /^v\d+/);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
 });
