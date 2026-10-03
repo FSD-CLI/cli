@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import os from "node:os";
+import path from "node:path";
 import test from "node:test";
 import {
   assertGeneratorSupported,
@@ -97,10 +99,11 @@ test("framework adapters isolate runtime-specific source generation", () => {
 });
 
 test("project paths cannot escape the working directory", () => {
-  assert.equal(resolveProjectPath("/workspace", "apps/store"), "/workspace/apps/store");
-  assert.throws(() => resolveProjectPath("/workspace", "../outside"), /inside the current directory/);
-  assert.throws(() => resolveProjectPath("/workspace", "/tmp/outside"), /inside the current directory/);
-  assert.throws(() => resolveProjectPath("/workspace", "bad project"), /Invalid project name/);
-  assert.throws(() => resolveProjectPath("/workspace", "node_modules"), /Invalid project name/);
-  assert.throws(() => resolveProjectPath("/workspace", ".hidden"), /Invalid project name/);
+  const cwd = path.join(os.tmpdir(), "fsd-cli-project-root");
+  assert.equal(resolveProjectPath(cwd, "apps/store"), path.join(cwd, "apps", "store"));
+  assert.throws(() => resolveProjectPath(cwd, "../outside"), /inside the current directory/);
+  assert.throws(() => resolveProjectPath(cwd, "bad project"), /Invalid project name/);
+  assert.throws(() => resolveProjectPath(cwd, "node_modules"), /Invalid project name/);
+  assert.throws(() => resolveProjectPath(cwd, ".hidden"), /Invalid project name/);
+  assert.throws(() => resolveProjectPath(cwd, "nested\\store"), /forward slashes/);
 });

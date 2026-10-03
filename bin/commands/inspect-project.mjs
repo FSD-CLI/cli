@@ -11,7 +11,7 @@ function result(label, ok, detail) {
   return { label, ok, detail };
 }
 
-function commandExists(command) {
+export function commandExists(command) {
   const probe = spawnSync(command, ["--version"], { encoding: "utf8", shell: false });
   return !probe.error && probe.status === 0;
 }

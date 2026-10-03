@@ -27,6 +27,50 @@ jobs:
       - run: npm test
       - run: npm pack --dry-run
 
+  cross-os-cli:
+    name: Cross-OS CLI / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm pack --dry-run
+
+  cross-os-smoke:
+    name: Cross-OS smoke / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    env:
+      CI_ARTIFACTS_DIR: ${{ github.workspace }}/ci-artifacts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Create, generate, inspect, and validate lifecycle contracts
+        run: node scripts/ci/os-smoke.mjs
+      - name: Upload smoke logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-os-smoke-${{ matrix.os }}
+          path: ci-artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
+
   framework-smoke:
     name: ${{ matrix.framework }} build
     runs-on: ubuntu-latest

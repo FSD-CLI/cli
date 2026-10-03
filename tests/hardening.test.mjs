@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { inspectProject } from "../bin/commands/inspect-project.mjs";
+import { commandExists, inspectProject } from "../bin/commands/inspect-project.mjs";
 import { getCapabilities, getDefaultStack } from "../bin/core/capability-matrix.mjs";
 import { getInstallCommand, getRunScriptCommand } from "../bin/core/package-managers.mjs";
 import { createGeneratorPlan, generateSlice, loadProjectConfig } from "../bin/generator.mjs";
@@ -161,6 +161,22 @@ test("check validates the FSD structure and resolved configuration", () => {
     const report = inspectProject(cwd);
     assert.equal(report.config.framework, "vue-vite");
     assert.equal(report.checks.every((item) => item.ok), true);
+  } finally {
+    fs.rmSync(cwd, { recursive: true, force: true });
+  }
+});
+
+test("doctor resolves the selected package manager without a shell", () => {
+  const { cwd } = fixture("react-vite");
+  try {
+    const report = inspectProject(cwd, { includeToolchain: true });
+    assert.equal(report.checks.every((item) => item.ok), true);
+    assert.equal(
+      report.checks.find((item) => item.label === "npm")?.detail,
+      "selected in fsd.config.json"
+    );
+    assert.equal(commandExists(process.execPath), true);
+    assert.equal(commandExists(`${process.execPath} --version`), false);
   } finally {
     fs.rmSync(cwd, { recursive: true, force: true });
   }
