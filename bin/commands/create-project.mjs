@@ -1,9 +1,9 @@
 import fs from "fs";
-import { spawn } from "child_process";
 import chalk from "chalk";
 import ora from "ora";
 import prompts from "prompts";
 import { getCapabilityChoices } from "../core/capability-matrix.mjs";
+import { spawnSafe } from "../core/command-runner.mjs";
 import { getRunScriptCommand } from "../core/package-managers.mjs";
 import { resolveProjectPath } from "../core/project-path.mjs";
 import {
@@ -268,7 +268,7 @@ export async function runCreateProject(options) {
     transaction.commit();
     console.log(`\n${chalk.cyan("  Starting development server...")}\n`);
     const dev = getRunScriptCommand(projectConfig.packageManager, "dev");
-    const child = spawn(dev.command, dev.args, {
+    const child = spawnSafe(dev.command, dev.args, {
       cwd: targetDir,
       stdio: "inherit",
       shell: false,

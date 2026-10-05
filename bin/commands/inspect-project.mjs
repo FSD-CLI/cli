@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
 import chalk from "chalk";
 import { getFrameworkAdapter } from "../core/frameworks/index.mjs";
+import { spawnSyncSafe } from "../core/command-runner.mjs";
 import { loadProjectConfig } from "../generator.mjs";
 
 const REQUIRED_LAYERS = ["app", "pages", "widgets", "features", "entities", "shared"];
@@ -12,7 +12,7 @@ function result(label, ok, detail) {
 }
 
 export function commandExists(command) {
-  const probe = spawnSync(command, ["--version"], { encoding: "utf8", shell: false });
+  const probe = spawnSyncSafe(command, ["--version"], { encoding: "utf8" });
   return !probe.error && probe.status === 0;
 }
 

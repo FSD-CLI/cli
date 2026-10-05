@@ -9,6 +9,14 @@ import { getInstallCommand, getRunScriptCommand } from "../bin/core/package-mana
 import { createGeneratorPlan, generateSlice, loadProjectConfig } from "../bin/generator.mjs";
 import { configureProject, normalizeProjectConfig } from "../bin/project-config.mjs";
 
+function toPosixPath(value) {
+  return value.replace(/\\/g, "/");
+}
+
+function toPosixFiles(files) {
+  return files.map(toPosixPath);
+}
+
 function fixture(framework) {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), `fsd-cli-${framework}-`));
   const sourceDirectory = framework === "nuxt" ? "app" : "src";
@@ -72,8 +80,8 @@ test("dry-run file plans are exact and do not write files", () => {
   const { cwd, config } = fixture("react-vite");
   try {
     const plan = createGeneratorPlan({ cwd, type: "page", name: "account", config });
-    assert.ok(plan.generatedFiles.includes("src/pages/account/ui/account-page.tsx"));
-    assert.ok(plan.changedFiles.includes("src/app/routing/index.tsx"));
+    assert.ok(toPosixFiles(plan.generatedFiles).includes("src/pages/account/ui/account-page.tsx"));
+    assert.ok(toPosixFiles(plan.changedFiles).includes("src/app/routing/index.tsx"));
     assert.equal(fs.existsSync(path.join(cwd, "src/pages/account")), false);
   } finally {
     fs.rmSync(cwd, { recursive: true, force: true });
@@ -84,7 +92,7 @@ test("page generators register framework-native routes", () => {
   for (const framework of ["react-vite", "vue-vite", "nextjs", "nuxt", "sveltekit"]) {
     const { cwd, config } = fixture(framework);
     try {
-      const files = generateSlice({ cwd, type: "page", name: "account", config });
+      const files = toPosixFiles(generateSlice({ cwd, type: "page", name: "account", config }));
       if (framework === "nextjs") {
         assert.ok(files.includes("src/app/account/page.route.tsx"));
         assert.match(

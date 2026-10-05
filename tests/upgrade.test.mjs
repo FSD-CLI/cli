@@ -432,7 +432,12 @@ test("transaction rollback restores files and retains an internal recovery backu
     assert.equal(transaction.rollback().ok, true);
     assert.equal(fs.readFileSync(path.join(root, "one.txt"), "utf8"), "one\n");
     assert.equal(fs.existsSync(path.join(root, "two.txt")), false);
-    assert.equal(fs.statSync(path.join(root, "one.txt")).mode & 0o777, 0o755);
+    // Windows reports 0o666 instead of 0o755 because it does not preserve
+    // POSIX executable bits. Content, cleanup, and backup checks above stay
+    // active on all platforms; only the mode assertion is POSIX-specific.
+    if (process.platform !== "win32") {
+      assert.equal(fs.statSync(path.join(root, "one.txt")).mode & 0o777, 0o755);
+    }
     assert.equal(fs.existsSync(transaction.backupLocation), true);
   } finally {
     removeFixture(root);

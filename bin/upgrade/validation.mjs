@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { spawnSync } from "node:child_process";
 import { getFrameworkAdapter } from "../core/frameworks/index.mjs";
+import { spawnSyncSafe } from "../core/command-runner.mjs";
 import { getInstallCommand, getRunScriptCommand } from "../core/package-managers.mjs";
 import { getManagedProjectArtifacts } from "../project-config.mjs";
 import { readProjectConfig, UpgradeStateError } from "./config.mjs";
@@ -65,7 +65,7 @@ export function validateUpgradedProject(projectRoot) {
   return { config, manifest };
 }
 
-export function assertPackageManagerAvailable(packageManager, runner = spawnSync) {
+export function assertPackageManagerAvailable(packageManager, runner = spawnSyncSafe) {
   const result = runner(packageManager, ["--version"], { encoding: "utf8", shell: false });
   if (result.error || result.status !== 0) {
     throw new UpgradeStateError(`Selected package manager is unavailable: ${packageManager}.`);
@@ -92,7 +92,7 @@ function runCommand(command, args, projectRoot, runner) {
   }
 }
 
-export function installAndValidateDependencies(projectRoot, config, runner = spawnSync) {
+export function installAndValidateDependencies(projectRoot, config, runner = spawnSyncSafe) {
   assertPackageManagerAvailable(config.packageManager, runner);
   const install = getInstallCommand(config.packageManager);
   runCommand(install.command, install.args, projectRoot, runner);
