@@ -9,6 +9,10 @@ import {
 } from "../bin/project-config.mjs";
 import { generateSlice, loadProjectConfig } from "../bin/generator.mjs";
 
+function toPosixFiles(files) {
+  return files.map((file) => file.replace(/\\/g, "/"));
+}
+
 function createFixture() {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-cli-test-"));
   fs.mkdirSync(path.join(fixture, "src"), { recursive: true });
@@ -124,13 +128,15 @@ test("feature generator reads the saved stack without additional choices", () =>
   try {
     const config = normalizeProjectConfig("nextjs");
     configureProject(fixture, config);
-    const files = generateSlice({
-      cwd: fixture,
-      type: "feature",
-      name: "profile",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const files = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "feature",
+        name: "profile",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
 
     assert.ok(files.includes("src/features/profile/api/profile.query.ts"));
     assert.ok(files.includes("src/features/profile/model/profile.store.ts"));
@@ -146,13 +152,15 @@ test("auth generator creates the complete flow and working mutation submissions"
   try {
     const config = normalizeProjectConfig("nextjs", { clientState: "redux" });
     configureProject(fixture, config);
-    const files = generateSlice({
-      cwd: fixture,
-      type: "feature",
-      name: "auth",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const files = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "feature",
+        name: "auth",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
 
     assert.ok(files.includes("src/features/auth/ui/login-form.tsx"));
     assert.ok(files.includes("src/features/auth/ui/register-form.tsx"));
@@ -194,13 +202,15 @@ test("forms can be generated without a server-state dependency", () => {
       clientState: "none",
     });
     configureProject(fixture, config);
-    const files = generateSlice({
-      cwd: fixture,
-      type: "feature",
-      name: "auth",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const files = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "feature",
+        name: "auth",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
 
     assert.ok(files.includes("src/features/auth/model/login.types.ts"));
     assert.ok(files.includes("src/features/auth/model/login.schema.ts"));
@@ -243,13 +253,15 @@ test("Vue projects receive framework-native dependencies, providers, and generat
       false
     );
 
-    const files = generateSlice({
-      cwd: fixture,
-      type: "feature",
-      name: "auth",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const files = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "feature",
+        name: "auth",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
     assert.ok(files.includes("src/features/auth/ui/LoginForm.vue"));
     assert.ok(files.includes("src/features/auth/ui/VerifyCodeForm.vue"));
     assert.ok(files.includes("src/features/auth/model/auth.store.ts"));
@@ -314,13 +326,15 @@ test("SvelteKit projects receive native dependencies, providers, stores, forms, 
     assert.match(apiClient, /PUBLIC_API_BASE/);
     assert.match(apiClient, /fetcher: Fetcher = fetch/);
 
-    const authFiles = generateSlice({
-      cwd: fixture,
-      type: "feature",
-      name: "auth",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const authFiles = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "feature",
+        name: "auth",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
     assert.ok(authFiles.includes("src/features/auth/ui/LoginForm.svelte"));
     assert.ok(authFiles.includes("src/features/auth/ui/VerifyCodeForm.svelte"));
     assert.ok(authFiles.includes("src/features/auth/model/auth.store.ts"));
@@ -340,13 +354,15 @@ test("SvelteKit projects receive native dependencies, providers, stores, forms, 
     assert.match(loginForm, /use:enhance/);
     assert.match(publicApi, /default as LoginForm/);
 
-    const pageFiles = generateSlice({
-      cwd: fixture,
-      type: "page",
-      name: "account",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const pageFiles = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "page",
+        name: "account",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
     assert.ok(pageFiles.includes("src/pages/account/ui/AccountPage.svelte"));
     assert.ok(pageFiles.includes("src/routes/account/+page.svelte"));
 
@@ -423,13 +439,15 @@ test("Nuxt projects receive modules, SSR providers, runtime API clients, and app
       true
     );
 
-    const files = generateSlice({
-      cwd: fixture,
-      type: "page",
-      name: "account",
-      config: loadProjectConfig(fixture),
-      force: false,
-    });
+    const files = toPosixFiles(
+      generateSlice({
+        cwd: fixture,
+        type: "page",
+        name: "account",
+        config: loadProjectConfig(fixture),
+        force: false,
+      })
+    );
     assert.ok(files.includes("app/pages/account/ui/AccountPage.vue"));
     assert.ok(files.includes("app/app/routes/account.vue"));
 

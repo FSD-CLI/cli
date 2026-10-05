@@ -1,5 +1,5 @@
-import { spawnSync } from "node:child_process";
 import prompts from "prompts";
+import { spawnSyncSafe } from "../core/command-runner.mjs";
 import { getLockfiles } from "../core/package-managers.mjs";
 import { readProjectConfig, UpgradeStateError } from "../upgrade/config.mjs";
 import { MANIFEST_PATH, readManifest } from "../upgrade/manifest.mjs";
@@ -20,7 +20,7 @@ export const UPGRADE_CHECK_EXIT_CODES = Object.freeze({
 });
 
 function getGitStatus(projectRoot) {
-  const run = (args) => spawnSync("git", args, { cwd: projectRoot, encoding: "utf8", shell: false });
+  const run = (args) => spawnSyncSafe("git", args, { cwd: projectRoot, encoding: "utf8", shell: false });
   const inside = run(["rev-parse", "--is-inside-work-tree"]);
   if (inside.error || inside.status !== 0 || inside.stdout.trim() !== "true") return null;
   const branch = run(["branch", "--show-current"]);
@@ -124,7 +124,7 @@ export function applyUpgradePlan(plan, { noInstall = false, failureInjection, co
   });
   const manifestOperation = plan.writes.find((operation) => operation.path === MANIFEST_PATH);
   const sourceOperations = plan.writes.filter((operation) => operation.path !== MANIFEST_PATH);
-  const runner = commandRunner ?? spawnSync;
+  const runner = commandRunner ?? spawnSyncSafe;
   let dependencyInstallStarted = false;
 
   try {

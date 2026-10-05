@@ -3,22 +3,28 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { spawnSync, execFileSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import test from "node:test";
 import { ensureHuskyHooks } from "../bin/core/project-lifecycle.mjs";
 import { createDefaultProjectConfig, getProjectQuestions } from "../bin/commands/create-project.mjs";
 import { viewContent } from "../bin/generators/shared.mjs";
 
 const cli = fileURLToPath(new URL("../bin/index.mjs", import.meta.url));
-const loader = fileURLToPath(new URL("./fixtures/local-template-loader.mjs", import.meta.url));
+const loaderPath = fileURLToPath(new URL("./fixtures/local-template-loader.mjs", import.meta.url));
+const loaderUrl = pathToFileURL(loaderPath).href;
 function fixture(t) {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-qa-regression-"));
   t.after(() => fs.rmSync(cwd, { recursive: true, force: true }));
   return cwd;
 }
-function executable(file, source) {
+function executable(file, posixSource, windowsSource) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, `#!/bin/sh\n${source}\n`, { mode: 0o755 });
+  fs.writeFileSync(file, `#!/bin/sh\n${posixSource}\n`, { mode: 0o755 });
+  // Windows cmd.exe resolves package-manager shims via PATHEXT (.cmd/.bat),
+  // so a POSIX-only shim would be ignored and the real installer would run.
+  // Always write a .cmd companion that reaches the same controlled outcome.
+  const batch = windowsSource ?? "@echo off\r\nexit /b 0";
+  fs.writeFileSync(`${file}.cmd`, `${batch}\r\n`);
 }
 
 test("--yes without a framework fails before prompting or replacing a directory", t => {
@@ -73,9 +79,13 @@ for (const force of [false, true]) {
       fs.mkdirSync(target);
       fs.writeFileSync(path.join(target, "original.txt"), "original bytes\n");
     }
-    executable(path.join(cwd, "tools", "npm"), 'echo "QA install failure: approval required" >&2\nexit 42');
+    executable(
+      path.join(cwd, "tools", "npm"),
+      'echo "QA install failure: approval required" >&2\nexit 42',
+      '@echo off\necho QA install failure: approval required 1>&2\nexit /b 42'
+    );
     const result = spawnSync(process.execPath, [
-      "--experimental-loader", loader, cli, "app", "--framework", "react-vite",
+      "--experimental-loader", loaderUrl, cli, "app", "--framework", "react-vite",
       "--yes", "--no-start", ...(force ? ["--force"] : []),
     ], { cwd, encoding: "utf8", timeout: 15000, env: {
       ...process.env, PATH: `${path.join(cwd, "tools")}${path.delimiter}${process.env.PATH}`,
@@ -94,8 +104,12 @@ for (const force of [false, true]) {
 
 test("intentional no-install remains successful and does not execute installer", t => {
   const cwd = fixture(t);
-  executable(path.join(cwd, "tools", "npm"), 'touch installer-was-called\nexit 42');
-  const result = spawnSync(process.execPath, ["--experimental-loader", loader, cli,
+  executable(
+    path.join(cwd, "tools", "npm"),
+    "touch installer-was-called\nexit 42",
+    "@echo off\necho called > installer-was-called\nexit /b 42"
+  );
+  const result = spawnSync(process.execPath, ["--experimental-loader", loaderUrl, cli,
     "app", "--framework", "react-vite", "--yes", "--no-install", "--no-start"], {
     cwd, encoding: "utf8", timeout: 15000,
     env: { ...process.env, PATH: `${path.join(cwd, "tools")}${path.delimiter}${process.env.PATH}` },
@@ -118,14 +132,30 @@ for (const pm of ["npm", "pnpm", "yarn", "bun"]) {
     ensureHuskyHooks(cwd, pm);
     const tools = path.join(cwd, "tools");
     const trace = path.join(cwd, "trace");
-    executable(path.join(tools, pm), `echo "$*" >> "$QA_TRACE"
+    executable(
+      path.join(tools, pm),
+      `echo "$*" >> "$QA_TRACE"
 case " $* " in
   *" lint "*) exit "${'$'}{QA_LINT_EXIT:-0}" ;;
   *" build "*) exit "${'$'}{QA_BUILD_EXIT:-0}" ;;
 esac
-exit 0`);
-    executable(path.join(tools, "bunx"), 'exit 0');
-    executable(path.join(cwd, "node_modules", ".bin", "commitlint"), 'exit 0');
+exit 0`,
+      `@echo off
+echo %*>>"%QA_TRACE%"
+echo  %*  | findstr /C:" lint " >nul
+if %errorlevel%==0 (
+  if "%QA_LINT_EXIT%"=="" exit /b 0
+  exit /b %QA_LINT_EXIT%
+)
+echo  %*  | findstr /C:" build " >nul
+if %errorlevel%==0 (
+  if "%QA_BUILD_EXIT%"=="" exit /b 0
+  exit /b %QA_BUILD_EXIT%
+)
+exit /b 0`
+    );
+    executable(path.join(tools, "bunx"), "exit 0", "@echo off\nexit /b 0");
+    executable(path.join(cwd, "node_modules", ".bin", "commitlint"), "exit 0", "@echo off\nexit /b 0");
     fs.writeFileSync(path.join(cwd, "sample.txt"), "clean\n");
     git("add", "sample.txt");
     const commit = extra => spawnSync("git", ["commit", "-m", "test: validate hook"], {

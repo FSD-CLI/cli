@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { execFileSync } from "child_process";
 import degit from "degit";
 import { configureProject } from "../project-config.mjs";
+import { execFileSafe } from "./command-runner.mjs";
 import { getInstallCommand } from "./package-managers.mjs";
 
 const REQUIRED_HUSKY_HOOKS = ["pre-commit", "commit-msg", "pre-push"];
@@ -17,7 +17,7 @@ const COMMITLINT_CONFIG_FILES = [
 ];
 
 export function runCommand(command, args, cwd, options = {}) {
-  return execFileSync(command, args, {
+  return execFileSafe(command, args, {
     cwd,
     encoding: "utf8",
     stdio: options.stdio ?? "pipe",
