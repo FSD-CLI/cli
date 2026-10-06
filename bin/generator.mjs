@@ -20,6 +20,7 @@ import {
 import { createVueFilePlan } from "./generators/vue.mjs";
 import { createSvelteFilePlan } from "./generators/svelte.mjs";
 import { normalizeProjectConfig } from "./project-config.mjs";
+import { generateStructure, generateBatch } from "./generators/structure.mjs";
 import {
   assertManagedFileUnchanged,
   recordManagedFileContent,
@@ -56,6 +57,14 @@ export function parseGenerateArgs(args) {
 }
 
 export async function runGenerator(options) {
+  if (options.segments) {
+    const paths = generateStructure({ ...options, cwd: process.cwd() });
+    console.log(paths.length ? paths.join("\n") : "Structure already exists; no changes.");
+    return;
+  }
+  if (options.names) {
+    return generateBatch(options, { loadProjectConfig, createGeneratorPlan, generateSlice, printFilePlan, printSuccess });
+  }
   validateGenerateOptions(options);
 
   const normalizedName = toKebabCase(options.name);

@@ -49,31 +49,45 @@ function parseUpgradeArgs(args) {
   }
 
   if (options.check && (options.yes || options.noInstall)) {
-    throw new CliUsageError("--check cannot be combined with --yes or --no-install.");
+    throw new CliUsageError(
+      "--check cannot be combined with --yes or --no-install.",
+    );
   }
   return options;
 }
 
 export function parseCliArgs(args) {
-  if (args.includes("--help") || args.includes("-h")) return { command: "help" };
-  if (args.includes("--version") || args.includes("-v")) return { command: "version" };
+  if (args.includes("--help") || args.includes("-h"))
+    return { command: "help" };
+  if (args.includes("--version") || args.includes("-v"))
+    return { command: "version" };
   if (args.includes("--list-templates")) return { command: "list-templates" };
 
   if (args[0] === "upgrade") return parseUpgradeArgs(args);
 
   if (["check", "doctor", "config"].includes(args[0])) {
+    if (
+      ["check", "doctor"].includes(args[0]) &&
+      args.length === 2 &&
+      args[1] === "--architecture"
+    )
+      return { command: args[0], architecture: true };
     if (args.length > 1) {
       throw new CliUsageError(`Unexpected argument "${args[1]}".`);
     }
     return { command: args[0] };
   }
 
-  const generateIndex = args.findIndex((arg) => arg === "--generate" || arg === "-g");
+  const generateIndex = args.findIndex(
+    (arg) => arg === "--generate" || arg === "-g",
+  );
   if (generateIndex !== -1) {
     const values = [];
     let force = false;
     let dryRun = false;
     let authProvider;
+    let root;
+    let segments;
     const tail = args.slice(generateIndex + 1);
     for (let index = 0; index < tail.length; index += 1) {
       const argument = tail[index];
@@ -81,18 +95,44 @@ export function parseCliArgs(args) {
         force = true;
       } else if (argument === "--dry-run") {
         dryRun = true;
-      } else if (argument === "--auth-provider" || argument.startsWith("--auth-provider=")) {
-        authProvider = argument.includes("=") ? argument.slice("--auth-provider=".length) : tail[++index];
-        if (authProvider !== "supabase") throw new CliUsageError("--auth-provider supports only supabase.");
+      } else if (
+        argument === "--auth-provider" ||
+        argument.startsWith("--auth-provider=")
+      ) {
+        authProvider = argument.includes("=")
+          ? argument.slice("--auth-provider=".length)
+          : tail[++index];
+        if (authProvider !== "supabase")
+          throw new CliUsageError("--auth-provider supports only supabase.");
+      } else if (
+        ["--root", "-r", "--segments", "-s"].includes(argument) ||
+        argument.startsWith("--root=") ||
+        argument.startsWith("--segments=")
+      ) {
+        const flag = argument.split("=")[0];
+        const value = argument.includes("=")
+          ? argument.slice(argument.indexOf("=") + 1)
+          : tail[++index];
+        if (!value || value.startsWith("-"))
+          throw new CliUsageError(`${flag} requires a value.`);
+        if (["--root", "-r"].includes(flag)) root = value;
+        else segments = value.split(",");
       } else if (argument.startsWith("-")) {
         throw new CliUsageError(`Unknown generate option "${argument}".`);
       } else {
         values.push(argument);
       }
     }
-    if (values.length > 2) {
-      throw new CliUsageError(`Unexpected argument "${values[2]}".`);
-    }
+    if (args.slice(0, generateIndex).length)
+      throw new CliUsageError("Place generate options after --generate.");
+    if (root && !segments)
+      throw new CliUsageError(
+        "--root requires --segments (structure-only generation).",
+      );
+    if (segments && (force || authProvider))
+      throw new CliUsageError(
+        "--segments cannot be combined with --force or --auth-provider.",
+      );
     return {
       command: "generate",
       type: values[0],
@@ -100,6 +140,9 @@ export function parseCliArgs(args) {
       force,
       dryRun,
       ...(authProvider ? { authProvider } : {}),
+      ...(values.length > 2 ? { names: values.slice(1) } : {}),
+      ...(root ? { root } : {}),
+      ...(segments ? { segments } : {}),
     };
   }
 
@@ -152,7 +195,9 @@ export function parseCliArgs(args) {
     throw new CliUsageError("A project name is required when using --yes.");
   }
   if (options.yes && !options.framework) {
-    throw new CliUsageError("--framework is required when using --yes (for example, --framework react-vite).");
+    throw new CliUsageError(
+      "--framework is required when using --yes (for example, --framework react-vite).",
+    );
   }
 
   return options;

@@ -5,7 +5,14 @@ import { getFrameworkAdapter } from "../core/frameworks/index.mjs";
 import { spawnSyncSafe } from "../core/command-runner.mjs";
 import { loadProjectConfig } from "../generator.mjs";
 
-const REQUIRED_LAYERS = ["app", "pages", "widgets", "features", "entities", "shared"];
+const REQUIRED_LAYERS = [
+  "app",
+  "pages",
+  "widgets",
+  "features",
+  "entities",
+  "shared",
+];
 
 function result(label, ok, detail) {
   return { label, ok, detail };
@@ -16,7 +23,10 @@ export function commandExists(command) {
   return !probe.error && probe.status === 0;
 }
 
-export function inspectProject(cwd = process.cwd(), { includeToolchain = false } = {}) {
+export function inspectProject(
+  cwd = process.cwd(),
+  { includeToolchain = false } = {},
+) {
   const checks = [];
   let config;
 
@@ -33,31 +43,41 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
     result(
       "package.json",
       fs.existsSync(packagePath),
-      fs.existsSync(packagePath) ? "found" : "missing"
-    )
+      fs.existsSync(packagePath) ? "found" : "missing",
+    ),
   );
 
   const sourceRoot = path.join(
     cwd,
-    getFrameworkAdapter(config.framework).sourceDirectory
+    getFrameworkAdapter(config.framework).sourceDirectory,
   );
   for (const layer of REQUIRED_LAYERS) {
     const layerPath = path.join(sourceRoot, layer);
     checks.push(
-      result(`FSD layer: ${layer}`, fs.existsSync(layerPath), path.relative(cwd, layerPath))
+      result(
+        `FSD layer: ${layer}`,
+        fs.existsSync(layerPath),
+        path.relative(cwd, layerPath),
+      ),
     );
   }
 
   if (includeToolchain) {
     const major = Number(process.versions.node.split(".")[0]);
     checks.push(result("Node.js", major >= 20, process.version));
-    checks.push(result("Git", commandExists("git"), "required for generated repositories"));
+    checks.push(
+      result(
+        "Git",
+        commandExists("git"),
+        "required for generated repositories",
+      ),
+    );
     checks.push(
       result(
         config.packageManager,
         commandExists(config.packageManager),
-        `selected in fsd.config.json`
-      )
+        `selected in fsd.config.json`,
+      ),
     );
   }
 
@@ -67,23 +87,61 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
 function printChecks(checks) {
   for (const check of checks) {
     const status = check.ok ? chalk.green("PASS") : chalk.red("FAIL");
-    console.log(`  ${status}  ${check.label}${check.detail ? ` — ${check.detail}` : ""}`);
+    console.log(
+      `  ${status}  ${check.label}${check.detail ? ` — ${check.detail}` : ""}`,
+    );
   }
 }
 
-export async function runProjectInspection(command, cwd = process.cwd()) {
+export async function runProjectInspection(
+  command,
+  cwd = process.cwd(),
+  { architecture = false } = {},
+) {
   if (command === "config") {
     console.log(JSON.stringify(loadProjectConfig(cwd), null, 2));
     return;
   }
 
-  const report = inspectProject(cwd, { includeToolchain: command === "doctor" });
+  const report = inspectProject(cwd, {
+    includeToolchain: command === "doctor",
+  });
   console.log(chalk.bold(`\n  FSD ${command}\n`));
   printChecks(report.checks);
   console.log();
 
   const failures = report.checks.filter((check) => !check.ok);
   if (failures.length) {
-    throw new Error(`${failures.length} ${command} check${failures.length === 1 ? "" : "s"} failed.`);
+    throw new Error(
+      `${failures.length} ${command} check${failures.length === 1 ? "" : "s"} failed.`,
+    );
   }
+  if (!architecture) {
+    console.log(
+      "  Scope: configuration, layers and optional toolchain only. Use check --architecture for installed Steiger checks.",
+    );
+    return;
+  }
+  const steiger = path.join(
+    cwd,
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "steiger.cmd" : "steiger",
+  );
+  if (!fs.existsSync(steiger))
+    throw new Error(
+      "Install steiger and @feature-sliced/steiger-plugin in this project before using --architecture. No packages are downloaded automatically.",
+    );
+  const sourceRoot = path.join(
+    cwd,
+    getFrameworkAdapter(report.config.framework).sourceDirectory,
+  );
+  const validation = spawnSyncSafe(steiger, [sourceRoot], {
+    cwd,
+    stdio: "inherit",
+  });
+  if (validation.error || validation.status !== 0)
+    throw new Error(
+      `Steiger architecture validation failed (${validation.status ?? validation.error?.message}).`,
+    );
 }

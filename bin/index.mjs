@@ -37,11 +37,17 @@ export async function runCli(args = process.argv.slice(2)) {
       name: command.name,
       force: command.force,
       dryRun: command.dryRun,
+      authProvider: command.authProvider,
+      names: command.names,
+      root: command.root,
+      segments: command.segments,
     });
     return;
   }
   if (["check", "doctor", "config"].includes(command.command)) {
-    await runProjectInspection(command.command);
+    await runProjectInspection(command.command, process.cwd(), {
+      architecture: command.architecture,
+    });
     return;
   }
   if (command.command === "upgrade") {
@@ -58,7 +64,9 @@ runCli()
   .catch((error) => {
     console.error(chalk.red(`  Error: ${error.message}`));
     if (error instanceof CliUsageError) {
-      console.error(chalk.dim("  Run with --help to see the available commands."));
+      console.error(
+        chalk.dim("  Run with --help to see the available commands."),
+      );
     }
     process.exitCode = error.exitCode ?? 1;
   });

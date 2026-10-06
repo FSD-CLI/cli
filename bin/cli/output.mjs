@@ -26,14 +26,16 @@ export function showHelp(version) {
 
 Usage:
   create-fsd-architecture [project-name] [options]
-  create-fsd-architecture --generate <type> <name> [--force] [--dry-run]
-  create-fsd-architecture <check|doctor|config>
+  create-fsd-architecture --generate <type> <name...> [--force] [--dry-run]
+  create-fsd-architecture -g <type> [names...] --segments ui,api [--root src]
+  create-fsd-architecture <check|doctor> [--architecture]
+  create-fsd-architecture config
   create-fsd-architecture upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
 Commands:
   -g, --generate <type> <name>  Generate an FSD slice in the current project
       --list-templates          Show stable and planned framework templates
-      check                     Validate the current FSD project
+      check                     Inspect config/layers (not import architecture)
        doctor                    Diagnose the local project and toolchain
        config                    Print the resolved FSD configuration
        upgrade                   Safely migrate CLI-owned project tooling
@@ -49,6 +51,8 @@ Create options:
       --no-install              Create the project without installing packages
       --no-start                Do not start the development server
       --dry-run                 Preview every planned change without writing files
+      --segments <names>        Structure-only comma-separated segments; preserve existing files
+  -r, --root <path>             Source root for structure-only generation
        --auth-provider supabase  Opt-in browser Supabase adapter for feature auth
        --force                   Replace an existing target with automatic rollback
 
@@ -68,6 +72,14 @@ Examples:
   npx create-fsd-architecture my-app --framework react-vite --yes --no-install
   npx create-fsd-architecture --generate feature auth
   npx create-fsd-architecture --generate feature auth --auth-provider supabase
+  npx create-fsd-architecture -g entity product customer --dry-run
+  npx create-fsd-architecture -g feature cart --segments ui,api --root src/lib
+  npx create-fsd-architecture -g shared --segments ui,lib --root src
+
+Architectural validation:
+  check/doctor do not analyze imports or FSD public API violations.
+  check --architecture runs the project's installed Steiger; no automatic download.
+  Install steiger and @feature-sliced/steiger-plugin and configure project rules.
 
 Support FSD CLI (optional):
   Buy Me a Coffee: https://buymeacoffee.com/ashrafqopiah
@@ -78,7 +90,11 @@ Support FSD CLI (optional):
 export function showTemplateList(templates) {
   console.log("Framework templates:\n");
   for (const template of templates) {
-    const status = template.available ? chalk.green("stable") : chalk.yellow("planned");
-    console.log(`  ${template.value.padEnd(14)} ${status.padEnd(17)} ${template.title}`);
+    const status = template.available
+      ? chalk.green("stable")
+      : chalk.yellow("planned");
+    console.log(
+      `  ${template.value.padEnd(14)} ${status.padEnd(17)} ${template.title}`,
+    );
   }
 }

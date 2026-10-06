@@ -392,3 +392,11 @@ to enable it. Auto-PR is manual (`workflow_dispatch`) and needs repository
 permission to create PRs. Labeler needs `.github/labeler.yml`, the labels
 `documentation`, `source`, `ci`, and Actions permission to apply labels.
 Do not enable automation before configuring its permissions and labels.
+
+## Candidate generator improvements
+
+Not in npm 2.6.1: native batch slices, preserving structure-only segments with
+custom roots, and project-local `check --architecture` via Steiger.
+See [generator workflows](docs/GENERATOR-WORKFLOWS.md) for exact syntax, rollback
+and boundaries. `--root` requires `--segments`; it does not rewrite framework
+route/alias configuration.
