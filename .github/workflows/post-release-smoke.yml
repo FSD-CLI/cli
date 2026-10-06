@@ -31,7 +31,7 @@ jobs:
       CLI_SMOKE_FRAMEWORK: ${{ matrix.framework }}
       CI_ARTIFACTS_DIR: ${{ github.workspace }}/ci-artifacts
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '22.23.0'
