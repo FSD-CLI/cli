@@ -27,7 +27,7 @@
     "smoke:templates": "node scripts/template-source-smoke.mjs"
   },
   "dependencies": {
-    "chalk": "^5.3.0",
+    "chalk": "^6.0.1",
     "ora": "^9.4.0",
     "prompts": "^2.4.2"
   },
