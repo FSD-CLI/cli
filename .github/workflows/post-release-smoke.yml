@@ -1,0 +1,46 @@
+name: Published package smoke
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/post-release-smoke.yml'
+      - 'scripts/post-release-smoke.mjs'
+      - 'scripts/ci/run-and-capture.mjs'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact version already published on npm
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  published-artifact:
+    name: npm artifact / ${{ matrix.framework }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        framework: [react-vite, nextjs]
+    env:
+      # PR runs validate the public baseline; manual runs verify a selected release.
+      CLI_SMOKE_VERSION: ${{ inputs.version || '2.6.1' }}
+      CLI_SMOKE_FRAMEWORK: ${{ matrix.framework }}
+      CI_ARTIFACTS_DIR: ${{ github.workspace }}/ci-artifacts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.23.0'
+      - run: npm run smoke:published
+      - name: Retain command logs and registry metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-${{ matrix.framework }}
+          path: ci-artifacts/
+          if-no-files-found: error
+          retention-days: 30

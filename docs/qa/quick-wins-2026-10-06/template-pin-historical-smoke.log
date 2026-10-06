@@ -1,0 +1,5 @@
+{"framework":"react-vite","sha":"ec8548bf2143c36f44c2475baddb8fa6bb90d016","lockHashes":["b610d0057005bd8dff752964a27bca85edea5da69b38bf0e00b92aac900c577f","b610d0057005bd8dff752964a27bca85edea5da69b38bf0e00b92aac900c577f"],"status":"PASS"}
+{"framework":"nextjs","sha":"2d44f0bf9dcd030f2ddc48e0a869670ced485efc","lockHashes":["8880fc2d7c0fd1de110b16e1736044f9f015215889b5a3c6e8b96370810a8d43"],"status":"PASS"}
+{"framework":"vue-vite","sha":"b272c0b8995b63d4618a27164272888f07842629","lockHashes":["4905d3eb2c0cbf0aead6a7ffa357c425ffed1e7ae81f8941d6868c242db4b437"],"status":"PASS"}
+{"framework":"nuxt","sha":"6b64241b712fb197db53503f2e097841ceb083bb","lockHashes":["a2b0cf94547505d72b7d88a30ee1100662dba1f89b5065071e7bafeeb9fc3398"],"status":"PASS"}
+{"framework":"sveltekit","sha":"1825f50faa34bd965ce41bc0463d5ea1934519d5","lockHashes":["a03a6a49ed11e51821510295e3201efe161e0e1dbf363851151b115af0c20419"],"status":"PASS"}

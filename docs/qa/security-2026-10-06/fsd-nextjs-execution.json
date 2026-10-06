@@ -1,0 +1,25 @@
+{
+  "repository": "fsd-nextjs",
+  "timestamp": "2026-10-06T01:31:18.582317+00:00",
+  "command": [
+    "npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=high",
+    "--json"
+  ],
+  "cwd": "/Users/ashraf/FSD-Platform/fsd-nextjs",
+  "exitCode": 0,
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "baseCommit": "2d44f0bf9dcd030f2ddc48e0a869670ced485efc",
+  "candidateLockSha256": "d6345c90f58decf1da346ce55d6a2895ba1a4361808bd22043eb45b6d2b7980b",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  }
+}

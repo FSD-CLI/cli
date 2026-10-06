@@ -1,0 +1,46 @@
+label: 08-create
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269
+command: ["/usr/local/bin/node","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/cli-install/node_modules/create-fsd-architecture/bin/index.mjs","app","--framework","react-vite","--package-manager","npm","--yes","--no-start"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│    ███████╗███████╗██████╗                                                  │
+│    ██╔════╝██╔════╝██╔══██╗                                                 │
+│    █████╗  ███████╗██║  ██║                                                 │
+│    ██╔══╝  ╚════██║██║  ██║                                                 │
+│    ██║     ███████║██████╔╝                                                 │
+│    ╚═╝     ╚══════╝╚═════╝                                                  │
+│                                                                             │
+│           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+│                                                                             │
+│   app → pages → widgets → features → entities → shared                     │
+│                                                                             │
+│   Scalable • Maintainable • Enterprise Frontend Architecture                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+  Project created successfully!
+
+  Next steps:
+
+    $ cd app
+    $ npm run dev
+
+
+
+stderr:
+- Downloading template...
+✔ Template downloaded.
+- Configuring FSD stack, Git, and Husky...
+✔ FSD stack, Git, and Husky configured.
+- Installing dependencies...
+✔ Dependencies installed.
+- Verifying Commitlint...
+✔ Commitlint rejected invalid message "test".
+

@@ -1,0 +1,20 @@
+[
+  {
+    "requested": "https://fsdcli.me",
+    "final": "https://fsdcli.me",
+    "status": 200,
+    "canonicalUsesDomain": true
+  },
+  {
+    "requested": "https://fsd-docs.vercel.app",
+    "final": "https://fsdcli.me/",
+    "status": 200,
+    "canonicalUsesDomain": true
+  },
+  {
+    "requested": "https://fsdcli.me/robots.txt",
+    "final": "https://fsdcli.me/robots.txt",
+    "status": 200,
+    "canonicalUsesDomain": true
+  }
+]

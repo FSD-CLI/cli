@@ -1,0 +1,24 @@
+label: check
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd pinned lifecycle-NS9oD0/nuxt
+command: ["/usr/local/bin/node","/Users/ashraf/FSD-Platform/create-fsd-architecture/bin/index.mjs","check"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  FSD check
+
+  PASS  FSD configuration — nuxt
+  PASS  package.json — found
+  PASS  FSD layer: app — app/app
+  PASS  FSD layer: pages — app/pages
+  PASS  FSD layer: widgets — app/widgets
+  PASS  FSD layer: features — app/features
+  PASS  FSD layer: entities — app/entities
+  PASS  FSD layer: shared — app/shared
+
+
+
+stderr:
+

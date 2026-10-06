@@ -1,0 +1,25 @@
+label: generate-feature
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-89QGTf/app
+command: ["/usr/local/bin/node","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-89QGTf/cli-install/node_modules/create-fsd-architecture/bin/index.mjs","--generate","feature","checkout"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  Slice generated successfully!
+
+  Created files:
+    - src/features/checkout/model/checkout.types.ts
+    - src/features/checkout/ui/checkout-view.tsx
+    - src/features/checkout/api/checkout.api.ts
+    - src/features/checkout/api/checkout.query.ts
+    - src/features/checkout/lib/checkout.keys.ts
+    - src/features/checkout/model/checkout.store.ts
+    - src/features/checkout/lib/checkout.helpers.ts
+    - src/features/checkout/index.ts
+
+
+
+stderr:
+

@@ -1,0 +1,24 @@
+label: check-generated
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd pinned lifecycle-NS9oD0/vue-vite
+command: ["/usr/local/bin/node","/Users/ashraf/FSD-Platform/create-fsd-architecture/bin/index.mjs","check"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  FSD check
+
+  PASS  FSD configuration — vue-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src/app
+  PASS  FSD layer: pages — src/pages
+  PASS  FSD layer: widgets — src/widgets
+  PASS  FSD layer: features — src/features
+  PASS  FSD layer: entities — src/entities
+  PASS  FSD layer: shared — src/shared
+
+
+
+stderr:
+

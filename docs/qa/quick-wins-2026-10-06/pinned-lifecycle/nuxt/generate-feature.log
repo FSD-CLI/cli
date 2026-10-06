@@ -1,0 +1,25 @@
+label: generate-feature
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd pinned lifecycle-NS9oD0/nuxt
+command: ["/usr/local/bin/node","/Users/ashraf/FSD-Platform/create-fsd-architecture/bin/index.mjs","-g","feature","sample-feature"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  Slice generated successfully!
+
+  Created files:
+    - app/features/sample-feature/model/sample-feature.types.ts
+    - app/features/sample-feature/ui/SampleFeatureView.vue
+    - app/features/sample-feature/api/sample-feature.api.ts
+    - app/features/sample-feature/api/sample-feature.query.ts
+    - app/features/sample-feature/lib/sample-feature.keys.ts
+    - app/features/sample-feature/model/sample-feature.store.ts
+    - app/features/sample-feature/lib/sample-feature.helpers.ts
+    - app/features/sample-feature/index.ts
+
+
+
+stderr:
+

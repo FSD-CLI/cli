@@ -1,5 +1,10 @@
 # CLI exploratory QA report — 2026-09-23
 
+> Historical evidence for the version/SHA recorded below. It is not current
+> release validation. See [Current release status](RELEASE-STATUS.md) for the
+> published package, current source baseline and open verification gaps.
+
+
 > Historical pre-fix audit. For subsequent local fixes and their verification,
 > see [QA-FIX-VERIFICATION.md](./QA-FIX-VERIFICATION.md).
 

@@ -1,0 +1,59 @@
+
+> fsd-angular@0.0.0 ci
+> npm run fsd:check && npm run lint && npm run typecheck && npm run test && npm run build
+
+
+> fsd-angular@0.0.0 fsd:check
+> steiger ./src
+
+✔ No problems found!
+
+> fsd-angular@0.0.0 lint
+> ng lint
+
+
+Linting "fsd-angular"...
+
+All files pass linting.
+
+
+> fsd-angular@0.0.0 typecheck
+> tsc --noEmit -p tsconfig.app.json
+
+
+> fsd-angular@0.0.0 test
+> ng test --watch=false
+
+❯ Building...
+✔ Building...
+Application bundle generation complete. [1.327 seconds] - 2026-10-06T01:28:58.125Z
+
+
+ RUN  v4.1.11 /Users/ashraf/FSD-Platform/fsd-angular
+
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  04:28:58
+   Duration  716ms (transform 65ms, setup 279ms, import 95ms, tests 51ms, environment 805ms)
+
+
+> fsd-angular@0.0.0 build
+> ng build
+
+❯ Building...
+✔ Building...
+Initial chunk files | Names         |  Raw size | Estimated transfer size
+main-W4T5YH5B.js    | main          | 132.58 kB |                33.90 kB
+chunk-L5WDC6JG.js   | -             | 115.29 kB |                34.69 kB
+styles-KHIA26X7.css | styles        |  15.05 kB |                 3.31 kB
+
+                    | Initial total | 262.91 kB |                71.89 kB
+
+Lazy chunk files    | Names         |  Raw size | Estimated transfer size
+chunk-K5TNYDQN.js   | index         | 463.91 kB |                79.74 kB
+
+Application bundle generation complete. [1.649 seconds] - 2026-10-06T01:29:01.561Z
+
+Output location: /Users/ashraf/FSD-Platform/fsd-angular/dist/fsd-angular
+

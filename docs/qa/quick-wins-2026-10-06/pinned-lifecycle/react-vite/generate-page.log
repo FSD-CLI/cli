@@ -1,0 +1,20 @@
+label: generate-page
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd pinned lifecycle-NS9oD0/react-vite
+command: ["/usr/local/bin/node","/Users/ashraf/FSD-Platform/create-fsd-architecture/bin/index.mjs","-g","page","sample-page"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  Slice generated successfully!
+
+  Created files:
+    - src/pages/sample-page/ui/sample-page-page.tsx
+    - src/pages/sample-page/index.ts
+    - src/app/routing/index.tsx
+
+
+
+stderr:
+

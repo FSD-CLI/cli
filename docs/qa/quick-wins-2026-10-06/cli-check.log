@@ -1,0 +1,387 @@
+
+> create-fsd-architecture@2.6.1 check
+> npm test && npm pack --dry-run
+
+
+> create-fsd-architecture@2.6.1 test
+> node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --check bin/core/command-runner.mjs && node --test tests/*.test.mjs
+
+✔ CI command capture preserves argument boundaries in paths with spaces (62.73475ms)
+✔ CLI parser keeps legacy creation and generation syntax (1.189792ms)
+✔ CLI parser supports automation-friendly create flags (0.372875ms)
+✔ CLI parser exposes dry-run, safe replacement, and inspection commands (0.12675ms)
+✔ CLI parser accepts explicit stack choices for repeatable E2E creation (0.088291ms)
+✔ --yes resolves defaults from the selected framework (0.142375ms)
+✔ CLI exposes version, help, and template discovery without prompts (361.164875ms)
+✔ CLI fails before cloning an unknown framework (137.152625ms)
+✔ project dry-run prints the plan without cloning a template (129.707041ms)
+✔ platform detection isolates Windows behavior (0.420833ms)
+✔ simple tokens allow safe flags and reject shell metacharacters (0.129875ms)
+✔ command validation keeps paths usable but rejects shell injection (0.1495ms)
+✔ Windows command lines keep commands and arguments separate (0.270875ms)
+✔ Windows cmd invocations never enable a shell and preserve boundaries (0.533917ms)
+✔ safe runners fail closed for injection without a shell (0.176ms)
+✔ commandExists preserves safe argument handling on this platform (176.460041ms)
+✔ template registry exposes stable and planned frameworks (1.404166ms)
+✔ capability matrix owns framework-specific stack choices (2.14025ms)
+✔ configuration validation rejects cross-framework stack values (0.427916ms)
+✔ framework adapters isolate runtime-specific source generation (0.783542ms)
+✔ project paths cannot escape the working directory (0.71225ms)
+✔ react-vite: compatible non-CLI inspection and generator preview preserve existing code (559.324167ms)
+✔ nextjs: compatible non-CLI inspection and generator preview preserve existing code (411.138333ms)
+✔ vue-vite: compatible non-CLI inspection and generator preview preserve existing code (333.205791ms)
+✔ nuxt: compatible non-CLI inspection and generator preview preserve existing code (324.093916ms)
+✔ sveltekit: compatible non-CLI inspection and generator preview preserve existing code (330.662667ms)
+✔ package-manager contract supports npm (0.809083ms)
+✔ package-manager contract supports pnpm (0.073542ms)
+✔ package-manager contract supports yarn (0.060042ms)
+✔ package-manager contract supports bun (0.056208ms)
+✔ dry-run file plans are exact and do not write files (12.602167ms)
+✔ page generators register framework-native routes (32.335167ms)
+✔ generator conflicts fail without changing existing files (6.095209ms)
+✔ generator rollback removes partial slices and restores external files (11.328917ms)
+✔ check validates the FSD structure and resolved configuration (6.1385ms)
+✔ doctor resolves the selected package manager without a shell (205.389125ms)
+✔ legacy Vue projects are detected without fsd.config.json (0.7675ms)
+✔ smart E2E matrix exercises every supported stack choice (817.408459ms)
+✔ pnpm uses a narrow build allowlist without replacing existing workspace policy (22.67225ms)
+✔ project configuration installs only the selected stack (6.596125ms)
+✔ Yarn projects establish an isolated node-modules workspace (7.91875ms)
+✔ feature generator reads the saved stack without additional choices (12.538917ms)
+✔ auth generator creates the complete flow and working mutation submissions (15.548334ms)
+✔ forms can be generated without a server-state dependency (13.058833ms)
+✔ Vue projects receive framework-native dependencies, providers, and generators (15.741416ms)
+✔ SvelteKit projects receive native dependencies, providers, stores, forms, and routes (12.953083ms)
+✔ Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators (6.239125ms)
+✔ project replacement can be committed or rolled back atomically (3.794583ms)
+✔ project lifecycle creates deterministic commit tooling (12.640792ms)
+✔ hook generation rejects unknown package managers (0.357208ms)
+✔ project lifecycle runs executable paths from working directories with spaces (28.774375ms)
+✔ --yes without a framework fails before prompting or replacing a directory (118.472625ms)
+✔ react-vite interactive preselection matches unattended defaults (0.223125ms)
+✔ react-vite numeric slice names are rejected before any write, including force (832.443041ms)
+✔ nextjs interactive preselection matches unattended defaults (0.131875ms)
+✔ nextjs numeric slice names are rejected before any write, including force (617.567167ms)
+✔ vue-vite interactive preselection matches unattended defaults (0.085542ms)
+✔ vue-vite numeric slice names are rejected before any write, including force (603.18225ms)
+✔ nuxt interactive preselection matches unattended defaults (0.068541ms)
+✔ nuxt numeric slice names are rejected before any write, including force (582.564ms)
+✔ sveltekit interactive preselection matches unattended defaults (0.084959ms)
+✔ sveltekit numeric slice names are rejected before any write, including force (593.528625ms)
+✔ generic view signatures respect the template formatter line width (0.095916ms)
+✔ failed installation exits nonzero and rolls back (force=false) (971.472709ms)
+✔ failed installation exits nonzero and rolls back (force=true) (646.978208ms)
+✔ intentional no-install remains successful and does not execute installer (211.217125ms)
+✔ npm hooks block lint/build/whitespace failure and permit clean commits (1340.188375ms)
+✔ pnpm hooks block lint/build/whitespace failure and permit clean commits (1302.865208ms)
+✔ yarn hooks block lint/build/whitespace failure and permit clean commits (973.845208ms)
+✔ bun hooks block lint/build/whitespace failure and permit clean commits (959.67775ms)
+✔ all shipped template sources bind full immutable commits (0.509625ms)
+✔ moving names, shortened SHAs and malformed repository sources fail before writing (0.689ms)
+
+FSD project upgrade
+
+Project: /private/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd-cli-upgrade-react-vite-gkAMwu
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+- npm run lint
++ #!/bin/sh
+
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+- ./node_modules/.bin/commitlint --edit "$1"
++ set -e
+
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+- npm run build
++ #!/bin/sh
+
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: no repository detected; internal transactional backup will be used.
+
+
+FSD project upgrade
+
+Project: /private/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd-cli-upgrade-react-vite-gkAMwu
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: no repository detected; internal transactional backup will be used.
+
+
+Dependency installation skipped; this migration does not change dependencies.
+
+FSD project upgrade
+
+Project: /private/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd-cli-upgrade-react-vite-gkAMwu
+Framework: react-vite
+Current state: managed state 2 / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: up to date
+
+ALREADY_APPLIED fsd.config.json  Configuration schema is current.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+PRESERVE        .husky/pre-commit  Verified managed content has no migration in this run.
+PRESERVE        .husky/commit-msg  Verified managed content has no migration in this run.
+PRESERVE        .husky/pre-push  Verified managed content has no migration in this run.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+
+0 creates, 0 safe updates, 0 deletes, 5 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: no repository detected; internal transactional backup will be used.
+
+Upgrade state is unsupported or invalid: Required FSD layer is missing: src/widgets
+
+Dependency installation skipped; this migration does not change dependencies.
+
+FSD project upgrade
+
+Project: /private/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd-cli-upgrade-vue-vite-l4onhS
+Framework: vue-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+CONFLICT        src/shared/api/client.ts  Legacy ownership cannot be proven because the file does not match a released CLI signature.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@tanstack/vue-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@vee-validate/zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:pinia matches its managed value.
+ALREADY_APPLIED package.json  dependencies:vee-validate matches its managed value.
+ALREADY_APPLIED package.json  dependencies:vue-router matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 1 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+Git: no repository detected; internal transactional backup will be used.
+
+Upgrade state is unsupported or invalid: Unable to read fsd.config.json: Unexpected token 'o', "not json
+" is not valid JSON
+
+Dependency installation skipped; this migration does not change dependencies.
+
+FSD project upgrade
+
+Project: /private/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd-cli-upgrade-react-vite-SbZli9
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+Git: main (dirty)
+
+✔ upgrade parser is isolated from create and generate flags (1.656958ms)
+✔ CLI routes upgrade without leaking flags into project creation (179.391875ms)
+✔ root discovery works from nested directories and rejects nested projects (7.519917ms)
+✔ root discovery ignores a package-only workspace above a complete FSD project (10.90475ms)
+✔ all supported framework and package-manager legacy fixtures have a deterministic plan (91.436958ms)
+✔ dry-run and check are read-only, then a clean legacy upgrade is idempotent (103.9905ms)
+✔ manifest serialization is accepted by the Next.js Biome array style (7.487ms)
+✔ a stale plan refuses to overwrite a file changed after planning (19.853375ms)
+✔ Redux generation refreshes its managed store hash (23.664917ms)
+✔ Redux generation refuses a user-modified managed store (20.765875ms)
+✔ check reports a missing required FSD layer as invalid (8.441416ms)
+✔ manifest projects preserve unclaimed dependency versions (8.219208ms)
+✔ business code is preserved while modified managed code blocks upgrade (37.137208ms)
+✔ managed manifests detect edits, malformed input, future schemas, and missing markers (23.475042ms)
+✔ transaction rollback restores files and retains an internal recovery backup (3.404125ms)
+✔ manifest-write failure rolls back prior hook updates (11.764834ms)
+✔ migration graph rejects gaps, duplicate IDs, cycles, and downgrades (0.161959ms)
+✔ symlink escapes are rejected before planning writes (6.496334ms)
+✔ dirty Git worktrees are refused unless explicitly allowed (108.213834ms)
+ℹ tests 91
+ℹ suites 0
+ℹ pass 91
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10030.108667
+npm notice
+npm notice 📦  create-fsd-architecture@2.6.1
+npm notice Tarball Contents
+npm notice 1.1kB LICENSE
+npm notice 15.1kB README.md
+npm notice 1.2kB SECURITY.md
+npm notice 4.2kB bin/cli/args.mjs
+npm notice 5.0kB bin/cli/output.mjs
+npm notice 9.4kB bin/commands/create-project.mjs
+npm notice 2.7kB bin/commands/inspect-project.mjs
+npm notice 8.6kB bin/commands/upgrade-project.mjs
+npm notice 5.2kB bin/core/capability-matrix.mjs
+npm notice 5.2kB bin/core/command-runner.mjs
+npm notice 1.2kB bin/core/frameworks/index.mjs
+npm notice 875B bin/core/frameworks/nextjs.mjs
+npm notice 850B bin/core/frameworks/nuxt.mjs
+npm notice 939B bin/core/frameworks/react-vite.mjs
+npm notice 676B bin/core/frameworks/sveltekit.mjs
+npm notice 766B bin/core/frameworks/vue-vite.mjs
+npm notice 1.2kB bin/core/package-managers.mjs
+npm notice 6.8kB bin/core/project-lifecycle.mjs
+npm notice 1.1kB bin/core/project-path.mjs
+npm notice 3.1kB bin/core/template-registry.mjs
+npm notice 37.9kB bin/generator.mjs
+npm notice 1.3kB bin/generators/basic-slices.mjs
+npm notice 1.5kB bin/generators/shared.mjs
+npm notice 13.4kB bin/generators/svelte.mjs
+npm notice 14.3kB bin/generators/vue.mjs
+npm notice 2.0kB bin/index.mjs
+npm notice 24.6kB bin/project-config.mjs
+npm notice 4.9kB bin/upgrade/config.mjs
+npm notice 10.1kB bin/upgrade/manifest.mjs
+npm notice 2.6kB bin/upgrade/migrations/index.mjs
+npm notice 14.5kB bin/upgrade/planner.mjs
+npm notice 2.6kB bin/upgrade/project-root.mjs
+npm notice 7.3kB bin/upgrade/transaction.mjs
+npm notice 4.6kB bin/upgrade/validation.mjs
+npm notice 9.1kB docs/CHANGELOG.md
+npm notice 3.7kB docs/EXISTING-PROJECT-SUPPORT.md
+npm notice 1.3kB docs/PROPOSALS.md
+npm notice 3.1kB docs/PUBLIC-DOCUMENTATION-OUTLINE.md
+npm notice 5.7kB docs/RELEASE-STATUS.md
+npm notice 7.4kB docs/UPGRADE-ARCHITECTURE.md
+npm notice 2.1kB package.json
+npm notice 1.0kB schema/fsd.config.schema.json
+npm notice 2.2kB schema/fsd.manifest.schema.json
+npm notice Tarball Details
+npm notice name: create-fsd-architecture
+npm notice version: 2.6.1
+npm notice filename: create-fsd-architecture-2.6.1.tgz
+npm notice package size: 65.5 kB
+npm notice unpacked size: 252.5 kB
+npm notice shasum: 3212998d67b30ab23d74e1623ef13218060d23ca
+npm notice integrity: sha512-TEjIYeXjAkiUO[...]tNA1kfby0+3DQ==
+npm notice total files: 43
+npm notice
+create-fsd-architecture-2.6.1.tgz

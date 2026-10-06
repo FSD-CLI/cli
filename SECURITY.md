@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Security fixes are provided for the latest released `2.5.x` version of
+Security fixes are provided for the latest released `2.6.x` version of
 `create-fsd-architecture`. Older versions should be upgraded before a fix is
 requested or applied.
 

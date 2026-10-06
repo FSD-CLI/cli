@@ -1,0 +1,27 @@
+label: 09-doctor
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/app
+command: ["/usr/local/bin/node","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/cli-install/node_modules/create-fsd-architecture/bin/index.mjs","doctor"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  FSD doctor
+
+  PASS  FSD configuration — react-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src/app
+  PASS  FSD layer: pages — src/pages
+  PASS  FSD layer: widgets — src/widgets
+  PASS  FSD layer: features — src/features
+  PASS  FSD layer: entities — src/entities
+  PASS  FSD layer: shared — src/shared
+  PASS  Node.js — v24.13.0
+  PASS  Git — required for generated repositories
+  PASS  npm — selected in fsd.config.json
+
+
+
+stderr:
+

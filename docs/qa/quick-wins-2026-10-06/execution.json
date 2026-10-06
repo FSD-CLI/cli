@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-06T01:43:59.786317+00:00",
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "platform": "macOS arm64",
+  "qualityResults": {
+    "FSD": {
+      "command": "npm run ci",
+      "exitCode": 0,
+      "candidateCommit": "2f10a391e6677c739ceed3a5b030711d1fdf4454",
+      "lockSha256": "ded7af9b12e96c851a89db1c31538773c86b5520d6edd0d547fc6eb5b2136e63"
+    },
+    "fsd-nextjs": {
+      "command": "npm run ci",
+      "exitCode": 0,
+      "candidateCommit": "b5b162a5bf3467b1cb559110cbbaa3878fd5f7a0",
+      "lockSha256": "d6345c90f58decf1da346ce55d6a2895ba1a4361808bd22043eb45b6d2b7980b"
+    },
+    "fsd-vue": {
+      "command": "npm run ci",
+      "exitCode": 0,
+      "candidateCommit": "e66d99c616fe3cb1208e366a130939e7d02fffc1",
+      "lockSha256": "ee4d7adfd9e228e0af0f3df1548f0c64a9268ee92c0719df6eb06a1febb52dd1"
+    },
+    "fsd-nuxt": {
+      "command": "npm run ci",
+      "exitCode": 0,
+      "candidateCommit": "54bf042258f4628d7ee504bc3cf1d0f01afda611",
+      "lockSha256": "9b7a91122a3f2f2a70d082c65f8d62cf7ca9cf082d3a19bff697cda1882ab07b"
+    },
+    "fsd-sveltekit": {
+      "command": "npm run ci",
+      "exitCode": 0,
+      "candidateCommit": "ca68a9f659c6e97c48cc24dfb6570502374fcba1",
+      "lockSha256": "fae8119a485cdc3acb370647417f69f279c3f9adf1cb24413bfc3d5902e6d9d6"
+    },
+    "fsd-angular": {
+      "command": "npm run ci",
+      "exitCode": 0,
+      "candidateCommit": "f18a634c74e5de71a1c049f2496fd5674d6171ea",
+      "lockSha256": "f2c54754a4ec2822cc044a9fdef70963c9ebe606d1afc7e5a6fcd37b6bd5c3d5"
+    },
+    "fsd-docs": {
+      "command": "npm run check",
+      "exitCode": 0,
+      "candidateCommit": "bc3876f10876e72e6b97760cce2d8c991de0b898",
+      "lockSha256": "eeb923581ef3312715604a5e7362c1e910fd2f121a177c56c55a1d5fc1496881"
+    }
+  },
+  "limitations": [
+    "Quality results do not imply passing security gates; Nuxt and Angular production audits remain failed.",
+    "GitHub PR jobs and branch protection were not verified for these candidate commits.",
+    "Template source identity and no-install lifecycle are separate from installed generated-project builds.",
+    "Published 2.6.1 React/Next artifact smoke used Node 24.13.0/npm 11.6.2; consult its separate metadata."
+  ],
+  "cli": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "tests": 91,
+    "sourceRuntimeSha256": {
+      "bin/generator.mjs": "ae319dc0e65cb317af19b829252ab6a9fdc7c4fbebce74f258ce47d25fe02adc",
+      "bin/index.mjs": "0dcf22f7dbcd9e75a3e821d7fe5279e19fcd9273ba4dc3143a3eec0bdb30c2fc",
+      "bin/project-config.mjs": "62dbd487d5c1ef4999d762f20471718d993151d0836140df5c753fb825426cb2",
+      "bin/upgrade/planner.mjs": "c559d3e79d3f3d0790562ae4199e0c931794db360cd32dd0c7f1e43583ae5281",
+      "bin/upgrade/validation.mjs": "7c44f3d9c0ac8c47d0d9892033d6800b43269173b2fbe6622d84afc55f94754d",
+      "bin/upgrade/project-root.mjs": "15c5d0504f8c4b0d2090274e5de5e26b726240c27ad9502d44d12086368cbb10",
+      "bin/upgrade/transaction.mjs": "82e9af7d1ce16126099d26649ebb3b5a467ab74b0f6f5b10ca00e5bb8471982b",
+      "bin/upgrade/config.mjs": "32eabbfb117bd30ced4ebf35584d1e31dc6b0debdc1fb4f688eaa5c276708e64",
+      "bin/upgrade/manifest.mjs": "58e3a6c929711ab90ba07d47fcbe06fa039a0fe1225f45f8f88e1e7c44861c99",
+      "bin/upgrade/migrations/index.mjs": "497f6537df3711b0268f7471f742d48fc758ad17553281f9145c14d354a3e084",
+      "bin/core/package-managers.mjs": "5a6858a636d9c893e01f46a472dfd7d9e9be6355ca33c56cfbadcd3fecbf9457",
+      "bin/core/template-registry.mjs": "13904e9cb85cbefa5638369f2d85fd57035a71b67f95fc95524d17f73b59b398",
+      "bin/core/project-lifecycle.mjs": "6e4a90f06853f1de817097ddbe231f387de92d96f1e7cb2638dddb49674c4b3a",
+      "bin/core/command-runner.mjs": "bc61427713a00ca8cdd0aad6874378940f4e4419bc5aece709d7a6a4c3e18c6b",
+      "bin/core/capability-matrix.mjs": "c437c472233d0349454ef6a75da6f411f492179190dfd9a2ac8ead18ff46d780",
+      "bin/core/project-path.mjs": "276d2e972e3f25b6d86beefe54b5909310f54077a608a77aed44d5d3e3233a7f",
+      "bin/core/frameworks/vue-vite.mjs": "c93733e87b6937da4249e645d19541ce04bf79be4d96705d66f105b27bcc46ec",
+      "bin/core/frameworks/sveltekit.mjs": "b9471b67da447b318df6eb13b3de788edb47a7df27f510edb69f3a60b5dd5acf",
+      "bin/core/frameworks/nextjs.mjs": "2b8a083a8f600b9efe612ca6fe295d3b389ed775cb86c180ee6d8bb8f264c43e",
+      "bin/core/frameworks/react-vite.mjs": "ee0abb863239ac1dc4611662141781b2a91a5ba95988837d5ac65140bdbbe9bc",
+      "bin/core/frameworks/index.mjs": "fc8c0006baf4ec618d0a11245ddac851967a3cf3dad867f932b1ea1c46fab5d6",
+      "bin/core/frameworks/nuxt.mjs": "2c05ad0f5064ac807cbeda86cfdf147e02310c347a48ebc445f19c228b3a5194",
+      "bin/cli/output.mjs": "8294887b945b35dc9ae692c9ee7d94f88b7aec964f1d4dee75ac59d4840dab2a",
+      "bin/cli/args.mjs": "4e157d42da34a5c5aa5e7e6653882567df94a89c935b65e7a4b78671c287089d",
+      "bin/commands/upgrade-project.mjs": "134ffcde36e527324c1b410fd70e08d44e0644ecc26b1d6dddbd8ce6911a99a1",
+      "bin/commands/create-project.mjs": "3f5c8ae5b19f0a737bdc7cd4a094e9eb7d0a94e3b354aa016d6a065ef08fa6c1",
+      "bin/commands/inspect-project.mjs": "e13f7f44e4e4219f143a8a7285171614cd54089f90884d0a48764f75b71b4403",
+      "bin/generators/svelte.mjs": "91947b9925a4c316eacda4299d857b1095a453caf4f1a15bce1d532ffd2797d2",
+      "bin/generators/shared.mjs": "9f997fdfa46db52a071a63259a5a540983251adfa7d6bf22f0afa194f2523da8",
+      "bin/generators/basic-slices.mjs": "d8f68a5255fa692c3fdd67e038ec513976096304656e47ac3d0c38964a16fd4e",
+      "bin/generators/vue.mjs": "8ef5603980f1b4b85908df425862cdc0d6bafda47351615f6093739f9dd51c93",
+      "scripts/template-source-smoke.mjs": "f2c7eab0e2a9f78dd666aef7c22bde401b289e480ac7d26d707b2f23217f6b3f",
+      "scripts/post-release-smoke.mjs": "b7fc53e44f2b0c8da4b3954298626fbddf70147dcb980ae5360b845ee3982953",
+      "scripts/ci/run-and-capture.mjs": "2ec9e615b437ecd880399e111fbd7d9f1b252e8aa5deba84663586c59c2cf5b1",
+      "scripts/ci/os-smoke.mjs": "9b9c25216c9e5e0ba8cc276d33bc78c411c7d99acd1668dce159481063839432",
+      "tests/command-runner.test.mjs": "e010d762e5bf417dafc23aeb574088b6708a816d32c28b0b4d6f1a0f3cffdcf7",
+      "tests/project-lifecycle.test.mjs": "fd61a54b450c57a4419f23fd117e56209dc199a56a33039b2a3f0d2158d83b98",
+      "tests/template-provenance.test.mjs": "46c6317ab4e2ece18bb230b50b62bd9e4e5cfd63bcd3dc17ced01c88fadcbf2a",
+      "tests/cli.test.mjs": "46764e890c9c8d6f53afbe1bd9046862486804294fc773d62b9cd211e45ff715",
+      "tests/hardening.test.mjs": "4b5b0ee3f36cbca70cd2bbb2a64e02a905c5ea0a2c570ad530651fd7a6d5a42d",
+      "tests/project-config.test.mjs": "fad3f56389a6ea995e61e7c6652cdf8b9f71fa8c7d52635e7472c2768366929e",
+      "tests/ci-scripts.test.mjs": "203e354f500a8c2859824794baad85e26b007bb2d1a85433a51c046f6030c9ca",
+      "tests/existing-project-support.test.mjs": "85c0398b5e389935471e5cded54bd8d2dd7d5fea4b187816bb4b83c6f8d28fd2",
+      "tests/core-architecture.test.mjs": "5d49bef25262194c069804209770ac3f0aee03996fc29137c6d284e1bf4a209d",
+      "tests/upgrade.test.mjs": "a7476ba56a8c9ee51670bb9c8c8f10977c73d4a220e8f3518ac631f5fb671990",
+      "tests/qa-regressions.test.mjs": "65a47425bc0a76a321bad68f2afc5b57b4eda19f38a5f5527c9e68c754309a18",
+      "tests/fixtures/local-template-loader.mjs": "c5216f89dc892f1005c2fac20a8db19cfacd64b7d73db7d1ccb180c8a8c85bb9"
+    }
+  }
+}

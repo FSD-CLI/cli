@@ -2,6 +2,25 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## Unreleased
+
+- Bind all five template sources to full immutable Git commits, verify downloaded
+  identities and retain provenance in `.fsd/template.json`.
+- Add published-package and repeated-template-source smoke scripts/workflows.
+- Record dated QA/security evidence, starter validation limits, the official
+  guided existing-project support policy and proposal classifications.
+- Add dependency audit/maintenance coverage; unresolved upstream findings remain
+  explicit and are not waived.
+
+## 2.6.1 - 2026-09-27
+
+### Changed
+
+- Use https://fsdcli.me as the official package homepage and documentation URL
+  in the README and newly configured projects.
+- Published npm gitHead: `4c83d0a75ec20117edc8880aba065bdb21edfa6d`.
+  Windows fixes from PR #4 merged after this release and await a newer artifact.
+
 ## 2.6.0 - 2026-09-26
 
 ### Added

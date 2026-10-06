@@ -1,0 +1,13 @@
+label: 02-npm-version
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269
+command: ["/usr/local/bin/node","/usr/local/lib/node_modules/npm/bin/npm-cli.js","--version"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+11.6.2
+
+
+stderr:
+
