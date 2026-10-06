@@ -76,3 +76,9 @@ for (const framework of ['react-vite', 'nextjs', 'vue-vite', 'nuxt', 'sveltekit'
     } finally { fs.rmSync(cwd, { recursive: true, force: true }); }
   });
 }
+
+test('exported adapter reset method works without an object receiver', async () => {
+  const { adapter } = fixture();
+  const { resetPassword } = adapter;
+  assert.deepEqual(await resetPassword({ email: user.email, code: '123456', password: 'new-password', passwordConfirmation: 'new-password' }), { message: 'Password updated.' });
+});

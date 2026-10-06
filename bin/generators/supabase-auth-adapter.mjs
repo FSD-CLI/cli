@@ -23,6 +23,15 @@ export function createSupabaseAuthAdapter(client) {
       accessToken: value.access_token,
     };
   };
+  const verifyCode = async ({ email, code }) => {
+    recovery = null;
+    const data = await checked(
+      client.auth.verifyOtp({ email, token: code, type: "recovery" }),
+    );
+    if (!data.session || data.user?.email !== email) fail();
+    recovery = { email, code };
+    return { isValid: true };
+  };
   return {
     async login(payload) {
       recovery = null;
@@ -46,20 +55,12 @@ export function createSupabaseAuthAdapter(client) {
           "If this account is eligible, recovery instructions have been sent.",
       };
     },
-    async verifyCode({ email, code }) {
-      recovery = null;
-      const data = await checked(
-        client.auth.verifyOtp({ email, token: code, type: "recovery" }),
-      );
-      if (!data.session || data.user?.email !== email) fail();
-      recovery = { email, code };
-      return { isValid: true };
-    },
+    verifyCode,
     async resetPassword({ email, code, password, passwordConfirmation }) {
       if (!password || password !== passwordConfirmation)
         throw new Error("Passwords must match.");
       if (!recovery || recovery.email !== email || recovery.code !== code) {
-        await this.verifyCode({ email, code });
+        await verifyCode({ email, code });
       }
       // Consume the verified recovery state even if update fails. Never retry without fresh proof.
       recovery = null;
