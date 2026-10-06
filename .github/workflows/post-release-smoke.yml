@@ -1,6 +1,11 @@
 name: Published package smoke
 
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/post-release-smoke.yml'
+      - 'scripts/post-release-smoke.mjs'
+      - 'scripts/ci/run-and-capture.mjs'
   workflow_dispatch:
     inputs:
       version:
@@ -21,7 +26,8 @@ jobs:
       matrix:
         framework: [react-vite, nextjs]
     env:
-      CLI_SMOKE_VERSION: ${{ inputs.version }}
+      # PR runs validate the public baseline; manual runs verify a selected release.
+      CLI_SMOKE_VERSION: ${{ inputs.version || '2.6.1' }}
       CLI_SMOKE_FRAMEWORK: ${{ matrix.framework }}
       CI_ARTIFACTS_DIR: ${{ github.workspace }}/ci-artifacts
     steps:
