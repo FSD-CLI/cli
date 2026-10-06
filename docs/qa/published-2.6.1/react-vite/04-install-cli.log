@@ -1,0 +1,14 @@
+label: 04-install-cli
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269
+command: ["/usr/local/bin/node","/usr/local/lib/node_modules/npm/bin/npm-cli.js","install","--prefix","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/cli-install","--ignore-scripts","--no-audit","--no-fund","create-fsd-architecture@2.6.1"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+added 22 packages in 1s
+
+
+stderr:
+

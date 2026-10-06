@@ -1,0 +1,332 @@
+
+> fsd-docs@1.0.0 check
+> npm run lint && npm run typecheck && npm run test && npm run build && npm run check:static
+
+
+> fsd-docs@1.0.0 lint
+> biome check
+
+src/lib/llms.ts:32:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    30 │ export function getLlmsIndex() {
+    31 │   return [
+  > 32 │     "# " + siteConfig.name,
+       │     ^^^^^^^^^^^^^^^^^^^^^^
+    33 │     "",
+    34 │     "> " + siteConfig.description,
+  
+  i Unsafe fix: Use a template literal.
+  
+     30  30 │   export function getLlmsIndex() {
+     31  31 │     return [
+     32     │ - ····"#·"·+·siteConfig.name,
+         32 │ + ····`#·${siteConfig.name}`,
+     33  33 │       "",
+     34  34 │       "> " + siteConfig.description,
+  
+
+src/lib/llms.ts:34:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    32 │     "# " + siteConfig.name,
+    33 │     "",
+  > 34 │     "> " + siteConfig.description,
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    35 │     "",
+    36 │     "FSD CLI is the command-line package " +
+  
+  i Unsafe fix: Use a template literal.
+  
+     32  32 │       "# " + siteConfig.name,
+     33  33 │       "",
+     34     │ - ····">·"·+·siteConfig.description,
+         34 │ + ····`>·${siteConfig.description}`,
+     35  35 │       "",
+     36  36 │       "FSD CLI is the command-line package " +
+  
+
+src/lib/llms.ts:82:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    80 │ export function getLlmsFull() {
+    81 │   const releaseDetails = latestRelease.sections.flatMap((section) => [
+  > 82 │     "### " + section.title,
+       │     ^^^^^^^^^^^^^^^^^^^^^^
+    83 │     "",
+    84 │     ...section.items.map((item) => "- " + item),
+  
+  i Unsafe fix: Use a template literal.
+  
+     80  80 │   export function getLlmsFull() {
+     81  81 │     const releaseDetails = latestRelease.sections.flatMap((section) => [
+     82     │ - ····"###·"·+·section.title,
+         82 │ + ····`###·${section.title}`,
+     83  83 │       "",
+     84  84 │       ...section.items.map((item) => "- " + item),
+  
+
+src/lib/llms.ts:84:36 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    82 │     "### " + section.title,
+    83 │     "",
+  > 84 │     ...section.items.map((item) => "- " + item),
+       │                                    ^^^^^^^^^^^
+    85 │     "",
+    86 │   ]);
+  
+  i Unsafe fix: Use a template literal.
+  
+     82  82 │       "### " + section.title,
+     83  83 │       "",
+     84     │ - ····...section.items.map((item)·=>·"-·"·+·item),
+         84 │ + ····...section.items.map((item)·=>·`-·${item}`),
+     85  85 │       "",
+     86  86 │     ]);
+  
+
+src/lib/llms.ts:92:19 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    90 │       release.version +
+    91 │       "](" +
+  > 92 │       absoluteUrl("/docs/releases/" + release.version) +
+       │                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    93 │       "): " +
+    94 │       release.summary,
+  
+  i Unsafe fix: Use a template literal.
+  
+     90  90 │         release.version +
+     91  91 │         "](" +
+     92     │ - ······absoluteUrl("/docs/releases/"·+·release.version)·+
+         92 │ + ······absoluteUrl(`/docs/releases/${release.version}`)·+
+     93  93 │         "): " +
+     94  94 │         release.summary,
+  
+
+src/lib/llms.ts:127:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    125 │     "# FSD CLI complete reference",
+    126 │     "",
+  > 127 │     "Canonical site: " + siteConfig.url,
+        │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    128 │     "Package: " + siteConfig.packageName,
+    129 │     "Current documented release: " +
+  
+  i Unsafe fix: Use a template literal.
+  
+    125 125 │       "# FSD CLI complete reference",
+    126 126 │       "",
+    127     │ - ····"Canonical·site:·"·+·siteConfig.url,
+        127 │ + ····`Canonical·site:·${siteConfig.url}`,
+    128 128 │       "Package: " + siteConfig.packageName,
+    129 129 │       "Current documented release: " +
+  
+
+src/lib/llms.ts:128:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    126 │     "",
+    127 │     "Canonical site: " + siteConfig.url,
+  > 128 │     "Package: " + siteConfig.packageName,
+        │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    129 │     "Current documented release: " +
+    130 │       latestRelease.version +
+  
+  i Unsafe fix: Use a template literal.
+  
+    126 126 │       "",
+    127 127 │       "Canonical site: " + siteConfig.url,
+    128     │ - ····"Package:·"·+·siteConfig.packageName,
+        128 │ + ····`Package:·${siteConfig.packageName}`,
+    129 129 │       "Current documented release: " +
+    130 130 │         latestRelease.version +
+  
+
+src/lib/llms.ts:134:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    132 │       latestRelease.date +
+    133 │       ")",
+  > 134 │     "Source: " + siteConfig.github,
+        │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    135 │     "Support: " + siteConfig.support.githubSponsors,
+    136 │     "",
+  
+  i Unsafe fix: Use a template literal.
+  
+    132 132 │         latestRelease.date +
+    133 133 │         ")",
+    134     │ - ····"Source:·"·+·siteConfig.github,
+        134 │ + ····`Source:·${siteConfig.github}`,
+    135 135 │       "Support: " + siteConfig.support.githubSponsors,
+    136 136 │       "",
+  
+
+src/lib/llms.ts:135:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    133 │       ")",
+    134 │     "Source: " + siteConfig.github,
+  > 135 │     "Support: " + siteConfig.support.githubSponsors,
+        │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    136 │     "",
+    137 │     "## Product scope",
+  
+  i Unsafe fix: Use a template literal.
+  
+    133 133 │         ")",
+    134 134 │       "Source: " + siteConfig.github,
+    135     │ - ····"Support:·"·+·siteConfig.support.githubSponsors,
+        135 │ + ····`Support:·${siteConfig.support.githubSponsors}`,
+    136 136 │       "",
+    137 137 │       "## Product scope",
+  
+
+src/lib/llms.ts:159:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    157 │     "    npx create-fsd-architecture@latest my-app --framework nextjs --package-manager pnpm --yes --no-start",
+    158 │     "",
+  > 159 │     "Supported framework IDs: " + supportedFrameworks + ".",
+        │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    160 │     "",
+    161 │     "Create options: " +
+  
+  i Unsafe fix: Use a template literal.
+  
+    157 157 │       "    npx create-fsd-architecture@latest my-app --framework nextjs --package-manager pnpm --yes --no-start",
+    158 158 │       "",
+    159     │ - ····"Supported·framework·IDs:·"·+·supportedFrameworks·+·".",
+        159 │ + ····`Supported·framework·IDs:·${supportedFrameworks}.`,
+    160 160 │       "",
+    161 161 │       "Create options: " +
+  
+
+src/lib/llms.ts:252:5 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Template literals are preferred over string concatenation.
+  
+    250 │     ...docsLinks(),
+    251 │     "",
+  > 252 │     "## Latest release: " + latestRelease.version,
+        │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    253 │     "",
+    254 │     latestRelease.summary,
+  
+  i Unsafe fix: Use a template literal.
+  
+    250 250 │       ...docsLinks(),
+    251 251 │       "",
+    252     │ - ····"##·Latest·release:·"·+·latestRelease.version,
+        252 │ + ····`##·Latest·release:·${latestRelease.version}`,
+    253 253 │       "",
+    254 254 │       latestRelease.summary,
+  
+
+Checked 77 files in 189ms. No fixes applied.
+Found 11 infos.
+
+> fsd-docs@1.0.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> fsd-docs@1.0.0 test
+> node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/lib/docs-video-and-dashboard.test.ts
+
+▶ dashboard access
+  ✔ anonymous, non-admin, and admin stay distinct (1.312042ms)
+  ✔ missing configuration and a failed session do not look like unauthorized (0.182833ms)
+  ✔ a signed-out visitor stays on the login page (0.073583ms)
+✔ dashboard access (2.801833ms)
+▶ YouTube urls
+  ✔ accepts supported urls and ids (0.266416ms)
+  ✔ rejects credentials, other hosts, and malformed values (0.189292ms)
+✔ YouTube urls (0.549166ms)
+▶ optional documentation video
+  ✔ getting started stays empty until a real video is configured (0.130166ms)
+✔ optional documentation video (0.196542ms)
+ℹ tests 6
+ℹ suites 3
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 343.073084
+
+> fsd-docs@1.0.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 27ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1268ms
+  Running TypeScript ...
+  Finished TypeScript in 1550ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/42) ...
+  Generating static pages using 7 workers (10/42) 
+  Generating static pages using 7 workers (20/42) 
+  Generating static pages using 7 workers (31/42) 
+✓ Generating static pages using 7 workers (42/42) in 993ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /dashboard
+├ ƒ /dashboard/login
+├ ○ /docs
+├ ○ /docs/ai-agent-skill
+├ ○ /docs/auth-generator
+├ ○ /docs/configuration
+├ ○ /docs/frameworks/nextjs
+├ ○ /docs/frameworks/nuxt
+├ ○ /docs/frameworks/react
+├ ○ /docs/frameworks/sveltekit
+├ ○ /docs/frameworks/vue
+├ ○ /docs/getting-started
+├ ○ /docs/releases
+├   /docs/releases/[version]
+│ ├ ● /docs/releases/2.6.1
+│ ├ ● /docs/releases/2.6.0
+│ ├ ● /docs/releases/2.5.1
+│ └ ● [+17 more paths]
+├ ○ /docs/slice-generator
+├ ○ /docs/upgrade
+├ ○ /icon.png
+├ ○ /llms-full.txt
+├ ○ /llms.txt
+├ ○ /manifest.webmanifest
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+> fsd-docs@1.0.0 check:static
+> node scripts/check-static-output.mjs
+
+Passed: 38 landing, docs, metadata, and LLM routes are prerendered statically.

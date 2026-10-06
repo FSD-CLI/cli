@@ -1,0 +1,25 @@
+{
+  "repository": "create-fsd-architecture",
+  "timestamp": "2026-10-06T01:31:18.466678+00:00",
+  "command": [
+    "npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=high",
+    "--json"
+  ],
+  "cwd": "/Users/ashraf/FSD-Platform/create-fsd-architecture",
+  "exitCode": 0,
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "baseCommit": "c05ef594e7d572247d5257791f275029b9dd9ea5",
+  "candidateLockSha256": "f99984f8d2903dd3c369f95baeff4796bf6bfdea7ede94d2314bc90dd8000541",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  }
+}

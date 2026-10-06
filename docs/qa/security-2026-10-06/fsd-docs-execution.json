@@ -1,0 +1,25 @@
+{
+  "repository": "fsd-docs",
+  "timestamp": "2026-10-06T01:31:26.634032+00:00",
+  "command": [
+    "npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=high",
+    "--json"
+  ],
+  "cwd": "/Users/ashraf/FSD-Platform/fsd-docs",
+  "exitCode": 0,
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "baseCommit": "a83ce07b942affa69bb3ebaebcf7f50d4098956c",
+  "candidateLockSha256": "eeb923581ef3312715604a5e7362c1e910fd2f121a177c56c55a1d5fc1496881",
+  "counts": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  }
+}

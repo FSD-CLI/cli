@@ -1,6 +1,6 @@
 # create-fsd-architecture
 
-Create production-ready frontend projects with a complete
+Create frontend starter projects with a complete
 [Feature-Sliced Design](https://feature-sliced.design/) structure.
 
 [![npm](https://img.shields.io/npm/v/create-fsd-architecture)](https://www.npmjs.com/package/create-fsd-architecture)
@@ -8,6 +8,13 @@ Create production-ready frontend projects with a complete
 
 - Documentation: https://fsdcli.me
 - GitHub: https://github.com/FSD-CLI/cli
+
+## Validation scope
+
+Generated projects are starting points. Passing CLI or template checks does not
+certify application-specific security, authentication, runtime behavior, or
+production deployment. Consult the [current release status](docs/RELEASE-STATUS.md)
+for evidence and untested combinations.
 
 ## Repository documentation
 
@@ -336,3 +343,28 @@ If this project helps you, you can optionally support its development:
 
 For InstaPay, use the username exactly as shown and verify the recipient details
 in the app before confirming a transfer. Donations are optional.
+
+## Existing projects and proposals
+
+Existing applications can use the official [audit and guided-migration workflow](docs/EXISTING-PROJECT-SUPPORT.md).
+CLI generators require a verified compatible project; managed upgrade remains
+limited to CLI-owned files. See the [proposal decisions](docs/PROPOSALS.md) for
+the unscheduled add/plugin proposals and migration research.
+
+## Reproducible template sources
+
+Each supported template is bound to a full commit in the CLI registry. Creation
+fetches that exact object, verifies its SHA, and records repository/requested
+ref/resolved commit in `.fsd/template.json`. Dry-runs show the pinned source.
+No fallback to a moving branch is allowed. Updating a template requires a
+reviewed registry change and a new CLI artifact; dependency version ranges still
+need their own lockfile/runtime verification. Old generated projects and
+ownership manifests remain valid without this optional provenance file.
+
+### Template source verification
+
+From the CLI repository, `npm run smoke:templates` downloads each registered immutable commit twice,
+checks the recorded provenance and compares the complete source byte tree.
+Before releasing a CLI update, merge its companion template PRs and verify the
+pinned commits remain available; rebind pins after squash/rebase merges.
+Security/build checks are separate from source identity verification.

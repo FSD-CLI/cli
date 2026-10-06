@@ -125,7 +125,7 @@ function showProjectPlan({ projectName, targetDir, template, projectConfig, opti
   const replace = fs.existsSync(targetDir) && options.force;
   console.log(chalk.bold("  Project plan (dry run)\n"));
   console.log(`  Target: ${targetDir}`);
-  console.log(`  Template: ${template.title} (${template.repo})`);
+  console.log(`  Template: ${template.title} (${template.repo}#${template.ref})`);
   console.log(`  Package manager: ${projectConfig.packageManager}`);
   console.log(`  API client: ${projectConfig.apiClient}`);
   console.log(`  Server state: ${projectConfig.serverState}`);
@@ -180,7 +180,7 @@ export async function runCreateProject(options) {
   const downloadSpinner = ora({ text: "Downloading template...", color: "cyan" }).start();
   try {
     await cloneTemplate(template, targetDir);
-    downloadSpinner.succeed(chalk.green("Template downloaded."));
+    downloadSpinner.succeed(chalk.green("Template downloaded at verified immutable commit."));
   } catch (error) {
     downloadSpinner.fail(chalk.red("Failed to download template."));
     transaction.rollback();

@@ -1,0 +1,39 @@
+label: 11-generated-ci
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/app
+command: ["/usr/local/bin/node","/usr/local/lib/node_modules/npm/bin/npm-cli.js","run","ci"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+> fsd-architecture-starter@0.0.0 ci
+> npm run fsd:check && npm run lint && npm run build
+
+
+> fsd-architecture-starter@0.0.0 fsd:check
+> steiger ./src
+
+
+> fsd-architecture-starter@0.0.0 lint
+> eslint .
+
+
+> fsd-architecture-starter@0.0.0 build
+> tsc -b && vite build
+
+vite v8.3.0 building client environment for production...
+transforming...
+✓ 90 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.47 kB │ gzip:  0.30 kB
+dist/assets/index-8JAHgINJ.css   17.17 kB │ gzip:  4.08 kB
+dist/assets/index-DntqyhNk.js   315.65 kB │ gzip: 99.60 kB
+
+✓ built in 343ms
+
+
+stderr:
+✔ No problems found!
+

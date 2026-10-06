@@ -1,0 +1,25 @@
+{
+  "repository": "fsd-sveltekit",
+  "timestamp": "2026-10-06T01:39:06.159639+00:00",
+  "command": [
+    "npm",
+    "audit",
+    "--omit=dev",
+    "--audit-level=high",
+    "--json"
+  ],
+  "cwd": "/Users/ashraf/FSD-Platform/fsd-sveltekit",
+  "exitCode": 0,
+  "node": "v24.21.0",
+  "npm": "11.19.0",
+  "baseCommit": "1825f50faa34bd965ce41bc0463d5ea1934519d5",
+  "candidateLockSha256": "fae8119a485cdc3acb370647417f69f279c3f9adf1cb24413bfc3d5902e6d9d6",
+  "counts": {
+    "info": 0,
+    "low": 3,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 3
+  }
+}

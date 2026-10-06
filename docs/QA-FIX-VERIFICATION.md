@@ -1,5 +1,10 @@
 # QA fixes — local verification, 2026-09-23
 
+> Historical evidence for the version/SHA recorded below. It is not current
+> release validation. See [Current release status](RELEASE-STATUS.md) for the
+> published package, current source baseline and open verification gaps.
+
+
 All eight findings from CLI-QA-REPORT.md now have local changes and targeted
 verification. This is not a published release or a claim that every originally
 blocked matrix case has been completed. The original audit remains a historical

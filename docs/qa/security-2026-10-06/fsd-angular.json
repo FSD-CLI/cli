@@ -1,0 +1,154 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@kobalte/core": {
+      "name": "@kobalte/core",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        "solid-js"
+      ],
+      "effects": [
+        "@tanstack/query-devtools"
+      ],
+      "range": ">=0.13.13",
+      "nodes": [
+        "node_modules/@kobalte/core"
+      ],
+      "fixAvailable": {
+        "name": "@tanstack/angular-query-experimental",
+        "version": "5.102.8",
+        "isSemVerMajor": true
+      }
+    },
+    "@tanstack/angular-query-experimental": {
+      "name": "@tanstack/angular-query-experimental",
+      "severity": "critical",
+      "isDirect": true,
+      "via": [
+        "@tanstack/query-devtools"
+      ],
+      "effects": [],
+      "range": ">=5.103.0",
+      "nodes": [
+        "node_modules/@tanstack/angular-query-experimental"
+      ],
+      "fixAvailable": {
+        "name": "@tanstack/angular-query-experimental",
+        "version": "5.102.8",
+        "isSemVerMajor": true
+      }
+    },
+    "@tanstack/query-devtools": {
+      "name": "@tanstack/query-devtools",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        "@kobalte/core",
+        "solid-js"
+      ],
+      "effects": [
+        "@tanstack/angular-query-experimental"
+      ],
+      "range": ">=5.103.0",
+      "nodes": [
+        "node_modules/@tanstack/query-devtools"
+      ],
+      "fixAvailable": {
+        "name": "@tanstack/angular-query-experimental",
+        "version": "5.102.8",
+        "isSemVerMajor": true
+      }
+    },
+    "seroval": {
+      "name": "seroval",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1241207,
+          "name": "seroval",
+          "dependency": "seroval",
+          "title": "Seroval: `fromJSON()` Promise thenable assimilation invokes plugin-produced callables (bypass of GHSA-mv8w-475r-vwqw)",
+          "url": "https://github.com/advisories/GHSA-p6vx-979v-rg4c",
+          "severity": "critical",
+          "cwe": [
+            "CWE-843"
+          ],
+          "cvss": {
+            "score": 9.8,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+          },
+          "range": ">=0.12.0 <=1.6.0"
+        },
+        {
+          "source": 1241208,
+          "name": "seroval",
+          "dependency": "seroval",
+          "title": "Seroval: Memory exhaustion via unchecked TypedArray length in JSON deserialization",
+          "url": "https://github.com/advisories/GHSA-jp82-f5mq-hwhp",
+          "severity": "high",
+          "cwe": [
+            "CWE-770"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<=1.6.2"
+        }
+      ],
+      "effects": [
+        "solid-js"
+      ],
+      "range": "<=1.6.2",
+      "nodes": [
+        "node_modules/seroval"
+      ],
+      "fixAvailable": {
+        "name": "@tanstack/angular-query-experimental",
+        "version": "5.102.8",
+        "isSemVerMajor": true
+      }
+    },
+    "solid-js": {
+      "name": "solid-js",
+      "severity": "critical",
+      "isDirect": false,
+      "via": [
+        "seroval"
+      ],
+      "effects": [
+        "@kobalte/core",
+        "@tanstack/query-devtools"
+      ],
+      "range": "1.8.4 - 1.8.7 || 1.9.7 - 2.0.0-rc.7",
+      "nodes": [
+        "node_modules/solid-js"
+      ],
+      "fixAvailable": {
+        "name": "@tanstack/angular-query-experimental",
+        "version": "5.102.8",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 5,
+      "total": 5
+    },
+    "dependencies": {
+      "prod": 14,
+      "dev": 677,
+      "optional": 199,
+      "peer": 2,
+      "peerOptional": 0,
+      "total": 725
+    }
+  }
+}

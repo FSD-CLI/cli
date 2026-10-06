@@ -1,0 +1,5 @@
+
+> fsd-docs@1.0.0 test:docs
+> node scripts/check-docs.mjs
+
+Passed: 34 sitemap pages, internal page links, 20 releases, bot access, LLM text routes, version commands, section anchors, and unknown-release 404.

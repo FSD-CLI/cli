@@ -1,5 +1,10 @@
 # CLI QA matrix — 2026-09-23
 
+> Historical evidence for the version/SHA recorded below. It is not current
+> release validation. See [Current release status](RELEASE-STATUS.md) for the
+> published package, current source baseline and open verification gaps.
+
+
 > Historical pre-fix results. Current local fix status is in
 > [QA-FIX-VERIFICATION.md](./QA-FIX-VERIFICATION.md).
 

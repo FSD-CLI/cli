@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import degit from "degit";
+import { getTemplateProvenance } from "./template-registry.mjs";
 import { configureProject } from "../project-config.mjs";
 import { execFileSafe } from "./command-runner.mjs";
 import { getInstallCommand } from "./package-managers.mjs";
@@ -25,8 +25,22 @@ export function runCommand(command, args, cwd, options = {}) {
 }
 
 export async function cloneTemplate(template, targetDir) {
-  const emitter = degit(template.repo, { cache: false, force: true });
-  await emitter.clone(targetDir);
+  const provenance = getTemplateProvenance(template);
+  if (fs.existsSync(targetDir)) throw new Error("Template destination must not already exist.");
+  fs.mkdirSync(targetDir, { recursive: true });
+  runCommand("git", ["init", "--quiet"], targetDir);
+  // Fetch the object directly: full SHAs must remain usable after branch tips move.
+  runCommand("git", ["-c", "maintenance.auto=false", "-c", "gc.auto=0",
+    "fetch", "--depth=1", "--no-tags",
+    `https://github.com/${template.repo}.git`, template.ref], targetDir);
+  const resolvedCommit = runCommand("git", ["rev-parse", "FETCH_HEAD"], targetDir).trim();
+  if (resolvedCommit !== template.ref) throw new Error("Downloaded template commit does not match its immutable ref.");
+  runCommand("git", ["-c", "core.autocrlf=false", "-c", "core.eol=lf",
+    "checkout", "--quiet", "--detach", resolvedCommit], targetDir);
+  fs.rmSync(path.join(targetDir, ".git"), { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+  fs.mkdirSync(path.join(targetDir, ".fsd"), { recursive: true });
+  fs.writeFileSync(path.join(targetDir, ".fsd", "template.json"),
+    JSON.stringify({ ...provenance, resolvedCommit }, null, 2) + "\n");
 }
 
 export function beginProjectTransaction(targetDir, { force = false } = {}) {

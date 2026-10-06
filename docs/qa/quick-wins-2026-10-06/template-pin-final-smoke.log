@@ -1,0 +1,9 @@
+
+> create-fsd-architecture@2.6.1 smoke:templates
+> node scripts/template-source-smoke.mjs
+
+{"framework":"react-vite","commit":"2f10a391e6677c739ceed3a5b030711d1fdf4454","treeSha256":"04c6f4a7375521806ddd120d4c24c3d13a04852548da979234fff25aad875e9e","status":"PASS"}
+{"framework":"nextjs","commit":"b5b162a5bf3467b1cb559110cbbaa3878fd5f7a0","treeSha256":"a840671d3c4a716f450d9d2368429e40d20f1894b97dda663023e85852f458a6","status":"PASS"}
+{"framework":"vue-vite","commit":"e66d99c616fe3cb1208e366a130939e7d02fffc1","treeSha256":"1b71355cd748f5ffb654af66782bb51d523a2d976e6b6b0f0ec628e49b958016","status":"PASS"}
+{"framework":"nuxt","commit":"54bf042258f4628d7ee504bc3cf1d0f01afda611","treeSha256":"aeef93699af3270f6e486904b7cc9997b1077ab7ffcb3aad7fe49691850f055c","status":"PASS"}
+{"framework":"sveltekit","commit":"ca68a9f659c6e97c48cc24dfb6570502374fcba1","treeSha256":"53e99d969caa39010e0371f80b4b2a2b804f5b4297a087f68096e8ffb094b7b8","status":"PASS"}

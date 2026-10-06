@@ -1,0 +1,20 @@
+label: generate-page
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/app
+command: ["/usr/local/bin/node","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-ULX269/cli-install/node_modules/create-fsd-architecture/bin/index.mjs","--generate","page","account"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  Slice generated successfully!
+
+  Created files:
+    - src/pages/account/ui/account-page.tsx
+    - src/pages/account/index.ts
+    - src/app/routing/index.tsx
+
+
+
+stderr:
+
