@@ -30,9 +30,13 @@ export async function cloneTemplate(template, targetDir) {
   fs.mkdirSync(targetDir, { recursive: true });
   runCommand("git", ["init", "--quiet"], targetDir);
   // Fetch the object directly: full SHAs must remain usable after branch tips move.
-  runCommand("git", ["-c", "maintenance.auto=false", "-c", "gc.auto=0",
-    "fetch", "--depth=1", "--no-tags",
-    `https://github.com/${template.repo}.git`, template.ref], targetDir);
+  try {
+    runCommand("git", ["-c", "maintenance.auto=false", "-c", "gc.auto=0",
+      "fetch", "--depth=1", "--no-tags",
+      `https://github.com/${template.repo}.git`, template.ref], targetDir);
+  } catch (error) {
+    throw new Error(`Cannot download template ${template.repo} at pinned commit ${template.ref}: ${error.message}`, { cause: error });
+  }
   const resolvedCommit = runCommand("git", ["rev-parse", "FETCH_HEAD"], targetDir).trim();
   if (resolvedCommit !== template.ref) throw new Error("Downloaded template commit does not match its immutable ref.");
   runCommand("git", ["-c", "core.autocrlf=false", "-c", "core.eol=lf",
