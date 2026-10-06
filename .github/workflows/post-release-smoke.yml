@@ -38,7 +38,7 @@ jobs:
       - run: npm run smoke:published
       - name: Retain command logs and registry metadata
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: npm-${{ matrix.framework }}
           path: ci-artifacts/
