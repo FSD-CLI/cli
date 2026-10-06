@@ -67,6 +67,7 @@ export async function runGenerator(options) {
     name: normalizedName,
     config,
     force: options.force,
+    authProvider: options.authProvider,
   };
 
   if (options.dryRun) {
@@ -158,7 +159,7 @@ export function loadProjectConfig(cwd) {
   });
 }
 
-export function createGeneratorPlan({ cwd, type, name, config, force = false }) {
+export function createGeneratorPlan({ cwd, type, name, config, force = false, authProvider }) {
   validateGenerateOptions({ type, name });
   assertGeneratorSupported(config.framework, type);
   const adapter = getFrameworkAdapter(config.framework);
@@ -175,7 +176,11 @@ export function createGeneratorPlan({ cwd, type, name, config, force = false }) 
     );
   }
 
-  const files = createFilePlan(type, name, config);
+  if (authProvider && (authProvider !== "supabase" || type !== "feature" || name !== "auth")) {
+    throw new Error("--auth-provider supabase is only valid for feature auth.");
+  }
+  const files = createFilePlan(type, name, { ...config, authProvider });
+  if (authProvider === "supabase") addSupabaseAuthFiles(files);
   const publicExports = files
     .filter((file) => file.public)
     .map((file) => file.exportLine ?? exportLine(file.path))
@@ -1285,4 +1290,23 @@ function printSuccess(files) {
   }
 
   console.log();
+}
+
+function addSupabaseAuthFiles(files) {
+  const adapter = fs.readFileSync(new URL("./generators/supabase-auth-adapter.mjs", import.meta.url), "utf8");
+  files.push(file("api/supabase.adapter.js", adapter, false));
+  files.push(file("api/supabase.adapter.d.ts", supabaseDeclaration(), false));
+  files.push({ path: "api/supabase.ts", content: 'export {\n  configureSupabaseAuth,\n  createSupabaseAuthAdapter,\n} from "./supabase.adapter.js";\n', public: true });
+  for (const [name, method] of [["login", "login"], ["register", "register"], ["forgot-password", "forgotPassword"], ["reset-password", "resetPassword"], ["verify-code", "verifyCode"]]) {
+    const pathname = `api/${name}.api.ts`;
+    const item = files.find(f => f.path === pathname);
+    const contents = `import { getSupabaseAuth } from "./supabase.adapter.js";\n\nexport function ${method}(\n  payload: Parameters<ReturnType<typeof getSupabaseAuth>["${method}"]>[0],\n) {\n  return getSupabaseAuth().${method}(payload);\n}\n`;
+    if (item) item.content = contents;
+    else files.push(file(pathname, contents, true));
+  }
+  files.push(file("SUPABASE.md", `# Supabase Auth integration\n\nOpt-in browser adapter; not an SSR authorization implementation. Install @supabase/supabase-js with your package manager. In browser bootstrap create a Supabase client with the public URL and publishable/anon key and pass it to configureSupabaseAuth exported by this slice. Never import service_role or secret keys into frontend code. Configure email recovery templates to include the recovery OTP; verify-code is for password recovery, not signup confirmation. Email-confirmation signup can return null. Subscribe to onAuthStateChange in application bootstrap to synchronize UI state; use adapter.logout to revoke the session. RLS and server authorization must be configured and tested independently. See the CLI docs/AUTH-SUPABASE-CONTRACT.md for the complete contract and acceptance.\n`, false));
+}
+
+function supabaseDeclaration() {
+  return fs.readFileSync(new URL("./generators/supabase-auth-contract.d.ts", import.meta.url), "utf8");
 }

@@ -49,6 +49,7 @@ Create options:
       --no-install              Create the project without installing packages
       --no-start                Do not start the development server
       --dry-run                 Preview every planned change without writing files
+       --auth-provider supabase  Opt-in browser Supabase adapter for feature auth
        --force                   Replace an existing target with automatic rollback
 
 Upgrade options:
@@ -66,6 +67,7 @@ Examples:
   npx create-fsd-architecture my-app
   npx create-fsd-architecture my-app --framework react-vite --yes --no-install
   npx create-fsd-architecture --generate feature auth
+  npx create-fsd-architecture --generate feature auth --auth-provider supabase
 
 Support FSD CLI (optional):
   Buy Me a Coffee: https://buymeacoffee.com/ashrafqopiah

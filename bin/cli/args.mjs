@@ -73,11 +73,17 @@ export function parseCliArgs(args) {
     const values = [];
     let force = false;
     let dryRun = false;
-    for (const argument of args.slice(generateIndex + 1)) {
+    let authProvider;
+    const tail = args.slice(generateIndex + 1);
+    for (let index = 0; index < tail.length; index += 1) {
+      const argument = tail[index];
       if (argument === "--force") {
         force = true;
       } else if (argument === "--dry-run") {
         dryRun = true;
+      } else if (argument === "--auth-provider" || argument.startsWith("--auth-provider=")) {
+        authProvider = argument.includes("=") ? argument.slice("--auth-provider=".length) : tail[++index];
+        if (authProvider !== "supabase") throw new CliUsageError("--auth-provider supports only supabase.");
       } else if (argument.startsWith("-")) {
         throw new CliUsageError(`Unknown generate option "${argument}".`);
       } else {
@@ -93,6 +99,7 @@ export function parseCliArgs(args) {
       name: values[1],
       force,
       dryRun,
+      ...(authProvider ? { authProvider } : {}),
     };
   }
 

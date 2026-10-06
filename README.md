@@ -283,6 +283,15 @@ reset-password, and verification-code flows together. With the default stack it
 also generates typed React Hook Form components, Zod schemas, React Query
 mutations, and the selected client-state integration.
 
+### Opt-in Supabase Auth adapter (candidate)
+
+`-g feature auth --auth-provider supabase` generates an official browser SDK
+adapter with session normalization, confirmation-required signup and recovery OTP
+handling. It is candidate work and is not available in published npm 2.6.1.
+Install the SDK and configure a browser client with public keys; SSR authorization
+and RLS need separate application integration and backend acceptance.
+See [the complete contract](docs/AUTH-SUPABASE-CONTRACT.md).
+
 ## Core architecture in 2.2
 
 The CLI runtime is split into stable boundaries:
@@ -368,3 +377,18 @@ checks the recorded provenance and compares the complete source byte tree.
 Before releasing a CLI update, merge its companion template PRs and verify the
 pinned commits remain available; rebind pins after squash/rebase merges.
 Security/build checks are separate from source identity verification.
+
+## Git workflow policy
+
+Git and Conventional Commits remain part of setup. Pre-commit checks staged and
+working-tree whitespace; full builds run in CI. Set `FSD_PRE_COMMIT_LINT=1` to
+run lint on commit or `FSD_PRE_PUSH_CHECKS=1` to run lint/build on push.
+For an intentional emergency bypass, Husky supports `HUSKY=0 git commit ...`;
+CI remains the required quality gate and failures must still be resolved.
+
+Auto-PR and PR labeling are optional. The React template keeps reviewed examples
+in `.github/optional-workflows/`; copy a chosen file into `.github/workflows/`
+to enable it. Auto-PR is manual (`workflow_dispatch`) and needs repository
+permission to create PRs. Labeler needs `.github/labeler.yml`, the labels
+`documentation`, `source`, `ci`, and Actions permission to apply labels.
+Do not enable automation before configuring its permissions and labels.

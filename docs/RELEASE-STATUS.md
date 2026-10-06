@@ -124,3 +124,13 @@ Raw commands, working directories, outputs and exit codes are saved under
 `ci-artifacts/published-<framework>/`. Failed temporary workspaces are retained
 for diagnosis; successful ones are removed. A failed result blocks the release
 verification claim, not npm publishing authority. No automatic republish occurs.
+
+## Approved decision follow-up (candidate)
+
+October 6 follow-up adds opt-in `--auth-provider supabase`, with browser SDK
+contract tests and generated lint/types/build across the five frameworks. Live
+Supabase staging acceptance and SSR/RLS integration remain separate requirements.
+The new light-hook policy uses internal managed state3 (`light-hooks-v1`) and
+keeps customized hooks as conflicts. These changes are not in npm2.6.1.
+Existing 0318943/93-test/28-check evidence above remains historical evidence of
+that exact head; the follow-up head requires its own CI results.

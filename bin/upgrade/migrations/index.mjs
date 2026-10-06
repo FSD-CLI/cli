@@ -1,6 +1,6 @@
 import { UpgradeStateError } from "../config.mjs";
 
-export const CURRENT_UPGRADE_STATE_VERSION = 2;
+export const CURRENT_UPGRADE_STATE_VERSION = 3;
 export const SUPPORTED_FRAMEWORKS = Object.freeze([
   "react-vite",
   "nextjs",
@@ -27,6 +27,15 @@ export const MIGRATIONS = Object.freeze([
     preconditions: ["Managed hook content and package-manager ownership are unambiguous."],
     manualActionMayBeRequired: true,
     plan: (context) => context.planToolingMigration(),
+  },
+  {
+    id: "light-hooks-v1",
+    from: 2,
+    to: 3,
+    frameworks: SUPPORTED_FRAMEWORKS,
+    preconditions: ["CLI-owned hook hashes match; user-customized hooks are conflicts."],
+    manualActionMayBeRequired: true,
+    plan: (context) => context.planLightHooksMigration(),
   },
 ]);
 

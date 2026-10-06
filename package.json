@@ -42,7 +42,8 @@
     "LICENSE",
     "docs/RELEASE-STATUS.md",
     "docs/EXISTING-PROJECT-SUPPORT.md",
-    "docs/PROPOSALS.md"
+    "docs/PROPOSALS.md",
+    "docs/AUTH-SUPABASE-CONTRACT.md"
   ],
   "keywords": [
     "fsd",

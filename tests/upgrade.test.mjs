@@ -22,6 +22,7 @@ import { generateSlice } from "../bin/generator.mjs";
 import {
   readManifest,
   serializeManifest,
+  sha256,
   writeInitialManifest,
 } from "../bin/upgrade/manifest.mjs";
 import { selectMigrationPath, validateMigrationGraph } from "../bin/upgrade/migrations/index.mjs";
@@ -207,8 +208,8 @@ test("dry-run and check are read-only, then a clean legacy upgrade is idempotent
     const plan = buildUpgradePlan(root, CLI_VERSION);
     applyUpgradePlan(plan, { noInstall: true });
     const manifest = readManifest(root);
-    assert.equal(manifest.stateVersion, 2);
-    assert.deepEqual(manifest.appliedMigrations, ["managed-state-v1", "tooling-hardening-v1"]);
+    assert.equal(manifest.stateVersion, 3);
+    assert.deepEqual(manifest.appliedMigrations, ["managed-state-v1", "tooling-hardening-v1", "light-hooks-v1"]);
     assert.match(fs.readFileSync(path.join(root, ".husky", "pre-commit"), "utf8"), /^#!\/bin\/sh\nset -e/m);
 
     const secondPlan = buildUpgradePlan(root, CLI_VERSION);
@@ -231,7 +232,7 @@ test("manifest serialization is accepted by the Next.js Biome array style", () =
     const content = fs.readFileSync(path.join(root, ".fsd", "manifest.json"), "utf8");
     assert.match(
       content,
-      /"appliedMigrations": \["managed-state-v1", "tooling-hardening-v1"\]/
+      /"appliedMigrations": \["managed-state-v1", "tooling-hardening-v1", "light-hooks-v1"\]/
     );
     assert.equal(content, serializeManifest(manifest));
   } finally {
@@ -465,7 +466,7 @@ test("manifest-write failure rolls back prior hook updates", () => {
 });
 
 test("migration graph rejects gaps, duplicate IDs, cycles, and downgrades", () => {
-  assert.equal(selectMigrationPath(0).length, 2);
+  assert.equal(selectMigrationPath(0).length, 3);
   assert.throws(
     () => validateMigrationGraph([{ id: "same", from: 0, to: 1 }, { id: "same", from: 1, to: 2 }]),
     /Duplicate/
@@ -474,7 +475,7 @@ test("migration graph rejects gaps, duplicate IDs, cycles, and downgrades", () =
     () => validateMigrationGraph([{ id: "cycle", from: 1, to: 1 }]),
     /invalid state transition/
   );
-  assert.throws(() => selectMigrationPath(3), /newer than this CLI supports/);
+  assert.throws(() => selectMigrationPath(4), /newer than this CLI supports/);
 });
 
 test("symlink escapes are rejected before planning writes", () => {
@@ -508,4 +509,27 @@ test("dirty Git worktrees are refused unless explicitly allowed", async () => {
   } finally {
     removeFixture(root);
   }
+});
+
+test('state2 projects receive light hooks without adopting customized hooks or business code', () => {
+  const { root, config } = createFixture('react-vite', { legacyHooks: false, manifest: true });
+  try {
+    const manifest = readManifest(root);
+    manifest.stateVersion = 2;
+    manifest.appliedMigrations = ['managed-state-v1', 'tooling-hardening-v1'];
+    const hook = '.husky/pre-commit';
+    const previous = '#!/bin/sh\nset -e\nnpm run lint\ngit diff --cached --check\ngit diff --check\nnpm run build\n';
+    fs.writeFileSync(path.join(root, hook), previous);
+    manifest.managedFiles[hook].contentHash = sha256(previous);
+    fs.writeFileSync(path.join(root, '.fsd/manifest.json'), serializeManifest(manifest));
+    const plan = buildUpgradePlan(root, CLI_VERSION);
+    assert.equal(plan.conflicts.length, 0);
+    assert.deepEqual(plan.migrationPath.map(x => x.id), ['light-hooks-v1']);
+    applyUpgradePlan(plan, { noInstall: true });
+    assert.equal(readManifest(root).stateVersion, 3);
+    assert.match(fs.readFileSync(path.join(root, hook), 'utf8'), /FSD_PRE_COMMIT_LINT/);
+    assert.equal(buildUpgradePlan(root, CLI_VERSION).writes.length, 0);
+    fs.appendFileSync(path.join(root, hook), '\necho custom policy\n');
+    assert(buildUpgradePlan(root, CLI_VERSION).conflicts.length > 0);
+  } finally { removeFixture(root); }
 });

@@ -146,9 +146,9 @@ export function createHuskyHooks(packageManager) {
   }
 
   return {
-    "pre-commit": `#!/bin/sh\nset -e\n${run("lint")}\ngit diff --cached --check\ngit diff --check\n${run("build")}\n`,
-    "commit-msg": `#!/bin/sh\nset -e\n${execCommitlint}\n`,
-    "pre-push": `#!/bin/sh\nset -e\n${run("build")}\n`,
+    "pre-commit": `#!/bin/sh\nset -e\nif [ "\${HUSKY:-1}" = "0" ]; then\n  echo "FSD: hook bypassed via HUSKY=0; CI checks still apply."\n  exit 0\nfi\ngit diff --cached --check\ngit diff --check\nif [ "\${FSD_PRE_COMMIT_LINT:-0}" = "1" ]; then\n  ${run("lint")}\nfi\n`,
+    "commit-msg": `#!/bin/sh\nset -e\nif [ "\${HUSKY:-1}" = "0" ]; then\n  echo "FSD: hook bypassed via HUSKY=0; CI checks still apply."\n  exit 0\nfi\n${execCommitlint}\n`,
+    "pre-push": `#!/bin/sh\nset -e\nif [ "\${HUSKY:-1}" = "0" ]; then\n  echo "FSD: hook bypassed via HUSKY=0; CI checks still apply."\n  exit 0\nfi\nif [ "\${FSD_PRE_PUSH_CHECKS:-0}" = "1" ]; then\n  ${run("lint")}\n  ${run("build")}\nelse\n  echo "FSD: quality/build run in CI. Use FSD_PRE_PUSH_CHECKS=1 for local checks."\nfi\n`,
   };
 }
 
