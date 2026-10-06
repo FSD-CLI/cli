@@ -40,8 +40,10 @@ and generated-project quality/build. Raw logs are in
 [committed React evidence](https://github.com/FSD-CLI/cli/blob/main/docs/qa/published-2.6.1/react-vite/result.json) and
 [committed Next.js evidence](https://github.com/FSD-CLI/cli/blob/main/docs/qa/published-2.6.1/nextjs/result.json), with raw
 command logs in the same directories.
-This closes those two artifact/build combinations only; Ubuntu workflow and
-other OS/framework/package-manager combinations still require execution.
+This closes those two local artifact/build combinations only. The follow-up
+[Ubuntu published baseline run](https://github.com/FSD-CLI/cli/actions/runs/37402559746)
+passed both React/Vite and Next.js jobs against the exact public 2.6.1 package.
+Other OS/framework/package-manager combinations still require execution.
 
 [QA PR #5](https://github.com/FSD-CLI/cli/pull/5) is an unmerged partial audit
 of `9640dcc6ab47ebfaedda60ff80572a3ce08e9562`, before the Windows fixes.
@@ -50,8 +52,10 @@ Reported counts are author claims until the committed matrix can be reviewed.
 
 ## Candidate branch verification (unmerged)
 
-The `codex/roadmap-quick-wins` candidate passed local `npm run check`: 91 tests
-and the npm pack dry-run, exit 0. Node 24.21.0/npm 11.19.0 on macOS were used.
+The initial `a1d18b0` candidate passed local `npm run check`: 91 tests and the
+npm pack dry-run, exit 0. The follow-up adds clear pinned-download failure
+messages and verifies rollback for both new and existing destinations:
+93 tests and npm pack dry-run passed. Node 24.21.0/npm 11.19.0 on macOS were used.
 Repeated downloads of all five pinned source commits produced identical byte
 trees, and actual CLI create-without-install, provenance, four slice generators
 and configuration/layer checks passed for every registered framework.
@@ -61,8 +65,9 @@ checks passed; the Docs production HTTP smoke also passed.
 [Candidate evidence](https://github.com/FSD-CLI/cli/tree/codex/roadmap-quick-wins/docs/qa/quick-wins-2026-10-06)
 records commits, lock hashes, commands and raw outputs.
 [Security inventory](https://github.com/FSD-CLI/cli/blob/codex/roadmap-quick-wins/docs/SECURITY-BASELINE.md)
-records the unresolved Nuxt/Angular production dependency findings. Their
-security gates stay failed. Quality/build success is not security clearance.
+records the unresolved Nuxt production dependency findings and the follow-up
+Angular serializer remediation. Nuxt's security gate stays failed; Angular's
+patched production dependency audit passed. Quality/build success is not security clearance.
 These branch changes are not yet merged, deployed or published.
 
 ## Reading evidence
@@ -101,6 +106,7 @@ historical results; never relabel them as runs against newer source.
 ## Post-publish artifact smoke
 
 Dispatch **Published package smoke** with the exact version already on npm.
+Changes to this workflow or its scripts also run the public 2.6.1 baseline on PRs.
 The job has read-only repository permissions and cannot publish. It verifies
 registry integrity/gitHead, packaged runtime files, installed CLI version,
 create/doctor/check, all four representative slice types and generated-project

@@ -9,13 +9,13 @@ All executable repositories add `.github/workflows/dependency-security.yml`: pul
 
 | Repository | CodeQL coverage | Production audit candidate result | Owner / remaining action |
 | --- | --- | --- | --- |
-| FSD-CLI/cli | Existing GitHub automatic analysis | PASS, zero findings | Maintainers; verify new PR security job |
+| FSD-CLI/cli | Existing GitHub automatic analysis | PASS, zero findings | PR #6 production-audit and CodeQL passed |
 | FSD-CLI/FSD | Existing GitHub automatic analysis | PASS, zero findings | Maintainers; existing PRs #2/#3 remain separate |
 | FSD-CLI/FSD-NEXTJS | Existing GitHub automatic analysis | PASS, zero findings | Maintainers; independent quality/security workflows need first PR run |
 | FSD-CLI/FSD-VUE | Explicit CodeQL workflow added; first run pending | PASS, zero findings | Maintainers; confirm CodeQL execution |
 | FSD-CLI/FSD-NUXT | Explicit CodeQL workflow added; first run pending | FAIL, 8 high / 6 critical aggregate entries | Maintainers; upstream dependency remediation below |
 | FSD-CLI/fsd-sveltekit | Explicit CodeQL workflow added; first run pending | Accepted: 3 low entries for one cookie advisory | Maintainers; review exception by 2026-11-06 |
-| FSD-CLI/fsd-angular | Explicit CodeQL workflow added; first run pending | FAIL, 5 critical aggregate entries | Maintainers; Seroval dependency remediation below |
+| FSD-CLI/fsd-angular | Explicit CodeQL workflow added; first run pending | PASS, zero production findings after scoped Seroval patch | Maintainers; confirm first PR security/quality runs |
 | ashrafmo-1/fsd-docs | Explicit CodeQL workflow added; first run pending | PASS, zero findings | Maintainers; verify new jobs |
 | FSD-CLI/create-fsd-architecture (Agent Skill) | Intentionally exempt: declarative Markdown/YAML; no executable JS/TS package | npm intentionally exempt; no package.json | Maintainers; reassess when executable tools are introduced |
 
@@ -27,9 +27,9 @@ Next.js in its template and Docs is patched from 16.3.5 to 16.3.8, beyond the [1
 
 ## Unresolved high/critical findings — no approved exception
 
-Nuxt 4.5.2 still pulls simple-git 3.36.0 through DevTools and node-forge 1.4.0 through listhen/Nitro. Its production audit also includes braces via its build dependency tree. npm's proposed forced Nuxt downgrade is not an acceptable remediation. simple-git's fix is a major 4.x update outside the upstream range; node-forge/braces had no fixed release available when checked. Owner: maintainers. Review by 2026-10-13; seek upstream releases or design and test a narrowly scoped compatible remediation. The Nuxt security job must remain failed; do not merge on a waived threshold.
+Nuxt 4.5.2 still pulls simple-git 3.36.0 through DevTools and node-forge 1.4.0 through listhen/Nitro. Its production audit also includes braces via its build dependency tree. npm's proposed forced Nuxt downgrade is not an acceptable remediation. simple-git's fixed 4.0.2 is outside the upstream range and removes the default export used by DevTools; a blind override would break its consumer. node-forge 1.4.0 and braces 3.0.3 still have no published fixed release as of the follow-up verification. Owner: maintainers. Review by 2026-10-13; seek upstream releases or design and test a narrowly scoped compatible remediation. The Nuxt security job must remain failed; do not merge on a waived threshold. Dependency advisories are confirmed; an exploitable application input path was not demonstrated.
 
-Angular 22.2.1 fixes the router finding, but query-devtools/Solid still constrains Seroval to a vulnerable 1.5.x range. The fixed Seroval release is 1.6.8; a range override needs focused serialization and consumer compatibility verification before acceptance. Owner: maintainers. Review by 2026-10-13. The Angular security job remains failed. No major upgrade, forced downgrade or blanket audit exception is approved.
+Angular's follow-up candidate applies a Solid-scoped Seroval 1.6.8 override. The plugin-produced Promise thenable and two bounded fake-ArrayBuffer payloads fail the security assertions on 1.5.6 and are rejected on 1.6.8. Ordinary values, typed arrays, Promises, web plugins and Solid SSR serialization remain valid. Clean installs and full quality/tests/build passed on Node 24.15.0 and 24.21.0; production audit reports zero findings. Both quality and security jobs run the five regression/compatibility tests. Independent candidate review found no concrete bypass or consumer regression. Five development-only high aggregate entries remain in the Steiger/braces chain; they are not waived or included in the production-only PASS. Owner: maintainers; remove the scoped override only after a fixed upstream range is verified.
 
 Sources: [simple-git advisory](https://github.com/advisories/GHSA-x6jw-m9v5-85vh), [node-forge advisory](https://github.com/advisories/GHSA-86w9-cpqp-85rv), [braces advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), [Seroval advisory](https://github.com/advisories/GHSA-p6vx-979v-rg4c). Aggregate package counts are not distinct vulnerability counts.
 
