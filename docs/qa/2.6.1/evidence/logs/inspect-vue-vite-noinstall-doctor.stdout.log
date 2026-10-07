@@ -1,0 +1,15 @@
+
+  FSD doctor
+
+  PASS  FSD configuration — vue-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+

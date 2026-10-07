@@ -1,0 +1,33 @@
+{
+  "createdAt": "2026-10-06T21:10:21.917Z",
+  "repoRoot": "E:\\qa clean 2\\cli",
+  "workspace": "E:\\qa work r2",
+  "repoHead": "bcde1c3bee7005027cee16a66ee6461090e1a164",
+  "branch": "qa/2.6.1-baseline",
+  "auditedCliSha": "9640dcc6ab47ebfaedda60ff80572a3ce08e9562",
+  "cliVersion": "2.6.1",
+  "scriptSha256": "2b5e4155bf5c2c8f12e5c54c2709785c3d2814820a1685e938010c0999e966e8",
+  "os": "Windows_NT 10.0.26200 x64",
+  "node": "v24.21.0",
+  "tools": {
+    "npm": "11.19.0",
+    "pnpm": "12.8.1",
+    "yarn": "1.22.22",
+    "bun": "1.4.2",
+    "git": "git version 2.49.0.windows.1"
+  },
+  "groups": [
+    "provenance",
+    "create",
+    "generate",
+    "inspect",
+    "upgrade",
+    "legacy",
+    "doctor-managers",
+    "imports",
+    "probe",
+    "packed",
+    "published",
+    "templates-end"
+  ]
+}

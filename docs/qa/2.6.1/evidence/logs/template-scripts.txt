@@ -1,0 +1,11 @@
+=== package.json scripts per template === 
+rv-noinstall 
+dev, typecheck, build, lint, fsd:check, ci, preview, prepare  ||  ci = npm run fsd:check && npm run lint && npm run build
+nextjs-noinstall 
+dev, typecheck, build, start, lint, format, fsd:check, ci, prepare  ||  ci = npm run fsd:check && npm run lint && npm run typecheck && npm run build
+vue-vite-noinstall 
+dev, typecheck, build, lint, fsd:check, ci, preview, prepare  ||  ci = npm run fsd:check && npm run lint && npm run build
+nuxt-noinstall 
+build, dev, typecheck, lint, fsd:check, ci, generate, preview, postinstall, prepare  ||  ci = npm run fsd:check && npm run lint && npm run typecheck && npm run build
+sveltekit-noinstall 
+dev, build, preview, typecheck, typecheck:watch, lint, fsd:check, audit, ci, prepare  ||  ci = npm run fsd:check && npm run lint && npm run typecheck && npm run build

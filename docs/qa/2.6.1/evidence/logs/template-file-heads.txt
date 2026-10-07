@@ -1,0 +1,17 @@
+=== E:\qa work r2\react-vite-r2\DEVTO-FSD-CLI-DRAFT.md
+---
+title: "Introducing create-fsd-architecture: Start with Feature-Sliced Design from Day One"
+published: false
+description: "A practical look at create-fsd-architecture, an open-source CLI for creating and extending FSD projects across React, Next.js, Vue, Nuxt, and SvelteKit."
+tags: architecture, frontend, javascript, opensource
+cover_image: "{{COVER_IMAGE_URL}}"
+canonical_url: "{{CANONICAL_URL}}"
+---
+=== E:\qa work r2\nextjs-r2\AGENTS.md
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes ƒ?? APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
+=== E:\qa work r2\nextjs-r2\CLAUDE.md
+@AGENTS.md

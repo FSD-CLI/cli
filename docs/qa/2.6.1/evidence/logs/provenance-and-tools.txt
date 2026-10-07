@@ -1,0 +1,28 @@
+CLI SHA 
+9640dcc6ab47ebfaedda60ff80572a3ce08e9562
+BRANCH 
+main
+STATUS 
+## main...origin/main
+?? docs/qa/
+?? scripts/
+LAST COMMIT 
+9640dcc6ab47ebfaedda60ff80572a3ce08e9562 2026-09-28 01:32:31 +0300 chore: add npm funding metadata
+PACKAGE 
+create-fsd-architecture 2.6.1
+OS 
+
+Microsoft Windows [Version 10.0.26200.9550]
+ARCH AMD64 
+NODE 
+v24.21.0
+NPM 
+11.19.0
+PNPM 
+12.8.1
+YARN 
+1.22.22
+BUN 
+1.4.2
+GIT 
+git version 2.49.0.windows.1

@@ -1,0 +1,15 @@
+
+  FSD doctor
+
+  PASS  FSD configuration — nuxt
+  PASS  package.json — found
+  PASS  FSD layer: app — app\app
+  PASS  FSD layer: pages — app\pages
+  PASS  FSD layer: widgets — app\widgets
+  PASS  FSD layer: features — app\features
+  PASS  FSD layer: entities — app\entities
+  PASS  FSD layer: shared — app\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+

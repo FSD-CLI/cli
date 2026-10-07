@@ -1,0 +1,12 @@
+C:\Program Files\nodejs\npm
+C:\Program Files\nodejs\npm.cmd
+C:\Users\HSN\AppData\Roaming\npm\npm
+C:\Users\HSN\AppData\Roaming\npm\npm.cmd
+C:\Users\HSN\AppData\Local\pnpm\bin\pnpm
+C:\Users\HSN\AppData\Local\pnpm\bin\pnpm.cmd
+C:\Users\HSN\AppData\Roaming\npm\pnpm
+C:\Users\HSN\AppData\Roaming\npm\pnpm.cmd
+C:\Users\HSN\AppData\Roaming\npm\yarn
+C:\Users\HSN\AppData\Roaming\npm\yarn.cmd
+C:\Users\HSN\AppData\Roaming\npm\bun
+C:\Users\HSN\AppData\Roaming\npm\bun.cmd

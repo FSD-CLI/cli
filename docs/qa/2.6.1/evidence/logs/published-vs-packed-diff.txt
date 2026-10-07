@@ -1,0 +1,12 @@
+packed files: 39
+published files: 39
+
+P             H                                                                SideIndicator
+-             -                                                                -------------
+\package.json 03D015A5CC0137E81CA69202518F81F6973D73400DA0B83B3EB73956AC083CFA <=           
+\package.json 3BAF2FC47DDAFBD962C4C8881144BC15C0D6E026C4E6E05B619BFDC852284331 =>           
+\README.md    0EB5FE7F2ED8FDBA9259DC33466C8BA406759D38BA18D6C73D88AD902AE751EC <=           
+\README.md    E701E734CF0435035075E35F3BF816AC636E18E1ED677083E107785745C184FA =>           
+
+
+
