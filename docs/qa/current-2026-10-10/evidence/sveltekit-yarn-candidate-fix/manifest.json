@@ -1,0 +1,24 @@
+{
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "templateRef": "ca68a9f659c6e97c48cc24dfb6570502374fcba1",
+  "classification": "candidate template package.json fix on generated fixture; not merged or published",
+  "node": "v24.13.0",
+  "yarn": "4.18.0",
+  "command": [
+    "yarn",
+    "run",
+    "ci"
+  ],
+  "cwd": "/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn",
+  "startedAt": "2026-10-10T16:53:25.629271+00:00",
+  "endedAt": "2026-10-10T16:53:36.297445+00:00",
+  "exit": 0,
+  "configBefore": false,
+  "configAfter": true,
+  "packageJsonOriginalSha256": "f2130750e0f4881583ceab49b3dafa5b554baeb2a3f17924bdb3dd6442b73178",
+  "packageJsonCandidateSha256": "b99769358640c072ab8caa5a5982145c4775762719fcb09f657d9ad122a14079",
+  "stdout": "stdout.log",
+  "stderr": "stderr.log",
+  "patch": "package-json.patch",
+  "originalPackageRestored": true
+}

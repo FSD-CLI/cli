@@ -1,0 +1,56 @@
+{
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "templateRef": "ca68a9f659c6e97c48cc24dfb6570502374fcba1",
+  "node": "v24.21.0",
+  "yarn": "4.18.0",
+  "packageJsonBefore": "f2130750e0f4881583ceab49b3dafa5b554baeb2a3f17924bdb3dd6442b73178",
+  "packageJsonAfter": "f2130750e0f4881583ceab49b3dafa5b554baeb2a3f17924bdb3dd6442b73178",
+  "rows": [
+    {
+      "command": [
+        "yarn",
+        "run",
+        "ci"
+      ],
+      "cwd": "/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn",
+      "startedAt": "2026-10-10T16:52:01.160413+00:00",
+      "endedAt": "2026-10-10T16:52:03.569027+00:00",
+      "exit": 1,
+      "configBefore": false,
+      "configAfter": false,
+      "stdout": "1.stdout.log",
+      "stderr": "1.stderr.log"
+    },
+    {
+      "command": [
+        "yarn",
+        "exec",
+        "svelte-kit",
+        "sync"
+      ],
+      "cwd": "/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn",
+      "startedAt": "2026-10-10T16:52:03.569199+00:00",
+      "endedAt": "2026-10-10T16:52:06.656541+00:00",
+      "exit": 0,
+      "configBefore": false,
+      "configAfter": true,
+      "stdout": "2.stdout.log",
+      "stderr": "2.stderr.log"
+    },
+    {
+      "command": [
+        "yarn",
+        "run",
+        "ci"
+      ],
+      "cwd": "/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn",
+      "startedAt": "2026-10-10T16:52:06.656671+00:00",
+      "endedAt": "2026-10-10T16:52:14.786701+00:00",
+      "exit": 0,
+      "configBefore": true,
+      "configAfter": true,
+      "stdout": "3.stdout.log",
+      "stderr": "3.stderr.log"
+    }
+  ]
+}

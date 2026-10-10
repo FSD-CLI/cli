@@ -1,0 +1,2168 @@
+{
+  "reviewedAt": "2026-10-10T16:25:29.587280+00:00",
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "runUrl": "https://github.com/FSD-CLI/cli/actions/runs/37682934668",
+  "runConclusion": "success",
+  "jobs": [
+    {
+      "id": 113003338114,
+      "name": "Cross-OS smoke / macos-latest",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338114",
+      "runner": "GitHub Actions 1000000897",
+      "startedAt": "2026-10-07T20:33:51Z",
+      "completedAt": "2026-10-07T20:34:04Z",
+      "tests": {},
+      "log": "113003338114.log",
+      "sha256": "f8d7dc3256e74068f0c3f18102ef5ae083ca827225a54197182509141d9c6e30",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:52Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:33:55Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:55Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Create, generate, inspect, and validate lifecycle contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Upload smoke logs",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:02Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:02Z",
+          "completed_at": "2026-10-07T20:34:02Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338298,
+      "name": "React / yarn",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338298",
+      "runner": "GitHub Actions 1000000896",
+      "startedAt": "2026-10-07T20:33:45Z",
+      "completedAt": "2026-10-07T20:34:08Z",
+      "tests": {},
+      "log": "113003338298.log",
+      "sha256": "e159f4f30188c7623fd7eec234581c95f3f7729b59c2ea67f5d5d7b0d0224ac3",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Install Yarn 4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Create and install project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:34:03Z"
+        },
+        {
+          "name": "Build with selected package manager",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-07T20:34:03Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338315,
+      "name": "pnpm 11 / nuxt",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338315",
+      "runner": "GitHub Actions 1000000898",
+      "startedAt": "2026-10-07T20:33:47Z",
+      "completedAt": "2026-10-07T20:34:34Z",
+      "tests": {},
+      "log": "113003338315.log",
+      "sha256": "36205b5e718ab2d4814b3c2e8ecf94a48466d4b9cddb2178a726e889a99309ea",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        },
+        {
+          "name": "Create with explicit build approvals",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:54Z",
+          "completed_at": "2026-10-07T20:34:12Z"
+        },
+        {
+          "name": "Generate and validate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:34:12Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338380,
+      "name": "Cross-OS smoke / ubuntu-latest",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338380",
+      "runner": "GitHub Actions 1000000901",
+      "startedAt": "2026-10-07T20:33:47Z",
+      "completedAt": "2026-10-07T20:33:57Z",
+      "tests": {},
+      "log": "113003338380.log",
+      "sha256": "2088b9b5ee58702c1cd4db41d5c26ddbfe618abb331e197635a413ae64946ae5",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:52Z"
+        },
+        {
+          "name": "Create, generate, inspect, and validate lifecycle contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:52Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        },
+        {
+          "name": "Upload smoke logs",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:54Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:33:54Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:33:54Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:33:54Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338392,
+      "name": "React / pnpm",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338392",
+      "runner": "GitHub Actions 1000000899",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:04Z",
+      "tests": {},
+      "log": "113003338392.log",
+      "sha256": "13067633ed9713c62b2c1f2f31c19963cd91634183b7abf9d24836b4bc0f25c0",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Install Yarn 4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Create and install project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Build with selected package manager",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:34:00Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-07T20:34:00Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338410,
+      "name": "pnpm 10.26.0 / nuxt",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338410",
+      "runner": "GitHub Actions 1000000905",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:26Z",
+      "tests": {},
+      "log": "113003338410.log",
+      "sha256": "287463e175da5b676fb6ecb8e726bf370949eea1c761c106eff6577157359b08",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Create with explicit build approvals",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Generate and validate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:24Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:24Z",
+          "completed_at": "2026-10-07T20:34:24Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:24Z",
+          "completed_at": "2026-10-07T20:34:24Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:24Z",
+          "completed_at": "2026-10-07T20:34:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:24Z",
+          "completed_at": "2026-10-07T20:34:24Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338412,
+      "name": "Cross-OS smoke / windows-latest",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338412",
+      "runner": "GitHub Actions 1000000916",
+      "startedAt": "2026-10-07T20:34:00Z",
+      "completedAt": "2026-10-07T20:34:35Z",
+      "tests": {},
+      "log": "113003338412.log",
+      "sha256": "21aba29ac16ef4cefedb90a5ce11490ca1dd20e2ad052fe8aecefadf6a47496f",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:02Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:34:02Z",
+          "completed_at": "2026-10-07T20:34:09Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:34:09Z",
+          "completed_at": "2026-10-07T20:34:16Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:34:16Z",
+          "completed_at": "2026-10-07T20:34:26Z"
+        },
+        {
+          "name": "Create, generate, inspect, and validate lifecycle contracts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:34:26Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Upload smoke logs",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:33Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:33Z",
+          "completed_at": "2026-10-07T20:34:33Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338443,
+      "name": "CLI / Node 22",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338443",
+      "runner": "GitHub Actions 1000000908",
+      "startedAt": "2026-10-07T20:33:47Z",
+      "completedAt": "2026-10-07T20:34:09Z",
+      "tests": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "113003338443.log",
+      "sha256": "65eac23e8747ac589348e45f4314172e5649cfe71bf0dcfefef3cf58c406b1ab",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:55Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:55Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:34:05Z"
+        },
+        {
+          "name": "Run npm pack --dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:05Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338448,
+      "name": "nextjs build",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338448",
+      "runner": "GitHub Actions 1000000900",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:12Z",
+      "tests": {},
+      "log": "113003338448.log",
+      "sha256": "e7f5b5dcae381b7027e7e99037ea63c4ac13b5169030700ceb2d3d641d5b933f",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Create project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Generate all slice types and auth",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Validate generated project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:34:08Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:08Z",
+          "completed_at": "2026-10-07T20:34:08Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:08Z",
+          "completed_at": "2026-10-07T20:34:08Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:08Z",
+          "completed_at": "2026-10-07T20:34:08Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338453,
+      "name": "React / npm",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338453",
+      "runner": "GitHub Actions 1000000902",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:02Z",
+      "tests": {},
+      "log": "113003338453.log",
+      "sha256": "3552c7d671e0317da0fd5db08149989621ace8fc5333cd478c3c366e249eb40e",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Install Yarn 4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Create and install project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Build with selected package manager",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:34:00Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-07T20:34:00Z",
+          "completed_at": "2026-10-07T20:34:00Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-07T20:34:00Z",
+          "completed_at": "2026-10-07T20:34:00Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-07T20:34:00Z",
+          "completed_at": "2026-10-07T20:34:00Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338508,
+      "name": "pnpm 11 / react-vite",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338508",
+      "runner": "GitHub Actions 1000000913",
+      "startedAt": "2026-10-07T20:33:47Z",
+      "completedAt": "2026-10-07T20:34:16Z",
+      "tests": {},
+      "log": "113003338508.log",
+      "sha256": "de534e16d69391b1b43331b32229ed61f46cbbc3b04dc0ddb86539db67df9e16",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:52Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:52Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Create with explicit build approvals",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Generate and validate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:11Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:11Z",
+          "completed_at": "2026-10-07T20:34:11Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:11Z",
+          "completed_at": "2026-10-07T20:34:11Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:11Z",
+          "completed_at": "2026-10-07T20:34:11Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:11Z",
+          "completed_at": "2026-10-07T20:34:11Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338516,
+      "name": "CLI / Node 20",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338516",
+      "runner": "GitHub Actions 1000000903",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:07Z",
+      "tests": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "113003338516.log",
+      "sha256": "347cb0ab290e9299b42e41283a1aae2f8147cf37f114f367fefea0c572e4f014",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:54Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:54Z",
+          "completed_at": "2026-10-07T20:33:55Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:55Z",
+          "completed_at": "2026-10-07T20:34:03Z"
+        },
+        {
+          "name": "Run npm pack --dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:03Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338519,
+      "name": "Cross-OS CLI / ubuntu-latest",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338519",
+      "runner": "GitHub Actions 1000000909",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:06Z",
+      "tests": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "113003338519.log",
+      "sha256": "23e508ded3e3c5e42c0b7c603f253ef3b79fa76b3d77c62c78342813aa8a3a90",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:52Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:52Z",
+          "completed_at": "2026-10-07T20:33:55Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:55Z",
+          "completed_at": "2026-10-07T20:34:03Z"
+        },
+        {
+          "name": "Run npm pack --dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:03Z",
+          "completed_at": "2026-10-07T20:34:03Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:03Z",
+          "completed_at": "2026-10-07T20:34:03Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:03Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338535,
+      "name": "React / bun",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338535",
+      "runner": "GitHub Actions 1000000910",
+      "startedAt": "2026-10-07T20:33:45Z",
+      "completedAt": "2026-10-07T20:34:01Z",
+      "tests": {},
+      "log": "113003338535.log",
+      "sha256": "a1dd54af8da3cac904b0f2c9e498ae9afaccb673e6ba985759ae3cfb146052b0",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Install Yarn 4",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Create and install project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:33:55Z"
+        },
+        {
+          "name": "Build with selected package manager",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-07T20:33:55Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Post Run oven-sh/setup-bun@v2",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338551,
+      "name": "Cross-OS CLI / windows-latest",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338551",
+      "runner": "GitHub Actions 1000000918",
+      "startedAt": "2026-10-07T20:34:04Z",
+      "completedAt": "2026-10-07T20:34:58Z",
+      "tests": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "113003338551.log",
+      "sha256": "812af7fd0a3c6a78e666337aac7fc5b802cec5948422d2e4b8fe2d53d771daa1",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:34:05Z",
+          "completed_at": "2026-10-07T20:34:05Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:34:05Z",
+          "completed_at": "2026-10-07T20:34:10Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:34:10Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:34:31Z",
+          "completed_at": "2026-10-07T20:34:39Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:34:39Z",
+          "completed_at": "2026-10-07T20:34:53Z"
+        },
+        {
+          "name": "Run npm pack --dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:53Z",
+          "completed_at": "2026-10-07T20:34:54Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:54Z",
+          "completed_at": "2026-10-07T20:34:54Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:54Z",
+          "completed_at": "2026-10-07T20:34:56Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:56Z",
+          "completed_at": "2026-10-07T20:34:56Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338553,
+      "name": "pnpm 10.26.0 / react-vite",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338553",
+      "runner": "GitHub Actions 1000000904",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:03Z",
+      "tests": {},
+      "log": "113003338553.log",
+      "sha256": "c7e1776d6740c4102eb6d02495bb69c4fb64541d7c8bd1bfd7e7700d5b531313",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:52Z"
+        },
+        {
+          "name": "Create with explicit build approvals",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:52Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Generate and validate",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run pnpm/action-setup@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:01Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:01Z",
+          "completed_at": "2026-10-07T20:34:02Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:02Z",
+          "completed_at": "2026-10-07T20:34:02Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338574,
+      "name": "react-vite build",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338574",
+      "runner": "GitHub Actions 1000000912",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:07Z",
+      "tests": {},
+      "log": "113003338574.log",
+      "sha256": "18fb28888b757ab3592e47f78fe7568c638390adbeaef178614ad1f5c3542ed6",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:46Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Create project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Generate all slice types and auth",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:33:57Z"
+        },
+        {
+          "name": "Validate generated project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:57Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:04Z",
+          "completed_at": "2026-10-07T20:34:04Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338581,
+      "name": "vue-vite build",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338581",
+      "runner": "GitHub Actions 1000000907",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:08Z",
+      "tests": {},
+      "log": "113003338581.log",
+      "sha256": "129071cc571ccde7864ca5e588fff1abd9f89b342e088eb1e4d37cb6dc567d10",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:51Z"
+        },
+        {
+          "name": "Create project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:51Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Generate all slice types and auth",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Validate generated project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:34:05Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:05Z",
+          "completed_at": "2026-10-07T20:34:05Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:05Z",
+          "completed_at": "2026-10-07T20:34:05Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:05Z",
+          "completed_at": "2026-10-07T20:34:05Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338603,
+      "name": "CLI / Node 24",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338603",
+      "runner": "GitHub Actions 1000000911",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:01Z",
+      "tests": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "113003338603.log",
+      "sha256": "8122d1647808219d77ad9ffaf8b40af17ae6df068fd1e7ed65feb7fd45460061",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:52Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:52Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Run npm pack --dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:33:58Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:33:58Z",
+          "completed_at": "2026-10-07T20:33:59Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:33:59Z",
+          "completed_at": "2026-10-07T20:33:59Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338648,
+      "name": "sveltekit build",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338648",
+      "runner": "GitHub Actions 1000000906",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:22Z",
+      "tests": {},
+      "log": "113003338648.log",
+      "sha256": "02ed4bc0da66dfe199bdef857c46f1cdddb79dc14d8319d172e088e3562c2b1e",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:49Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:49Z",
+          "completed_at": "2026-10-07T20:33:53Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:53Z",
+          "completed_at": "2026-10-07T20:33:55Z"
+        },
+        {
+          "name": "Create project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:55Z",
+          "completed_at": "2026-10-07T20:34:06Z"
+        },
+        {
+          "name": "Generate all slice types and auth",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:06Z",
+          "completed_at": "2026-10-07T20:34:07Z"
+        },
+        {
+          "name": "Validate generated project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:34:07Z",
+          "completed_at": "2026-10-07T20:34:19Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:19Z",
+          "completed_at": "2026-10-07T20:34:20Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:20Z",
+          "completed_at": "2026-10-07T20:34:20Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:20Z",
+          "completed_at": "2026-10-07T20:34:20Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338724,
+      "name": "Cross-OS CLI / macos-latest",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338724",
+      "runner": "GitHub Actions 1000000917",
+      "startedAt": "2026-10-07T20:34:10Z",
+      "completedAt": "2026-10-07T20:34:32Z",
+      "tests": {
+        "tests": 93,
+        "pass": 93,
+        "fail": 0,
+        "skipped": 0
+      },
+      "log": "113003338724.log",
+      "sha256": "a659c5870a2f576c38e293fb19c3f6e4062da15e2cbc8cc83ee25b57e3327a65",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:34:11Z",
+          "completed_at": "2026-10-07T20:34:12Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:34:12Z",
+          "completed_at": "2026-10-07T20:34:14Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:34:14Z",
+          "completed_at": "2026-10-07T20:34:16Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:34:16Z",
+          "completed_at": "2026-10-07T20:34:17Z"
+        },
+        {
+          "name": "Run npm test",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:34:17Z",
+          "completed_at": "2026-10-07T20:34:29Z"
+        },
+        {
+          "name": "Run npm pack --dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:29Z",
+          "completed_at": "2026-10-07T20:34:29Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-07T20:34:29Z",
+          "completed_at": "2026-10-07T20:34:30Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-07T20:34:30Z",
+          "completed_at": "2026-10-07T20:34:30Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:30Z",
+          "completed_at": "2026-10-07T20:34:31Z"
+        }
+      ]
+    },
+    {
+      "id": 113003338818,
+      "name": "nuxt build",
+      "conclusion": "success",
+      "url": "https://github.com/FSD-CLI/cli/actions/runs/37682934668/job/113003338818",
+      "runner": "GitHub Actions 1000000914",
+      "startedAt": "2026-10-07T20:33:46Z",
+      "completedAt": "2026-10-07T20:34:20Z",
+      "tests": {},
+      "log": "113003338818.log",
+      "sha256": "5e198fdea066f29802cfdb242f8479237ac3200e80fd763db3dfa20e8b389eb0",
+      "checkoutShaFound": true,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:47Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-07T20:33:47Z",
+          "completed_at": "2026-10-07T20:33:48Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-07T20:33:48Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:33:50Z"
+        },
+        {
+          "name": "Create project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-07T20:33:50Z",
+          "completed_at": "2026-10-07T20:34:02Z"
+        },
+        {
+          "name": "Generate all slice types and auth",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-07T20:34:02Z",
+          "completed_at": "2026-10-07T20:34:03Z"
+        },
+        {
+          "name": "Validate generated project",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-07T20:34:03Z",
+          "completed_at": "2026-10-07T20:34:17Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-07T20:34:17Z",
+          "completed_at": "2026-10-07T20:34:17Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-07T20:34:17Z",
+          "completed_at": "2026-10-07T20:34:17Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-07T20:34:17Z",
+          "completed_at": "2026-10-07T20:34:17Z"
+        }
+      ]
+    }
+  ]
+}

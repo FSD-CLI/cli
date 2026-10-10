@@ -1,0 +1,20 @@
+label: generate-entity
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-fAsoI4/app
+command: ["/usr/local/bin/node","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-fAsoI4/cli-install/node_modules/create-fsd-architecture/bin/index.mjs","--generate","entity","product"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  Slice generated successfully!
+
+  Created files:
+    - src/entities/product/model/product.types.ts
+    - src/entities/product/ui/product-card.tsx
+    - src/entities/product/index.ts
+
+
+
+stderr:
+

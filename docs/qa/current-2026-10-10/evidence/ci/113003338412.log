@@ -1,0 +1,346 @@
+2026-10-07T20:34:01.1887343Z Current runner version: '2.337.0'
+2026-10-07T20:34:01.1915670Z ##[group]Runner Image Provisioner
+2026-10-07T20:34:01.1917002Z Hosted Compute Agent
+2026-10-07T20:34:01.1917670Z Version: 20260901.588
+2026-10-07T20:34:01.1918354Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-07T20:34:01.1919222Z Build Date: 2026-09-01T19:56:44Z
+2026-10-07T20:34:01.1919988Z Worker ID: {42d7c9f9-13aa-40e8-8304-0416e278f6f3}
+2026-10-07T20:34:01.1920879Z Azure Region: mexicocentral
+2026-10-07T20:34:01.1921554Z ##[endgroup]
+2026-10-07T20:34:01.1923073Z ##[group]Operating System
+2026-10-07T20:34:01.1923918Z Microsoft Windows Server 2025
+2026-10-07T20:34:01.1924625Z 10.0.26100
+2026-10-07T20:34:01.1925210Z Datacenter
+2026-10-07T20:34:01.1925776Z ##[endgroup]
+2026-10-07T20:34:01.1926378Z ##[group]Runner Image
+2026-10-07T20:34:01.1927092Z Image: windows-2025-vs2026
+2026-10-07T20:34:01.1927903Z Version: 20260925.250.1
+2026-10-07T20:34:01.1929754Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260925.250/images/windows/Windows2025-VS2026-Readme.md
+2026-10-07T20:34:01.1931936Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260925.250
+2026-10-07T20:34:01.1933267Z ##[endgroup]
+2026-10-07T20:34:01.1934862Z ##[group]GITHUB_TOKEN Permissions
+2026-10-07T20:34:01.1937414Z Contents: read
+2026-10-07T20:34:01.1938098Z Metadata: read
+2026-10-07T20:34:01.1938755Z ##[endgroup]
+2026-10-07T20:34:01.1940973Z Secret source: Actions
+2026-10-07T20:34:01.1942037Z Cache mode: write
+2026-10-07T20:34:01.1942805Z Prepare workflow directory
+2026-10-07T20:34:01.2395443Z Prepare all required actions
+2026-10-07T20:34:01.2438259Z Getting action download info
+2026-10-07T20:34:01.5277503Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-07T20:34:01.6945443Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-07T20:34:01.9679042Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-07T20:34:02.3452459Z Complete job name: Cross-OS smoke / windows-latest
+2026-10-07T20:34:02.4649057Z ##[group]Run actions/checkout@v4
+2026-10-07T20:34:02.4649948Z with:
+2026-10-07T20:34:02.4650272Z   repository: FSD-CLI/cli
+2026-10-07T20:34:02.4653591Z   token: ***
+2026-10-07T20:34:02.4653911Z   ssh-strict: true
+2026-10-07T20:34:02.4654233Z   ssh-user: git
+2026-10-07T20:34:02.4654558Z   persist-credentials: true
+2026-10-07T20:34:02.4654918Z   clean: true
+2026-10-07T20:34:02.4655242Z   sparse-checkout-cone-mode: true
+2026-10-07T20:34:02.4655629Z   fetch-depth: 1
+2026-10-07T20:34:02.4655940Z   fetch-tags: false
+2026-10-07T20:34:02.4656263Z   show-progress: true
+2026-10-07T20:34:02.4656589Z   lfs: false
+2026-10-07T20:34:02.4656891Z   submodules: false
+2026-10-07T20:34:02.4657210Z   set-safe-directory: true
+2026-10-07T20:34:02.4657572Z   allow-unsafe-pr-checkout: false
+2026-10-07T20:34:02.4658132Z env:
+2026-10-07T20:34:02.4658483Z   CI_ARTIFACTS_DIR: D:\a\cli\cli/ci-artifacts
+2026-10-07T20:34:02.4658908Z ##[endgroup]
+2026-10-07T20:34:02.5783071Z Syncing repository: FSD-CLI/cli
+2026-10-07T20:34:02.5784419Z ##[group]Getting Git version info
+2026-10-07T20:34:02.5784874Z Working directory is 'D:\a\cli\cli'
+2026-10-07T20:34:02.6673423Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-07T20:34:03.4178811Z git version 2.55.0.windows.5
+2026-10-07T20:34:03.4214896Z ##[endgroup]
+2026-10-07T20:34:03.4230999Z Temporarily overriding HOME='D:\a\_temp\c31d4a24-17e9-4743-a9c3-16f56f4079f9' before making global git config changes
+2026-10-07T20:34:03.4232992Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:34:03.4239616Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\cli\cli
+2026-10-07T20:34:03.4966450Z Deleting the contents of 'D:\a\cli\cli'
+2026-10-07T20:34:03.4971520Z ##[group]Initializing the repository
+2026-10-07T20:34:03.4978887Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\cli\cli
+2026-10-07T20:34:03.6001879Z Initialized empty Git repository in D:/a/cli/cli/.git/
+2026-10-07T20:34:03.6040142Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/FSD-CLI/cli
+2026-10-07T20:34:03.6542452Z ##[endgroup]
+2026-10-07T20:34:03.6543941Z ##[group]Disabling automatic garbage collection
+2026-10-07T20:34:03.6548936Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-07T20:34:03.6774414Z ##[endgroup]
+2026-10-07T20:34:03.6783693Z ##[group]Setting up auth
+2026-10-07T20:34:03.6785290Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:34:03.7008988Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-07T20:34:06.0597643Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:34:06.0838617Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-07T20:34:06.5003382Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:34:06.5237938Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-07T20:34:06.9421753Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-07T20:34:06.9654763Z ##[endgroup]
+2026-10-07T20:34:06.9655344Z ##[group]Fetching the repository
+2026-10-07T20:34:06.9667556Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fcde52a0b801a6d57b4d5914596dde72bf490ae9:refs/remotes/origin/main
+2026-10-07T20:34:08.7854187Z From https://github.com/FSD-CLI/cli
+2026-10-07T20:34:08.7854860Z  * [new ref]         fcde52a0b801a6d57b4d5914596dde72bf490ae9 -> origin/main
+2026-10-07T20:34:08.7887716Z ##[endgroup]
+2026-10-07T20:34:08.7888048Z ##[group]Determining the checkout info
+2026-10-07T20:34:08.7890152Z ##[endgroup]
+2026-10-07T20:34:08.7902069Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-07T20:34:08.8263171Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-07T20:34:08.8506258Z ##[group]Checking out the ref
+2026-10-07T20:34:08.8513522Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B main refs/remotes/origin/main
+2026-10-07T20:34:08.9831914Z Switched to a new branch 'main'
+2026-10-07T20:34:08.9888665Z branch 'main' set up to track 'origin/main'.
+2026-10-07T20:34:09.0260464Z ##[endgroup]
+2026-10-07T20:34:09.0266782Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-07T20:34:09.0470062Z fcde52a0b801a6d57b4d5914596dde72bf490ae9
+2026-10-07T20:34:09.0992376Z ##[group]Run actions/setup-node@v4
+2026-10-07T20:34:09.0992773Z with:
+2026-10-07T20:34:09.0992934Z   node-version: 22
+2026-10-07T20:34:09.0993103Z   cache: npm
+2026-10-07T20:34:09.0993246Z   always-auth: false
+2026-10-07T20:34:09.0993412Z   check-latest: false
+2026-10-07T20:34:09.0995543Z   token: ***
+2026-10-07T20:34:09.0995716Z env:
+2026-10-07T20:34:09.0995921Z   CI_ARTIFACTS_DIR: D:\a\cli\cli/ci-artifacts
+2026-10-07T20:34:09.0996130Z ##[endgroup]
+2026-10-07T20:34:09.2401858Z Found in cache @ C:\hostedtoolcache\windows\node\22.23.3\x64
+2026-10-07T20:34:09.2409196Z (node:4656) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:34:09.2409739Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:34:09.2412582Z ##[group]Environment details
+2026-10-07T20:34:14.6467513Z node: v22.23.3
+2026-10-07T20:34:14.6467766Z npm: 10.9.9
+2026-10-07T20:34:14.6468252Z yarn: 1.22.22
+2026-10-07T20:34:14.6468890Z ##[endgroup]
+2026-10-07T20:34:14.7074732Z [command]C:\Windows\system32\cmd.exe /D /S /C "C:\hostedtoolcache\windows\node\22.23.3\x64\npm.cmd config get cache"
+2026-10-07T20:34:15.5497796Z C:\npm\cache
+2026-10-07T20:34:15.8984833Z Cache hit for: node-cache-Windows-x64-npm-f338ca2e7f0be7e6b17d4b37887c02c01abf82af6c946ab361d86672b306c41f
+2026-10-07T20:34:15.9074497Z (node:4656) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-07T20:34:16.3352879Z Received 217322 of 217322 (100.0%), 1.0 MBs/sec
+2026-10-07T20:34:16.3354085Z Cache Size: ~0 MB (217322 B)
+2026-10-07T20:34:16.3410300Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/479bb336-dd8f-4896-b545-209efe54a943/cache.tzst -P -C D:/a/cli/cli --force-local --use-compress-program "zstd -d"
+2026-10-07T20:34:16.5133183Z Cache restored successfully
+2026-10-07T20:34:16.5141461Z Cache restored from key: node-cache-Windows-x64-npm-f338ca2e7f0be7e6b17d4b37887c02c01abf82af6c946ab361d86672b306c41f
+2026-10-07T20:34:16.5398682Z ##[group]Run npm ci
+2026-10-07T20:34:16.5398946Z [36;1mnpm ci[0m
+2026-10-07T20:34:16.5900847Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-07T20:34:16.5901155Z env:
+2026-10-07T20:34:16.5901338Z   CI_ARTIFACTS_DIR: D:\a\cli\cli/ci-artifacts
+2026-10-07T20:34:16.5901559Z ##[endgroup]
+2026-10-07T20:34:22.8127705Z 
+2026-10-07T20:34:22.8134466Z added 20 packages, and audited 21 packages in 6s
+2026-10-07T20:34:22.8134834Z 
+2026-10-07T20:34:22.8135031Z 17 packages are looking for funding
+2026-10-07T20:34:22.8135399Z   run `npm fund` for details
+2026-10-07T20:34:22.8138657Z 
+2026-10-07T20:34:22.8138879Z found 0 vulnerabilities
+2026-10-07T20:34:26.5707692Z ##[group]Run node scripts/ci/os-smoke.mjs
+2026-10-07T20:34:26.5708408Z [36;1mnode scripts/ci/os-smoke.mjs[0m
+2026-10-07T20:34:26.5768029Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-07T20:34:26.5768319Z env:
+2026-10-07T20:34:26.5768526Z   CI_ARTIFACTS_DIR: D:\a\cli\cli/ci-artifacts
+2026-10-07T20:34:26.5768744Z ##[endgroup]
+2026-10-07T20:34:26.8671635Z 
+2026-10-07T20:34:26.8673057Z [01-create] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","os-smoke-app","--framework","react-vite","--package-manager","npm","--yes","--no-install","--no-start"]
+2026-10-07T20:34:29.6290523Z 
+2026-10-07T20:34:29.6291808Z ┌─────────────────────────────────────────────────────────────────────────────┐
+2026-10-07T20:34:29.6292986Z │                                                                             │
+2026-10-07T20:34:29.6293759Z │    ███████╗███████╗██████╗                                                  │
+2026-10-07T20:34:29.6294365Z │    ██╔════╝██╔════╝██╔══██╗                                                 │
+2026-10-07T20:34:29.6294861Z │    █████╗  ███████╗██║  ██║                                                 │
+2026-10-07T20:34:29.6295272Z │    ██╔══╝  ╚════██║██║  ██║                                                 │
+2026-10-07T20:34:29.6295666Z │    ██║     ███████║██████╔╝                                                 │
+2026-10-07T20:34:29.6296040Z │    ╚═╝     ╚══════╝╚═════╝                                                  │
+2026-10-07T20:34:29.6296383Z │                                                                             │
+2026-10-07T20:34:29.6296789Z │           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+2026-10-07T20:34:29.6297195Z │                                                                             │
+2026-10-07T20:34:29.6297616Z │   app → pages → widgets → features → entities → shared                     │
+2026-10-07T20:34:29.6298322Z │                                                                             │
+2026-10-07T20:34:29.6298759Z │   Scalable • Maintainable • Enterprise Frontend Architecture                │
+2026-10-07T20:34:29.6299174Z │                                                                             │
+2026-10-07T20:34:29.6299570Z └─────────────────────────────────────────────────────────────────────────────┘
+2026-10-07T20:34:29.6299762Z 
+2026-10-07T20:34:29.6299949Z   Commitlint verification skipped until dependencies are installed.
+2026-10-07T20:34:29.6300168Z 
+2026-10-07T20:34:29.6300295Z   Project created successfully!
+2026-10-07T20:34:29.6300430Z 
+2026-10-07T20:34:29.6300492Z   Next steps:
+2026-10-07T20:34:29.6300587Z 
+2026-10-07T20:34:29.6300664Z     $ cd os-smoke-app
+2026-10-07T20:34:29.6300832Z     $ npm install
+2026-10-07T20:34:29.6301024Z     $ npm run dev
+2026-10-07T20:34:29.6301115Z 
+2026-10-07T20:34:29.6301262Z - Downloading template...
+2026-10-07T20:34:29.6301984Z [32m√[39m Template downloaded at verified immutable commit.
+2026-10-07T20:34:29.6302323Z - Configuring FSD stack, Git, and Husky...
+2026-10-07T20:34:29.6302643Z [32m√[39m FSD stack, Git, and Husky configured.
+2026-10-07T20:34:29.6302799Z 
+2026-10-07T20:34:29.6303241Z [02-generate-feature] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","--generate","feature","checkout"]
+2026-10-07T20:34:29.7918856Z 
+2026-10-07T20:34:29.7919564Z   Slice generated successfully!
+2026-10-07T20:34:29.7919860Z 
+2026-10-07T20:34:29.7920034Z   Created files:
+2026-10-07T20:34:29.7920295Z     - src\features\checkout\model\checkout.types.ts
+2026-10-07T20:34:29.7920601Z     - src\features\checkout\ui\checkout-view.tsx
+2026-10-07T20:34:29.7920881Z     - src\features\checkout\api\checkout.api.ts
+2026-10-07T20:34:29.7921157Z     - src\features\checkout\api\checkout.query.ts
+2026-10-07T20:34:29.7921421Z     - src\features\checkout\lib\checkout.keys.ts
+2026-10-07T20:34:29.7923520Z     - src\features\checkout\model\checkout.store.ts
+2026-10-07T20:34:29.7924075Z     - src\features\checkout\lib\checkout.helpers.ts
+2026-10-07T20:34:29.7924368Z     - src\features\checkout\index.ts
+2026-10-07T20:34:29.7924522Z 
+2026-10-07T20:34:29.7924538Z 
+2026-10-07T20:34:29.7924981Z [03-generate-entity] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","--generate","entity","product"]
+2026-10-07T20:34:29.9459314Z 
+2026-10-07T20:34:29.9459916Z   Slice generated successfully!
+2026-10-07T20:34:29.9460168Z 
+2026-10-07T20:34:29.9460288Z   Created files:
+2026-10-07T20:34:29.9461194Z     - src\entities\product\model\product.types.ts
+2026-10-07T20:34:29.9461694Z     - src\entities\product\ui\product-card.tsx
+2026-10-07T20:34:29.9462136Z     - src\entities\product\index.ts
+2026-10-07T20:34:29.9462357Z 
+2026-10-07T20:34:29.9462375Z 
+2026-10-07T20:34:29.9463139Z [04-generate-widget] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","--generate","widget","cart-summary"]
+2026-10-07T20:34:30.1162076Z 
+2026-10-07T20:34:30.1162570Z   Slice generated successfully!
+2026-10-07T20:34:30.1162772Z 
+2026-10-07T20:34:30.1162851Z   Created files:
+2026-10-07T20:34:30.1163101Z     - src\widgets\cart-summary\ui\cart-summary.tsx
+2026-10-07T20:34:30.1163385Z     - src\widgets\cart-summary\index.ts
+2026-10-07T20:34:30.1163531Z 
+2026-10-07T20:34:30.1163691Z 
+2026-10-07T20:34:30.1164289Z [05-generate-page] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","--generate","page","account"]
+2026-10-07T20:34:30.2684502Z 
+2026-10-07T20:34:30.2685012Z   Slice generated successfully!
+2026-10-07T20:34:30.2685224Z 
+2026-10-07T20:34:30.2685302Z   Created files:
+2026-10-07T20:34:30.2685549Z     - src\pages\account\ui\account-page.tsx
+2026-10-07T20:34:30.2685902Z     - src\pages\account\index.ts
+2026-10-07T20:34:30.2686233Z     - src\app\routing\index.tsx
+2026-10-07T20:34:30.2686696Z 
+2026-10-07T20:34:30.2686728Z 
+2026-10-07T20:34:30.2687167Z [06-generate-auth] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","--generate","feature","auth"]
+2026-10-07T20:34:30.4321141Z 
+2026-10-07T20:34:30.4321689Z   Slice generated successfully!
+2026-10-07T20:34:30.4321898Z 
+2026-10-07T20:34:30.4321977Z   Created files:
+2026-10-07T20:34:30.4322216Z     - src\features\auth\model\login.types.ts
+2026-10-07T20:34:30.4322499Z     - src\features\auth\model\register.types.ts
+2026-10-07T20:34:30.4322883Z     - src\features\auth\model\forgot-password.types.ts
+2026-10-07T20:34:30.4323282Z     - src\features\auth\model\reset-password.types.ts
+2026-10-07T20:34:30.4323556Z     - src\features\auth\model\verify-code.types.ts
+2026-10-07T20:34:30.4323945Z     - src\features\auth\api\login.api.ts
+2026-10-07T20:34:30.4324196Z     - src\features\auth\api\register.api.ts
+2026-10-07T20:34:30.4324452Z     - src\features\auth\api\forgot-password.api.ts
+2026-10-07T20:34:30.4324773Z     - src\features\auth\api\reset-password.api.ts
+2026-10-07T20:34:30.4325039Z     - src\features\auth\api\verify-code.api.ts
+2026-10-07T20:34:30.4325406Z     - src\features\auth\api\auth.query.ts
+2026-10-07T20:34:30.4325644Z     - src\features\auth\lib\auth.keys.ts
+2026-10-07T20:34:30.4325886Z     - src\features\auth\model\auth.types.ts
+2026-10-07T20:34:30.4326118Z     - src\features\auth\model\auth.store.ts
+2026-10-07T20:34:30.4326337Z     - src\features\auth\lib\auth.helpers.ts
+2026-10-07T20:34:30.4326586Z     - src\features\auth\model\login.schema.ts
+2026-10-07T20:34:30.4326843Z     - src\features\auth\model\register.schema.ts
+2026-10-07T20:34:30.4327118Z     - src\features\auth\model\forgot-password.schema.ts
+2026-10-07T20:34:30.4327418Z     - src\features\auth\model\reset-password.schema.ts
+2026-10-07T20:34:30.4327686Z     - src\features\auth\model\verify-code.schema.ts
+2026-10-07T20:34:30.4327932Z     - src\features\auth\ui\login-form.tsx
+2026-10-07T20:34:30.4328882Z     - src\features\auth\ui\register-form.tsx
+2026-10-07T20:34:30.4329176Z     - src\features\auth\ui\forgot-password-form.tsx
+2026-10-07T20:34:30.4329456Z     - src\features\auth\ui\reset-password-form.tsx
+2026-10-07T20:34:30.4329724Z     - src\features\auth\ui\verify-code-form.tsx
+2026-10-07T20:34:30.4329962Z     - src\features\auth\index.ts
+2026-10-07T20:34:30.4330091Z 
+2026-10-07T20:34:30.4330104Z 
+2026-10-07T20:34:30.4330441Z [07-check] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","check"]
+2026-10-07T20:34:30.5961819Z 
+2026-10-07T20:34:30.5962404Z   FSD check
+2026-10-07T20:34:30.5962595Z 
+2026-10-07T20:34:30.5963074Z   PASS  FSD configuration — react-vite
+2026-10-07T20:34:30.5963558Z   PASS  package.json — found
+2026-10-07T20:34:30.5963977Z   PASS  FSD layer: app — src\app
+2026-10-07T20:34:30.5964744Z   PASS  FSD layer: pages — src\pages
+2026-10-07T20:34:30.5965380Z   PASS  FSD layer: widgets — src\widgets
+2026-10-07T20:34:30.5966002Z   PASS  FSD layer: features — src\features
+2026-10-07T20:34:30.5966444Z   PASS  FSD layer: entities — src\entities
+2026-10-07T20:34:30.5966877Z   PASS  FSD layer: shared — src\shared
+2026-10-07T20:34:30.5967103Z 
+2026-10-07T20:34:30.5967116Z 
+2026-10-07T20:34:30.5967695Z [08-doctor] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","doctor"]
+2026-10-07T20:34:31.0978193Z 
+2026-10-07T20:34:31.0978728Z   FSD doctor
+2026-10-07T20:34:31.0978922Z 
+2026-10-07T20:34:31.0979335Z   PASS  FSD configuration — react-vite
+2026-10-07T20:34:31.0979708Z   PASS  package.json — found
+2026-10-07T20:34:31.0980071Z   PASS  FSD layer: app — src\app
+2026-10-07T20:34:31.0980338Z   PASS  FSD layer: pages — src\pages
+2026-10-07T20:34:31.0980616Z   PASS  FSD layer: widgets — src\widgets
+2026-10-07T20:34:31.0980889Z   PASS  FSD layer: features — src\features
+2026-10-07T20:34:31.0981154Z   PASS  FSD layer: entities — src\entities
+2026-10-07T20:34:31.0982342Z   PASS  FSD layer: shared — src\shared
+2026-10-07T20:34:31.0982607Z   PASS  Node.js — v22.23.3
+2026-10-07T20:34:31.0982870Z   PASS  Git — required for generated repositories
+2026-10-07T20:34:31.0983184Z   PASS  npm — selected in fsd.config.json
+2026-10-07T20:34:31.0983331Z 
+2026-10-07T20:34:31.0983336Z 
+2026-10-07T20:34:31.0983890Z [09-invalid-path] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","../outside","--framework","react-vite","--yes","--no-install","--no-start"]
+2026-10-07T20:34:31.3051440Z   Error: Project directory must be created inside the current directory.
+2026-10-07T20:34:31.3051767Z 
+2026-10-07T20:34:31.3052256Z ┌─────────────────────────────────────────────────────────────────────────────┐
+2026-10-07T20:34:31.3052684Z │                                                                             │
+2026-10-07T20:34:31.3053081Z │    ███████╗███████╗██████╗                                                  │
+2026-10-07T20:34:31.3053540Z │    ██╔════╝██╔════╝██╔══██╗                                                 │
+2026-10-07T20:34:31.3053938Z │    █████╗  ███████╗██║  ██║                                                 │
+2026-10-07T20:34:31.3054315Z │    ██╔══╝  ╚════██║██║  ██║                                                 │
+2026-10-07T20:34:31.3054683Z │    ██║     ███████║██████╔╝                                                 │
+2026-10-07T20:34:31.3055057Z │    ╚═╝     ╚══════╝╚═════╝                                                  │
+2026-10-07T20:34:31.3055399Z │                                                                             │
+2026-10-07T20:34:31.3055783Z │           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+2026-10-07T20:34:31.3056168Z │                                                                             │
+2026-10-07T20:34:31.3056565Z │   app → pages → widgets → features → entities → shared                     │
+2026-10-07T20:34:31.3056952Z │                                                                             │
+2026-10-07T20:34:31.3057623Z │   Scalable • Maintainable • Enterprise Frontend Architecture                │
+2026-10-07T20:34:31.3058350Z │                                                                             │
+2026-10-07T20:34:31.3058754Z └─────────────────────────────────────────────────────────────────────────────┘
+2026-10-07T20:34:31.3058964Z 
+2026-10-07T20:34:31.3059548Z [10-existing-target] ["C:\\hostedtoolcache\\windows\\node\\22.23.3\\x64\\node.exe","D:\\a\\cli\\cli\\bin\\index.mjs","existing-target","--framework","react-vite","--yes","--no-install","--no-start"]
+2026-10-07T20:34:31.5163825Z   Error: Folder "existing-target" already exists. Re-run with --force to replace it.
+2026-10-07T20:34:31.5164223Z 
+2026-10-07T20:34:31.5164764Z ┌─────────────────────────────────────────────────────────────────────────────┐
+2026-10-07T20:34:31.5165300Z │                                                                             │
+2026-10-07T20:34:31.5165997Z │    ███████╗███████╗██████╗                                                  │
+2026-10-07T20:34:31.5166387Z │    ██╔════╝██╔════╝██╔══██╗                                                 │
+2026-10-07T20:34:31.5166770Z │    █████╗  ███████╗██║  ██║                                                 │
+2026-10-07T20:34:31.5167137Z │    ██╔══╝  ╚════██║██║  ██║                                                 │
+2026-10-07T20:34:31.5167501Z │    ██║     ███████║██████╔╝                                                 │
+2026-10-07T20:34:31.5167875Z │    ╚═╝     ╚══════╝╚═════╝                                                  │
+2026-10-07T20:34:31.5168216Z │                                                                             │
+2026-10-07T20:34:31.5168861Z │           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+2026-10-07T20:34:31.5169275Z │                                                                             │
+2026-10-07T20:34:31.5169697Z │   app → pages → widgets → features → entities → shared                     │
+2026-10-07T20:34:31.5170126Z │                                                                             │
+2026-10-07T20:34:31.5170558Z │   Scalable • Maintainable • Enterprise Frontend Architecture                │
+2026-10-07T20:34:31.5170959Z │                                                                             │
+2026-10-07T20:34:31.5171334Z └─────────────────────────────────────────────────────────────────────────────┘
+2026-10-07T20:34:31.5280722Z 
+2026-10-07T20:34:31.5281353Z Cross-OS smoke passed. Logs: D:\a\cli\cli\ci-artifacts\os-smoke
+2026-10-07T20:34:31.6743510Z Post job cleanup.
+2026-10-07T20:34:31.8047514Z (node:8684) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:34:31.8048144Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:34:31.8050950Z Cache hit occurred on the primary key node-cache-Windows-x64-npm-f338ca2e7f0be7e6b17d4b37887c02c01abf82af6c946ab361d86672b306c41f, not saving cache.
+2026-10-07T20:34:31.8305682Z Post job cleanup.
+2026-10-07T20:34:31.9693980Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-07T20:34:31.9936938Z git version 2.55.0.windows.5
+2026-10-07T20:34:31.9999629Z Temporarily overriding HOME='D:\a\_temp\9b273db6-eef1-4785-b589-b8f4c981d0a5' before making global git config changes
+2026-10-07T20:34:32.0001018Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:34:32.0009834Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\cli\cli
+2026-10-07T20:34:32.0346125Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:34:32.0657809Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-07T20:34:32.5561786Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:34:32.5806393Z http.https://github.com/.extraheader
+2026-10-07T20:34:32.5846259Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-07T20:34:32.6116028Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-07T20:34:33.0907474Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:34:33.1210075Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-07T20:34:33.6616134Z Cleaning up orphan processes
+2026-10-07T20:34:33.6656461Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

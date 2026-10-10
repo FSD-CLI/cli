@@ -1,0 +1,12 @@
+✔ default runs preserve all historical evidence and use distinct outputs (1538.413625ms)
+✔ nonempty output is refused without changing its contents (36.362917ms)
+✔ a partial run has its own manifest and can be rendered (531.521667ms)
+✔ committed Windows evidence regenerates identically with valid links on every OS (70.938667ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2229.528958

@@ -1,0 +1,12 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src/features/checkout/model/checkout.types.ts
+    - src/features/checkout/ui/CheckoutView.svelte
+    - src/features/checkout/api/checkout.api.ts
+    - src/features/checkout/api/checkout.query.ts
+    - src/features/checkout/lib/checkout.keys.ts
+    - src/features/checkout/model/checkout.store.ts
+    - src/features/checkout/index.ts
+

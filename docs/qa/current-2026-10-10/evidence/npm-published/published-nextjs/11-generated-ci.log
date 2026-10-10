@@ -1,0 +1,59 @@
+label: 11-generated-ci
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-TutyKY/app
+command: ["/usr/local/bin/node","/usr/local/lib/node_modules/npm/bin/npm-cli.js","run","ci"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+> fsd-nextjs@0.1.0 ci
+> npm run fsd:check && npm run lint && npm run typecheck && npm run build
+
+
+> fsd-nextjs@0.1.0 fsd:check
+> steiger ./src
+
+
+> fsd-nextjs@0.1.0 lint
+> biome check
+
+Checked 47 files in 12ms. No fixes applied.
+
+> fsd-nextjs@0.1.0 typecheck
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully
+
+> fsd-nextjs@0.1.0 build
+> next build
+
+▲ Next.js 16.3.5 (Turbopack)
+✓ Running next.config.ts took 14ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 19.3s
+  Running TypeScript ...
+  Finished TypeScript in 1261ms ...
+  Collecting page data using 6 workers ...
+  Generating static pages using 6 workers (0/5) ...
+  Generating static pages using 6 workers (1/5) 
+  Generating static pages using 6 workers (2/5) 
+  Generating static pages using 6 workers (3/5) 
+✓ Generating static pages using 6 workers (5/5) in 294ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+└ ○ /account
+
+
+○  (Static)  prerendered as static content
+
+
+
+stderr:
+✔ No problems found!
+

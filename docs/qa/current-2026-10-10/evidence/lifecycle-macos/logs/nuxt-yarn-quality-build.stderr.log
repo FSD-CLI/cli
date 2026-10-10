@@ -1,0 +1,6 @@
+✔ No problems found!
+node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs (303:0): A comment
+
+"/* @__NO_SIDE_EFFECTS__ */"
+
+in "node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.

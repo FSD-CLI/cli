@@ -1,0 +1,71 @@
+
+> fsd-sveltekit@0.0.0 fsd:check
+> steiger ./src
+
+
+> fsd-sveltekit@0.0.0 lint
+> eslint .
+
+
+> fsd-sveltekit@0.0.0 typecheck
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+> fsd-sveltekit@0.0.0 build
+> vite build
+
+vite v8.3.4 building ssr environment for production...
+transforming...
+✓ 187 modules transformed.
+rendering chunks...
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 230 modules transformed.
+rendering chunks...
+computing gzip size...
+.svelte-kit/output/client/_app/version.json                        0.02 kB │ gzip:  0.04 kB
+.svelte-kit/output/client/.vite/manifest.json                      2.69 kB │ gzip:  0.53 kB
+.svelte-kit/output/client/_app/immutable/assets/0.BFJ0katE.css    16.70 kB │ gzip:  4.11 kB
+.svelte-kit/output/client/_app/immutable/entry/start.CCOU8KhV.js   0.06 kB │ gzip:  0.07 kB
+.svelte-kit/output/client/_app/immutable/chunks/xihTtKlq.js        0.06 kB │ gzip:  0.08 kB
+.svelte-kit/output/client/_app/immutable/nodes/3.BmQaJqQG.js       0.31 kB │ gzip:  0.24 kB
+.svelte-kit/output/client/_app/immutable/nodes/1.C-bgNNl2.js       0.57 kB │ gzip:  0.32 kB
+.svelte-kit/output/client/_app/immutable/chunks/Bjy-W4x2.js        1.36 kB │ gzip:  0.65 kB
+.svelte-kit/output/client/_app/immutable/entry/app.YbJ4X3L0.js     4.41 kB │ gzip:  2.00 kB
+.svelte-kit/output/client/_app/immutable/nodes/2.CamwouGr.js       6.73 kB │ gzip:  2.86 kB
+.svelte-kit/output/client/_app/immutable/nodes/0.CZowz680.js      25.20 kB │ gzip:  7.57 kB
+.svelte-kit/output/client/_app/immutable/chunks/DFBqKMDX.js       26.63 kB │ gzip: 10.29 kB
+.svelte-kit/output/client/_app/immutable/chunks/zQe7oAx-.js       41.21 kB │ gzip: 15.81 kB
+
+✓ built in 101ms
+computing gzip size...
+.svelte-kit/output/server/.vite/manifest.json                           3.19 kB │ gzip:  0.56 kB
+.svelte-kit/output/server/_app/immutable/assets/_layout.CW_fbWIG.css   16.63 kB │ gzip:  4.11 kB
+.svelte-kit/output/server/env.js                                        0.13 kB │ gzip:  0.12 kB
+.svelte-kit/output/server/chunks/env.js                                 0.28 kB │ gzip:  0.17 kB
+.svelte-kit/output/server/internal.js                                   0.40 kB │ gzip:  0.19 kB
+.svelte-kit/output/server/entries/pages/account/_page.svelte.js         0.43 kB │ gzip:  0.25 kB
+.svelte-kit/output/server/chunks/internal.js                            0.74 kB │ gzip:  0.34 kB
+.svelte-kit/output/server/entries/fallbacks/error.svelte.js             4.21 kB │ gzip:  1.66 kB
+.svelte-kit/output/server/chunks/index-server.js                        5.60 kB │ gzip:  2.05 kB
+.svelte-kit/output/server/entries/pages/_page.svelte.js                 8.42 kB │ gzip:  2.82 kB
+.svelte-kit/output/server/chunks/shared.js                             10.57 kB │ gzip:  3.38 kB
+.svelte-kit/output/server/chunks/exports.js                            11.25 kB │ gzip:  3.63 kB
+.svelte-kit/output/server/entries/pages/_layout.svelte.js              19.37 kB │ gzip:  5.26 kB
+.svelte-kit/output/server/chunks/utils.js                              31.76 kB │ gzip:  9.35 kB
+.svelte-kit/output/server/chunks/internal2.js                          35.82 kB │ gzip: 10.19 kB
+.svelte-kit/output/server/remote-entry.js                              54.49 kB │ gzip: 12.02 kB
+.svelte-kit/output/server/chunks/server.js                            118.44 kB │ gzip: 31.09 kB
+.svelte-kit/output/server/index.js                                    126.01 kB │ gzip: 31.92 kB
+
+✓ built in 1.25s
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-auto
+  Could not detect a supported production environment. See https://svelte.dev/docs/kit/adapters to learn how to configure your app to run on the platform of your choosing
+  ✔ done

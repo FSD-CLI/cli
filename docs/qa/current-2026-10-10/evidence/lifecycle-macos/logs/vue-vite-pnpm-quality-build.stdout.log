@@ -1,0 +1,26 @@
+
+> fsd-vue-starter@0.0.0 ci /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/vue-vite-pnpm
+> npm run fsd:check && npm run lint && npm run build
+
+
+> fsd-vue-starter@0.0.0 fsd:check
+> steiger ./src
+
+
+> fsd-vue-starter@0.0.0 lint
+> eslint .
+
+
+> fsd-vue-starter@0.0.0 build
+> vue-tsc -b && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 106 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.62 kB │ gzip:  0.38 kB
+dist/assets/index-DXAHi2rK.css   18.65 kB │ gzip:  4.49 kB
+dist/assets/index-gMOqLleu.js   123.67 kB │ gzip: 45.37 kB
+
+✓ built in 802ms

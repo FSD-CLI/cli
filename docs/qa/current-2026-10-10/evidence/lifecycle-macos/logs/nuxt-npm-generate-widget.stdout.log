@@ -1,0 +1,7 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - app/widgets/cart-summary/ui/CartSummary.vue
+    - app/widgets/cart-summary/index.ts
+

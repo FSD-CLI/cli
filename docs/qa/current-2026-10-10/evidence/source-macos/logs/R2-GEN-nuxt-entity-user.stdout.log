@@ -1,0 +1,8 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - app/entities/user/model/user.types.ts
+    - app/entities/user/ui/UserCard.vue
+    - app/entities/user/index.ts
+

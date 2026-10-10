@@ -1,0 +1,8 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src/entities/product/model/product.types.ts
+    - src/entities/product/ui/ProductCard.svelte
+    - src/entities/product/index.ts
+

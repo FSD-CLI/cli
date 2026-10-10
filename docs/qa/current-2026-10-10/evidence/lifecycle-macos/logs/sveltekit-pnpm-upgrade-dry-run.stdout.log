@@ -1,0 +1,34 @@
+
+FSD project upgrade
+
+Project: /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-pnpm
+Framework: sveltekit
+Current state: managed state 2 / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: up to date
+
+ALREADY_APPLIED fsd.config.json  Configuration schema is current.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/query/QueryProvider.svelte  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/query/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@tanstack/svelte-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:sveltekit-superforms matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+PRESERVE        .husky/pre-commit  Verified managed content has no migration in this run.
+PRESERVE        .husky/commit-msg  Verified managed content has no migration in this run.
+PRESERVE        .husky/pre-push  Verified managed content has no migration in this run.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+
+0 creates, 0 safe updates, 0 deletes, 5 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: main (dirty)
+
