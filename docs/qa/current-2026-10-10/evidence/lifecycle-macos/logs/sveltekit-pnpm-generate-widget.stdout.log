@@ -1,0 +1,7 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src/widgets/cart-summary/ui/CartSummary.svelte
+    - src/widgets/cart-summary/index.ts
+

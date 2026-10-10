@@ -1,0 +1,19 @@
+label: generate-widget
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-TutyKY/app
+command: ["/usr/local/bin/node","/var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-TutyKY/cli-install/node_modules/create-fsd-architecture/bin/index.mjs","--generate","widget","cart-summary"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+
+  Slice generated successfully!
+
+  Created files:
+    - src/widgets/cart-summary/ui/cart-summary.tsx
+    - src/widgets/cart-summary/index.ts
+
+
+
+stderr:
+

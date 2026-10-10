@@ -1,0 +1,13 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - app/features/profile/model/profile.types.ts
+    - app/features/profile/ui/ProfileView.vue
+    - app/features/profile/api/profile.api.ts
+    - app/features/profile/api/profile.query.ts
+    - app/features/profile/lib/profile.keys.ts
+    - app/features/profile/model/profile.store.ts
+    - app/features/profile/lib/profile.helpers.ts
+    - app/features/profile/index.ts
+

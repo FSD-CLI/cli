@@ -1,0 +1,348 @@
+2026-10-07T20:33:47.4622778Z Current runner version: '2.337.0'
+2026-10-07T20:33:47.4647783Z ##[group]Runner Image Provisioner
+2026-10-07T20:33:47.4648790Z Hosted Compute Agent
+2026-10-07T20:33:47.4649407Z Version: 20260901.588
+2026-10-07T20:33:47.4650150Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-07T20:33:47.4650981Z Build Date: 2026-09-01T19:56:44Z
+2026-10-07T20:33:47.4651654Z Worker ID: {4aa83e14-4e7b-4692-9337-876248eade68}
+2026-10-07T20:33:47.4652442Z Azure Region: westus3
+2026-10-07T20:33:47.4653036Z ##[endgroup]
+2026-10-07T20:33:47.4655052Z ##[group]Operating System
+2026-10-07T20:33:47.4655777Z Ubuntu
+2026-10-07T20:33:47.4656315Z 24.04.5
+2026-10-07T20:33:47.4656896Z LTS
+2026-10-07T20:33:47.4657432Z ##[endgroup]
+2026-10-07T20:33:47.4658069Z ##[group]Runner Image
+2026-10-07T20:33:47.4658733Z Image: ubuntu-24.04
+2026-10-07T20:33:47.4659395Z Version: 20260927.320.1
+2026-10-07T20:33:47.4660718Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-07T20:33:47.4662354Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-07T20:33:47.4663827Z ##[endgroup]
+2026-10-07T20:33:47.4664946Z ##[group]GITHUB_TOKEN Permissions
+2026-10-07T20:33:47.4666989Z Contents: read
+2026-10-07T20:33:47.4667618Z Metadata: read
+2026-10-07T20:33:47.4668321Z ##[endgroup]
+2026-10-07T20:33:47.4670349Z Secret source: Actions
+2026-10-07T20:33:47.4671407Z Cache mode: write
+2026-10-07T20:33:47.4672116Z Prepare workflow directory
+2026-10-07T20:33:47.5070405Z Prepare all required actions
+2026-10-07T20:33:47.5118464Z Getting action download info
+2026-10-07T20:33:47.8254582Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-07T20:33:47.9507102Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-07T20:33:48.1735747Z Complete job name: sveltekit build
+2026-10-07T20:33:48.2521839Z ##[group]Run actions/checkout@v4
+2026-10-07T20:33:48.2523346Z with:
+2026-10-07T20:33:48.2523844Z   repository: FSD-CLI/cli
+2026-10-07T20:33:48.2527489Z   token: ***
+2026-10-07T20:33:48.2527938Z   ssh-strict: true
+2026-10-07T20:33:48.2528390Z   ssh-user: git
+2026-10-07T20:33:48.2528858Z   persist-credentials: true
+2026-10-07T20:33:48.2529376Z   clean: true
+2026-10-07T20:33:48.2529847Z   sparse-checkout-cone-mode: true
+2026-10-07T20:33:48.2530387Z   fetch-depth: 1
+2026-10-07T20:33:48.2530837Z   fetch-tags: false
+2026-10-07T20:33:48.2531298Z   show-progress: true
+2026-10-07T20:33:48.2531757Z   lfs: false
+2026-10-07T20:33:48.2532185Z   submodules: false
+2026-10-07T20:33:48.2532651Z   set-safe-directory: true
+2026-10-07T20:33:48.2533311Z   allow-unsafe-pr-checkout: false
+2026-10-07T20:33:48.2534226Z ##[endgroup]
+2026-10-07T20:33:48.3558683Z Syncing repository: FSD-CLI/cli
+2026-10-07T20:33:48.3561141Z ##[group]Getting Git version info
+2026-10-07T20:33:48.3562252Z Working directory is '/home/runner/work/cli/cli'
+2026-10-07T20:33:48.3564038Z [command]/usr/bin/git version
+2026-10-07T20:33:48.4513958Z git version 2.55.0
+2026-10-07T20:33:48.4536561Z ##[endgroup]
+2026-10-07T20:33:48.4551435Z Temporarily overriding HOME='/home/runner/work/_temp/d186a296-9853-45e8-b5e1-0e478a3810ad' before making global git config changes
+2026-10-07T20:33:48.4553858Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:33:48.4557524Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:33:48.4807110Z Deleting the contents of '/home/runner/work/cli/cli'
+2026-10-07T20:33:48.4811636Z ##[group]Initializing the repository
+2026-10-07T20:33:48.4816126Z [command]/usr/bin/git init /home/runner/work/cli/cli
+2026-10-07T20:33:48.5248068Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-07T20:33:48.5249897Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-07T20:33:48.5251578Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-07T20:33:48.5253487Z hint: call:
+2026-10-07T20:33:48.5254293Z hint:
+2026-10-07T20:33:48.5255358Z hint: 	git config --global init.defaultBranch <name>
+2026-10-07T20:33:48.5256577Z hint:
+2026-10-07T20:33:48.5257701Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-07T20:33:48.5259449Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-07T20:33:48.5260956Z hint:
+2026-10-07T20:33:48.5261786Z hint: 	git branch -m <name>
+2026-10-07T20:33:48.5262681Z hint:
+2026-10-07T20:33:48.5264137Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-07T20:33:48.5265955Z Initialized empty Git repository in /home/runner/work/cli/cli/.git/
+2026-10-07T20:33:48.5269458Z [command]/usr/bin/git remote add origin https://github.com/FSD-CLI/cli
+2026-10-07T20:33:48.5500478Z ##[endgroup]
+2026-10-07T20:33:48.5501906Z ##[group]Disabling automatic garbage collection
+2026-10-07T20:33:48.5505844Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-07T20:33:48.5542992Z ##[endgroup]
+2026-10-07T20:33:48.5544808Z ##[group]Setting up auth
+2026-10-07T20:33:48.5552225Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:33:48.5594458Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:33:48.7182457Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:33:48.7227643Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:33:48.7457980Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:33:48.7495567Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:33:48.7726441Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-07T20:33:48.7768100Z ##[endgroup]
+2026-10-07T20:33:48.7769157Z ##[group]Fetching the repository
+2026-10-07T20:33:48.7778335Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fcde52a0b801a6d57b4d5914596dde72bf490ae9:refs/remotes/origin/main
+2026-10-07T20:33:49.5579492Z From https://github.com/FSD-CLI/cli
+2026-10-07T20:33:49.5580824Z  * [new ref]         fcde52a0b801a6d57b4d5914596dde72bf490ae9 -> origin/main
+2026-10-07T20:33:49.5589263Z ##[endgroup]
+2026-10-07T20:33:49.5589977Z ##[group]Determining the checkout info
+2026-10-07T20:33:49.5592142Z ##[endgroup]
+2026-10-07T20:33:49.5598079Z [command]/usr/bin/git sparse-checkout disable
+2026-10-07T20:33:49.5754704Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-07T20:33:49.5798334Z ##[group]Checking out the ref
+2026-10-07T20:33:49.5799027Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-07T20:33:49.6116361Z Switched to a new branch 'main'
+2026-10-07T20:33:49.6121635Z branch 'main' set up to track 'origin/main'.
+2026-10-07T20:33:49.6128295Z ##[endgroup]
+2026-10-07T20:33:49.6174969Z [command]/usr/bin/git log -1 --format=%H
+2026-10-07T20:33:49.6201032Z fcde52a0b801a6d57b4d5914596dde72bf490ae9
+2026-10-07T20:33:49.6490438Z ##[group]Run actions/setup-node@v4
+2026-10-07T20:33:49.6491012Z with:
+2026-10-07T20:33:49.6491432Z   node-version: 22
+2026-10-07T20:33:49.6491858Z   cache: npm
+2026-10-07T20:33:49.6492267Z   always-auth: false
+2026-10-07T20:33:49.6492707Z   check-latest: false
+2026-10-07T20:33:49.6495792Z   token: ***
+2026-10-07T20:33:49.6496219Z ##[endgroup]
+2026-10-07T20:33:49.8151359Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-07T20:33:49.8155542Z (node:2300) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:33:49.8156848Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:33:49.8158592Z ##[group]Environment details
+2026-10-07T20:33:52.6807384Z node: v22.23.3
+2026-10-07T20:33:52.6808062Z npm: 10.9.9
+2026-10-07T20:33:52.6808539Z yarn: 1.22.22
+2026-10-07T20:33:52.6810735Z ##[endgroup]
+2026-10-07T20:33:52.6864557Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+2026-10-07T20:33:52.9421578Z /home/runner/.npm
+2026-10-07T20:33:53.2382038Z Cache hit for: node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295
+2026-10-07T20:33:53.2493405Z (node:2300) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-07T20:33:53.6706415Z Received 137127 of 137127 (100.0%), 0.6 MBs/sec
+2026-10-07T20:33:53.6707103Z Cache Size: ~0 MB (137127 B)
+2026-10-07T20:33:53.6738996Z [command]/usr/bin/tar -xf /home/runner/work/_temp/e1638723-385d-4a49-b24c-d43a5a470522/cache.tzst -P -C /home/runner/work/cli/cli --use-compress-program unzstd
+2026-10-07T20:33:53.6975351Z Cache restored successfully
+2026-10-07T20:33:53.6980185Z Cache restored from key: node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295
+2026-10-07T20:33:53.7120979Z ##[group]Run npm ci
+2026-10-07T20:33:53.7121312Z [36;1mnpm ci[0m
+2026-10-07T20:33:53.7406393Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:53.7406732Z ##[endgroup]
+2026-10-07T20:33:55.2393457Z 
+2026-10-07T20:33:55.2400669Z added 20 packages, and audited 21 packages in 1s
+2026-10-07T20:33:55.2401043Z 
+2026-10-07T20:33:55.2401285Z 17 packages are looking for funding
+2026-10-07T20:33:55.2401756Z   run `npm fund` for details
+2026-10-07T20:33:55.2402104Z 
+2026-10-07T20:33:55.2402593Z found 0 vulnerabilities
+2026-10-07T20:33:55.2843780Z ##[group]Run node bin/index.mjs e2e-app --framework sveltekit --package-manager npm --yes --no-start
+2026-10-07T20:33:55.2844633Z [36;1mnode bin/index.mjs e2e-app --framework sveltekit --package-manager npm --yes --no-start[0m
+2026-10-07T20:33:55.2910354Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:55.2910645Z ##[endgroup]
+2026-10-07T20:33:55.5263088Z 
+2026-10-07T20:33:55.5265178Z ┌─────────────────────────────────────────────────────────────────────────────┐
+2026-10-07T20:33:55.5266491Z │                                                                             │
+2026-10-07T20:33:55.5272452Z │    ███████╗███████╗██████╗                                                  │
+2026-10-07T20:33:55.5273965Z │    ██╔════╝██╔════╝██╔══██╗                                                 │
+2026-10-07T20:33:55.5275135Z │    █████╗  ███████╗██║  ██║                                                 │
+2026-10-07T20:33:55.5276393Z │    ██╔══╝  ╚════██║██║  ██║                                                 │
+2026-10-07T20:33:55.5277575Z │    ██║     ███████║██████╔╝                                                 │
+2026-10-07T20:33:55.5278768Z │    ╚═╝     ╚══════╝╚═════╝                                                  │
+2026-10-07T20:33:55.5279838Z │                                                                             │
+2026-10-07T20:33:55.5280936Z │           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+2026-10-07T20:33:55.5282121Z │                                                                             │
+2026-10-07T20:33:55.5283602Z │   app → pages → widgets → features → entities → shared                     │
+2026-10-07T20:33:55.5284830Z │                                                                             │
+2026-10-07T20:33:55.5286064Z │   Scalable • Maintainable • Enterprise Frontend Architecture                │
+2026-10-07T20:33:55.5287268Z │                                                                             │
+2026-10-07T20:33:55.5288375Z └─────────────────────────────────────────────────────────────────────────────┘
+2026-10-07T20:33:55.5289356Z 
+2026-10-07T20:33:55.5289687Z - Downloading template...
+2026-10-07T20:33:56.0184343Z [32m✔[39m Template downloaded at verified immutable commit.
+2026-10-07T20:33:56.0184973Z - Configuring FSD stack, Git, and Husky...
+2026-10-07T20:33:56.0370128Z [32m✔[39m FSD stack, Git, and Husky configured.
+2026-10-07T20:33:56.0370589Z - Installing dependencies...
+2026-10-07T20:34:05.9846851Z [32m✔[39m Dependencies installed.
+2026-10-07T20:34:05.9847321Z - Verifying Commitlint...
+2026-10-07T20:34:06.4161335Z [32m✔[39m Commitlint rejected invalid message "test".
+2026-10-07T20:34:06.4161716Z 
+2026-10-07T20:34:06.4161907Z   Project created successfully!
+2026-10-07T20:34:06.4163803Z 
+2026-10-07T20:34:06.4164029Z   Next steps:
+2026-10-07T20:34:06.4164259Z 
+2026-10-07T20:34:06.4174363Z     $ cd e2e-app
+2026-10-07T20:34:06.4175555Z     $ npm run dev
+2026-10-07T20:34:06.4175861Z 
+2026-10-07T20:34:06.4257363Z ##[group]Run node ../bin/index.mjs --generate feature checkout
+2026-10-07T20:34:06.4257886Z [36;1mnode ../bin/index.mjs --generate feature checkout[0m
+2026-10-07T20:34:06.4258297Z [36;1mnode ../bin/index.mjs --generate entity product[0m
+2026-10-07T20:34:06.4258704Z [36;1mnode ../bin/index.mjs --generate widget cart-summary[0m
+2026-10-07T20:34:06.4259100Z [36;1mnode ../bin/index.mjs --generate page account[0m
+2026-10-07T20:34:06.4259489Z [36;1mnode ../bin/index.mjs --generate feature auth[0m
+2026-10-07T20:34:06.4323379Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:34:06.4323675Z ##[endgroup]
+2026-10-07T20:34:06.5496465Z 
+2026-10-07T20:34:06.5501112Z   Slice generated successfully!
+2026-10-07T20:34:06.5501522Z 
+2026-10-07T20:34:06.5501800Z   Created files:
+2026-10-07T20:34:06.5502759Z     - src/features/checkout/model/checkout.types.ts
+2026-10-07T20:34:06.5503829Z     - src/features/checkout/ui/CheckoutView.svelte
+2026-10-07T20:34:06.5504660Z     - src/features/checkout/api/checkout.api.ts
+2026-10-07T20:34:06.5505383Z     - src/features/checkout/api/checkout.query.ts
+2026-10-07T20:34:06.5506109Z     - src/features/checkout/lib/checkout.keys.ts
+2026-10-07T20:34:06.5507405Z     - src/features/checkout/model/checkout.store.ts
+2026-10-07T20:34:06.5508113Z     - src/features/checkout/index.ts
+2026-10-07T20:34:06.5508463Z 
+2026-10-07T20:34:06.6632063Z 
+2026-10-07T20:34:06.6636974Z   Slice generated successfully!
+2026-10-07T20:34:06.6637359Z 
+2026-10-07T20:34:06.6637536Z   Created files:
+2026-10-07T20:34:06.6638599Z     - src/entities/product/model/product.types.ts
+2026-10-07T20:34:06.6639328Z     - src/entities/product/ui/ProductCard.svelte
+2026-10-07T20:34:06.6639976Z     - src/entities/product/index.ts
+2026-10-07T20:34:06.6640328Z 
+2026-10-07T20:34:06.7836587Z 
+2026-10-07T20:34:06.7840973Z   Slice generated successfully!
+2026-10-07T20:34:06.7841436Z 
+2026-10-07T20:34:06.7842161Z   Created files:
+2026-10-07T20:34:06.7842925Z     - src/widgets/cart-summary/ui/CartSummary.svelte
+2026-10-07T20:34:06.7843941Z     - src/widgets/cart-summary/index.ts
+2026-10-07T20:34:06.7844332Z 
+2026-10-07T20:34:06.8977954Z 
+2026-10-07T20:34:06.8982650Z   Slice generated successfully!
+2026-10-07T20:34:06.8983328Z 
+2026-10-07T20:34:06.8983546Z   Created files:
+2026-10-07T20:34:06.8984185Z     - src/pages/account/ui/AccountPage.svelte
+2026-10-07T20:34:06.8984928Z     - src/pages/account/index.ts
+2026-10-07T20:34:06.8985593Z     - src/routes/account/+page.svelte
+2026-10-07T20:34:06.8986009Z 
+2026-10-07T20:34:07.0122287Z 
+2026-10-07T20:34:07.0127275Z   Slice generated successfully!
+2026-10-07T20:34:07.0127703Z 
+2026-10-07T20:34:07.0128264Z   Created files:
+2026-10-07T20:34:07.0129589Z     - src/features/auth/model/auth.types.ts
+2026-10-07T20:34:07.0130285Z     - src/features/auth/api/login.api.ts
+2026-10-07T20:34:07.0130930Z     - src/features/auth/api/register.api.ts
+2026-10-07T20:34:07.0131631Z     - src/features/auth/api/forgot-password.api.ts
+2026-10-07T20:34:07.0132398Z     - src/features/auth/api/reset-password.api.ts
+2026-10-07T20:34:07.0133813Z     - src/features/auth/api/verify-code.api.ts
+2026-10-07T20:34:07.0134860Z     - src/features/auth/api/auth.query.ts
+2026-10-07T20:34:07.0135508Z     - src/features/auth/lib/auth.keys.ts
+2026-10-07T20:34:07.0136141Z     - src/features/auth/model/auth.store.ts
+2026-10-07T20:34:07.0136815Z     - src/features/auth/model/login.schema.ts
+2026-10-07T20:34:07.0154339Z     - src/features/auth/model/register.schema.ts
+2026-10-07T20:34:07.0155180Z     - src/features/auth/model/forgot-password.schema.ts
+2026-10-07T20:34:07.0155833Z     - src/features/auth/model/reset-password.schema.ts
+2026-10-07T20:34:07.0156279Z     - src/features/auth/model/verify-code.schema.ts
+2026-10-07T20:34:07.0156684Z     - src/features/auth/ui/LoginForm.svelte
+2026-10-07T20:34:07.0157101Z     - src/features/auth/ui/RegisterForm.svelte
+2026-10-07T20:34:07.0157529Z     - src/features/auth/ui/ForgotPasswordForm.svelte
+2026-10-07T20:34:07.0157997Z     - src/features/auth/ui/ResetPasswordForm.svelte
+2026-10-07T20:34:07.0158810Z     - src/features/auth/ui/VerifyCodeForm.svelte
+2026-10-07T20:34:07.0159548Z     - src/features/auth/index.ts
+2026-10-07T20:34:07.0159934Z 
+2026-10-07T20:34:07.0228648Z ##[group]Run npm run ci
+2026-10-07T20:34:07.0228955Z [36;1mnpm run ci[0m
+2026-10-07T20:34:07.0292753Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:34:07.0293332Z ##[endgroup]
+2026-10-07T20:34:07.1375788Z 
+2026-10-07T20:34:07.1376478Z > fsd-sveltekit@0.0.0 ci
+2026-10-07T20:34:07.1377112Z > npm run fsd:check && npm run lint && npm run typecheck && npm run build
+2026-10-07T20:34:07.1377490Z 
+2026-10-07T20:34:07.2376342Z 
+2026-10-07T20:34:07.2377031Z > fsd-sveltekit@0.0.0 fsd:check
+2026-10-07T20:34:07.2377425Z > steiger ./src
+2026-10-07T20:34:07.2377586Z 
+2026-10-07T20:34:08.5264979Z [32m✔ No problems found![39m
+2026-10-07T20:34:08.6626836Z 
+2026-10-07T20:34:08.6627843Z > fsd-sveltekit@0.0.0 lint
+2026-10-07T20:34:08.6628286Z > eslint .
+2026-10-07T20:34:08.6628435Z 
+2026-10-07T20:34:11.0175446Z 
+2026-10-07T20:34:11.0176032Z > fsd-sveltekit@0.0.0 typecheck
+2026-10-07T20:34:11.0176773Z > svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+2026-10-07T20:34:11.0177131Z 
+2026-10-07T20:34:16.5829451Z Loading svelte-check in workspace: /home/runner/work/cli/cli/e2e-app
+2026-10-07T20:34:16.5830376Z Getting Svelte diagnostics...
+2026-10-07T20:34:16.5830704Z 
+2026-10-07T20:34:16.5919803Z [32msvelte-check found 0 errors and 0 warnings
+2026-10-07T20:34:16.7348025Z [39m
+2026-10-07T20:34:16.7348514Z > fsd-sveltekit@0.0.0 build
+2026-10-07T20:34:16.7348952Z > vite build
+2026-10-07T20:34:16.7349112Z 
+2026-10-07T20:34:17.5156971Z [36mvite v8.3.0 [32mbuilding ssr environment for production...[36m[39m
+2026-10-07T20:34:17.5264805Z transforming...
+2026-10-07T20:34:17.8257561Z ✓ 187 modules transformed.
+2026-10-07T20:34:17.8530901Z rendering chunks...
+2026-10-07T20:34:18.7502211Z [36mvite v8.3.0 [32mbuilding client environment for production...[36m[39m
+2026-10-07T20:34:18.7575286Z transforming...
+2026-10-07T20:34:18.9645491Z ✓ 230 modules transformed.
+2026-10-07T20:34:18.9781223Z rendering chunks...
+2026-10-07T20:34:18.9964395Z computing gzip size...
+2026-10-07T20:34:18.9977965Z .svelte-kit/output/client/_app/version.json                        0.02 kB │ gzip:  0.04 kB
+2026-10-07T20:34:18.9979559Z .svelte-kit/output/client/.vite/manifest.json                      2.69 kB │ gzip:  0.53 kB
+2026-10-07T20:34:18.9981254Z .svelte-kit/output/client/_app/immutable/assets/0.BFJ0katE.css    16.70 kB │ gzip:  4.11 kB
+2026-10-07T20:34:18.9982862Z .svelte-kit/output/client/_app/immutable/chunks/xihTtKlq.js        0.06 kB │ gzip:  0.08 kB
+2026-10-07T20:34:18.9984269Z .svelte-kit/output/client/_app/immutable/entry/start.DzBDiHtR.js   0.07 kB │ gzip:  0.08 kB
+2026-10-07T20:34:18.9985114Z .svelte-kit/output/client/_app/immutable/nodes/3.nRBegI8O.js       0.31 kB │ gzip:  0.24 kB
+2026-10-07T20:34:18.9985922Z .svelte-kit/output/client/_app/immutable/nodes/1.DmWSQUJj.js       0.57 kB │ gzip:  0.32 kB
+2026-10-07T20:34:18.9986717Z .svelte-kit/output/client/_app/immutable/chunks/Bjy-W4x2.js        1.36 kB │ gzip:  0.65 kB
+2026-10-07T20:34:18.9987539Z .svelte-kit/output/client/_app/immutable/entry/app.DSe7Qih1.js     4.11 kB │ gzip:  1.89 kB
+2026-10-07T20:34:18.9988602Z .svelte-kit/output/client/_app/immutable/nodes/2.Bwl4sKo8.js       6.74 kB │ gzip:  2.86 kB
+2026-10-07T20:34:18.9989373Z .svelte-kit/output/client/_app/immutable/nodes/0.BE9gdi_U.js      25.22 kB │ gzip:  7.57 kB
+2026-10-07T20:34:18.9990145Z .svelte-kit/output/client/_app/immutable/chunks/C1oNG1zq.js       26.64 kB │ gzip: 10.29 kB
+2026-10-07T20:34:18.9990938Z .svelte-kit/output/client/_app/immutable/chunks/CM-2kbjP.js       41.08 kB │ gzip: 15.76 kB
+2026-10-07T20:34:18.9991302Z 
+2026-10-07T20:34:18.9991483Z [32m✓ built in 248ms[39m
+2026-10-07T20:34:19.8744061Z computing gzip size...
+2026-10-07T20:34:19.8754507Z .svelte-kit/output/server/.vite/manifest.json                           3.19 kB │ gzip:  0.56 kB
+2026-10-07T20:34:19.8756083Z .svelte-kit/output/server/_app/immutable/assets/_layout.CW_fbWIG.css   16.63 kB │ gzip:  4.11 kB
+2026-10-07T20:34:19.8757520Z .svelte-kit/output/server/env.js                                        0.22 kB │ gzip:  0.14 kB
+2026-10-07T20:34:19.8759237Z .svelte-kit/output/server/chunks/env.js                                 0.28 kB │ gzip:  0.17 kB
+2026-10-07T20:34:19.8760617Z .svelte-kit/output/server/internal.js                                   0.40 kB │ gzip:  0.19 kB
+2026-10-07T20:34:19.8762084Z .svelte-kit/output/server/entries/pages/account/_page.svelte.js         0.43 kB │ gzip:  0.25 kB
+2026-10-07T20:34:19.8763061Z .svelte-kit/output/server/chunks/internal.js                            0.74 kB │ gzip:  0.34 kB
+2026-10-07T20:34:19.8764235Z .svelte-kit/output/server/entries/fallbacks/error.svelte.js             4.21 kB │ gzip:  1.66 kB
+2026-10-07T20:34:19.8765073Z .svelte-kit/output/server/chunks/index-server.js                        5.60 kB │ gzip:  2.05 kB
+2026-10-07T20:34:19.8766254Z .svelte-kit/output/server/entries/pages/_page.svelte.js                 8.42 kB │ gzip:  2.82 kB
+2026-10-07T20:34:19.8767727Z .svelte-kit/output/server/chunks/shared.js                             10.57 kB │ gzip:  3.38 kB
+2026-10-07T20:34:19.8769162Z .svelte-kit/output/server/chunks/exports.js                            11.25 kB │ gzip:  3.63 kB
+2026-10-07T20:34:19.8770294Z .svelte-kit/output/server/entries/pages/_layout.svelte.js              17.85 kB │ gzip:  4.88 kB
+2026-10-07T20:34:19.8771088Z .svelte-kit/output/server/chunks/utils.js                              31.76 kB │ gzip:  9.35 kB
+2026-10-07T20:34:19.8771977Z .svelte-kit/output/server/chunks/internal2.js                          35.36 kB │ gzip: 10.09 kB
+2026-10-07T20:34:19.8773715Z .svelte-kit/output/server/remote-entry.js                              54.49 kB │ gzip: 12.02 kB
+2026-10-07T20:34:19.8775217Z .svelte-kit/output/server/chunks/server.js                            118.23 kB │ gzip: 31.04 kB
+2026-10-07T20:34:19.8776674Z .svelte-kit/output/server/index.js                                    126.01 kB │ gzip: 31.92 kB
+2026-10-07T20:34:19.8777311Z 
+2026-10-07T20:34:19.8777657Z [32m✓ built in 2.36s[39m
+2026-10-07T20:34:19.8777973Z 
+2026-10-07T20:34:19.8778446Z Run npm run preview to preview your production build locally.
+2026-10-07T20:34:19.8792281Z 
+2026-10-07T20:34:19.8792922Z > Using @sveltejs/adapter-auto
+2026-10-07T20:34:19.8799575Z   Could not detect a supported production environment. See https://svelte.dev/docs/kit/adapters to learn how to configure your app to run on the platform of your choosing
+2026-10-07T20:34:19.8801347Z   ✔ done
+2026-10-07T20:34:19.9621451Z Post job cleanup.
+2026-10-07T20:34:20.0853343Z (node:2635) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:34:20.0854358Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:34:20.0857711Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295, not saving cache.
+2026-10-07T20:34:20.1013737Z Post job cleanup.
+2026-10-07T20:34:20.1881349Z [command]/usr/bin/git version
+2026-10-07T20:34:20.1924423Z git version 2.55.0
+2026-10-07T20:34:20.1962583Z Temporarily overriding HOME='/home/runner/work/_temp/903b9778-8191-4213-8d40-c303cc44757d' before making global git config changes
+2026-10-07T20:34:20.1964482Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:34:20.1968326Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:34:20.2008835Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:34:20.2046389Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:34:20.2301036Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:34:20.2329354Z http.https://github.com/.extraheader
+2026-10-07T20:34:20.2342517Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-07T20:34:20.2377440Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:34:20.2695281Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:34:20.2738316Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:34:20.3190516Z Cleaning up orphan processes
+2026-10-07T20:34:20.3494858Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

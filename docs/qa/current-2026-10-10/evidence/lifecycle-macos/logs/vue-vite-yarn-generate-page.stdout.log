@@ -1,0 +1,8 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src/pages/account/ui/AccountPage.vue
+    - src/pages/account/index.ts
+    - src/app/routing/index.ts
+

@@ -1,0 +1,991 @@
+2026-10-07T20:33:46.9468949Z Current runner version: '2.337.0'
+2026-10-07T20:33:46.9495262Z ##[group]Runner Image Provisioner
+2026-10-07T20:33:46.9496273Z Hosted Compute Agent
+2026-10-07T20:33:46.9496892Z Version: 20260901.588
+2026-10-07T20:33:46.9498018Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-07T20:33:46.9498812Z Build Date: 2026-09-01T19:56:44Z
+2026-10-07T20:33:46.9499898Z Worker ID: {cee36882-2745-41c9-96cc-9a4f610e141d}
+2026-10-07T20:33:46.9500692Z Azure Region: northcentralus
+2026-10-07T20:33:46.9501346Z ##[endgroup]
+2026-10-07T20:33:46.9503271Z ##[group]Operating System
+2026-10-07T20:33:46.9503963Z Ubuntu
+2026-10-07T20:33:46.9504587Z 24.04.5
+2026-10-07T20:33:46.9505213Z LTS
+2026-10-07T20:33:46.9505753Z ##[endgroup]
+2026-10-07T20:33:46.9506420Z ##[group]Runner Image
+2026-10-07T20:33:46.9507036Z Image: ubuntu-24.04
+2026-10-07T20:33:46.9507931Z Version: 20260927.320.1
+2026-10-07T20:33:46.9509320Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-07T20:33:46.9511011Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-07T20:33:46.9512015Z ##[endgroup]
+2026-10-07T20:33:46.9513207Z ##[group]GITHUB_TOKEN Permissions
+2026-10-07T20:33:46.9515376Z Contents: read
+2026-10-07T20:33:46.9516137Z Metadata: read
+2026-10-07T20:33:46.9516746Z ##[endgroup]
+2026-10-07T20:33:46.9520141Z Secret source: Actions
+2026-10-07T20:33:46.9521811Z Cache mode: write
+2026-10-07T20:33:46.9523583Z Prepare workflow directory
+2026-10-07T20:33:47.0006604Z Prepare all required actions
+2026-10-07T20:33:47.0078937Z Getting action download info
+2026-10-07T20:33:47.2482192Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-07T20:33:47.3770744Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-07T20:33:47.6346383Z Complete job name: Cross-OS CLI / ubuntu-latest
+2026-10-07T20:33:47.7123924Z ##[group]Run actions/checkout@v4
+2026-10-07T20:33:47.7124815Z with:
+2026-10-07T20:33:47.7125253Z   repository: FSD-CLI/cli
+2026-10-07T20:33:47.7129185Z   token: ***
+2026-10-07T20:33:47.7129635Z   ssh-strict: true
+2026-10-07T20:33:47.7130074Z   ssh-user: git
+2026-10-07T20:33:47.7130563Z   persist-credentials: true
+2026-10-07T20:33:47.7131052Z   clean: true
+2026-10-07T20:33:47.7131494Z   sparse-checkout-cone-mode: true
+2026-10-07T20:33:47.7132020Z   fetch-depth: 1
+2026-10-07T20:33:47.7132446Z   fetch-tags: false
+2026-10-07T20:33:47.7132900Z   show-progress: true
+2026-10-07T20:33:47.7133345Z   lfs: false
+2026-10-07T20:33:47.7133758Z   submodules: false
+2026-10-07T20:33:47.7134209Z   set-safe-directory: true
+2026-10-07T20:33:47.7134773Z   allow-unsafe-pr-checkout: false
+2026-10-07T20:33:47.7135565Z ##[endgroup]
+2026-10-07T20:33:47.8147392Z Syncing repository: FSD-CLI/cli
+2026-10-07T20:33:47.8150041Z ##[group]Getting Git version info
+2026-10-07T20:33:47.8151232Z Working directory is '/home/runner/work/cli/cli'
+2026-10-07T20:33:47.8152437Z [command]/usr/bin/git version
+2026-10-07T20:33:47.8210957Z git version 2.55.0
+2026-10-07T20:33:47.8235354Z ##[endgroup]
+2026-10-07T20:33:47.8253436Z Temporarily overriding HOME='/home/runner/work/_temp/b7a1a2b6-6bd0-416d-80f3-e64545a834e1' before making global git config changes
+2026-10-07T20:33:47.8256190Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:33:47.8281922Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:33:47.8336631Z Deleting the contents of '/home/runner/work/cli/cli'
+2026-10-07T20:33:47.8344753Z ##[group]Initializing the repository
+2026-10-07T20:33:47.8351765Z [command]/usr/bin/git init /home/runner/work/cli/cli
+2026-10-07T20:33:47.8456170Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-07T20:33:47.8458035Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-07T20:33:47.8463716Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-07T20:33:47.8465938Z hint: call:
+2026-10-07T20:33:47.8467652Z hint:
+2026-10-07T20:33:47.8469089Z hint: 	git config --global init.defaultBranch <name>
+2026-10-07T20:33:47.8470449Z hint:
+2026-10-07T20:33:47.8471664Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-07T20:33:47.8473706Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-07T20:33:47.8475437Z hint:
+2026-10-07T20:33:47.8476535Z hint: 	git branch -m <name>
+2026-10-07T20:33:47.8478261Z hint:
+2026-10-07T20:33:47.8479810Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-07T20:33:47.8481698Z Initialized empty Git repository in /home/runner/work/cli/cli/.git/
+2026-10-07T20:33:47.8485384Z [command]/usr/bin/git remote add origin https://github.com/FSD-CLI/cli
+2026-10-07T20:33:47.8526724Z ##[endgroup]
+2026-10-07T20:33:47.8527796Z ##[group]Disabling automatic garbage collection
+2026-10-07T20:33:47.8532524Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-07T20:33:47.8564935Z ##[endgroup]
+2026-10-07T20:33:47.8565689Z ##[group]Setting up auth
+2026-10-07T20:33:47.8573060Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:33:47.8606497Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:33:47.8962239Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:33:47.9002305Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:33:47.9274861Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:33:47.9311764Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:33:47.9539329Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-07T20:33:47.9582761Z ##[endgroup]
+2026-10-07T20:33:47.9584175Z ##[group]Fetching the repository
+2026-10-07T20:33:47.9593800Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fcde52a0b801a6d57b4d5914596dde72bf490ae9:refs/remotes/origin/main
+2026-10-07T20:33:48.3591295Z From https://github.com/FSD-CLI/cli
+2026-10-07T20:33:48.3592912Z  * [new ref]         fcde52a0b801a6d57b4d5914596dde72bf490ae9 -> origin/main
+2026-10-07T20:33:48.3598296Z ##[endgroup]
+2026-10-07T20:33:48.3599353Z ##[group]Determining the checkout info
+2026-10-07T20:33:48.3601353Z ##[endgroup]
+2026-10-07T20:33:48.3607835Z [command]/usr/bin/git sparse-checkout disable
+2026-10-07T20:33:48.3661813Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-07T20:33:48.3694564Z ##[group]Checking out the ref
+2026-10-07T20:33:48.3708153Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-07T20:33:48.3969404Z Switched to a new branch 'main'
+2026-10-07T20:33:48.3974124Z branch 'main' set up to track 'origin/main'.
+2026-10-07T20:33:48.3980013Z ##[endgroup]
+2026-10-07T20:33:48.4023224Z [command]/usr/bin/git log -1 --format=%H
+2026-10-07T20:33:48.4050475Z fcde52a0b801a6d57b4d5914596dde72bf490ae9
+2026-10-07T20:33:48.4356956Z ##[group]Run actions/setup-node@v4
+2026-10-07T20:33:48.4357774Z with:
+2026-10-07T20:33:48.4358203Z   node-version: 22
+2026-10-07T20:33:48.4358652Z   cache: npm
+2026-10-07T20:33:48.4359085Z   always-auth: false
+2026-10-07T20:33:48.4359551Z   check-latest: false
+2026-10-07T20:33:48.4363223Z   token: ***
+2026-10-07T20:33:48.4363663Z ##[endgroup]
+2026-10-07T20:33:48.6114934Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-07T20:33:48.6120538Z (node:2295) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:33:48.6123363Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:33:48.6125599Z ##[group]Environment details
+2026-10-07T20:33:52.0362597Z node: v22.23.3
+2026-10-07T20:33:52.0363252Z npm: 10.9.9
+2026-10-07T20:33:52.0363695Z yarn: 1.22.22
+2026-10-07T20:33:52.0365579Z ##[endgroup]
+2026-10-07T20:33:52.0420718Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+2026-10-07T20:33:52.4242292Z /home/runner/.npm
+2026-10-07T20:33:52.5558528Z Cache hit for: node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295
+2026-10-07T20:33:52.5704787Z (node:2295) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-07T20:33:52.7298056Z Received 137127 of 137127 (100.0%), 1.8 MBs/sec
+2026-10-07T20:33:52.7301592Z Cache Size: ~0 MB (137127 B)
+2026-10-07T20:33:52.7329592Z [command]/usr/bin/tar -xf /home/runner/work/_temp/d6ec4561-25f1-4ac0-865a-92244e409e9f/cache.tzst -P -C /home/runner/work/cli/cli --use-compress-program unzstd
+2026-10-07T20:33:52.7448418Z Cache restored successfully
+2026-10-07T20:33:52.7452147Z Cache restored from key: node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295
+2026-10-07T20:33:52.7595092Z ##[group]Run npm ci
+2026-10-07T20:33:52.7595456Z [36;1mnpm ci[0m
+2026-10-07T20:33:52.7903220Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:52.7903574Z ##[endgroup]
+2026-10-07T20:33:55.0245152Z 
+2026-10-07T20:33:55.0251964Z added 20 packages, and audited 21 packages in 2s
+2026-10-07T20:33:55.0252391Z 
+2026-10-07T20:33:55.0252663Z 17 packages are looking for funding
+2026-10-07T20:33:55.0253122Z   run `npm fund` for details
+2026-10-07T20:33:55.0255962Z 
+2026-10-07T20:33:55.0256422Z found 0 vulnerabilities
+2026-10-07T20:33:55.0674654Z ##[group]Run npm test
+2026-10-07T20:33:55.0674963Z [36;1mnpm test[0m
+2026-10-07T20:33:55.0740860Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:55.0741154Z ##[endgroup]
+2026-10-07T20:33:55.2229625Z 
+2026-10-07T20:33:55.2230067Z > create-fsd-architecture@2.6.1 test
+2026-10-07T20:33:55.2234157Z > node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --check bin/core/command-runner.mjs && node --test tests/*.test.mjs
+2026-10-07T20:33:55.2237032Z 
+2026-10-07T20:33:55.5826644Z TAP version 13
+2026-10-07T20:33:55.6789414Z # Subtest: CI command capture preserves argument boundaries in paths with spaces
+2026-10-07T20:33:55.6798755Z ok 1 - CI command capture preserves argument boundaries in paths with spaces
+2026-10-07T20:33:55.6849425Z   ---
+2026-10-07T20:33:55.6858526Z   duration_ms: 45.168047
+2026-10-07T20:33:55.6894238Z   type: 'test'
+2026-10-07T20:33:55.6907840Z   ...
+2026-10-07T20:33:56.5819210Z # Subtest: CLI parser keeps legacy creation and generation syntax
+2026-10-07T20:33:56.5820782Z ok 2 - CLI parser keeps legacy creation and generation syntax
+2026-10-07T20:33:56.5821719Z   ---
+2026-10-07T20:33:56.5822300Z   duration_ms: 3.239845
+2026-10-07T20:33:56.5823003Z   type: 'test'
+2026-10-07T20:33:56.5823583Z   ...
+2026-10-07T20:33:56.5824522Z # Subtest: CLI parser supports automation-friendly create flags
+2026-10-07T20:33:56.5848377Z ok 3 - CLI parser supports automation-friendly create flags
+2026-10-07T20:33:56.5878490Z   ---
+2026-10-07T20:33:56.5879183Z   duration_ms: 0.619373
+2026-10-07T20:33:56.5879905Z   type: 'test'
+2026-10-07T20:33:56.5880468Z   ...
+2026-10-07T20:33:56.5881510Z # Subtest: CLI parser exposes dry-run, safe replacement, and inspection commands
+2026-10-07T20:33:56.5883374Z ok 4 - CLI parser exposes dry-run, safe replacement, and inspection commands
+2026-10-07T20:33:56.5884244Z   ---
+2026-10-07T20:33:56.5884761Z   duration_ms: 0.396928
+2026-10-07T20:33:56.5885311Z   type: 'test'
+2026-10-07T20:33:56.5885813Z   ...
+2026-10-07T20:33:56.5886688Z # Subtest: CLI parser accepts explicit stack choices for repeatable E2E creation
+2026-10-07T20:33:56.5888261Z ok 5 - CLI parser accepts explicit stack choices for repeatable E2E creation
+2026-10-07T20:33:56.5889111Z   ---
+2026-10-07T20:33:56.5889641Z   duration_ms: 0.196466
+2026-10-07T20:33:56.5890266Z   type: 'test'
+2026-10-07T20:33:56.5890837Z   ...
+2026-10-07T20:33:56.5891690Z # Subtest: --yes resolves defaults from the selected framework
+2026-10-07T20:33:56.5892825Z ok 6 - --yes resolves defaults from the selected framework
+2026-10-07T20:33:56.5893702Z   ---
+2026-10-07T20:33:56.5894314Z   duration_ms: 0.331407
+2026-10-07T20:33:56.5894999Z   type: 'test'
+2026-10-07T20:33:56.5895605Z   ...
+2026-10-07T20:33:56.5896595Z # Subtest: CLI exposes version, help, and template discovery without prompts
+2026-10-07T20:33:56.5898437Z ok 7 - CLI exposes version, help, and template discovery without prompts
+2026-10-07T20:33:56.5899518Z   ---
+2026-10-07T20:33:56.5900245Z   duration_ms: 437.380347
+2026-10-07T20:33:56.5901021Z   type: 'test'
+2026-10-07T20:33:56.5901721Z   ...
+2026-10-07T20:33:56.5902621Z # Subtest: CLI fails before cloning an unknown framework
+2026-10-07T20:33:56.5903873Z ok 8 - CLI fails before cloning an unknown framework
+2026-10-07T20:33:56.5904893Z   ---
+2026-10-07T20:33:56.5905631Z   duration_ms: 118.60678
+2026-10-07T20:33:56.5906442Z   type: 'test'
+2026-10-07T20:33:56.5907428Z   ...
+2026-10-07T20:33:56.5908640Z # Subtest: project dry-run prints the plan without cloning a template
+2026-10-07T20:33:56.5910106Z ok 9 - project dry-run prints the plan without cloning a template
+2026-10-07T20:33:56.5911156Z   ---
+2026-10-07T20:33:56.5912206Z   duration_ms: 123.881983
+2026-10-07T20:33:56.5912962Z   type: 'test'
+2026-10-07T20:33:56.5913587Z   ...
+2026-10-07T20:33:56.5994523Z # Subtest: platform detection isolates Windows behavior
+2026-10-07T20:33:56.6018610Z ok 10 - platform detection isolates Windows behavior
+2026-10-07T20:33:56.6047843Z   ---
+2026-10-07T20:33:56.6050908Z   duration_ms: 0.850933
+2026-10-07T20:33:56.6051628Z   type: 'test'
+2026-10-07T20:33:56.6052252Z   ...
+2026-10-07T20:33:56.6053239Z # Subtest: simple tokens allow safe flags and reject shell metacharacters
+2026-10-07T20:33:56.6054469Z ok 11 - simple tokens allow safe flags and reject shell metacharacters
+2026-10-07T20:33:56.6055298Z   ---
+2026-10-07T20:33:56.6055851Z   duration_ms: 0.31707
+2026-10-07T20:33:56.6056527Z   type: 'test'
+2026-10-07T20:33:56.6057394Z   ...
+2026-10-07T20:33:56.6058346Z # Subtest: command validation keeps paths usable but rejects shell injection
+2026-10-07T20:33:56.6059496Z ok 12 - command validation keeps paths usable but rejects shell injection
+2026-10-07T20:33:56.6060295Z   ---
+2026-10-07T20:33:56.6060822Z   duration_ms: 0.299427
+2026-10-07T20:33:56.6061486Z   type: 'test'
+2026-10-07T20:33:56.6062124Z   ...
+2026-10-07T20:33:56.6063132Z # Subtest: Windows command lines keep commands and arguments separate
+2026-10-07T20:33:56.6064338Z ok 13 - Windows command lines keep commands and arguments separate
+2026-10-07T20:33:56.6065277Z   ---
+2026-10-07T20:33:56.6065863Z   duration_ms: 0.648396
+2026-10-07T20:33:56.6066446Z   type: 'test'
+2026-10-07T20:33:56.6067033Z   ...
+2026-10-07T20:33:56.6068328Z # Subtest: Windows cmd invocations never enable a shell and preserve boundaries
+2026-10-07T20:33:56.6069729Z ok 14 - Windows cmd invocations never enable a shell and preserve boundaries
+2026-10-07T20:33:56.6070693Z   ---
+2026-10-07T20:33:56.6071323Z   duration_ms: 1.148827
+2026-10-07T20:33:56.6072002Z   type: 'test'
+2026-10-07T20:33:56.6072607Z   ...
+2026-10-07T20:33:56.6073520Z # Subtest: safe runners fail closed for injection without a shell
+2026-10-07T20:33:56.6074742Z ok 15 - safe runners fail closed for injection without a shell
+2026-10-07T20:33:56.6076022Z   ---
+2026-10-07T20:33:56.6076672Z   duration_ms: 0.410664
+2026-10-07T20:33:56.6077579Z   type: 'test'
+2026-10-07T20:33:56.6078099Z   ...
+2026-10-07T20:33:56.6078971Z # Subtest: commandExists preserves safe argument handling on this platform
+2026-10-07T20:33:56.6080223Z ok 16 - commandExists preserves safe argument handling on this platform
+2026-10-07T20:33:56.6081036Z   ---
+2026-10-07T20:33:56.6081550Z   duration_ms: 101.482771
+2026-10-07T20:33:56.6082112Z   type: 'test'
+2026-10-07T20:33:56.6082603Z   ...
+2026-10-07T20:33:56.6083249Z # Subtest: template registry exposes stable and planned frameworks
+2026-10-07T20:33:56.6084450Z ok 17 - template registry exposes stable and planned frameworks
+2026-10-07T20:33:56.6085335Z   ---
+2026-10-07T20:33:56.6085901Z   duration_ms: 1.836296
+2026-10-07T20:33:56.6086548Z   type: 'test'
+2026-10-07T20:33:56.6087409Z   ...
+2026-10-07T20:33:56.6088379Z # Subtest: capability matrix owns framework-specific stack choices
+2026-10-07T20:33:56.6089626Z ok 18 - capability matrix owns framework-specific stack choices
+2026-10-07T20:33:56.6090511Z   ---
+2026-10-07T20:33:56.6091118Z   duration_ms: 0.491123
+2026-10-07T20:33:56.6091792Z   type: 'test'
+2026-10-07T20:33:56.6092401Z   ...
+2026-10-07T20:33:56.6093385Z # Subtest: configuration validation rejects cross-framework stack values
+2026-10-07T20:33:56.6094904Z ok 19 - configuration validation rejects cross-framework stack values
+2026-10-07T20:33:56.6095843Z   ---
+2026-10-07T20:33:56.6096448Z   duration_ms: 0.283627
+2026-10-07T20:33:56.6097096Z   type: 'test'
+2026-10-07T20:33:56.6097965Z   ...
+2026-10-07T20:33:56.6098915Z # Subtest: framework adapters isolate runtime-specific source generation
+2026-10-07T20:33:56.6100212Z ok 20 - framework adapters isolate runtime-specific source generation
+2026-10-07T20:33:56.6101133Z   ---
+2026-10-07T20:33:56.6101715Z   duration_ms: 0.350042
+2026-10-07T20:33:56.6102359Z   type: 'test'
+2026-10-07T20:33:56.6103231Z   ...
+2026-10-07T20:33:56.6104152Z # Subtest: project paths cannot escape the working directory
+2026-10-07T20:33:56.6105312Z ok 21 - project paths cannot escape the working directory
+2026-10-07T20:33:56.6106223Z   ---
+2026-10-07T20:33:56.6106898Z   duration_ms: 0.62391
+2026-10-07T20:33:56.6108003Z   type: 'test'
+2026-10-07T20:33:56.6108606Z   ...
+2026-10-07T20:33:58.5453248Z # Subtest: react-vite: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5468662Z ok 22 - react-vite: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5481579Z   ---
+2026-10-07T20:33:58.5482211Z   duration_ms: 585.153756
+2026-10-07T20:33:58.5482845Z   type: 'test'
+2026-10-07T20:33:58.5483432Z   ...
+2026-10-07T20:33:58.5484537Z # Subtest: nextjs: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5486135Z ok 23 - nextjs: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5487624Z   ---
+2026-10-07T20:33:58.5488268Z   duration_ms: 484.161258
+2026-10-07T20:33:58.5488897Z   type: 'test'
+2026-10-07T20:33:58.5489427Z   ...
+2026-10-07T20:33:58.5490528Z # Subtest: vue-vite: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5492142Z ok 24 - vue-vite: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5493159Z   ---
+2026-10-07T20:33:58.5493693Z   duration_ms: 469.22059
+2026-10-07T20:33:58.5494291Z   type: 'test'
+2026-10-07T20:33:58.5494821Z   ...
+2026-10-07T20:33:58.5495885Z # Subtest: nuxt: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5497720Z ok 25 - nuxt: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5498765Z   ---
+2026-10-07T20:33:58.5499314Z   duration_ms: 558.514126
+2026-10-07T20:33:58.5499932Z   type: 'test'
+2026-10-07T20:33:58.5500420Z   ...
+2026-10-07T20:33:58.5501519Z # Subtest: sveltekit: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5503492Z ok 26 - sveltekit: compatible non-CLI inspection and generator preview preserve existing code
+2026-10-07T20:33:58.5504537Z   ---
+2026-10-07T20:33:58.5505065Z   duration_ms: 600.007301
+2026-10-07T20:33:58.5505666Z   type: 'test'
+2026-10-07T20:33:58.5506456Z   ...
+2026-10-07T20:33:58.5622493Z # Subtest: package-manager contract supports npm
+2026-10-07T20:33:58.5623716Z ok 27 - package-manager contract supports npm
+2026-10-07T20:33:58.5624545Z   ---
+2026-10-07T20:33:58.5625233Z   duration_ms: 2.151723
+2026-10-07T20:33:58.5626032Z   type: 'test'
+2026-10-07T20:33:58.5626611Z   ...
+2026-10-07T20:33:58.5627878Z # Subtest: package-manager contract supports pnpm
+2026-10-07T20:33:58.5628984Z ok 28 - package-manager contract supports pnpm
+2026-10-07T20:33:58.5629759Z   ---
+2026-10-07T20:33:58.5630340Z   duration_ms: 0.243172
+2026-10-07T20:33:58.5630989Z   type: 'test'
+2026-10-07T20:33:58.5631580Z   ...
+2026-10-07T20:33:58.5632382Z # Subtest: package-manager contract supports yarn
+2026-10-07T20:33:58.5633400Z ok 29 - package-manager contract supports yarn
+2026-10-07T20:33:58.5634154Z   ---
+2026-10-07T20:33:58.5634751Z   duration_ms: 0.250495
+2026-10-07T20:33:58.5635414Z   type: 'test'
+2026-10-07T20:33:58.5635993Z   ...
+2026-10-07T20:33:58.5636735Z # Subtest: package-manager contract supports bun
+2026-10-07T20:33:58.5637960Z ok 30 - package-manager contract supports bun
+2026-10-07T20:33:58.5638602Z   ---
+2026-10-07T20:33:58.5639171Z   duration_ms: 0.212515
+2026-10-07T20:33:58.5639834Z   type: 'test'
+2026-10-07T20:33:58.5640420Z   ...
+2026-10-07T20:33:58.5641286Z # Subtest: dry-run file plans are exact and do not write files
+2026-10-07T20:33:58.5642393Z ok 31 - dry-run file plans are exact and do not write files
+2026-10-07T20:33:58.5643180Z   ---
+2026-10-07T20:33:58.5643766Z   duration_ms: 28.032669
+2026-10-07T20:33:58.5644425Z   type: 'test'
+2026-10-07T20:33:58.5645000Z   ...
+2026-10-07T20:33:58.5646104Z # Subtest: page generators register framework-native routes
+2026-10-07T20:33:58.5647526Z ok 32 - page generators register framework-native routes
+2026-10-07T20:33:58.5648297Z   ---
+2026-10-07T20:33:58.5648837Z   duration_ms: 50.967205
+2026-10-07T20:33:58.5649436Z   type: 'test'
+2026-10-07T20:33:58.5649969Z   ...
+2026-10-07T20:33:58.5650813Z # Subtest: generator conflicts fail without changing existing files
+2026-10-07T20:33:58.5652139Z ok 33 - generator conflicts fail without changing existing files
+2026-10-07T20:33:58.5652939Z   ---
+2026-10-07T20:33:58.5653445Z   duration_ms: 4.742252
+2026-10-07T20:33:58.5654197Z   type: 'test'
+2026-10-07T20:33:58.5654734Z   ...
+2026-10-07T20:33:58.5655665Z # Subtest: generator rollback removes partial slices and restores external files
+2026-10-07T20:33:58.5657718Z ok 34 - generator rollback removes partial slices and restores external files
+2026-10-07T20:33:58.5658572Z   ---
+2026-10-07T20:33:58.5659084Z   duration_ms: 4.579379
+2026-10-07T20:33:58.5659671Z   type: 'test'
+2026-10-07T20:33:58.5660208Z   ...
+2026-10-07T20:33:58.5661084Z # Subtest: check validates the FSD structure and resolved configuration
+2026-10-07T20:33:58.5662228Z ok 35 - check validates the FSD structure and resolved configuration
+2026-10-07T20:33:58.5663042Z   ---
+2026-10-07T20:33:58.5663581Z   duration_ms: 4.721804
+2026-10-07T20:33:58.5664168Z   type: 'test'
+2026-10-07T20:33:58.5664683Z   ...
+2026-10-07T20:33:58.5665569Z # Subtest: doctor resolves the selected package manager without a shell
+2026-10-07T20:33:58.5666773Z ok 36 - doctor resolves the selected package manager without a shell
+2026-10-07T20:33:58.5667929Z   ---
+2026-10-07T20:33:58.5668447Z   duration_ms: 140.990577
+2026-10-07T20:33:58.5669042Z   type: 'test'
+2026-10-07T20:33:58.5669589Z   ...
+2026-10-07T20:33:58.5670431Z # Subtest: legacy Vue projects are detected without fsd.config.json
+2026-10-07T20:33:58.5671552Z ok 37 - legacy Vue projects are detected without fsd.config.json
+2026-10-07T20:33:58.5672305Z   ---
+2026-10-07T20:33:58.5672821Z   duration_ms: 1.829283
+2026-10-07T20:33:58.5673370Z   type: 'test'
+2026-10-07T20:33:58.5674138Z   ...
+2026-10-07T20:33:58.5674965Z # Subtest: smart E2E matrix exercises every supported stack choice
+2026-10-07T20:33:58.5676108Z ok 38 - smart E2E matrix exercises every supported stack choice
+2026-10-07T20:33:58.5676915Z   ---
+2026-10-07T20:33:58.5677705Z   duration_ms: 1591.748339
+2026-10-07T20:33:58.5678329Z   type: 'test'
+2026-10-07T20:33:58.5678854Z   ...
+2026-10-07T20:33:58.5681778Z # Subtest: pnpm uses a narrow build allowlist without replacing existing workspace policy
+2026-10-07T20:33:58.5683152Z ok 39 - pnpm uses a narrow build allowlist without replacing existing workspace policy
+2026-10-07T20:33:58.5684094Z   ---
+2026-10-07T20:33:58.5684606Z   duration_ms: 23.267872
+2026-10-07T20:33:58.5685177Z   type: 'test'
+2026-10-07T20:33:58.5685723Z   ...
+2026-10-07T20:33:58.5686595Z # Subtest: project configuration installs only the selected stack
+2026-10-07T20:33:58.5688010Z ok 40 - project configuration installs only the selected stack
+2026-10-07T20:33:58.5688816Z   ---
+2026-10-07T20:33:58.5689344Z   duration_ms: 7.339825
+2026-10-07T20:33:58.5689907Z   type: 'test'
+2026-10-07T20:33:58.5690446Z   ...
+2026-10-07T20:33:58.5700207Z # Subtest: Yarn projects establish an isolated node-modules workspace
+2026-10-07T20:33:58.5701517Z ok 41 - Yarn projects establish an isolated node-modules workspace
+2026-10-07T20:33:58.5702423Z   ---
+2026-10-07T20:33:58.5703240Z   duration_ms: 7.725419
+2026-10-07T20:33:58.5711668Z   type: 'test'
+2026-10-07T20:33:58.5712295Z   ...
+2026-10-07T20:33:58.5713313Z # Subtest: feature generator reads the saved stack without additional choices
+2026-10-07T20:33:58.5714656Z ok 42 - feature generator reads the saved stack without additional choices
+2026-10-07T20:33:58.5715579Z   ---
+2026-10-07T20:33:58.5716167Z   duration_ms: 5.378652
+2026-10-07T20:33:58.5716800Z   type: 'test'
+2026-10-07T20:33:58.5717636Z   ...
+2026-10-07T20:33:58.5718967Z # Subtest: auth generator creates the complete flow and working mutation submissions
+2026-10-07T20:33:58.5720436Z ok 43 - auth generator creates the complete flow and working mutation submissions
+2026-10-07T20:33:58.5721400Z   ---
+2026-10-07T20:33:58.5722032Z   duration_ms: 216.48397
+2026-10-07T20:33:58.5722683Z   type: 'test'
+2026-10-07T20:33:58.5723270Z   ...
+2026-10-07T20:33:58.5724153Z # Subtest: forms can be generated without a server-state dependency
+2026-10-07T20:33:58.5725346Z ok 44 - forms can be generated without a server-state dependency
+2026-10-07T20:33:58.5726191Z   ---
+2026-10-07T20:33:58.5726784Z   duration_ms: 144.8923
+2026-10-07T20:33:58.5727725Z   type: 'test'
+2026-10-07T20:33:58.5728218Z   ...
+2026-10-07T20:33:58.5729138Z # Subtest: Vue projects receive framework-native dependencies, providers, and generators
+2026-10-07T20:33:58.5730466Z ok 45 - Vue projects receive framework-native dependencies, providers, and generators
+2026-10-07T20:33:58.5731306Z   ---
+2026-10-07T20:33:58.5731778Z   duration_ms: 42.397745
+2026-10-07T20:33:58.5732319Z   type: 'test'
+2026-10-07T20:33:58.5732858Z   ...
+2026-10-07T20:33:58.5733895Z # Subtest: SvelteKit projects receive native dependencies, providers, stores, forms, and routes
+2026-10-07T20:33:58.5735670Z ok 46 - SvelteKit projects receive native dependencies, providers, stores, forms, and routes
+2026-10-07T20:33:58.5736598Z   ---
+2026-10-07T20:33:58.5737100Z   duration_ms: 114.197807
+2026-10-07T20:33:58.5737942Z   type: 'test'
+2026-10-07T20:33:58.5738446Z   ...
+2026-10-07T20:33:58.5739467Z # Subtest: Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators
+2026-10-07T20:33:58.5740936Z ok 47 - Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators
+2026-10-07T20:33:58.5741898Z   ---
+2026-10-07T20:33:58.5742408Z   duration_ms: 6.003076
+2026-10-07T20:33:58.5743051Z   type: 'test'
+2026-10-07T20:33:58.5743640Z   ...
+2026-10-07T20:33:58.5744572Z # Subtest: project replacement can be committed or rolled back atomically
+2026-10-07T20:33:58.5745840Z ok 48 - project replacement can be committed or rolled back atomically
+2026-10-07T20:33:58.5747064Z   ---
+2026-10-07T20:33:58.5747924Z   duration_ms: 2.631869
+2026-10-07T20:33:58.5748550Z   type: 'test'
+2026-10-07T20:33:58.5749147Z   ...
+2026-10-07T20:33:58.5750026Z # Subtest: project lifecycle creates deterministic commit tooling
+2026-10-07T20:33:58.5751146Z ok 49 - project lifecycle creates deterministic commit tooling
+2026-10-07T20:33:58.5751861Z   ---
+2026-10-07T20:33:58.5752344Z   duration_ms: 9.633169
+2026-10-07T20:33:58.5752867Z   type: 'test'
+2026-10-07T20:33:58.5753351Z   ...
+2026-10-07T20:33:58.5754087Z # Subtest: hook generation rejects unknown package managers
+2026-10-07T20:33:58.5755024Z ok 50 - hook generation rejects unknown package managers
+2026-10-07T20:33:58.5755579Z   ---
+2026-10-07T20:33:58.5755935Z   duration_ms: 0.408925
+2026-10-07T20:33:58.5756347Z   type: 'test'
+2026-10-07T20:33:58.5756696Z   ...
+2026-10-07T20:33:58.5758072Z # Subtest: project lifecycle runs executable paths from working directories with spaces
+2026-10-07T20:33:58.5758792Z ok 51 - project lifecycle runs executable paths from working directories with spaces
+2026-10-07T20:33:58.5759424Z   ---
+2026-10-07T20:33:58.5759772Z   duration_ms: 8.056507
+2026-10-07T20:33:58.5760206Z   type: 'test'
+2026-10-07T20:33:58.5760803Z   ...
+2026-10-07T20:34:03.2558996Z # Subtest: --yes without a framework fails before prompting or replacing a directory
+2026-10-07T20:34:03.2560248Z ok 52 - --yes without a framework fails before prompting or replacing a directory
+2026-10-07T20:34:03.2560940Z   ---
+2026-10-07T20:34:03.2561270Z   duration_ms: 188.666871
+2026-10-07T20:34:03.2561668Z   type: 'test'
+2026-10-07T20:34:03.2562014Z   ...
+2026-10-07T20:34:03.2562710Z # Subtest: react-vite interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2563755Z ok 53 - react-vite interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2564401Z   ---
+2026-10-07T20:34:03.2564737Z   duration_ms: 0.700532
+2026-10-07T20:34:03.2565117Z   type: 'test'
+2026-10-07T20:34:03.2565788Z   ...
+2026-10-07T20:34:03.2566640Z # Subtest: react-vite numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2568097Z ok 54 - react-vite numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2568807Z   ---
+2026-10-07T20:34:03.2569171Z   duration_ms: 1137.755465
+2026-10-07T20:34:03.2569596Z   type: 'test'
+2026-10-07T20:34:03.2569944Z   ...
+2026-10-07T20:34:03.2570627Z # Subtest: nextjs interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2571586Z ok 55 - nextjs interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2572186Z   ---
+2026-10-07T20:34:03.2572541Z   duration_ms: 0.203551
+2026-10-07T20:34:03.2572935Z   type: 'test'
+2026-10-07T20:34:03.2573277Z   ...
+2026-10-07T20:34:03.2574036Z # Subtest: nextjs numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2575162Z ok 56 - nextjs numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2575867Z   ---
+2026-10-07T20:34:03.2576227Z   duration_ms: 885.206173
+2026-10-07T20:34:03.2576643Z   type: 'test'
+2026-10-07T20:34:03.2576987Z   ...
+2026-10-07T20:34:03.2577923Z # Subtest: vue-vite interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2578930Z ok 57 - vue-vite interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2579558Z   ---
+2026-10-07T20:34:03.2579893Z   duration_ms: 0.389309
+2026-10-07T20:34:03.2580288Z   type: 'test'
+2026-10-07T20:34:03.2580644Z   ...
+2026-10-07T20:34:03.2581420Z # Subtest: vue-vite numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2582594Z ok 58 - vue-vite numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2583311Z   ---
+2026-10-07T20:34:03.2583662Z   duration_ms: 890.185045
+2026-10-07T20:34:03.2584070Z   type: 'test'
+2026-10-07T20:34:03.2584417Z   ...
+2026-10-07T20:34:03.2585072Z # Subtest: nuxt interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2586003Z ok 59 - nuxt interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2617964Z   ---
+2026-10-07T20:34:03.2653474Z   duration_ms: 0.177072
+2026-10-07T20:34:03.2654005Z   type: 'test'
+2026-10-07T20:34:03.2654365Z   ...
+2026-10-07T20:34:03.2655143Z # Subtest: nuxt numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2656280Z ok 60 - nuxt numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2656988Z   ---
+2026-10-07T20:34:03.2668213Z   duration_ms: 891.329018
+2026-10-07T20:34:03.2676429Z   type: 'test'
+2026-10-07T20:34:03.2676871Z   ...
+2026-10-07T20:34:03.2678166Z # Subtest: sveltekit interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2679325Z ok 61 - sveltekit interactive preselection matches unattended defaults
+2026-10-07T20:34:03.2680023Z   ---
+2026-10-07T20:34:03.2680419Z   duration_ms: 0.286286
+2026-10-07T20:34:03.2680863Z   type: 'test'
+2026-10-07T20:34:03.2681242Z   ...
+2026-10-07T20:34:03.2682064Z # Subtest: sveltekit numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2683362Z ok 62 - sveltekit numeric slice names are rejected before any write, including force
+2026-10-07T20:34:03.2684135Z   ---
+2026-10-07T20:34:03.2684498Z   duration_ms: 896.329141
+2026-10-07T20:34:03.2684925Z   type: 'test'
+2026-10-07T20:34:03.2685345Z   ...
+2026-10-07T20:34:03.2686055Z # Subtest: generic view signatures respect the template formatter line width
+2026-10-07T20:34:03.2687395Z ok 63 - generic view signatures respect the template formatter line width
+2026-10-07T20:34:03.2688134Z   ---
+2026-10-07T20:34:03.2688486Z   duration_ms: 0.194103
+2026-10-07T20:34:03.2688897Z   type: 'test'
+2026-10-07T20:34:03.2689256Z   ...
+2026-10-07T20:34:03.2689989Z # Subtest: failed installation exits nonzero and rolls back (force=false)
+2026-10-07T20:34:03.2691030Z ok 64 - failed installation exits nonzero and rolls back (force=false)
+2026-10-07T20:34:03.2691701Z   ---
+2026-10-07T20:34:03.2692311Z   duration_ms: 204.031986
+2026-10-07T20:34:03.2692779Z   type: 'test'
+2026-10-07T20:34:03.2693146Z   ...
+2026-10-07T20:34:03.2693855Z # Subtest: failed installation exits nonzero and rolls back (force=true)
+2026-10-07T20:34:03.2694866Z ok 65 - failed installation exits nonzero and rolls back (force=true)
+2026-10-07T20:34:03.2695514Z   ---
+2026-10-07T20:34:03.2695874Z   duration_ms: 185.50408
+2026-10-07T20:34:03.2696298Z   type: 'test'
+2026-10-07T20:34:03.2696681Z   ...
+2026-10-07T20:34:03.2697716Z # Subtest: intentional no-install remains successful and does not execute installer
+2026-10-07T20:34:03.2698960Z ok 66 - intentional no-install remains successful and does not execute installer
+2026-10-07T20:34:03.2699702Z   ---
+2026-10-07T20:34:03.2700096Z   duration_ms: 181.500115
+2026-10-07T20:34:03.2700530Z   type: 'test'
+2026-10-07T20:34:03.2700888Z   ...
+2026-10-07T20:34:03.2701693Z # Subtest: npm hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2702809Z ok 67 - npm hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2703457Z   ---
+2026-10-07T20:34:03.2703783Z   duration_ms: 64.705288
+2026-10-07T20:34:03.2704389Z   type: 'test'
+2026-10-07T20:34:03.2705819Z   ...
+2026-10-07T20:34:03.2706674Z # Subtest: pnpm hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2708001Z ok 68 - pnpm hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2708709Z   ---
+2026-10-07T20:34:03.2709052Z   duration_ms: 59.985024
+2026-10-07T20:34:03.2709438Z   type: 'test'
+2026-10-07T20:34:03.2709654Z   ...
+2026-10-07T20:34:03.2710148Z # Subtest: yarn hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2711204Z ok 69 - yarn hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2711968Z   ---
+2026-10-07T20:34:03.2712335Z   duration_ms: 60.194788
+2026-10-07T20:34:03.2712779Z   type: 'test'
+2026-10-07T20:34:03.2713150Z   ...
+2026-10-07T20:34:03.2714002Z # Subtest: bun hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2715444Z ok 70 - bun hooks block lint/build/whitespace failure and permit clean commits
+2026-10-07T20:34:03.2727444Z   ---
+2026-10-07T20:34:03.2728102Z   duration_ms: 59.626144
+2026-10-07T20:34:03.2750208Z   type: 'test'
+2026-10-07T20:34:03.2750572Z   ...
+2026-10-07T20:34:03.2752832Z # Subtest: all shipped template sources bind full immutable commits
+2026-10-07T20:34:03.2753761Z ok 71 - all shipped template sources bind full immutable commits
+2026-10-07T20:34:03.2754184Z   ---
+2026-10-07T20:34:03.2754465Z   duration_ms: 1.155494
+2026-10-07T20:34:03.2754709Z   type: 'test'
+2026-10-07T20:34:03.2755013Z   ...
+2026-10-07T20:34:03.2755570Z # Subtest: unavailable pinned download rolls back a new target
+2026-10-07T20:34:03.2756176Z ok 72 - unavailable pinned download rolls back a new target
+2026-10-07T20:34:03.2756761Z   ---
+2026-10-07T20:34:03.2757362Z   duration_ms: 130.300122
+2026-10-07T20:34:03.2757813Z   type: 'test'
+2026-10-07T20:34:03.2758182Z   ...
+2026-10-07T20:34:03.2760146Z # Subtest: unavailable pinned download rolls back the existing target
+2026-10-07T20:34:03.2768739Z ok 73 - unavailable pinned download rolls back the existing target
+2026-10-07T20:34:03.2769438Z   ---
+2026-10-07T20:34:03.2769817Z   duration_ms: 153.64464
+2026-10-07T20:34:03.2770262Z   type: 'test'
+2026-10-07T20:34:03.2770640Z   ...
+2026-10-07T20:34:03.2771518Z # Subtest: moving names, shortened SHAs and malformed repository sources fail before writing
+2026-10-07T20:34:03.2772822Z ok 74 - moving names, shortened SHAs and malformed repository sources fail before writing
+2026-10-07T20:34:03.2773596Z   ---
+2026-10-07T20:34:03.2773968Z   duration_ms: 1.43647
+2026-10-07T20:34:03.2774393Z   type: 'test'
+2026-10-07T20:34:03.2774764Z   ...
+2026-10-07T20:34:03.2775156Z # FSD project upgrade
+2026-10-07T20:34:03.2775788Z # Project: /tmp/fsd-cli-upgrade-react-vite-I98pCJ
+2026-10-07T20:34:03.2776713Z # Framework: react-vite
+2026-10-07T20:34:03.2777655Z # Current state: legacy (no manifest) / config schema 1
+2026-10-07T20:34:03.2778451Z # Target state: managed state 2 / config schema 1
+2026-10-07T20:34:03.2779293Z # Migration path: managed-state-v1 -> tooling-hardening-v1
+2026-10-07T20:34:03.2780097Z # Mode: conservative legacy ownership analysis
+2026-10-07T20:34:03.2781023Z # ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+2026-10-07T20:34:03.2782284Z # ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+2026-10-07T20:34:03.2783602Z # ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+2026-10-07T20:34:03.2784858Z # ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2786238Z # ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+2026-10-07T20:34:03.2787844Z # ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2789195Z # ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+2026-10-07T20:34:03.2790587Z # ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+2026-10-07T20:34:03.2791831Z # ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+2026-10-07T20:34:03.2793014Z # ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+2026-10-07T20:34:03.2794192Z # ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+2026-10-07T20:34:03.2795263Z # ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+2026-10-07T20:34:03.2796248Z # ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+2026-10-07T20:34:03.2797587Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+2026-10-07T20:34:03.2798965Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+2026-10-07T20:34:03.2800634Z # PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+2026-10-07T20:34:03.2801868Z # UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2802602Z # - npm run lint
+2026-10-07T20:34:03.2802993Z # + \#!/bin/sh
+2026-10-07T20:34:03.2803730Z # UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2804582Z # - ./node_modules/.bin/commitlint --edit "$1"
+2026-10-07T20:34:03.2805101Z # + set -e
+2026-10-07T20:34:03.2805826Z # UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2806532Z # - npm run build
+2026-10-07T20:34:03.2806913Z # + \#!/bin/sh
+2026-10-07T20:34:03.2808390Z # PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+2026-10-07T20:34:03.2810117Z # CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+2026-10-07T20:34:03.2811419Z # 1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+2026-10-07T20:34:03.2812154Z # Validations:
+2026-10-07T20:34:03.2812767Z #   - fsd.config.json schema and capability validation
+2026-10-07T20:34:03.2813529Z #   - framework adapter and required FSD layers
+2026-10-07T20:34:03.2814384Z #   - package.json and managed dependency consistency
+2026-10-07T20:34:03.2815119Z #   - managed-file hashes and marker integrity
+2026-10-07T20:34:03.2815794Z #   - ownership manifest schema validation
+2026-10-07T20:34:03.2816357Z # No files were changed.
+2026-10-07T20:34:03.2817470Z # Git: no repository detected; internal transactional backup will be used.
+2026-10-07T20:34:03.2818230Z # FSD project upgrade
+2026-10-07T20:34:03.2818854Z # Project: /tmp/fsd-cli-upgrade-react-vite-I98pCJ
+2026-10-07T20:34:03.2819468Z # Framework: react-vite
+2026-10-07T20:34:03.2820362Z # Current state: legacy (no manifest) / config schema 1
+2026-10-07T20:34:03.2821238Z # Target state: managed state 2 / config schema 1
+2026-10-07T20:34:03.2822055Z # Migration path: managed-state-v1 -> tooling-hardening-v1
+2026-10-07T20:34:03.2822843Z # Mode: conservative legacy ownership analysis
+2026-10-07T20:34:03.2823749Z # ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+2026-10-07T20:34:03.2824974Z # ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+2026-10-07T20:34:03.2826268Z # ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+2026-10-07T20:34:03.2827719Z # ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2829114Z # ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+2026-10-07T20:34:03.2830494Z # ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2831830Z # ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+2026-10-07T20:34:03.2833180Z # ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+2026-10-07T20:34:03.2834418Z # ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+2026-10-07T20:34:03.2835622Z # ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+2026-10-07T20:34:03.2836876Z # ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+2026-10-07T20:34:03.2838265Z # ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+2026-10-07T20:34:03.2839407Z # ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+2026-10-07T20:34:03.2840636Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+2026-10-07T20:34:03.2842095Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+2026-10-07T20:34:03.2843558Z # PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+2026-10-07T20:34:03.2845028Z # UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2846089Z # UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2847104Z # UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2848867Z # PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+2026-10-07T20:34:03.2850535Z # CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+2026-10-07T20:34:03.2851780Z # 1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+2026-10-07T20:34:03.2852473Z # Validations:
+2026-10-07T20:34:03.2853061Z #   - fsd.config.json schema and capability validation
+2026-10-07T20:34:03.2853796Z #   - framework adapter and required FSD layers
+2026-10-07T20:34:03.2854531Z #   - package.json and managed dependency consistency
+2026-10-07T20:34:03.2855239Z #   - managed-file hashes and marker integrity
+2026-10-07T20:34:03.2855883Z #   - ownership manifest schema validation
+2026-10-07T20:34:03.2856414Z # No files were changed.
+2026-10-07T20:34:03.2857424Z # Git: no repository detected; internal transactional backup will be used.
+2026-10-07T20:34:03.2858520Z # Dependency installation skipped; this migration does not change dependencies.
+2026-10-07T20:34:03.2859275Z # FSD project upgrade
+2026-10-07T20:34:03.2859873Z # Project: /tmp/fsd-cli-upgrade-react-vite-I98pCJ
+2026-10-07T20:34:03.2860469Z # Framework: react-vite
+2026-10-07T20:34:03.2861046Z # Current state: managed state 2 / config schema 1
+2026-10-07T20:34:03.2861752Z # Target state: managed state 2 / config schema 1
+2026-10-07T20:34:03.2862372Z # Migration path: up to date
+2026-10-07T20:34:03.2863337Z # ALREADY_APPLIED fsd.config.json  Configuration schema is current.
+2026-10-07T20:34:03.2864544Z # ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+2026-10-07T20:34:03.2865775Z # ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+2026-10-07T20:34:03.2866931Z # ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2868479Z # ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+2026-10-07T20:34:03.2869773Z # ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2871012Z # ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+2026-10-07T20:34:03.2872313Z # ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+2026-10-07T20:34:03.2873495Z # ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+2026-10-07T20:34:03.2874651Z # ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+2026-10-07T20:34:03.2875882Z # ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+2026-10-07T20:34:03.2877015Z # ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+2026-10-07T20:34:03.2878371Z # ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+2026-10-07T20:34:03.2879606Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+2026-10-07T20:34:03.2881043Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+2026-10-07T20:34:03.2882501Z # PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+2026-10-07T20:34:03.2883788Z # PRESERVE        .husky/pre-commit  Verified managed content has no migration in this run.
+2026-10-07T20:34:03.2885010Z # PRESERVE        .husky/commit-msg  Verified managed content has no migration in this run.
+2026-10-07T20:34:03.2886237Z # PRESERVE        .husky/pre-push  Verified managed content has no migration in this run.
+2026-10-07T20:34:03.2888512Z # PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+2026-10-07T20:34:03.2889988Z # 0 creates, 0 safe updates, 0 deletes, 5 preserved, 0 conflicts, 0 manual actions
+2026-10-07T20:34:03.2890702Z # Validations:
+2026-10-07T20:34:03.2891296Z #   - fsd.config.json schema and capability validation
+2026-10-07T20:34:03.2892018Z #   - framework adapter and required FSD layers
+2026-10-07T20:34:03.2892741Z #   - package.json and managed dependency consistency
+2026-10-07T20:34:03.2893425Z #   - managed-file hashes and marker integrity
+2026-10-07T20:34:03.2894057Z #   - ownership manifest schema validation
+2026-10-07T20:34:03.2894602Z # No files were changed.
+2026-10-07T20:34:03.2895363Z # Git: no repository detected; internal transactional backup will be used.
+2026-10-07T20:34:03.2896478Z # Upgrade state is unsupported or invalid: Required FSD layer is missing: src/widgets
+2026-10-07T20:34:03.2897845Z # Dependency installation skipped; this migration does not change dependencies.
+2026-10-07T20:34:03.2898582Z # FSD project upgrade
+2026-10-07T20:34:03.2899169Z # Project: /tmp/fsd-cli-upgrade-vue-vite-mfsl45
+2026-10-07T20:34:03.2899749Z # Framework: vue-vite
+2026-10-07T20:34:03.2900339Z # Current state: legacy (no manifest) / config schema 1
+2026-10-07T20:34:03.2901048Z # Target state: managed state 2 / config schema 1
+2026-10-07T20:34:03.2901789Z # Migration path: managed-state-v1 -> tooling-hardening-v1
+2026-10-07T20:34:03.2902510Z # Mode: conservative legacy ownership analysis
+2026-10-07T20:34:03.2903399Z # ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+2026-10-07T20:34:03.2904639Z # ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+2026-10-07T20:34:03.2906616Z # CONFLICT        src/shared/api/client.ts  Legacy ownership cannot be proven because the file does not match a released CLI signature.
+2026-10-07T20:34:03.2908553Z # ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2909824Z # ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2911156Z # ALREADY_APPLIED package.json  dependencies:@tanstack/vue-query matches its managed value.
+2026-10-07T20:34:03.2912441Z # ALREADY_APPLIED package.json  dependencies:@vee-validate/zod matches its managed value.
+2026-10-07T20:34:03.2913609Z # ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+2026-10-07T20:34:03.2914756Z # ALREADY_APPLIED package.json  dependencies:pinia matches its managed value.
+2026-10-07T20:34:03.2915935Z # ALREADY_APPLIED package.json  dependencies:vee-validate matches its managed value.
+2026-10-07T20:34:03.2917366Z # ALREADY_APPLIED package.json  dependencies:vue-router matches its managed value.
+2026-10-07T20:34:03.2918528Z # ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+2026-10-07T20:34:03.2919744Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+2026-10-07T20:34:03.2921268Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+2026-10-07T20:34:03.2922766Z # PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+2026-10-07T20:34:03.2923975Z # UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2925014Z # UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2926041Z # UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2927824Z # PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+2026-10-07T20:34:03.2929589Z # CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+2026-10-07T20:34:03.2931141Z # 1 creates, 3 safe updates, 0 deletes, 2 preserved, 1 conflicts, 0 manual actions
+2026-10-07T20:34:03.2931860Z # Validations:
+2026-10-07T20:34:03.2932452Z #   - fsd.config.json schema and capability validation
+2026-10-07T20:34:03.2933200Z #   - framework adapter and required FSD layers
+2026-10-07T20:34:03.2933952Z #   - package.json and managed dependency consistency
+2026-10-07T20:34:03.2934667Z #   - managed-file hashes and marker integrity
+2026-10-07T20:34:03.2935319Z #   - ownership manifest schema validation
+2026-10-07T20:34:03.2936175Z # Git: no repository detected; internal transactional backup will be used.
+2026-10-07T20:34:03.2937747Z # Upgrade state is unsupported or invalid: Unable to read fsd.config.json: Unexpected token 'o', "not json
+2026-10-07T20:34:03.2938733Z # " is not valid JSON
+2026-10-07T20:34:03.2939593Z # Dependency installation skipped; this migration does not change dependencies.
+2026-10-07T20:34:03.2940433Z # FSD project upgrade
+2026-10-07T20:34:03.2941066Z # Project: /tmp/fsd-cli-upgrade-react-vite-Bm9USL
+2026-10-07T20:34:03.2941697Z # Framework: react-vite
+2026-10-07T20:34:03.2942311Z # Current state: legacy (no manifest) / config schema 1
+2026-10-07T20:34:03.2943052Z # Target state: managed state 2 / config schema 1
+2026-10-07T20:34:03.2943885Z # Migration path: managed-state-v1 -> tooling-hardening-v1
+2026-10-07T20:34:03.2944691Z # Mode: conservative legacy ownership analysis
+2026-10-07T20:34:03.2945625Z # ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+2026-10-07T20:34:03.2946899Z # ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+2026-10-07T20:34:03.2948519Z # ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+2026-10-07T20:34:03.2949772Z # ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2951339Z # ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+2026-10-07T20:34:03.2952708Z # ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+2026-10-07T20:34:03.2954033Z # ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+2026-10-07T20:34:03.2955397Z # ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+2026-10-07T20:34:03.2956557Z # ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+2026-10-07T20:34:03.2957673Z # ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+2026-10-07T20:34:03.2958465Z # ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+2026-10-07T20:34:03.2959198Z # ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+2026-10-07T20:34:03.2959842Z # ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+2026-10-07T20:34:03.2960573Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+2026-10-07T20:34:03.2961455Z # ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+2026-10-07T20:34:03.2962371Z # PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+2026-10-07T20:34:03.2963099Z # UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2963713Z # UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2964328Z # UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+2026-10-07T20:34:03.2965258Z # PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+2026-10-07T20:34:03.2966278Z # CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+2026-10-07T20:34:03.2967094Z # 1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+2026-10-07T20:34:03.2968077Z # Validations:
+2026-10-07T20:34:03.2968464Z #   - fsd.config.json schema and capability validation
+2026-10-07T20:34:03.2968941Z #   - framework adapter and required FSD layers
+2026-10-07T20:34:03.2969382Z #   - package.json and managed dependency consistency
+2026-10-07T20:34:03.2969821Z #   - managed-file hashes and marker integrity
+2026-10-07T20:34:03.2970238Z #   - ownership manifest schema validation
+2026-10-07T20:34:03.2970584Z # Git: master (dirty)
+2026-10-07T20:34:03.2971009Z # Subtest: upgrade parser is isolated from create and generate flags
+2026-10-07T20:34:03.2971584Z ok 75 - upgrade parser is isolated from create and generate flags
+2026-10-07T20:34:03.2971968Z   ---
+2026-10-07T20:34:03.2972187Z   duration_ms: 3.127326
+2026-10-07T20:34:03.2972430Z   type: 'test'
+2026-10-07T20:34:03.2972634Z   ...
+2026-10-07T20:34:03.2973054Z # Subtest: CLI routes upgrade without leaking flags into project creation
+2026-10-07T20:34:03.2973668Z ok 76 - CLI routes upgrade without leaking flags into project creation
+2026-10-07T20:34:03.2974061Z   ---
+2026-10-07T20:34:03.2974285Z   duration_ms: 188.190441
+2026-10-07T20:34:03.2974530Z   type: 'test'
+2026-10-07T20:34:03.2974727Z   ...
+2026-10-07T20:34:03.2975214Z # Subtest: root discovery works from nested directories and rejects nested projects
+2026-10-07T20:34:03.2975960Z ok 77 - root discovery works from nested directories and rejects nested projects
+2026-10-07T20:34:03.2976397Z   ---
+2026-10-07T20:34:03.2976609Z   duration_ms: 5.379165
+2026-10-07T20:34:03.2976831Z   type: 'test'
+2026-10-07T20:34:03.2977022Z   ...
+2026-10-07T20:34:03.2977675Z # Subtest: root discovery ignores a package-only workspace above a complete FSD project
+2026-10-07T20:34:03.2978556Z ok 78 - root discovery ignores a package-only workspace above a complete FSD project
+2026-10-07T20:34:03.2979404Z   ---
+2026-10-07T20:34:03.2979759Z   duration_ms: 4.96232
+2026-10-07T20:34:03.2980150Z   type: 'test'
+2026-10-07T20:34:03.2980750Z   ...
+2026-10-07T20:34:03.2981474Z # Subtest: all supported framework and package-manager legacy fixtures have a deterministic plan
+2026-10-07T20:34:03.2982292Z ok 79 - all supported framework and package-manager legacy fixtures have a deterministic plan
+2026-10-07T20:34:03.2982765Z   ---
+2026-10-07T20:34:03.2982969Z   duration_ms: 66.739798
+2026-10-07T20:34:03.2983203Z   type: 'test'
+2026-10-07T20:34:03.2983395Z   ...
+2026-10-07T20:34:03.2983833Z # Subtest: dry-run and check are read-only, then a clean legacy upgrade is idempotent
+2026-10-07T20:34:03.2984496Z ok 80 - dry-run and check are read-only, then a clean legacy upgrade is idempotent
+2026-10-07T20:34:03.2984904Z   ---
+2026-10-07T20:34:03.2985095Z   duration_ms: 39.925086
+2026-10-07T20:34:03.2985327Z   type: 'test'
+2026-10-07T20:34:03.2985518Z   ...
+2026-10-07T20:34:03.2985929Z # Subtest: manifest serialization is accepted by the Next.js Biome array style
+2026-10-07T20:34:03.2986568Z ok 81 - manifest serialization is accepted by the Next.js Biome array style
+2026-10-07T20:34:03.2986963Z   ---
+2026-10-07T20:34:03.2987405Z   duration_ms: 5.459894
+2026-10-07T20:34:03.2987654Z   type: 'test'
+2026-10-07T20:34:03.2987849Z   ...
+2026-10-07T20:34:03.2988231Z # Subtest: a stale plan refuses to overwrite a file changed after planning
+2026-10-07T20:34:03.2988814Z ok 82 - a stale plan refuses to overwrite a file changed after planning
+2026-10-07T20:34:03.2989182Z   ---
+2026-10-07T20:34:03.2989367Z   duration_ms: 9.221208
+2026-10-07T20:34:03.2989587Z   type: 'test'
+2026-10-07T20:34:03.2989778Z   ...
+2026-10-07T20:34:03.2990098Z # Subtest: Redux generation refreshes its managed store hash
+2026-10-07T20:34:03.2990564Z ok 83 - Redux generation refreshes its managed store hash
+2026-10-07T20:34:03.2990890Z   ---
+2026-10-07T20:34:03.2991076Z   duration_ms: 12.285085
+2026-10-07T20:34:03.2991296Z   type: 'test'
+2026-10-07T20:34:03.2991485Z   ...
+2026-10-07T20:34:03.2991829Z # Subtest: Redux generation refuses a user-modified managed store
+2026-10-07T20:34:03.2992339Z ok 84 - Redux generation refuses a user-modified managed store
+2026-10-07T20:34:03.2992817Z   ---
+2026-10-07T20:34:03.2993011Z   duration_ms: 7.635629
+2026-10-07T20:34:03.2993223Z   type: 'test'
+2026-10-07T20:34:03.2993407Z   ...
+2026-10-07T20:34:03.2993749Z # Subtest: check reports a missing required FSD layer as invalid
+2026-10-07T20:34:03.2994246Z ok 85 - check reports a missing required FSD layer as invalid
+2026-10-07T20:34:03.2994579Z   ---
+2026-10-07T20:34:03.2994772Z   duration_ms: 4.527598
+2026-10-07T20:34:03.2994989Z   type: 'test'
+2026-10-07T20:34:03.2995184Z   ...
+2026-10-07T20:34:03.2995578Z # Subtest: manifest projects preserve unclaimed dependency versions
+2026-10-07T20:34:03.2996123Z ok 86 - manifest projects preserve unclaimed dependency versions
+2026-10-07T20:34:03.2996467Z   ---
+2026-10-07T20:34:03.2996651Z   duration_ms: 5.560883
+2026-10-07T20:34:03.2996873Z   type: 'test'
+2026-10-07T20:34:03.2997062Z   ...
+2026-10-07T20:34:03.2997853Z # Subtest: business code is preserved while modified managed code blocks upgrade
+2026-10-07T20:34:03.2998533Z ok 87 - business code is preserved while modified managed code blocks upgrade
+2026-10-07T20:34:03.2998939Z   ---
+2026-10-07T20:34:03.2999142Z   duration_ms: 20.461898
+2026-10-07T20:34:03.2999375Z   type: 'test'
+2026-10-07T20:34:03.2999574Z   ...
+2026-10-07T20:34:03.3000105Z # Subtest: managed manifests detect edits, malformed input, future schemas, and missing markers
+2026-10-07T20:34:03.3000877Z ok 88 - managed manifests detect edits, malformed input, future schemas, and missing markers
+2026-10-07T20:34:03.3001337Z   ---
+2026-10-07T20:34:03.3001549Z   duration_ms: 23.434614
+2026-10-07T20:34:03.3001775Z   type: 'test'
+2026-10-07T20:34:03.3001972Z   ...
+2026-10-07T20:34:03.3002438Z # Subtest: transaction rollback restores files and retains an internal recovery backup
+2026-10-07T20:34:03.3003378Z ok 89 - transaction rollback restores files and retains an internal recovery backup
+2026-10-07T20:34:03.3004103Z   ---
+2026-10-07T20:34:03.3004671Z   duration_ms: 3.204591
+2026-10-07T20:34:03.3004981Z   type: 'test'
+2026-10-07T20:34:03.3005182Z   ...
+2026-10-07T20:34:03.3005543Z # Subtest: manifest-write failure rolls back prior hook updates
+2026-10-07T20:34:03.3006043Z ok 90 - manifest-write failure rolls back prior hook updates
+2026-10-07T20:34:03.3006374Z   ---
+2026-10-07T20:34:03.3006568Z   duration_ms: 11.068878
+2026-10-07T20:34:03.3006793Z   type: 'test'
+2026-10-07T20:34:03.3006985Z   ...
+2026-10-07T20:34:03.3007684Z # Subtest: migration graph rejects gaps, duplicate IDs, cycles, and downgrades
+2026-10-07T20:34:03.3008310Z ok 91 - migration graph rejects gaps, duplicate IDs, cycles, and downgrades
+2026-10-07T20:34:03.3008695Z   ---
+2026-10-07T20:34:03.3008884Z   duration_ms: 0.488605
+2026-10-07T20:34:03.3009099Z   type: 'test'
+2026-10-07T20:34:03.3009287Z   ...
+2026-10-07T20:34:03.3009618Z # Subtest: symlink escapes are rejected before planning writes
+2026-10-07T20:34:03.3010105Z ok 92 - symlink escapes are rejected before planning writes
+2026-10-07T20:34:03.3010434Z   ---
+2026-10-07T20:34:03.3010623Z   duration_ms: 6.089112
+2026-10-07T20:34:03.3010849Z   type: 'test'
+2026-10-07T20:34:03.3011033Z   ...
+2026-10-07T20:34:03.3011393Z # Subtest: dirty Git worktrees are refused unless explicitly allowed
+2026-10-07T20:34:03.3011935Z ok 93 - dirty Git worktrees are refused unless explicitly allowed
+2026-10-07T20:34:03.3012280Z   ---
+2026-10-07T20:34:03.3012467Z   duration_ms: 26.749359
+2026-10-07T20:34:03.3012689Z   type: 'test'
+2026-10-07T20:34:03.3012879Z   ...
+2026-10-07T20:34:03.3013053Z 1..93
+2026-10-07T20:34:03.3013232Z # tests 93
+2026-10-07T20:34:03.3013420Z # suites 0
+2026-10-07T20:34:03.3013604Z # pass 93
+2026-10-07T20:34:03.3013786Z # fail 0
+2026-10-07T20:34:03.3013974Z # cancelled 0
+2026-10-07T20:34:03.3014175Z # skipped 0
+2026-10-07T20:34:03.3014356Z # todo 0
+2026-10-07T20:34:03.3014563Z # duration_ms 7726.087286
+2026-10-07T20:34:03.3098657Z ##[group]Run npm pack --dry-run
+2026-10-07T20:34:03.3098984Z [36;1mnpm pack --dry-run[0m
+2026-10-07T20:34:03.3162546Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:34:03.3162814Z ##[endgroup]
+2026-10-07T20:34:03.7199792Z npm notice
+2026-10-07T20:34:03.7202759Z npm notice 📦  create-fsd-architecture@2.6.1
+2026-10-07T20:34:03.7203296Z npm notice Tarball Contents
+2026-10-07T20:34:03.7205948Z npm notice 1.1kB LICENSE
+2026-10-07T20:34:03.7206468Z npm notice 15.1kB README.md
+2026-10-07T20:34:03.7206955Z npm notice 1.2kB SECURITY.md
+2026-10-07T20:34:03.7207657Z npm notice 4.2kB bin/cli/args.mjs
+2026-10-07T20:34:03.7208185Z npm notice 5.0kB bin/cli/output.mjs
+2026-10-07T20:34:03.7208770Z npm notice 9.4kB bin/commands/create-project.mjs
+2026-10-07T20:34:03.7209220Z npm notice 2.7kB bin/commands/inspect-project.mjs
+2026-10-07T20:34:03.7209665Z npm notice 8.6kB bin/commands/upgrade-project.mjs
+2026-10-07T20:34:03.7210106Z npm notice 5.2kB bin/core/capability-matrix.mjs
+2026-10-07T20:34:03.7210736Z npm notice 5.2kB bin/core/command-runner.mjs
+2026-10-07T20:34:03.7211447Z npm notice 1.2kB bin/core/frameworks/index.mjs
+2026-10-07T20:34:03.7212219Z npm notice 875B bin/core/frameworks/nextjs.mjs
+2026-10-07T20:34:03.7212749Z npm notice 850B bin/core/frameworks/nuxt.mjs
+2026-10-07T20:34:03.7213438Z npm notice 939B bin/core/frameworks/react-vite.mjs
+2026-10-07T20:34:03.7213896Z npm notice 676B bin/core/frameworks/sveltekit.mjs
+2026-10-07T20:34:03.7214555Z npm notice 766B bin/core/frameworks/vue-vite.mjs
+2026-10-07T20:34:03.7215167Z npm notice 1.2kB bin/core/package-managers.mjs
+2026-10-07T20:34:03.7215605Z npm notice 7.0kB bin/core/project-lifecycle.mjs
+2026-10-07T20:34:03.7216023Z npm notice 1.1kB bin/core/project-path.mjs
+2026-10-07T20:34:03.7216441Z npm notice 3.1kB bin/core/template-registry.mjs
+2026-10-07T20:34:03.7216827Z npm notice 37.9kB bin/generator.mjs
+2026-10-07T20:34:03.7217505Z npm notice 1.3kB bin/generators/basic-slices.mjs
+2026-10-07T20:34:03.7217917Z npm notice 1.5kB bin/generators/shared.mjs
+2026-10-07T20:34:03.7218273Z npm notice 13.4kB bin/generators/svelte.mjs
+2026-10-07T20:34:03.7218623Z npm notice 14.3kB bin/generators/vue.mjs
+2026-10-07T20:34:03.7218963Z npm notice 2.0kB bin/index.mjs
+2026-10-07T20:34:03.7219282Z npm notice 24.6kB bin/project-config.mjs
+2026-10-07T20:34:03.7219610Z npm notice 4.9kB bin/upgrade/config.mjs
+2026-10-07T20:34:03.7219944Z npm notice 10.1kB bin/upgrade/manifest.mjs
+2026-10-07T20:34:03.7220302Z npm notice 2.6kB bin/upgrade/migrations/index.mjs
+2026-10-07T20:34:03.7220664Z npm notice 14.5kB bin/upgrade/planner.mjs
+2026-10-07T20:34:03.7221015Z npm notice 2.6kB bin/upgrade/project-root.mjs
+2026-10-07T20:34:03.7221383Z npm notice 7.3kB bin/upgrade/transaction.mjs
+2026-10-07T20:34:03.7221732Z npm notice 4.6kB bin/upgrade/validation.mjs
+2026-10-07T20:34:03.7222061Z npm notice 9.1kB docs/CHANGELOG.md
+2026-10-07T20:34:03.7222437Z npm notice 3.7kB docs/EXISTING-PROJECT-SUPPORT.md
+2026-10-07T20:34:03.7222790Z npm notice 1.3kB docs/PROPOSALS.md
+2026-10-07T20:34:03.7223163Z npm notice 3.1kB docs/PUBLIC-DOCUMENTATION-OUTLINE.md
+2026-10-07T20:34:03.7223545Z npm notice 7.2kB docs/RELEASE-STATUS.md
+2026-10-07T20:34:03.7223888Z npm notice 7.4kB docs/UPGRADE-ARCHITECTURE.md
+2026-10-07T20:34:03.7224219Z npm notice 2.1kB package.json
+2026-10-07T20:34:03.7224550Z npm notice 1.0kB schema/fsd.config.schema.json
+2026-10-07T20:34:03.7224921Z npm notice 2.2kB schema/fsd.manifest.schema.json
+2026-10-07T20:34:03.7225233Z npm notice Tarball Details
+2026-10-07T20:34:03.7225534Z npm notice name: create-fsd-architecture
+2026-10-07T20:34:03.7225837Z npm notice version: 2.6.1
+2026-10-07T20:34:03.7226191Z npm notice filename: create-fsd-architecture-2.6.1.tgz
+2026-10-07T20:34:03.7226565Z npm notice package size: 66.1 kB
+2026-10-07T20:34:03.7226874Z npm notice unpacked size: 254.2 kB
+2026-10-07T20:34:03.7227405Z npm notice shasum: 9045ef78a2916b481d6d75471dabd0606743c47a
+2026-10-07T20:34:03.7227879Z npm notice integrity: sha512-RInT/E7pWK/2t[...]2m1e6X2KnqTlA==
+2026-10-07T20:34:03.7228793Z npm notice total files: 43
+2026-10-07T20:34:03.7229131Z npm notice
+2026-10-07T20:34:03.7229452Z create-fsd-architecture-2.6.1.tgz
+2026-10-07T20:34:03.7412120Z Post job cleanup.
+2026-10-07T20:34:03.8647345Z (node:3279) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:34:03.8648830Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:34:03.8651716Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295, not saving cache.
+2026-10-07T20:34:03.8867955Z Post job cleanup.
+2026-10-07T20:34:03.9740432Z [command]/usr/bin/git version
+2026-10-07T20:34:03.9786981Z git version 2.55.0
+2026-10-07T20:34:03.9831286Z Temporarily overriding HOME='/home/runner/work/_temp/1915632c-a081-4794-ab62-e93a8e2f0912' before making global git config changes
+2026-10-07T20:34:03.9832788Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:34:03.9836308Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:34:03.9877244Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:34:03.9912410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:34:04.0168389Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:34:04.0198058Z http.https://github.com/.extraheader
+2026-10-07T20:34:04.0210694Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-07T20:34:04.0248294Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:34:04.0509408Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:34:04.0552984Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:34:04.0954834Z Cleaning up orphan processes
+2026-10-07T20:34:04.1284152Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

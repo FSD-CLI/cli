@@ -1,0 +1,47 @@
+{
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "rows": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "cwd": "/Users/ashraf/FSD-Platform/cli-qa-current-baseline",
+      "exit": 0,
+      "status": "PASS",
+      "startedAt": "2026-10-10T16:23:34.015027+00:00",
+      "endedAt": "2026-10-10T16:23:59.594373+00:00",
+      "log": "1.log",
+      "sha256": "c02ce73c4142649233165c67c2644a56ef2ed29f46b72d1299e20f2dc5a1365a"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "docs/qa/2.6.1/evidence/scripts/qa-tools.test.mjs"
+      ],
+      "cwd": "/Users/ashraf/FSD-Platform/cli-qa-current-baseline",
+      "exit": 0,
+      "status": "PASS",
+      "startedAt": "2026-10-10T16:23:59.596898+00:00",
+      "endedAt": "2026-10-10T16:24:01.865739+00:00",
+      "log": "2.log",
+      "sha256": "33e45da1e985b545d8fa429ea015be73c75dce5cdae0b8de9133e005d42fdfef"
+    },
+    {
+      "command": [
+        "node",
+        "docs/qa/2.6.1/evidence/scripts/check-links.mjs"
+      ],
+      "cwd": "/Users/ashraf/FSD-Platform/cli-qa-current-baseline",
+      "exit": 0,
+      "status": "PASS",
+      "startedAt": "2026-10-10T16:24:01.865925+00:00",
+      "endedAt": "2026-10-10T16:24:01.915168+00:00",
+      "log": "3.log",
+      "sha256": "4978780535d1290833a7706f0b2d459101320d2a945d9fa2398dcfd5cedfe675"
+    }
+  ]
+}

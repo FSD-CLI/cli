@@ -1,0 +1,147 @@
+label: 01-registry
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-TutyKY
+command: ["/usr/local/bin/node","/usr/local/lib/node_modules/npm/bin/npm-cli.js","view","create-fsd-architecture@2.6.1","--json"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+{
+  "_id": "create-fsd-architecture@2.6.1",
+  "_rev": "20-24a4f559adf1f27db37b4fb2d869aa39",
+  "name": "create-fsd-architecture",
+  "dist-tags": {
+    "latest": "2.6.1"
+  },
+  "versions": [
+    "1.0.1",
+    "1.0.2",
+    "1.0.3",
+    "1.0.4",
+    "1.0.5",
+    "1.0.6",
+    "2.0.0",
+    "2.0.1",
+    "2.0.2",
+    "2.1.0",
+    "2.1.1",
+    "2.2.0",
+    "2.3.0",
+    "2.3.1",
+    "2.3.2",
+    "2.4.0",
+    "2.5.0",
+    "2.5.1",
+    "2.6.0",
+    "2.6.1"
+  ],
+  "time": {
+    "created": "2026-05-30T13:32:55.119Z",
+    "modified": "2026-09-27T16:51:43.780Z",
+    "1.0.1": "2026-05-30T13:32:55.444Z",
+    "1.0.2": "2026-05-30T14:20:23.076Z",
+    "1.0.3": "2026-05-30T14:47:04.655Z",
+    "1.0.4": "2026-05-30T22:39:02.591Z",
+    "1.0.5": "2026-05-30T22:48:09.905Z",
+    "1.0.6": "2026-06-07T03:59:10.398Z",
+    "2.0.0": "2026-06-09T13:17:25.734Z",
+    "2.0.1": "2026-07-02T10:45:47.376Z",
+    "2.0.2": "2026-09-14T12:19:10.544Z",
+    "2.1.0": "2026-09-15T07:32:43.970Z",
+    "2.1.1": "2026-09-15T12:41:53.222Z",
+    "2.2.0": "2026-09-16T06:43:52.503Z",
+    "2.3.0": "2026-09-16T07:36:43.268Z",
+    "2.3.1": "2026-09-17T00:50:39.710Z",
+    "2.3.2": "2026-09-17T12:19:21.458Z",
+    "2.4.0": "2026-09-19T15:47:31.067Z",
+    "2.5.0": "2026-09-19T19:14:57.969Z",
+    "2.5.1": "2026-09-23T11:47:45.311Z",
+    "2.6.0": "2026-09-26T12:49:34.819Z",
+    "2.6.1": "2026-09-27T16:51:43.628Z"
+  },
+  "bugs": {
+    "url": "https://github.com/FSD-CLI/cli/issues"
+  },
+  "author": "Ashraf Mohamed",
+  "license": "MIT",
+  "homepage": "https://fsdcli.me",
+  "keywords": [
+    "fsd",
+    "feature-sliced-design",
+    "react",
+    "vue",
+    "pinia",
+    "vite",
+    "nextjs",
+    "nuxt",
+    "svelte",
+    "sveltekit",
+    "architecture",
+    "frontend",
+    "scaffolding",
+    "cli",
+    "scaffold",
+    "template"
+  ],
+  "repository": {
+    "url": "git+https://github.com/FSD-CLI/cli.git",
+    "type": "git"
+  },
+  "description": "Scaffold React, Next.js, Vue, Nuxt, and SvelteKit projects with Feature-Sliced Design architecture.",
+  "maintainers": [
+    "ashrafmo-1 <ashraf.qopiah@gmail.com>"
+  ],
+  "readmeFilename": "README.md",
+  "_contentLength": 54632,
+  "bin": {
+    "create-fsd-architecture": "bin/index.mjs"
+  },
+  "dist": {
+    "shasum": "6331b199d29b74ce763c6b9601c5ae42d740ad14",
+    "tarball": "https://registry.npmjs.org/create-fsd-architecture/-/create-fsd-architecture-2.6.1.tgz",
+    "fileCount": 39,
+    "integrity": "sha512-X1StMp1ytT0g1A8H/5b1ok8HN+5yRSIhoOAoG5w1g7Wz+HxFLRfE364QXrkxyRT35WEZJp9wNYL2qCt+2XAoRg==",
+    "signatures": [
+      {
+        "sig": "MEUCIEDeACbjmwOCPUn6TP827M0Tk6cd3nxjRdivV96Jc0Y+AiEAwlGWOPYL77sfALW5lKl42KZkd5VyK69aSLipMkbj+qM=",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      },
+      {
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U",
+        "sig": "MEUCICen5V16TSbWM64SLUzgI60L4M08iWjjjtwsbXgekRySAiEA+TP8TJMX9l0N7yfF0MrLorDn9tuq0p8QZkLM6Met4zg="
+      }
+    ],
+    "unpackedSize": 231686
+  },
+  "main": "bin/index.mjs",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "gitHead": "4c83d0a75ec20117edc8880aba065bdb21edfa6d",
+  "scripts": {
+    "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs",
+    "check": "npm test && npm pack --dry-run",
+    "start": "node ./bin/index.mjs"
+  },
+  "version": "2.6.1",
+  "_npmUser": "ashrafmo-1 <ashraf.qopiah@gmail.com>",
+  "_npmVersion": "11.19.0",
+  "directories": {},
+  "_nodeVersion": "24.21.0",
+  "dependencies": {
+    "ora": "^9.4.0",
+    "chalk": "^5.3.0",
+    "degit": "^2.8.6",
+    "prompts": "^2.4.2"
+  },
+  "_hasShrinkwrap": false,
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages-npm-production",
+    "tmp": "tmp/create-fsd-architecture_2.6.1_1790527903535_0.5620755959507455"
+  }
+}
+
+
+stderr:
+

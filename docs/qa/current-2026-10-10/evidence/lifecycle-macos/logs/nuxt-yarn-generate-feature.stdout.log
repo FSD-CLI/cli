@@ -1,0 +1,13 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - app/features/checkout/model/checkout.types.ts
+    - app/features/checkout/ui/CheckoutView.vue
+    - app/features/checkout/api/checkout.api.ts
+    - app/features/checkout/api/checkout.query.ts
+    - app/features/checkout/lib/checkout.keys.ts
+    - app/features/checkout/model/checkout.store.ts
+    - app/features/checkout/lib/checkout.helpers.ts
+    - app/features/checkout/index.ts
+

@@ -1,0 +1,76 @@
+
+> fsd-sveltekit@0.0.0 ci /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-pnpm
+> npm run fsd:check && npm run lint && npm run typecheck && npm run build
+
+
+> fsd-sveltekit@0.0.0 fsd:check
+> steiger ./src
+
+
+> fsd-sveltekit@0.0.0 lint
+> eslint .
+
+
+> fsd-sveltekit@0.0.0 typecheck
+> svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+
+Loading svelte-check in workspace: /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-pnpm
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+
+> fsd-sveltekit@0.0.0 build
+> vite build
+
+vite v8.3.4 building ssr environment for production...
+transforming...
+✓ 221 modules transformed.
+rendering chunks...
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 230 modules transformed.
+rendering chunks...
+computing gzip size...
+.svelte-kit/output/client/_app/version.json                        0.02 kB │ gzip:  0.04 kB
+.svelte-kit/output/client/.vite/manifest.json                      2.97 kB │ gzip:  0.62 kB
+.svelte-kit/output/client/_app/immutable/assets/0.BFJ0katE.css    16.70 kB │ gzip:  4.11 kB
+.svelte-kit/output/client/_app/immutable/entry/start.CIuRHyjO.js   0.06 kB │ gzip:  0.07 kB
+.svelte-kit/output/client/_app/immutable/chunks/xihTtKlq.js        0.06 kB │ gzip:  0.08 kB
+.svelte-kit/output/client/_app/immutable/nodes/3.BmQaJqQG.js       0.31 kB │ gzip:  0.24 kB
+.svelte-kit/output/client/_app/immutable/nodes/1.BO5BamxK.js       0.57 kB │ gzip:  0.32 kB
+.svelte-kit/output/client/_app/immutable/chunks/Bjy-W4x2.js        1.36 kB │ gzip:  0.65 kB
+.svelte-kit/output/client/_app/immutable/entry/app.DbYprTph.js     4.41 kB │ gzip:  1.99 kB
+.svelte-kit/output/client/_app/immutable/nodes/2.bvqvTu1j.js       6.73 kB │ gzip:  2.86 kB
+.svelte-kit/output/client/_app/immutable/nodes/0.CZowz680.js      25.20 kB │ gzip:  7.57 kB
+.svelte-kit/output/client/_app/immutable/chunks/Blz6Aaei.js       26.63 kB │ gzip: 10.29 kB
+.svelte-kit/output/client/_app/immutable/chunks/zQe7oAx-.js       41.21 kB │ gzip: 15.81 kB
+
+✓ built in 107ms
+computing gzip size...
+.svelte-kit/output/server/.vite/manifest.json                           4.27 kB │ gzip:  0.68 kB
+.svelte-kit/output/server/_app/immutable/assets/_layout.CW_fbWIG.css   16.63 kB │ gzip:  4.11 kB
+.svelte-kit/output/server/env.js                                        0.13 kB │ gzip:  0.12 kB
+.svelte-kit/output/server/chunks/env.js                                 0.28 kB │ gzip:  0.17 kB
+.svelte-kit/output/server/internal.js                                   0.40 kB │ gzip:  0.19 kB
+.svelte-kit/output/server/entries/pages/account/_page.svelte.js         0.43 kB │ gzip:  0.25 kB
+.svelte-kit/output/server/chunks/internal.js                            0.88 kB │ gzip:  0.44 kB
+.svelte-kit/output/server/entries/fallbacks/error.svelte.js             4.77 kB │ gzip:  1.76 kB
+.svelte-kit/output/server/chunks/index-server.js                        5.23 kB │ gzip:  1.87 kB
+.svelte-kit/output/server/entries/pages/_page.svelte.js                 8.42 kB │ gzip:  2.82 kB
+.svelte-kit/output/server/chunks/exports.js                            11.87 kB │ gzip:  3.74 kB
+.svelte-kit/output/server/chunks/uneval.js                             19.38 kB │ gzip:  5.35 kB
+.svelte-kit/output/server/chunks/shared.js                             30.70 kB │ gzip:  8.24 kB
+.svelte-kit/output/server/chunks/internal2.js                          36.21 kB │ gzip: 10.24 kB
+.svelte-kit/output/server/chunks/utils.js                              37.76 kB │ gzip: 10.95 kB
+.svelte-kit/output/server/remote-entry.js                              55.45 kB │ gzip: 12.13 kB
+.svelte-kit/output/server/entries/pages/_layout.svelte.js              93.30 kB │ gzip: 22.43 kB
+.svelte-kit/output/server/chunks/server.js                            120.86 kB │ gzip: 31.33 kB
+.svelte-kit/output/server/index.js                                    134.71 kB │ gzip: 33.71 kB
+
+✓ built in 1.62s
+
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-auto
+  Could not detect a supported production environment. See https://svelte.dev/docs/kit/adapters to learn how to configure your app to run on the platform of your choosing
+  ✔ done

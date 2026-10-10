@@ -1,0 +1,5 @@
+$ bun run fsd:check && bun run lint && bun run build
+$ steiger ./src
+✔ No problems found!
+$ eslint .
+$ vue-tsc -b && vite build

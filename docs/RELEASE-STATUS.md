@@ -1,5 +1,23 @@
 # Current release and validation status
 
+## Latest QA baseline — 10 October 2026
+
+The [consolidated Task 7 baseline](https://github.com/FSD-CLI/cli/blob/main/docs/qa/current-2026-10-10/REPORT.md) is the current
+QA assessment. It binds new macOS runs and the inspected 22-job Linux/macOS/Windows
+CI run to executable source `fcde52a0b801a6d57b4d5914596dde72bf490ae9`.
+QA PR #5 is merged; its historical report/matrices and repaired evidence tools
+are present. Published npm remains `create-fsd-architecture@2.6.1` at
+`4c83d0a75ec20117edc8880aba065bdb21edfa6d`, separately verified by exact-artifact
+React/Next install/generate/quality/build smoke. New source validation does not
+publish Windows fixes or close the report's explicit remaining gaps.
+
+## Historical snapshot — 6 October 2026
+
+The sections below preserve the 6 October snapshot, including its then-unmerged
+PR #5 and candidate-branch wording. Use the current baseline above for later
+merge state, source identity and evidence; do not read those older statements as
+current repository status.
+
 Reviewed: 2026-10-06. Owner: FSD CLI maintainers.
 
 ## Published package
