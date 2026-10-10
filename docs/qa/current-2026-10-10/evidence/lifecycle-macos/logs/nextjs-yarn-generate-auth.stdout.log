@@ -1,0 +1,31 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src/features/auth/model/login.types.ts
+    - src/features/auth/model/register.types.ts
+    - src/features/auth/model/forgot-password.types.ts
+    - src/features/auth/model/reset-password.types.ts
+    - src/features/auth/model/verify-code.types.ts
+    - src/features/auth/api/login.api.ts
+    - src/features/auth/api/register.api.ts
+    - src/features/auth/api/forgot-password.api.ts
+    - src/features/auth/api/reset-password.api.ts
+    - src/features/auth/api/verify-code.api.ts
+    - src/features/auth/api/auth.query.ts
+    - src/features/auth/lib/auth.keys.ts
+    - src/features/auth/model/auth.types.ts
+    - src/features/auth/model/auth.store.ts
+    - src/features/auth/lib/auth.helpers.ts
+    - src/features/auth/model/login.schema.ts
+    - src/features/auth/model/register.schema.ts
+    - src/features/auth/model/forgot-password.schema.ts
+    - src/features/auth/model/reset-password.schema.ts
+    - src/features/auth/model/verify-code.schema.ts
+    - src/features/auth/ui/login-form.tsx
+    - src/features/auth/ui/register-form.tsx
+    - src/features/auth/ui/forgot-password-form.tsx
+    - src/features/auth/ui/reset-password-form.tsx
+    - src/features/auth/ui/verify-code-form.tsx
+    - src/features/auth/index.ts
+

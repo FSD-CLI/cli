@@ -1,0 +1,32 @@
+file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/tsconfck/src/parse.js:262
+	throw new TSConfckParseError(
+	      ^
+
+TSConfckParseError: failed to resolve "extends":"./.svelte-kit/tsconfig.json" in /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/tsconfig.json
+    at resolveExtends (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/tsconfck/src/parse.js:262:8)
+    at parseExtends (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/tsconfck/src/parse.js:197:24)
+    ... 5 lines matching cause stack trace ...
+    at async file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/steiger/dist/cli.mjs:971:23 {
+  code: 'EXTENDS_RESOLVE',
+  cause: Error: Cannot find module './.svelte-kit/tsconfig.json'
+  Require stack:
+  - /Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/tsconfig.json
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+      at require.resolve (node:internal/modules/helpers:163:19)
+      at resolveExtends (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/tsconfck/src/parse.js:250:14)
+      at parseExtends (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/tsconfck/src/parse.js:197:24)
+      at parse (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/tsconfck/src/parse.js:54:23)
+      at async Object.check (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/@feature-sliced/steiger-plugin/dist/index.js:680:25)
+      at async file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/steiger/dist/chunk-ZD3CZEWV.mjs:678:16
+      at async Promise.all (index 6)
+      at async runRules (file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/steiger/dist/chunk-ZD3CZEWV.mjs:674:23)
+      at async file:///Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/node_modules/steiger/dist/cli.mjs:971:23 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: [
+      '/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/tsconfig.json'
+    ]
+  },
+  tsconfigFile: '/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix/sveltekit-yarn/tsconfig.json'
+}
+
+Node.js v24.13.0

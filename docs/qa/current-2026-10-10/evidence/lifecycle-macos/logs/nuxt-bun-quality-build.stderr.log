@@ -1,0 +1,11 @@
+$ bun run fsd:check && bun run lint && bun run typecheck && bun run build
+$ steiger ./app
+✔ No problems found!
+$ eslint .
+$ nuxt typecheck
+$ nuxt build
+node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs (193:0): A comment
+
+"/* @__NO_SIDE_EFFECTS__ */"
+
+in "node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.

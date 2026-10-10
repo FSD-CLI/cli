@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "framework": "sveltekit",
+  "repository": "FSD-CLI/fsd-sveltekit",
+  "requestedRef": "ca68a9f659c6e97c48cc24dfb6570502374fcba1",
+  "resolvedCommit": "ca68a9f659c6e97c48cc24dfb6570502374fcba1"
+}

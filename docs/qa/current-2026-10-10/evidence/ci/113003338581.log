@@ -1,0 +1,300 @@
+2026-10-07T20:33:47.4390429Z Current runner version: '2.337.0'
+2026-10-07T20:33:47.4412611Z ##[group]Runner Image Provisioner
+2026-10-07T20:33:47.4413378Z Hosted Compute Agent
+2026-10-07T20:33:47.4413967Z Version: 20260901.588
+2026-10-07T20:33:47.4414545Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-07T20:33:47.4415204Z Build Date: 2026-09-01T19:56:44Z
+2026-10-07T20:33:47.4416006Z Worker ID: {347e3e3e-3bf5-4f83-a660-92ab50cc5c47}
+2026-10-07T20:33:47.4416647Z Azure Region: westus3
+2026-10-07T20:33:47.4417172Z ##[endgroup]
+2026-10-07T20:33:47.4418587Z ##[group]Operating System
+2026-10-07T20:33:47.4419199Z Ubuntu
+2026-10-07T20:33:47.4419717Z 24.04.5
+2026-10-07T20:33:47.4420183Z LTS
+2026-10-07T20:33:47.4420645Z ##[endgroup]
+2026-10-07T20:33:47.4421150Z ##[group]Runner Image
+2026-10-07T20:33:47.4421717Z Image: ubuntu-24.04
+2026-10-07T20:33:47.4422240Z Version: 20260927.320.1
+2026-10-07T20:33:47.4423419Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-07T20:33:47.4424818Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-07T20:33:47.4425892Z ##[endgroup]
+2026-10-07T20:33:47.4426918Z ##[group]GITHUB_TOKEN Permissions
+2026-10-07T20:33:47.4428689Z Contents: read
+2026-10-07T20:33:47.4429281Z Metadata: read
+2026-10-07T20:33:47.4429813Z ##[endgroup]
+2026-10-07T20:33:47.4431762Z Secret source: Actions
+2026-10-07T20:33:47.4432595Z Cache mode: write
+2026-10-07T20:33:47.4433193Z Prepare workflow directory
+2026-10-07T20:33:47.4738825Z Prepare all required actions
+2026-10-07T20:33:47.4786030Z Getting action download info
+2026-10-07T20:33:47.8311961Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-07T20:33:47.9301674Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-07T20:33:48.0848214Z Complete job name: vue-vite build
+2026-10-07T20:33:48.1572977Z ##[group]Run actions/checkout@v4
+2026-10-07T20:33:48.1573914Z with:
+2026-10-07T20:33:48.1574447Z   repository: FSD-CLI/cli
+2026-10-07T20:33:48.1578374Z   token: ***
+2026-10-07T20:33:48.1578860Z   ssh-strict: true
+2026-10-07T20:33:48.1579338Z   ssh-user: git
+2026-10-07T20:33:48.1579825Z   persist-credentials: true
+2026-10-07T20:33:48.1580347Z   clean: true
+2026-10-07T20:33:48.1580840Z   sparse-checkout-cone-mode: true
+2026-10-07T20:33:48.1581366Z   fetch-depth: 1
+2026-10-07T20:33:48.1581858Z   fetch-tags: false
+2026-10-07T20:33:48.1582325Z   show-progress: true
+2026-10-07T20:33:48.1688492Z   lfs: false
+2026-10-07T20:33:48.1689220Z   submodules: false
+2026-10-07T20:33:48.1689869Z   set-safe-directory: true
+2026-10-07T20:33:48.1690660Z   allow-unsafe-pr-checkout: false
+2026-10-07T20:33:48.1692004Z ##[endgroup]
+2026-10-07T20:33:48.2712221Z Syncing repository: FSD-CLI/cli
+2026-10-07T20:33:48.2714667Z ##[group]Getting Git version info
+2026-10-07T20:33:48.2715790Z Working directory is '/home/runner/work/cli/cli'
+2026-10-07T20:33:48.2716713Z [command]/usr/bin/git version
+2026-10-07T20:33:48.2791598Z git version 2.55.0
+2026-10-07T20:33:48.2811845Z ##[endgroup]
+2026-10-07T20:33:48.2826885Z Temporarily overriding HOME='/home/runner/work/_temp/04f54793-615f-4029-8c03-c0068d3e517d' before making global git config changes
+2026-10-07T20:33:48.2829276Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:33:48.2831161Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:33:48.2876750Z Deleting the contents of '/home/runner/work/cli/cli'
+2026-10-07T20:33:48.2897261Z ##[group]Initializing the repository
+2026-10-07T20:33:48.2906796Z [command]/usr/bin/git init /home/runner/work/cli/cli
+2026-10-07T20:33:48.2981657Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-07T20:33:48.2982836Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-07T20:33:48.2983756Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-07T20:33:48.2984658Z hint: call:
+2026-10-07T20:33:48.2985030Z hint:
+2026-10-07T20:33:48.2985683Z hint: 	git config --global init.defaultBranch <name>
+2026-10-07T20:33:48.2986247Z hint:
+2026-10-07T20:33:48.2986771Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-07T20:33:48.2987621Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-07T20:33:48.2988295Z hint:
+2026-10-07T20:33:48.2988673Z hint: 	git branch -m <name>
+2026-10-07T20:33:48.2989085Z hint:
+2026-10-07T20:33:48.2989638Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-07T20:33:48.2993656Z Initialized empty Git repository in /home/runner/work/cli/cli/.git/
+2026-10-07T20:33:48.3005460Z [command]/usr/bin/git remote add origin https://github.com/FSD-CLI/cli
+2026-10-07T20:33:48.3080782Z ##[endgroup]
+2026-10-07T20:33:48.3082038Z ##[group]Disabling automatic garbage collection
+2026-10-07T20:33:48.3083899Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-07T20:33:48.3118755Z ##[endgroup]
+2026-10-07T20:33:48.3119891Z ##[group]Setting up auth
+2026-10-07T20:33:48.3126232Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:33:48.3157874Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:33:48.3443089Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:33:48.3472748Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:33:48.3676219Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:33:48.3706712Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:33:48.3876470Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-07T20:33:48.3909428Z ##[endgroup]
+2026-10-07T20:33:48.3910714Z ##[group]Fetching the repository
+2026-10-07T20:33:48.3919892Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fcde52a0b801a6d57b4d5914596dde72bf490ae9:refs/remotes/origin/main
+2026-10-07T20:33:49.0600243Z From https://github.com/FSD-CLI/cli
+2026-10-07T20:33:49.0601262Z  * [new ref]         fcde52a0b801a6d57b4d5914596dde72bf490ae9 -> origin/main
+2026-10-07T20:33:49.0604582Z ##[endgroup]
+2026-10-07T20:33:49.0605308Z ##[group]Determining the checkout info
+2026-10-07T20:33:49.0607055Z ##[endgroup]
+2026-10-07T20:33:49.0614305Z [command]/usr/bin/git sparse-checkout disable
+2026-10-07T20:33:49.0661756Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-07T20:33:49.0691316Z ##[group]Checking out the ref
+2026-10-07T20:33:49.0697092Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-07T20:33:49.0879628Z Switched to a new branch 'main'
+2026-10-07T20:33:49.0884900Z branch 'main' set up to track 'origin/main'.
+2026-10-07T20:33:49.0888816Z ##[endgroup]
+2026-10-07T20:33:49.0920258Z [command]/usr/bin/git log -1 --format=%H
+2026-10-07T20:33:49.0939890Z fcde52a0b801a6d57b4d5914596dde72bf490ae9
+2026-10-07T20:33:49.1277170Z ##[group]Run actions/setup-node@v4
+2026-10-07T20:33:49.1278294Z with:
+2026-10-07T20:33:49.1279086Z   node-version: 22
+2026-10-07T20:33:49.1279925Z   cache: npm
+2026-10-07T20:33:49.1280743Z   always-auth: false
+2026-10-07T20:33:49.1281627Z   check-latest: false
+2026-10-07T20:33:49.1290826Z   token: ***
+2026-10-07T20:33:49.1291671Z ##[endgroup]
+2026-10-07T20:33:49.2636012Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-07T20:33:49.2639013Z (node:2215) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:33:49.2642053Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:33:49.2644189Z ##[group]Environment details
+2026-10-07T20:33:49.6171388Z node: v22.23.3
+2026-10-07T20:33:49.6171826Z npm: 10.9.9
+2026-10-07T20:33:49.6172134Z yarn: 1.22.22
+2026-10-07T20:33:49.6190696Z ##[endgroup]
+2026-10-07T20:33:49.6191349Z [command]/opt/hostedtoolcache/node/22.23.3/x64/bin/npm config get cache
+2026-10-07T20:33:49.7147129Z /home/runner/.npm
+2026-10-07T20:33:49.9750010Z Cache hit for: node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295
+2026-10-07T20:33:49.9854718Z (node:2215) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-07T20:33:50.4565779Z Received 137127 of 137127 (100.0%), 0.6 MBs/sec
+2026-10-07T20:33:50.4566587Z Cache Size: ~0 MB (137127 B)
+2026-10-07T20:33:50.4597900Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c8a3ac4e-ecb4-499a-91e9-3acb601fde78/cache.tzst -P -C /home/runner/work/cli/cli --use-compress-program unzstd
+2026-10-07T20:33:50.4679764Z Cache restored successfully
+2026-10-07T20:33:50.4681081Z Cache restored from key: node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295
+2026-10-07T20:33:50.4801197Z ##[group]Run npm ci
+2026-10-07T20:33:50.4801524Z [36;1mnpm ci[0m
+2026-10-07T20:33:50.4994187Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:50.4994487Z ##[endgroup]
+2026-10-07T20:33:51.2142588Z 
+2026-10-07T20:33:51.2149685Z added 20 packages, and audited 21 packages in 659ms
+2026-10-07T20:33:51.2150089Z 
+2026-10-07T20:33:51.2150427Z 17 packages are looking for funding
+2026-10-07T20:33:51.2150932Z   run `npm fund` for details
+2026-10-07T20:33:51.2151406Z 
+2026-10-07T20:33:51.2151700Z found 0 vulnerabilities
+2026-10-07T20:33:51.2404581Z ##[group]Run node bin/index.mjs e2e-app --framework vue-vite --package-manager npm --yes --no-start
+2026-10-07T20:33:51.2405281Z [36;1mnode bin/index.mjs e2e-app --framework vue-vite --package-manager npm --yes --no-start[0m
+2026-10-07T20:33:51.2446022Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:51.2446555Z ##[endgroup]
+2026-10-07T20:33:51.3488907Z 
+2026-10-07T20:33:51.3489886Z ┌─────────────────────────────────────────────────────────────────────────────┐
+2026-10-07T20:33:51.3490494Z │                                                                             │
+2026-10-07T20:33:51.3491030Z │    ███████╗███████╗██████╗                                                  │
+2026-10-07T20:33:51.3491550Z │    ██╔════╝██╔════╝██╔══██╗                                                 │
+2026-10-07T20:33:51.3492065Z │    █████╗  ███████╗██║  ██║                                                 │
+2026-10-07T20:33:51.3492640Z │    ██╔══╝  ╚════██║██║  ██║                                                 │
+2026-10-07T20:33:51.3493170Z │    ██║     ███████║██████╔╝                                                 │
+2026-10-07T20:33:51.3493711Z │    ╚═╝     ╚══════╝╚═════╝                                                  │
+2026-10-07T20:33:51.3494414Z │                                                                             │
+2026-10-07T20:33:51.3495557Z │           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+2026-10-07T20:33:51.3496229Z │                                                                             │
+2026-10-07T20:33:51.3496810Z │   app → pages → widgets → features → entities → shared                     │
+2026-10-07T20:33:51.3497333Z │                                                                             │
+2026-10-07T20:33:51.3497872Z │   Scalable • Maintainable • Enterprise Frontend Architecture                │
+2026-10-07T20:33:51.3498409Z │                                                                             │
+2026-10-07T20:33:51.3498944Z └─────────────────────────────────────────────────────────────────────────────┘
+2026-10-07T20:33:51.3499976Z - Downloading template...
+2026-10-07T20:33:51.3500200Z 
+2026-10-07T20:33:51.9046464Z [32m✔[39m Template downloaded at verified immutable commit.
+2026-10-07T20:33:51.9182840Z - Configuring FSD stack, Git, and Husky...
+2026-10-07T20:33:51.9183537Z [32m✔[39m FSD stack, Git, and Husky configured.
+2026-10-07T20:33:51.9183902Z - Installing dependencies...
+2026-10-07T20:33:57.7912728Z [32m✔[39m Dependencies installed.
+2026-10-07T20:33:57.7913968Z - Verifying Commitlint...
+2026-10-07T20:33:58.1743394Z [32m✔[39m Commitlint rejected invalid message "test".
+2026-10-07T20:33:58.1743976Z 
+2026-10-07T20:33:58.1744151Z   Project created successfully!
+2026-10-07T20:33:58.1745077Z 
+2026-10-07T20:33:58.1745237Z   Next steps:
+2026-10-07T20:33:58.1745542Z 
+2026-10-07T20:33:58.1762224Z     $ cd e2e-app
+2026-10-07T20:33:58.1763370Z     $ npm run dev
+2026-10-07T20:33:58.1763624Z 
+2026-10-07T20:33:58.1812400Z ##[group]Run node ../bin/index.mjs --generate feature checkout
+2026-10-07T20:33:58.1812852Z [36;1mnode ../bin/index.mjs --generate feature checkout[0m
+2026-10-07T20:33:58.1813223Z [36;1mnode ../bin/index.mjs --generate entity product[0m
+2026-10-07T20:33:58.1813586Z [36;1mnode ../bin/index.mjs --generate widget cart-summary[0m
+2026-10-07T20:33:58.1813949Z [36;1mnode ../bin/index.mjs --generate page account[0m
+2026-10-07T20:33:58.1814284Z [36;1mnode ../bin/index.mjs --generate feature auth[0m
+2026-10-07T20:33:58.1851748Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:58.1852008Z ##[endgroup]
+2026-10-07T20:33:58.2861845Z 
+2026-10-07T20:33:58.2865640Z   Slice generated successfully!
+2026-10-07T20:33:58.2866015Z 
+2026-10-07T20:33:58.2876004Z   Created files:
+2026-10-07T20:33:58.2876486Z     - src/features/checkout/model/checkout.types.ts
+2026-10-07T20:33:58.2876921Z     - src/features/checkout/ui/CheckoutView.vue
+2026-10-07T20:33:58.2877379Z     - src/features/checkout/api/checkout.api.ts
+2026-10-07T20:33:58.2877825Z     - src/features/checkout/api/checkout.query.ts
+2026-10-07T20:33:58.2878252Z     - src/features/checkout/lib/checkout.keys.ts
+2026-10-07T20:33:58.2878670Z     - src/features/checkout/model/checkout.store.ts
+2026-10-07T20:33:58.2879090Z     - src/features/checkout/lib/checkout.helpers.ts
+2026-10-07T20:33:58.2879515Z     - src/features/checkout/index.ts
+2026-10-07T20:33:58.2879742Z 
+2026-10-07T20:33:58.3870433Z 
+2026-10-07T20:33:58.3874604Z   Slice generated successfully!
+2026-10-07T20:33:58.3874990Z 
+2026-10-07T20:33:58.3875150Z   Created files:
+2026-10-07T20:33:58.3875852Z     - src/entities/product/model/product.types.ts
+2026-10-07T20:33:58.3876520Z     - src/entities/product/ui/ProductCard.vue
+2026-10-07T20:33:58.3877047Z     - src/entities/product/index.ts
+2026-10-07T20:33:58.3877340Z 
+2026-10-07T20:33:58.4846846Z 
+2026-10-07T20:33:58.4850625Z   Slice generated successfully!
+2026-10-07T20:33:58.4850997Z 
+2026-10-07T20:33:58.4851142Z   Created files:
+2026-10-07T20:33:58.4851778Z     - src/widgets/cart-summary/ui/CartSummary.vue
+2026-10-07T20:33:58.4852458Z     - src/widgets/cart-summary/index.ts
+2026-10-07T20:33:58.4852746Z 
+2026-10-07T20:33:58.5824264Z 
+2026-10-07T20:33:58.5828443Z   Slice generated successfully!
+2026-10-07T20:33:58.5828861Z 
+2026-10-07T20:33:58.5829072Z   Created files:
+2026-10-07T20:33:58.5829648Z     - src/pages/account/ui/AccountPage.vue
+2026-10-07T20:33:58.5830286Z     - src/pages/account/index.ts
+2026-10-07T20:33:58.5830862Z     - src/app/routing/index.ts
+2026-10-07T20:33:58.5831171Z 
+2026-10-07T20:33:58.6881475Z 
+2026-10-07T20:33:58.6885515Z   Slice generated successfully!
+2026-10-07T20:33:58.6885822Z 
+2026-10-07T20:33:58.6886428Z   Created files:
+2026-10-07T20:33:58.6887079Z     - src/features/auth/model/auth.types.ts
+2026-10-07T20:33:58.6887747Z     - src/features/auth/api/login.api.ts
+2026-10-07T20:33:58.6888407Z     - src/features/auth/api/register.api.ts
+2026-10-07T20:33:58.6889056Z     - src/features/auth/api/forgot-password.api.ts
+2026-10-07T20:33:58.6889521Z     - src/features/auth/api/reset-password.api.ts
+2026-10-07T20:33:58.6891645Z     - src/features/auth/api/verify-code.api.ts
+2026-10-07T20:33:58.6892622Z     - src/features/auth/api/auth.query.ts
+2026-10-07T20:33:58.6893242Z     - src/features/auth/lib/auth.keys.ts
+2026-10-07T20:33:58.6893869Z     - src/features/auth/model/auth.store.ts
+2026-10-07T20:33:58.6894537Z     - src/features/auth/model/login.schema.ts
+2026-10-07T20:33:58.6895197Z     - src/features/auth/model/register.schema.ts
+2026-10-07T20:33:58.6895819Z     - src/features/auth/model/forgot-password.schema.ts
+2026-10-07T20:33:58.6896272Z     - src/features/auth/model/reset-password.schema.ts
+2026-10-07T20:33:58.6896712Z     - src/features/auth/model/verify-code.schema.ts
+2026-10-07T20:33:58.6897137Z     - src/features/auth/ui/LoginForm.vue
+2026-10-07T20:33:58.6897501Z     - src/features/auth/ui/RegisterForm.vue
+2026-10-07T20:33:58.6897897Z     - src/features/auth/ui/ForgotPasswordForm.vue
+2026-10-07T20:33:58.6898508Z     - src/features/auth/ui/ResetPasswordForm.vue
+2026-10-07T20:33:58.6898915Z     - src/features/auth/ui/VerifyCodeForm.vue
+2026-10-07T20:33:58.6899300Z     - src/features/auth/index.ts
+2026-10-07T20:33:58.6899505Z 
+2026-10-07T20:33:58.6963741Z ##[group]Run npm run ci
+2026-10-07T20:33:58.6964002Z [36;1mnpm run ci[0m
+2026-10-07T20:33:58.7001421Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:58.7001696Z ##[endgroup]
+2026-10-07T20:33:58.7906026Z 
+2026-10-07T20:33:58.7906881Z > fsd-vue-starter@0.0.0 ci
+2026-10-07T20:33:58.7907374Z > npm run fsd:check && npm run lint && npm run build
+2026-10-07T20:33:58.7907609Z 
+2026-10-07T20:33:58.8805919Z 
+2026-10-07T20:33:58.8806590Z > fsd-vue-starter@0.0.0 fsd:check
+2026-10-07T20:33:58.8806906Z > steiger ./src
+2026-10-07T20:33:58.8807046Z 
+2026-10-07T20:34:00.0842001Z [32m✔ No problems found![39m
+2026-10-07T20:34:00.2083509Z 
+2026-10-07T20:34:00.2084132Z > fsd-vue-starter@0.0.0 lint
+2026-10-07T20:34:00.2084448Z > eslint .
+2026-10-07T20:34:00.2084570Z 
+2026-10-07T20:34:02.1190695Z 
+2026-10-07T20:34:02.1191546Z > fsd-vue-starter@0.0.0 build
+2026-10-07T20:34:02.1191974Z > vue-tsc -b && vite build
+2026-10-07T20:34:02.1192163Z 
+2026-10-07T20:34:05.2698355Z [36mvite v8.3.0 [32mbuilding client environment for production...[36m[39m
+2026-10-07T20:34:05.2803605Z transforming...
+2026-10-07T20:34:05.4139276Z ✓ 105 modules transformed.
+2026-10-07T20:34:05.4329755Z rendering chunks...
+2026-10-07T20:34:05.4582864Z computing gzip size...
+2026-10-07T20:34:05.4603228Z dist/index.html                   0.62 kB │ gzip:  0.38 kB
+2026-10-07T20:34:05.4603907Z dist/assets/index-DXAHi2rK.css   18.65 kB │ gzip:  4.49 kB
+2026-10-07T20:34:05.4604480Z dist/assets/index-C5C7uwui.js   122.62 kB │ gzip: 44.93 kB
+2026-10-07T20:34:05.4604762Z 
+2026-10-07T20:34:05.4610373Z [32m✓ built in 190ms[39m
+2026-10-07T20:34:05.4984010Z Post job cleanup.
+2026-10-07T20:34:05.6130246Z (node:2486) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:34:05.6131609Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:34:05.6134855Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-23d63e89653b8653f138c2b1c17b159292afb1767abeb11860d5374b734ce295, not saving cache.
+2026-10-07T20:34:05.6329868Z Post job cleanup.
+2026-10-07T20:34:05.7179601Z [command]/usr/bin/git version
+2026-10-07T20:34:05.7216267Z git version 2.55.0
+2026-10-07T20:34:05.7251318Z Temporarily overriding HOME='/home/runner/work/_temp/1d718cde-e1c4-48a1-8a25-3a481d833c5b' before making global git config changes
+2026-10-07T20:34:05.7253071Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:34:05.7255655Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:34:05.7290088Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:34:05.7319185Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:34:05.7519059Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:34:05.7543884Z http.https://github.com/.extraheader
+2026-10-07T20:34:05.7553115Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-07T20:34:05.7581812Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:34:05.7787906Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:34:05.7808215Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:34:05.8164144Z Cleaning up orphan processes
+2026-10-07T20:34:05.8426425Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

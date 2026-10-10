@@ -1,6 +1,6 @@
 # QA baseline for CLI 2.6.1
 
-This folder is the current QA baseline for `create-fsd-architecture` 2.6.1. It sits next to the historical 2.5.0 audit in `docs/` (`CLI-QA-REPORT.md`, `CLI-QA-MATRIX.md`, `QA-FIX-VERIFICATION.md`, `TASK-CLI-END-TO-END-QA.md`), which it does not change.
+This folder preserves the historical Windows QA baseline for `create-fsd-architecture` 2.6.1 at `9640dcc6ab47ebfaedda60ff80572a3ce08e9562`, before the Windows fixes and immutable template refs. The [current consolidated baseline](../current-2026-10-10/README.md) records newer source and published-artifact runs separately. The historical 2.5.0 audit in `docs/` (`CLI-QA-REPORT.md`, `CLI-QA-MATRIX.md`, `QA-FIX-VERIFICATION.md`, `TASK-CLI-END-TO-END-QA.md`) is also unchanged.
 
 | Item | Value |
 |---|---|

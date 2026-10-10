@@ -1,0 +1,26 @@
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│    ███████╗███████╗██████╗                                                  │
+│    ██╔════╝██╔════╝██╔══██╗                                                 │
+│    █████╗  ███████╗██║  ██║                                                 │
+│    ██╔══╝  ╚════██║██║  ██║                                                 │
+│    ██║     ███████║██████╔╝                                                 │
+│    ╚═╝     ╚══════╝╚═════╝                                                  │
+│                                                                             │
+│           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+│                                                                             │
+│   app → pages → widgets → features → entities → shared                     │
+│                                                                             │
+│   Scalable • Maintainable • Enterprise Frontend Architecture                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+  Project created successfully!
+
+  Next steps:
+
+    $ cd sveltekit-bun
+    $ bun run dev
+

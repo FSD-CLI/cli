@@ -1,0 +1,56 @@
+npm notice
+npm notice 📦  create-fsd-architecture@2.6.1
+npm notice Tarball Contents
+npm notice 1.1kB LICENSE
+npm notice 15.1kB README.md
+npm notice 1.2kB SECURITY.md
+npm notice 4.2kB bin/cli/args.mjs
+npm notice 5.0kB bin/cli/output.mjs
+npm notice 9.4kB bin/commands/create-project.mjs
+npm notice 2.7kB bin/commands/inspect-project.mjs
+npm notice 8.6kB bin/commands/upgrade-project.mjs
+npm notice 5.2kB bin/core/capability-matrix.mjs
+npm notice 5.2kB bin/core/command-runner.mjs
+npm notice 1.2kB bin/core/frameworks/index.mjs
+npm notice 875B bin/core/frameworks/nextjs.mjs
+npm notice 850B bin/core/frameworks/nuxt.mjs
+npm notice 939B bin/core/frameworks/react-vite.mjs
+npm notice 676B bin/core/frameworks/sveltekit.mjs
+npm notice 766B bin/core/frameworks/vue-vite.mjs
+npm notice 1.2kB bin/core/package-managers.mjs
+npm notice 7.0kB bin/core/project-lifecycle.mjs
+npm notice 1.1kB bin/core/project-path.mjs
+npm notice 3.1kB bin/core/template-registry.mjs
+npm notice 37.9kB bin/generator.mjs
+npm notice 1.3kB bin/generators/basic-slices.mjs
+npm notice 1.5kB bin/generators/shared.mjs
+npm notice 13.4kB bin/generators/svelte.mjs
+npm notice 14.3kB bin/generators/vue.mjs
+npm notice 2.0kB bin/index.mjs
+npm notice 24.6kB bin/project-config.mjs
+npm notice 4.9kB bin/upgrade/config.mjs
+npm notice 10.1kB bin/upgrade/manifest.mjs
+npm notice 2.6kB bin/upgrade/migrations/index.mjs
+npm notice 14.5kB bin/upgrade/planner.mjs
+npm notice 2.6kB bin/upgrade/project-root.mjs
+npm notice 7.3kB bin/upgrade/transaction.mjs
+npm notice 4.6kB bin/upgrade/validation.mjs
+npm notice 9.1kB docs/CHANGELOG.md
+npm notice 3.7kB docs/EXISTING-PROJECT-SUPPORT.md
+npm notice 1.3kB docs/PROPOSALS.md
+npm notice 3.1kB docs/PUBLIC-DOCUMENTATION-OUTLINE.md
+npm notice 7.2kB docs/RELEASE-STATUS.md
+npm notice 7.4kB docs/UPGRADE-ARCHITECTURE.md
+npm notice 2.1kB package.json
+npm notice 1.0kB schema/fsd.config.schema.json
+npm notice 2.2kB schema/fsd.manifest.schema.json
+npm notice Tarball Details
+npm notice name: create-fsd-architecture
+npm notice version: 2.6.1
+npm notice filename: create-fsd-architecture-2.6.1.tgz
+npm notice package size: 66.1 kB
+npm notice unpacked size: 254.2 kB
+npm notice shasum: 9045ef78a2916b481d6d75471dabd0606743c47a
+npm notice integrity: sha512-RInT/E7pWK/2t[...]2m1e6X2KnqTlA==
+npm notice total files: 43
+npm notice

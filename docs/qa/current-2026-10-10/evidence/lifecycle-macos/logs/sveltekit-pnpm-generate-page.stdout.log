@@ -1,0 +1,8 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src/pages/account/ui/AccountPage.svelte
+    - src/pages/account/index.ts
+    - src/routes/account/+page.svelte
+

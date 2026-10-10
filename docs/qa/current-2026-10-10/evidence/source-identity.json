@@ -1,0 +1,212 @@
+{
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "matchedFiles": 51,
+  "files": [
+    {
+      "path": "bin/cli/args.mjs",
+      "sha256": "4e157d42da34a5c5aa5e7e6653882567df94a89c935b65e7a4b78671c287089d"
+    },
+    {
+      "path": "bin/cli/output.mjs",
+      "sha256": "8294887b945b35dc9ae692c9ee7d94f88b7aec964f1d4dee75ac59d4840dab2a"
+    },
+    {
+      "path": "bin/commands/create-project.mjs",
+      "sha256": "3f5c8ae5b19f0a737bdc7cd4a094e9eb7d0a94e3b354aa016d6a065ef08fa6c1"
+    },
+    {
+      "path": "bin/commands/inspect-project.mjs",
+      "sha256": "e13f7f44e4e4219f143a8a7285171614cd54089f90884d0a48764f75b71b4403"
+    },
+    {
+      "path": "bin/commands/upgrade-project.mjs",
+      "sha256": "134ffcde36e527324c1b410fd70e08d44e0644ecc26b1d6dddbd8ce6911a99a1"
+    },
+    {
+      "path": "bin/core/capability-matrix.mjs",
+      "sha256": "c437c472233d0349454ef6a75da6f411f492179190dfd9a2ac8ead18ff46d780"
+    },
+    {
+      "path": "bin/core/command-runner.mjs",
+      "sha256": "bc61427713a00ca8cdd0aad6874378940f4e4419bc5aece709d7a6a4c3e18c6b"
+    },
+    {
+      "path": "bin/core/frameworks/index.mjs",
+      "sha256": "fc8c0006baf4ec618d0a11245ddac851967a3cf3dad867f932b1ea1c46fab5d6"
+    },
+    {
+      "path": "bin/core/frameworks/nextjs.mjs",
+      "sha256": "2b8a083a8f600b9efe612ca6fe295d3b389ed775cb86c180ee6d8bb8f264c43e"
+    },
+    {
+      "path": "bin/core/frameworks/nuxt.mjs",
+      "sha256": "2c05ad0f5064ac807cbeda86cfdf147e02310c347a48ebc445f19c228b3a5194"
+    },
+    {
+      "path": "bin/core/frameworks/react-vite.mjs",
+      "sha256": "ee0abb863239ac1dc4611662141781b2a91a5ba95988837d5ac65140bdbbe9bc"
+    },
+    {
+      "path": "bin/core/frameworks/sveltekit.mjs",
+      "sha256": "b9471b67da447b318df6eb13b3de788edb47a7df27f510edb69f3a60b5dd5acf"
+    },
+    {
+      "path": "bin/core/frameworks/vue-vite.mjs",
+      "sha256": "c93733e87b6937da4249e645d19541ce04bf79be4d96705d66f105b27bcc46ec"
+    },
+    {
+      "path": "bin/core/package-managers.mjs",
+      "sha256": "5a6858a636d9c893e01f46a472dfd7d9e9be6355ca33c56cfbadcd3fecbf9457"
+    },
+    {
+      "path": "bin/core/project-lifecycle.mjs",
+      "sha256": "5034d857004771ec5e528d9a1ff5e6ab59f013c4d55ee5f62af463de97718be9"
+    },
+    {
+      "path": "bin/core/project-path.mjs",
+      "sha256": "276d2e972e3f25b6d86beefe54b5909310f54077a608a77aed44d5d3e3233a7f"
+    },
+    {
+      "path": "bin/core/template-registry.mjs",
+      "sha256": "13904e9cb85cbefa5638369f2d85fd57035a71b67f95fc95524d17f73b59b398"
+    },
+    {
+      "path": "bin/generator.mjs",
+      "sha256": "ae319dc0e65cb317af19b829252ab6a9fdc7c4fbebce74f258ce47d25fe02adc"
+    },
+    {
+      "path": "bin/generators/basic-slices.mjs",
+      "sha256": "d8f68a5255fa692c3fdd67e038ec513976096304656e47ac3d0c38964a16fd4e"
+    },
+    {
+      "path": "bin/generators/shared.mjs",
+      "sha256": "9f997fdfa46db52a071a63259a5a540983251adfa7d6bf22f0afa194f2523da8"
+    },
+    {
+      "path": "bin/generators/svelte.mjs",
+      "sha256": "91947b9925a4c316eacda4299d857b1095a453caf4f1a15bce1d532ffd2797d2"
+    },
+    {
+      "path": "bin/generators/vue.mjs",
+      "sha256": "8ef5603980f1b4b85908df425862cdc0d6bafda47351615f6093739f9dd51c93"
+    },
+    {
+      "path": "bin/index.mjs",
+      "sha256": "0dcf22f7dbcd9e75a3e821d7fe5279e19fcd9273ba4dc3143a3eec0bdb30c2fc"
+    },
+    {
+      "path": "bin/project-config.mjs",
+      "sha256": "62dbd487d5c1ef4999d762f20471718d993151d0836140df5c753fb825426cb2"
+    },
+    {
+      "path": "bin/upgrade/config.mjs",
+      "sha256": "32eabbfb117bd30ced4ebf35584d1e31dc6b0debdc1fb4f688eaa5c276708e64"
+    },
+    {
+      "path": "bin/upgrade/manifest.mjs",
+      "sha256": "58e3a6c929711ab90ba07d47fcbe06fa039a0fe1225f45f8f88e1e7c44861c99"
+    },
+    {
+      "path": "bin/upgrade/migrations/index.mjs",
+      "sha256": "497f6537df3711b0268f7471f742d48fc758ad17553281f9145c14d354a3e084"
+    },
+    {
+      "path": "bin/upgrade/planner.mjs",
+      "sha256": "c559d3e79d3f3d0790562ae4199e0c931794db360cd32dd0c7f1e43583ae5281"
+    },
+    {
+      "path": "bin/upgrade/project-root.mjs",
+      "sha256": "15c5d0504f8c4b0d2090274e5de5e26b726240c27ad9502d44d12086368cbb10"
+    },
+    {
+      "path": "bin/upgrade/transaction.mjs",
+      "sha256": "82e9af7d1ce16126099d26649ebb3b5a467ab74b0f6f5b10ca00e5bb8471982b"
+    },
+    {
+      "path": "bin/upgrade/validation.mjs",
+      "sha256": "7c44f3d9c0ac8c47d0d9892033d6800b43269173b2fbe6622d84afc55f94754d"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "f99984f8d2903dd3c369f95baeff4796bf6bfdea7ede94d2314bc90dd8000541"
+    },
+    {
+      "path": "package.json",
+      "sha256": "8f2b840fd86aaa31c2e0f0ab47658492845dc05ce390f8b6eb81f3a6407a4bc2"
+    },
+    {
+      "path": "schema/fsd.config.schema.json",
+      "sha256": "373b5e0b45d14b32c0fc54c29d798372bce4b3df0ad2b412c8e561f170557247"
+    },
+    {
+      "path": "schema/fsd.manifest.schema.json",
+      "sha256": "290eeeb8abc5829d82a1e6cab0b2b7a8d49e0bf539f5e084bbaa0f8ca7dd5c6d"
+    },
+    {
+      "path": "scripts/ci/os-smoke.mjs",
+      "sha256": "9b9c25216c9e5e0ba8cc276d33bc78c411c7d99acd1668dce159481063839432"
+    },
+    {
+      "path": "scripts/ci/run-and-capture.mjs",
+      "sha256": "2ec9e615b437ecd880399e111fbd7d9f1b252e8aa5deba84663586c59c2cf5b1"
+    },
+    {
+      "path": "scripts/post-release-smoke.mjs",
+      "sha256": "b7fc53e44f2b0c8da4b3954298626fbddf70147dcb980ae5360b845ee3982953"
+    },
+    {
+      "path": "scripts/template-source-smoke.mjs",
+      "sha256": "f2c7eab0e2a9f78dd666aef7c22bde401b289e480ac7d26d707b2f23217f6b3f"
+    },
+    {
+      "path": "tests/ci-scripts.test.mjs",
+      "sha256": "203e354f500a8c2859824794baad85e26b007bb2d1a85433a51c046f6030c9ca"
+    },
+    {
+      "path": "tests/cli.test.mjs",
+      "sha256": "46764e890c9c8d6f53afbe1bd9046862486804294fc773d62b9cd211e45ff715"
+    },
+    {
+      "path": "tests/command-runner.test.mjs",
+      "sha256": "e010d762e5bf417dafc23aeb574088b6708a816d32c28b0b4d6f1a0f3cffdcf7"
+    },
+    {
+      "path": "tests/core-architecture.test.mjs",
+      "sha256": "5d49bef25262194c069804209770ac3f0aee03996fc29137c6d284e1bf4a209d"
+    },
+    {
+      "path": "tests/existing-project-support.test.mjs",
+      "sha256": "85c0398b5e389935471e5cded54bd8d2dd7d5fea4b187816bb4b83c6f8d28fd2"
+    },
+    {
+      "path": "tests/fixtures/local-template-loader.mjs",
+      "sha256": "c5216f89dc892f1005c2fac20a8db19cfacd64b7d73db7d1ccb180c8a8c85bb9"
+    },
+    {
+      "path": "tests/hardening.test.mjs",
+      "sha256": "4b5b0ee3f36cbca70cd2bbb2a64e02a905c5ea0a2c570ad530651fd7a6d5a42d"
+    },
+    {
+      "path": "tests/project-config.test.mjs",
+      "sha256": "fad3f56389a6ea995e61e7c6652cdf8b9f71fa8c7d52635e7472c2768366929e"
+    },
+    {
+      "path": "tests/project-lifecycle.test.mjs",
+      "sha256": "fd61a54b450c57a4419f23fd117e56209dc199a56a33039b2a3f0d2158d83b98"
+    },
+    {
+      "path": "tests/qa-regressions.test.mjs",
+      "sha256": "65a47425bc0a76a321bad68f2afc5b57b4eda19f38a5f5527c9e68c754309a18"
+    },
+    {
+      "path": "tests/template-provenance.test.mjs",
+      "sha256": "321ea03f20a7a598f71d82b29ad7724d8cbf3d5e47cbd3b0bfaaac6eba887992"
+    },
+    {
+      "path": "tests/upgrade.test.mjs",
+      "sha256": "a7476ba56a8c9ee51670bb9c8c8f10977c73d4a220e8f3518ac631f5fb671990"
+    }
+  ],
+  "verifiedAt": "2026-10-10T16:47:12.902685+00:00",
+  "verification": "git show <sourceSha>:<path> bytes equal working-tree bytes; SHA-256 recorded for every file"
+}
