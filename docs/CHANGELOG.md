@@ -6,6 +6,11 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Changed
 
+- Refresh template pins to verified commits on each template's main branch.
+- Accept Angular's native configuration for read-only inspection; reject
+  Angular generation, reconfiguration and managed upgrades before any writes.
+- Keep Chalk on the Node-20-compatible 5.x series to honor the CLI runtime contract.
+
 - Expand the README badge panel with live npm version/downloads, Node support,
   GitHub contributors/forks/stars/issues, license and workflow status.
 - Include the Windows toolchain, path and rollback fixes merged after 2.6.1.

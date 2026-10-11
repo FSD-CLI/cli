@@ -33,6 +33,21 @@ export const CAPABILITY_LABELS = Object.freeze({
 });
 
 export const CAPABILITY_MATRIX = Object.freeze({
+  angular: Object.freeze({
+    defaults: Object.freeze({
+      apiClient: "angular-http",
+      serverState: "angular-query",
+      clientState: "ngrx-signals",
+      forms: "angular-forms-zod",
+      packageManager: "npm",
+    }),
+    apiClient: Object.freeze(["angular-http"]),
+    serverState: Object.freeze(["angular-query"]),
+    clientState: Object.freeze(["ngrx-signals"]),
+    forms: Object.freeze(["angular-forms-zod"]),
+    packageManager: Object.freeze(["npm"]),
+    generators: Object.freeze([]),
+  }),
   "react-vite": Object.freeze({
     defaults: Object.freeze({
       apiClient: "axios",

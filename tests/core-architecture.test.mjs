@@ -94,7 +94,7 @@ test("framework adapters isolate runtime-specific source generation", () => {
   assert.match(sveltekit.publicApiBaseUrlExpression, /PUBLIC_API_BASE/);
   assert.deepEqual(
     listFrameworkAdapters().map(({ id }) => id),
-    ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"]
+    ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit", "angular"]
   );
 });
 

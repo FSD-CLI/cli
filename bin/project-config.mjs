@@ -20,6 +20,14 @@ export const DEFAULT_PROJECT_CONFIG = {
   ui: "shared-ui",
 };
 
+function assertWritableFramework(framework) {
+  const adapter = getFrameworkAdapter(framework);
+  if (adapter.inspectionOnly) {
+    throw new Error(`Framework "${framework}" supports configuration inspection only; project configuration and managed upgrades are not available yet.`);
+  }
+  return adapter;
+}
+
 export function normalizeProjectConfig(framework, answers = {}) {
   const config = {
     $schema:
@@ -35,7 +43,7 @@ export function normalizeProjectConfig(framework, answers = {}) {
 
 export function configureProject(targetDir, config) {
   assertSupportedProjectConfig(config);
-  getFrameworkAdapter(config.framework);
+  assertWritableFramework(config.framework);
   updateDependencies(targetDir, config);
   removeForeignLockfiles(targetDir, config.packageManager);
   configurePackageManager(targetDir, config.packageManager, config.framework);
@@ -49,7 +57,7 @@ export function configureProject(targetDir, config) {
 // project configuration lifecycle in a temporary directory.
 export function getManagedProjectArtifacts(config) {
   assertSupportedProjectConfig(config);
-  const adapter = getFrameworkAdapter(config.framework);
+  const adapter = assertWritableFramework(config.framework);
   const files = {};
   const sourceDirectory = adapter.sourceDirectory;
   const frameworkLabels = {
