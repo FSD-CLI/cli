@@ -5,8 +5,9 @@
 Version 2.6.2 is prepared for publication with the expanded README badge panel
 and the changes already merged since npm 2.6.1, including pinned template
 sources and Windows portability fixes. Local `npm run check` and
-`npm audit --audit-level=moderate` passed. Publication is blocked by npm
-authentication (`npm whoami` returns HTTP 401); npm latest remains 2.6.1.
+`npm audit --audit-level=moderate` passed. npm authentication is now configured;
+the owner will publish the validated package manually. npm latest remains 2.6.1
+until the registry confirms the new release.
 No 2.6.2 published-artifact validation is claimed. The QA baseline below still
 describes its recorded source and package versions.
 

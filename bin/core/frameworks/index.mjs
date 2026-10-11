@@ -1,4 +1,5 @@
 import { nextjsAdapter } from "./nextjs.mjs";
+import { angularAdapter } from "./angular.mjs";
 import { nuxtAdapter } from "./nuxt.mjs";
 import { reactViteAdapter } from "./react-vite.mjs";
 import { sveltekitAdapter } from "./sveltekit.mjs";
@@ -11,6 +12,7 @@ const adapters = new Map(
     vueViteAdapter,
     nuxtAdapter,
     sveltekitAdapter,
+    angularAdapter,
   ].map((adapter) => [adapter.id, adapter])
 );
 
@@ -35,7 +37,7 @@ export function listFrameworkAdapters() {
 export function listManagedDependencies() {
   return [
     ...new Set(
-      listFrameworkAdapters().flatMap((adapter) =>
+      listFrameworkAdapters().filter((adapter) => !adapter.inspectionOnly).flatMap((adapter) =>
         [
           ...(adapter.baseDependencies ?? []),
           ...Object.values(adapter.dependencies).flatMap((options) =>

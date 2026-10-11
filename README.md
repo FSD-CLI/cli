@@ -31,6 +31,11 @@ for evidence and untested combinations.
 
 ## Repository documentation
 
+Angular's standalone starter has an inspectable configuration contract in CLI
+source (`check`, `doctor`, `config`). Angular project creation, slice generation
+and managed upgrades are unavailable; the five stable templates below are the
+supported scaffolding frameworks.
+
 - [Changelog](./docs/CHANGELOG.md)
 - [Safe upgrade architecture](./docs/UPGRADE-ARCHITECTURE.md)
 - [Public documentation outline](./docs/PUBLIC-DOCUMENTATION-OUTLINE.md)
