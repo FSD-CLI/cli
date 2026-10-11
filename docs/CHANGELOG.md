@@ -2,7 +2,7 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## 2.6.2 - 2026-10-11 (prepared; not yet published)
+## 2.6.3 - 2026-10-11 (prepared; owner publication pending)
 
 ### Changed
 
@@ -10,6 +10,14 @@ All notable changes to `create-fsd-architecture` are documented here.
 - Accept Angular's native configuration for read-only inspection; reject
   Angular generation, reconfiguration and managed upgrades before any writes.
 - Keep Chalk on the Node-20-compatible 5.x series to honor the CLI runtime contract.
+
+## 2.6.2 - 2026-10-11
+
+Published npm gitHead: `5f5654cf040a1fa0e6731e594f1b9701da0d18be`.
+The Angular inspection contract, refreshed main pins and Chalk 5 change above
+were merged after this published artifact and are prepared for 2.6.3.
+
+### Changed
 
 - Expand the README badge panel with live npm version/downloads, Node support,
   GitHub contributors/forks/stars/issues, license and workflow status.

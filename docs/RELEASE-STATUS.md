@@ -1,15 +1,24 @@
 # Current release and validation status
 
-## 2.6.2 release candidate — 11 October 2026
+## 2.6.3 release candidate — 11 October 2026
 
-Version 2.6.2 is prepared for publication with the expanded README badge panel
-and the changes already merged since npm 2.6.1, including pinned template
-sources and Windows portability fixes. Local `npm run check` and
-`npm audit --audit-level=moderate` passed. npm authentication is now configured;
-the owner will publish the validated package manually. npm latest remains 2.6.1
-until the registry confirms the new release.
-No 2.6.2 published-artifact validation is claimed. The QA baseline below still
-describes its recorded source and package versions.
+npm 2.6.2 is published at gitHead
+`5f5654cf040a1fa0e6731e594f1b9701da0d18be`, with integrity
+`sha512-BM40sl634KeYkKu4sS9z5F6JILvGSCGPxDSwxTtAeT60iF2KfxcY27ymZZfnd+aaUra0xspdeejJNBkxGVekHQ==`.
+Its publication was verified from registry metadata; no 2.6.2 artifact/build
+certification is claimed here.
+
+[PR #13](https://github.com/FSD-CLI/cli/pull/13) merged afterward at
+`e0873e263d496baffba1a3570edffe3b6be9f855`, adding Angular inspection-only
+configuration support, refreshed immutable main template pins and Chalk 5.x
+for Node 20 compatibility. All 27 PR checks and 25 main checks passed;
+95 local tests also passed on Node 20. These executable changes are prepared
+for 2.6.3 because the existing npm version cannot be replaced.
+
+The owner alone publishes npm. No 2.6.3 publication or published-artifact
+validation is claimed. Nuxt's independent production audit remains failing;
+source builds and CLI audit success do not clear that separate security hold.
+The QA baseline below still describes its recorded source and package versions.
 
 ## Latest QA baseline — 10 October 2026
 
