@@ -2,7 +2,13 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## Unreleased
+## 2.6.2 - 2026-10-11 (prepared; not yet published)
+
+### Changed
+
+- Expand the README badge panel with live npm version/downloads, Node support,
+  GitHub contributors/forks/stars/issues, license and workflow status.
+- Include the Windows toolchain, path and rollback fixes merged after 2.6.1.
 
 - Bind all five template sources to full immutable Git commits, verify downloaded
   identities and retain provenance in `.fsd/template.json`.

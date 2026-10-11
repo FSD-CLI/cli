@@ -1,5 +1,15 @@
 # Current release and validation status
 
+## 2.6.2 release candidate — 11 October 2026
+
+Version 2.6.2 is prepared for publication with the expanded README badge panel
+and the changes already merged since npm 2.6.1, including pinned template
+sources and Windows portability fixes. Local `npm run check` and
+`npm audit --audit-level=moderate` passed. Publication is blocked by npm
+authentication (`npm whoami` returns HTTP 401); npm latest remains 2.6.1.
+No 2.6.2 published-artifact validation is claimed. The QA baseline below still
+describes its recorded source and package versions.
+
 ## Latest QA baseline — 10 October 2026
 
 The [consolidated Task 7 baseline](https://github.com/FSD-CLI/cli/blob/main/docs/qa/current-2026-10-10/REPORT.md) is the current
