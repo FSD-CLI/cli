@@ -1,23 +1,31 @@
 # Current release and validation status
 
-## 2.6.3 release candidate — 11 October 2026
+## Published 2.6.3 — 11 October 2026
 
-npm 2.6.2 is published at gitHead
-`5f5654cf040a1fa0e6731e594f1b9701da0d18be`, with integrity
-`sha512-BM40sl634KeYkKu4sS9z5F6JILvGSCGPxDSwxTtAeT60iF2KfxcY27ymZZfnd+aaUra0xspdeejJNBkxGVekHQ==`.
-Its publication was verified from registry metadata; no 2.6.2 artifact/build
-certification is claimed here.
+The owner published `create-fsd-architecture@2.6.3` with gitHead
+`9d37a154fd9476ff416941463c6f60c77bab55de` and integrity
+`sha512-rXD8GOrY3cQ4jvRwsBINMqqTg8DQHwhWbjgHFEV+4kopUWbLIEK9wOSE7cdCh4fL3Gm85t/ljL2FjCzoYENm/g==`.
+Registry identity matches the prepared package. The agent did not publish npm.
 
-[PR #13](https://github.com/FSD-CLI/cli/pull/13) merged afterward at
-`e0873e263d496baffba1a3570edffe3b6be9f855`, adding Angular inspection-only
+Exact-artifact React/Vite and Next.js npm smoke passed on macOS/arm64,
+Node 24.13.0/npm 11.6.2: CLI install/version/help/template listing, project
+creation with dependency installation, four slice generators, doctor/check,
+and generated-project quality/build. [Raw evidence](qa/published-2.6.3/macos/manifest.json)
+records commands, tool versions, registry identity and outcomes.
+The [Ubuntu artifact run](https://github.com/FSD-CLI/cli/actions/runs/38154161694)
+also passed both jobs on Node 22.23.0/npm 10.9.8. [Job logs](qa/published-2.6.3/ubuntu/)
+confirm the exact 2.6.3 input and successful artifact smokes.
+
+[PR #13](https://github.com/FSD-CLI/cli/pull/13) added Angular inspection-only
 configuration support, refreshed immutable main template pins and Chalk 5.x
-for Node 20 compatibility. All 27 PR checks and 25 main checks passed;
-95 local tests also passed on Node 20. These executable changes are prepared
-for 2.6.3 because the existing npm version cannot be replaced.
+for Node 20 compatibility. The source release head passed all 25 main checks
+and 95 local tests; the earlier executable head also passed Node 20 locally.
+Angular scaffolding/generators remain outside this release's support scope.
 
-The owner alone publishes npm. No 2.6.3 publication or published-artifact
-validation is claimed. Nuxt's independent production audit remains failing;
-source builds and CLI audit success do not clear that separate security hold.
+These artifact results cover React/Vite and Next.js with npm on the recorded
+platforms, not all framework/package-manager/runtime/deployment combinations.
+Nuxt's independent production audit remains failing; source builds and CLI
+audit success do not clear that separate security hold.
 The QA baseline below still describes its recorded source and package versions.
 
 ## Latest QA baseline — 10 October 2026

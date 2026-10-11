@@ -2,7 +2,9 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## 2.6.3 - 2026-10-11 (prepared; owner publication pending)
+## 2.6.3 - 2026-10-11
+
+Published npm gitHead: `9d37a154fd9476ff416941463c6f60c77bab55de`.
 
 ### Changed
 
