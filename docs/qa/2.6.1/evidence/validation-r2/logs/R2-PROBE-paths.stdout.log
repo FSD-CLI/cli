@@ -1,0 +1,37 @@
+{
+  "cwd": "C:\\Users\\HSN\\AppData\\Local\\Temp\\fsd-probe-ioOqef",
+  "type": "page",
+  "name": "account",
+  "config": {
+    "$schema": "https://raw.githubusercontent.com/FSD-CLI/cli/main/schema/fsd.config.schema.json",
+    "schemaVersion": 1,
+    "packageManager": "npm",
+    "apiClient": "axios",
+    "serverState": "react-query",
+    "clientState": "zustand",
+    "forms": "react-hook-form-zod",
+    "ui": "shared-ui",
+    "framework": "react-vite"
+  },
+  "force": false,
+  "sliceDir": "C:\\Users\\HSN\\AppData\\Local\\Temp\\fsd-probe-ioOqef\\src\\pages\\account",
+  "files": [
+    {
+      "path": "ui/account-page.tsx",
+      "content": "type AccountPageProps = {\n  title?: string;\n};\n\nexport function AccountPage({ title = \"Account page\" }: AccountPageProps) {\n  return (\n    <section>\n      <h2>{title}</h2>\n    </section>\n  );\n}\n",
+      "public": true
+    },
+    {
+      "path": "index.ts",
+      "content": "export * from \"./ui/account-page\";\n",
+      "public": false
+    }
+  ],
+  "generatedFiles": [
+    "src\\pages\\account\\ui\\account-page.tsx",
+    "src\\pages\\account\\index.ts"
+  ],
+  "changedFiles": [
+    "src\\app\\routing\\index.tsx"
+  ]
+}

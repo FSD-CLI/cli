@@ -1,0 +1,11 @@
+--- a/package.json
++++ b/package.json
+@@ -10,7 +10,7 @@
+     "typecheck": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+     "typecheck:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+     "lint": "eslint .",
+-    "fsd:check": "steiger ./src",
++    "fsd:check": "svelte-kit sync && steiger ./src",
+     "audit": "node scripts/audit-production.mjs",
+     "ci": "npm run fsd:check && npm run lint && npm run typecheck && npm run build",
+     "prepare": "svelte-kit sync && husky",

@@ -1,0 +1,25 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - app/features/auth/model/auth.types.ts
+    - app/features/auth/api/login.api.ts
+    - app/features/auth/api/register.api.ts
+    - app/features/auth/api/forgot-password.api.ts
+    - app/features/auth/api/reset-password.api.ts
+    - app/features/auth/api/verify-code.api.ts
+    - app/features/auth/api/auth.query.ts
+    - app/features/auth/lib/auth.keys.ts
+    - app/features/auth/model/auth.store.ts
+    - app/features/auth/model/login.schema.ts
+    - app/features/auth/model/register.schema.ts
+    - app/features/auth/model/forgot-password.schema.ts
+    - app/features/auth/model/reset-password.schema.ts
+    - app/features/auth/model/verify-code.schema.ts
+    - app/features/auth/ui/LoginForm.vue
+    - app/features/auth/ui/RegisterForm.vue
+    - app/features/auth/ui/ForgotPasswordForm.vue
+    - app/features/auth/ui/ResetPasswordForm.vue
+    - app/features/auth/ui/VerifyCodeForm.vue
+    - app/features/auth/index.ts
+

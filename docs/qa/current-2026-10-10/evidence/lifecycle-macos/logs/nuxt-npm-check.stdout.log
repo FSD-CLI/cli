@@ -1,0 +1,12 @@
+
+  FSD check
+
+  PASS  FSD configuration — nuxt
+  PASS  package.json — found
+  PASS  FSD layer: app — app/app
+  PASS  FSD layer: pages — app/pages
+  PASS  FSD layer: widgets — app/widgets
+  PASS  FSD layer: features — app/features
+  PASS  FSD layer: entities — app/entities
+  PASS  FSD layer: shared — app/shared
+

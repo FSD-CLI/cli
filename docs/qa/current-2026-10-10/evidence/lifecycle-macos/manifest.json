@@ -1,0 +1,51 @@
+{
+  "startedAt": "2026-10-10T16:23:05.528Z",
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "cliVersion": "2.6.1",
+  "scriptSha256": "938a07201bf8ff4f3cd956302b99e8ec63ddb7dc3e4944e7cfcdaa1106b92b36",
+  "platform": "Darwin 27.2.0 arm64",
+  "node": "v24.13.0",
+  "tools": {
+    "npm": "11.6.2",
+    "pnpm": "10.26.0",
+    "yarn": "4.18.0",
+    "bun": "1.3.9"
+  },
+  "root": "/Users/ashraf/FSD-Platform/cli-qa-current-baseline",
+  "work": "/Users/ashraf/FSD-Platform/qa-reports/task7-2026-10-10-matrix",
+  "out": "/Users/ashraf/FSD-Platform/cli-qa-current-baseline/docs/qa/current-2026-10-10/evidence/lifecycle-macos",
+  "templates": [
+    {
+      "framework": "react-vite",
+      "repository": "FSD-CLI/FSD",
+      "ref": "2f10a391e6677c739ceed3a5b030711d1fdf4454"
+    },
+    {
+      "framework": "nextjs",
+      "repository": "FSD-CLI/FSD-NEXTJS",
+      "ref": "b5b162a5bf3467b1cb559110cbbaa3878fd5f7a0"
+    },
+    {
+      "framework": "vue-vite",
+      "repository": "FSD-CLI/FSD-VUE",
+      "ref": "e66d99c616fe3cb1208e366a130939e7d02fffc1"
+    },
+    {
+      "framework": "nuxt",
+      "repository": "FSD-CLI/FSD-NUXT",
+      "ref": "54bf042258f4628d7ee504bc3cf1d0f01afda611"
+    },
+    {
+      "framework": "sveltekit",
+      "repository": "FSD-CLI/fsd-sveltekit",
+      "ref": "ca68a9f659c6e97c48cc24dfb6570502374fcba1"
+    }
+  ],
+  "scope": "macOS source lifecycle, five frameworks x four package managers; fresh managed upgrades; runtime/browser/historical upgrades excluded",
+  "completedAt": "2026-10-10T16:49:47.030Z",
+  "counts": {
+    "PASS": 279,
+    "FAIL": 1,
+    "NOT TESTED": 0
+  }
+}

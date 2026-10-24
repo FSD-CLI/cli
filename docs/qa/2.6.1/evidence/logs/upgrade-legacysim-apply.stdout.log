@@ -1,0 +1,46 @@
+
+FSD project upgrade
+
+Project: E:\qa-work\rv-legacy
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+ALREADY_APPLIED .husky/pre-commit  Current content already matches the target.
+ALREADY_APPLIED .husky/commit-msg  Current content already matches the target.
+ALREADY_APPLIED .husky/pre-push  Current content already matches the target.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 0 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+Git: main (dirty)
+
+WARNING: applying in a dirty Git worktree; the internal affected-path backup is active.
+
+Dependency installation skipped; this migration does not change dependencies.
+
+Upgrade completed successfully. CLI-owned migration state is current.

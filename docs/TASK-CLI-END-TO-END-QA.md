@@ -20,6 +20,17 @@ This task is an **audit and reporting task first**. Do not start fixing discover
 - Test project creation, dependency installation, project startup/build, generators, saved configuration, inspection commands, Git, Husky, Commitlint, package managers, and failure behavior.
 - Compare observed behavior with the CLI `README.md`, `--help`, and the public documentation. Record every mismatch.
 
+## Current scope update (CLI 2.6.1)
+
+The 2.5.0 audit stays as a historical record. The current baseline is in `docs/qa/2.6.1/` (`README.md`, `CLI-QA-REPORT.md`, `CLI-QA-MATRIX.md`) and covers CLI 2.6.1 on `main`.
+
+In addition to the scope below, the current baseline covers:
+
+- Safe Upgrade v1: `upgrade --check`, `upgrade --dry-run` and `upgrade` on legacy-state projects, including install and build afterwards where a historical project is available (otherwise recorded as a gap).
+- Three separate CLI sources, never mixed in one claim: the local checkout (exact SHA), the packed artifact, and the published npm package.
+- The exact SHA of every template repository at test time.
+- A coverage summary reported separately from the pass rate.
+
 ## Important rules
 
 - Run all generated-project tests inside disposable test directories, never inside the CLI repository.
@@ -29,7 +40,7 @@ This task is an **audit and reporting task first**. Do not start fixing discover
 - Record the exact CLI commit SHA, operating system, Node version, and package-manager versions.
 - Use Node.js `22.22.2` or later for the main generated-project matrix.
 - Do not call a case passed if installation, build, typecheck, lint, runtime startup, or generated code was not actually verified.
-- Use the statuses `PASS`, `FAIL`, `BLOCKED`, and `NOT APPLICABLE`.
+- Use the statuses `PASS`, `FAIL`, `BLOCKED`, `NOT APPLICABLE`, and `NOT TESTED`. Use `BLOCKED` only with a documented blocker; a case that was simply not run is `NOT TESTED`.
 - Save relevant logs for failed or blocked cases. Do not rely only on screenshots.
 
 ## Required deliverables

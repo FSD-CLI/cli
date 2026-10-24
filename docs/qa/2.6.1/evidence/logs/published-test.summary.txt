@@ -1,0 +1,26 @@
+START Sun 10/04/2026 15:29:47.50
+EXIT npm view 0
+version = '2.6.1'
+dist-tags.latest = '2.6.1'
+dist.shasum = '6331b199d29b74ce763c6b9601c5ae42d740ad14'
+dist.integrity = 'sha512-X1StMp1ytT0g1A8H/5b1ok8HN+5yRSIhoOAoG5w1g7Wz+HxFLRfE364QXrkxyRT35WEZJp9wNYL2qCt+2XAoRg=='
+time.modified = '2026-09-27T16:51:43.780Z'
+EXIT npm install published 0
+EXIT --version 0
+2.6.1
+EXIT create 0
+END Sun 10/04/2026 15:29:54.79
+--- published-rv src ---
+app
+entities
+features
+main.tsx
+pages
+shared
+widgets
+  "framework": "react-vite"
+--- stderr of install and create ---
+- Downloading template...
+[32m✔[39m Template downloaded.
+- Configuring FSD stack, Git, and Husky...
+[32m✔[39m FSD stack, Git, and Husky configured.

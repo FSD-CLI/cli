@@ -1,0 +1,224 @@
+﻿2026-10-11T16:07:54.9571835Z Current runner version: '2.337.0'
+2026-10-11T16:07:54.9598207Z ##[group]Runner Image Provisioner
+2026-10-11T16:07:54.9599168Z Hosted Compute Agent
+2026-10-11T16:07:54.9599866Z Version: 20261002.596
+2026-10-11T16:07:54.9600565Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-11T16:07:54.9601267Z Build Date: 2026-10-02T22:28:27Z
+2026-10-11T16:07:54.9602348Z Worker ID: {a84e4a99-eba3-45ac-b3ce-8abf8dc85034}
+2026-10-11T16:07:54.9603100Z Region: westcentralus
+2026-10-11T16:07:54.9603659Z Cloud: Azure
+2026-10-11T16:07:54.9604194Z ##[endgroup]
+2026-10-11T16:07:54.9605545Z ##[group]Operating System
+2026-10-11T16:07:54.9606192Z Ubuntu
+2026-10-11T16:07:54.9606748Z 24.04.5
+2026-10-11T16:07:54.9607299Z LTS
+2026-10-11T16:07:54.9607812Z ##[endgroup]
+2026-10-11T16:07:54.9608370Z ##[group]Runner Image
+2026-10-11T16:07:54.9608992Z Image: ubuntu-24.04
+2026-10-11T16:07:54.9609567Z Version: 20261004.327.1
+2026-10-11T16:07:54.9610794Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-11T16:07:54.9612541Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-11T16:07:54.9613490Z ##[endgroup]
+2026-10-11T16:07:54.9614592Z ##[group]GITHUB_TOKEN Permissions
+2026-10-11T16:07:54.9616592Z Contents: read
+2026-10-11T16:07:54.9617630Z Metadata: read
+2026-10-11T16:07:54.9618418Z ##[endgroup]
+2026-10-11T16:07:54.9620920Z Secret source: Actions
+2026-10-11T16:07:54.9622351Z Cache mode: write
+2026-10-11T16:07:54.9623243Z Prepare workflow directory
+2026-10-11T16:07:55.0288677Z Prepare all required actions
+2026-10-11T16:07:55.0340625Z Getting action download info
+2026-10-11T16:07:55.3471212Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-11T16:07:56.2568635Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-11T16:07:56.8981203Z Download action repository 'actions/upload-artifact@v7' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-10-11T16:07:57.9648939Z Complete job name: npm artifact / react-vite
+2026-10-11T16:07:58.0487643Z ##[group]Run actions/checkout@v7
+2026-10-11T16:07:58.0488407Z with:
+2026-10-11T16:07:58.0488801Z   repository: FSD-CLI/cli
+2026-10-11T16:07:58.0492609Z   token: ***
+2026-10-11T16:07:58.0493050Z   ssh-strict: true
+2026-10-11T16:07:58.0493423Z   ssh-user: git
+2026-10-11T16:07:58.0493856Z   persist-credentials: true
+2026-10-11T16:07:58.0494274Z   clean: true
+2026-10-11T16:07:58.0494668Z   sparse-checkout-cone-mode: true
+2026-10-11T16:07:58.0495097Z   fetch-depth: 1
+2026-10-11T16:07:58.0495502Z   fetch-tags: false
+2026-10-11T16:07:58.0495905Z   show-progress: true
+2026-10-11T16:07:58.0496298Z   lfs: false
+2026-10-11T16:07:58.0496708Z   submodules: false
+2026-10-11T16:07:58.0497124Z   set-safe-directory: true
+2026-10-11T16:07:58.0497544Z   allow-unsafe-pr-checkout: false
+2026-10-11T16:07:58.0498128Z env:
+2026-10-11T16:07:58.0498492Z   CLI_SMOKE_VERSION: 2.6.3
+2026-10-11T16:07:58.0498886Z   CLI_SMOKE_FRAMEWORK: react-vite
+2026-10-11T16:07:58.0499592Z   CI_ARTIFACTS_DIR: /home/runner/work/cli/cli/ci-artifacts
+2026-10-11T16:07:58.0500057Z ##[endgroup]
+2026-10-11T16:07:58.1668573Z Syncing repository: FSD-CLI/cli
+2026-10-11T16:07:58.1670743Z ##[group]Getting Git version info
+2026-10-11T16:07:58.1671776Z Working directory is '/home/runner/work/cli/cli'
+2026-10-11T16:07:58.1673070Z [command]/usr/bin/git version
+2026-10-11T16:07:58.2777783Z git version 2.55.0
+2026-10-11T16:07:58.2801310Z ##[endgroup]
+2026-10-11T16:07:58.2813849Z Temporarily overriding HOME='/home/runner/work/_temp/d856c615-3139-4f3b-b2c7-ea1feddd0962' before making global git config changes
+2026-10-11T16:07:58.2815598Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T16:07:58.2819808Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-11T16:07:58.3096351Z Deleting the contents of '/home/runner/work/cli/cli'
+2026-10-11T16:07:58.3100752Z ##[group]Determining repository object format
+2026-10-11T16:07:58.3106077Z ##[endgroup]
+2026-10-11T16:07:58.3107091Z ##[group]Initializing the repository
+2026-10-11T16:07:58.3115390Z [command]/usr/bin/git init /home/runner/work/cli/cli
+2026-10-11T16:07:58.4263720Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-11T16:07:58.4264714Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-11T16:07:58.4265398Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-11T16:07:58.4266044Z hint: call:
+2026-10-11T16:07:58.4266504Z hint:
+2026-10-11T16:07:58.4267061Z hint: 	git config --global init.defaultBranch <name>
+2026-10-11T16:07:58.4267549Z hint:
+2026-10-11T16:07:58.4268015Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-11T16:07:58.4268644Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-11T16:07:58.4269212Z hint:
+2026-10-11T16:07:58.4269667Z hint: 	git branch -m <name>
+2026-10-11T16:07:58.4270138Z hint:
+2026-10-11T16:07:58.4270645Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-11T16:07:58.4271805Z Initialized empty Git repository in /home/runner/work/cli/cli/.git/
+2026-10-11T16:07:58.4284382Z [command]/usr/bin/git remote add origin https://github.com/FSD-CLI/cli
+2026-10-11T16:07:58.5378998Z ##[endgroup]
+2026-10-11T16:07:58.5379797Z ##[group]Disabling automatic garbage collection
+2026-10-11T16:07:58.5386656Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-11T16:07:58.5666000Z ##[endgroup]
+2026-10-11T16:07:58.5666957Z ##[group]Setting up auth
+2026-10-11T16:07:58.5667606Z Removing SSH command configuration
+2026-10-11T16:07:58.5676210Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T16:07:58.5714486Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T16:07:59.0717476Z Removing HTTP extra header
+2026-10-11T16:07:59.0725636Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T16:07:59.0757391Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T16:07:59.0947943Z Removing includeIf entries pointing to credentials config files
+2026-10-11T16:07:59.0954192Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T16:07:59.0984417Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T16:07:59.1191827Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-11T16:07:59.1228097Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/cli/cli/.git.path /home/runner/work/_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:07:59.1260299Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:07:59.1295499Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:07:59.1327392Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:07:59.1354914Z ##[endgroup]
+2026-10-11T16:07:59.1355441Z ##[group]Fetching the repository
+2026-10-11T16:07:59.1362248Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9d37a154fd9476ff416941463c6f60c77bab55de:refs/remotes/origin/main
+2026-10-11T16:07:59.9799303Z From https://github.com/FSD-CLI/cli
+2026-10-11T16:07:59.9800349Z  * [new ref]         9d37a154fd9476ff416941463c6f60c77bab55de -> origin/main
+2026-10-11T16:07:59.9812353Z [command]/usr/bin/git branch --list --remote origin/main
+2026-10-11T16:07:59.9844295Z   origin/main
+2026-10-11T16:07:59.9852578Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-10-11T16:07:59.9879139Z 9d37a154fd9476ff416941463c6f60c77bab55de
+2026-10-11T16:07:59.9881907Z ##[endgroup]
+2026-10-11T16:07:59.9882762Z ##[group]Determining the checkout info
+2026-10-11T16:07:59.9889092Z ##[endgroup]
+2026-10-11T16:07:59.9892324Z [command]/usr/bin/git sparse-checkout disable
+2026-10-11T16:08:00.0202213Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-11T16:08:00.0239548Z ##[group]Checking out the ref
+2026-10-11T16:08:00.0243981Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-11T16:08:00.0634609Z Switched to a new branch 'main'
+2026-10-11T16:08:00.0638683Z branch 'main' set up to track 'origin/main'.
+2026-10-11T16:08:00.0646778Z ##[endgroup]
+2026-10-11T16:08:00.0696820Z [command]/usr/bin/git log -1 --format=%H
+2026-10-11T16:08:00.0722969Z 9d37a154fd9476ff416941463c6f60c77bab55de
+2026-10-11T16:08:00.1000823Z ##[group]Run actions/setup-node@v4
+2026-10-11T16:08:00.1001501Z with:
+2026-10-11T16:08:00.1001847Z   node-version: 22.23.0
+2026-10-11T16:08:00.1002197Z   always-auth: false
+2026-10-11T16:08:00.1002594Z   check-latest: false
+2026-10-11T16:08:00.1005756Z   token: ***
+2026-10-11T16:08:00.1006095Z env:
+2026-10-11T16:08:00.1006405Z   CLI_SMOKE_VERSION: 2.6.3
+2026-10-11T16:08:00.1006773Z   CLI_SMOKE_FRAMEWORK: react-vite
+2026-10-11T16:08:00.1007245Z   CI_ARTIFACTS_DIR: /home/runner/work/cli/cli/ci-artifacts
+2026-10-11T16:08:00.1007670Z ##[endgroup]
+2026-10-11T16:08:00.2470511Z Attempting to download 22.23.0...
+2026-10-11T16:08:00.2585580Z (node:2366) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-11T16:08:00.2586787Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-11T16:08:01.1768784Z Acquiring 22.23.0 - x64 from https://github.com/actions/node-versions/releases/download/22.23.0-27765725320/node-22.23.0-linux-x64.tar.gz
+2026-10-11T16:08:01.8834985Z Extracting ...
+2026-10-11T16:08:01.8963922Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/ec6106ea-1bc2-4e7b-bcb2-0b6aeace8c60 -f /home/runner/work/_temp/deb021b8-336b-4857-bd1c-7dbdc0f1649d
+2026-10-11T16:08:03.2320347Z Adding to the cache ...
+2026-10-11T16:08:05.6094776Z ##[group]Environment details
+2026-10-11T16:08:06.0090136Z node: v22.23.0
+2026-10-11T16:08:06.0090624Z npm: 10.9.8
+2026-10-11T16:08:06.0091044Z yarn: 1.22.22
+2026-10-11T16:08:06.0091938Z ##[endgroup]
+2026-10-11T16:08:06.0270185Z ##[group]Run npm run smoke:published
+2026-10-11T16:08:06.0270751Z [36;1mnpm run smoke:published[0m
+2026-10-11T16:08:06.1352884Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:08:06.1353633Z env:
+2026-10-11T16:08:06.1353988Z   CLI_SMOKE_VERSION: 2.6.3
+2026-10-11T16:08:06.1354356Z   CLI_SMOKE_FRAMEWORK: react-vite
+2026-10-11T16:08:06.1354814Z   CI_ARTIFACTS_DIR: /home/runner/work/cli/cli/ci-artifacts
+2026-10-11T16:08:06.1355294Z ##[endgroup]
+2026-10-11T16:08:06.2319151Z 
+2026-10-11T16:08:06.2327956Z > create-fsd-architecture@2.6.3 smoke:published
+2026-10-11T16:08:06.2329194Z > node scripts/post-release-smoke.mjs
+2026-10-11T16:08:06.2329508Z 
+2026-10-11T16:08:21.6043111Z Published 2.6.3 / react-vite: PASS; evidence /home/runner/work/cli/cli/ci-artifacts/published-react-vite
+2026-10-11T16:08:21.9512370Z ##[group]Run actions/upload-artifact@v7
+2026-10-11T16:08:21.9512795Z with:
+2026-10-11T16:08:21.9513174Z   name: npm-react-vite
+2026-10-11T16:08:21.9513515Z   path: ci-artifacts/
+2026-10-11T16:08:21.9513876Z   if-no-files-found: error
+2026-10-11T16:08:21.9514260Z   retention-days: 30
+2026-10-11T16:08:21.9514767Z   compression-level: 6
+2026-10-11T16:08:21.9515116Z   overwrite: false
+2026-10-11T16:08:21.9515444Z   include-hidden-files: false
+2026-10-11T16:08:21.9515782Z   archive: true
+2026-10-11T16:08:21.9516155Z env:
+2026-10-11T16:08:21.9516455Z   CLI_SMOKE_VERSION: 2.6.3
+2026-10-11T16:08:21.9516855Z   CLI_SMOKE_FRAMEWORK: react-vite
+2026-10-11T16:08:21.9517264Z   CI_ARTIFACTS_DIR: /home/runner/work/cli/cli/ci-artifacts
+2026-10-11T16:08:21.9517665Z ##[endgroup]
+2026-10-11T16:08:22.1063762Z With the provided path, there will be 18 files uploaded
+2026-10-11T16:08:22.1068464Z Artifact name is valid!
+2026-10-11T16:08:22.1069083Z Root directory input is valid!
+2026-10-11T16:08:22.4564941Z Uploading artifact: npm-react-vite.zip
+2026-10-11T16:08:22.4613123Z Beginning upload of artifact content to blob storage
+2026-10-11T16:08:22.7334506Z Uploaded bytes 12093
+2026-10-11T16:08:22.7882278Z Finished uploading artifact content to blob storage!
+2026-10-11T16:08:22.7883277Z SHA256 digest of uploaded artifact is 0fcbe0ae319b1b2c1fa7fcf845c570eaf60d83c2e4cd8e0a7a38bec5499d2483
+2026-10-11T16:08:22.7884967Z Finalizing artifact upload
+2026-10-11T16:08:23.1470776Z Artifact npm-react-vite successfully finalized. Artifact ID 11708180496
+2026-10-11T16:08:23.1472290Z Artifact npm-react-vite has been successfully uploaded! Final size is 12093 bytes. Artifact ID is 11708180496
+2026-10-11T16:08:23.1476963Z Artifact download URL: https://github.com/FSD-CLI/cli/actions/runs/38154161694/artifacts/11708180496
+2026-10-11T16:08:23.1673028Z Post job cleanup.
+2026-10-11T16:08:23.3006411Z (node:2723) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-11T16:08:23.3007571Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-11T16:08:23.3214885Z Post job cleanup.
+2026-10-11T16:08:23.4187739Z [command]/usr/bin/git version
+2026-10-11T16:08:23.4231780Z git version 2.55.0
+2026-10-11T16:08:23.4279402Z Temporarily overriding HOME='/home/runner/work/_temp/9194f854-ebda-4481-ba57-cd3a8cd2bf1a' before making global git config changes
+2026-10-11T16:08:23.4280371Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T16:08:23.4290177Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-11T16:08:23.4329075Z Removing SSH command configuration
+2026-10-11T16:08:23.4336400Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T16:08:23.4376965Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T16:08:23.4635040Z Removing HTTP extra header
+2026-10-11T16:08:23.4645396Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T16:08:23.4724334Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T16:08:23.5021759Z Removing includeIf entries pointing to credentials config files
+2026-10-11T16:08:23.5023459Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T16:08:23.5045408Z includeif.gitdir:/home/runner/work/cli/cli/.git.path
+2026-10-11T16:08:23.5059439Z includeif.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path
+2026-10-11T16:08:23.5090736Z includeif.gitdir:/github/workspace/.git.path
+2026-10-11T16:08:23.5111057Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-11T16:08:23.5113904Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/cli/cli/.git.path
+2026-10-11T16:08:23.5115545Z /home/runner/work/_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:08:23.5118268Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/cli/cli/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-3d70a24d\-21e9\-498d\-abd5\-92b1a31aafa7\.config
+2026-10-11T16:08:23.5184004Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path
+2026-10-11T16:08:23.5201011Z /home/runner/work/_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:08:23.5210499Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/cli/cli/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-3d70a24d\-21e9\-498d\-abd5\-92b1a31aafa7\.config
+2026-10-11T16:08:23.5254534Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-11T16:08:23.5278052Z /github/runner_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:08:23.5285737Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-3d70a24d\-21e9\-498d\-abd5\-92b1a31aafa7\.config
+2026-10-11T16:08:23.5323755Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-11T16:08:23.5344728Z /github/runner_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config
+2026-10-11T16:08:23.5353636Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-3d70a24d\-21e9\-498d\-abd5\-92b1a31aafa7\.config
+2026-10-11T16:08:23.5396801Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T16:08:23.5603891Z Removing credentials config '/home/runner/work/_temp/git-credentials-3d70a24d-21e9-498d-abd5-92b1a31aafa7.config'
+2026-10-11T16:08:23.5765129Z Cleaning up orphan processes
+2026-10-11T16:08:23.6045231Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

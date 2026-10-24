@@ -1,0 +1,33 @@
+START Sun 10/04/2026 15:27:53.93
+EXIT upgrade --yes 0
+END Sun 10/04/2026 15:27:54.37
+EXIT upgrade --check after apply 0
+--- apply stdout, last 15 lines ---
+
+1 creates, 0 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+Git: main (dirty)
+
+WARNING: applying in a dirty Git worktree; the internal affected-path backup is active.
+
+Dependency installation skipped; this migration does not change dependencies.
+
+Upgrade completed successfully. CLI-owned migration state is current.
+--- apply stderr ---
+--- .fsd after apply ---
+backups
+manifest.json
+--- recheck stdout, first 8 lines ---
+
+FSD project upgrade
+
+Project: E:\qa-work\rv-legacy
+Framework: react-vite
+Current state: managed state 2 / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: up to date

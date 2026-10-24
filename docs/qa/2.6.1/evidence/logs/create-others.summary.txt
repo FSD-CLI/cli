@@ -1,0 +1,158 @@
+===== nextjs =====
+START Sun 10/04/2026 15:19:27.99
+EXIT 0
+END Sun 10/04/2026 15:19:59.84
+--- top-level ---
+.fsd
+.github
+.gitignore
+.husky
+AGENTS.md
+biome.json
+CLAUDE.md
+commitlint.config.cjs
+components.json
+fsd.config.json
+next.config.ts
+package-lock.json
+package.json
+postcss.config.mjs
+public
+README.md
+src
+steiger.config.ts
+tsconfig.json
+--- config ---
+  "apiClient": "axios",
+  "serverState": "react-query",
+  "clientState": "zustand",
+  "forms": "react-hook-form-zod",
+  "framework": "nextjs"
+--- src ---
+app
+entities
+features
+pages
+shared
+widgets
+--- app ---
+===== vue-vite =====
+START Sun 10/04/2026 15:19:59.88
+EXIT 0
+END Sun 10/04/2026 15:20:31.75
+--- top-level ---
+.fsd
+.github
+.gitignore
+.husky
+.vscode
+commitlint.config.cjs
+eslint.config.js
+fsd.config.json
+index.html
+LICENSE
+package-lock.json
+package.json
+public
+README.md
+src
+steiger.config.ts
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vite.config.ts
+--- config ---
+  "apiClient": "axios",
+  "serverState": "vue-query",
+  "clientState": "pinia",
+  "forms": "vee-validate-zod",
+  "framework": "vue-vite"
+--- src ---
+app
+entities
+features
+main.ts
+pages
+shared
+widgets
+--- app ---
+===== nuxt =====
+START Sun 10/04/2026 15:20:31.80
+EXIT 0
+END Sun 10/04/2026 15:21:03.64
+--- top-level ---
+.fsd
+.github
+.gitignore
+.husky
+.nvmrc
+app
+commitlint.config.cjs
+eslint.config.mjs
+fsd.config.json
+LICENSE
+nuxt.config.ts
+package-lock.json
+package.json
+public
+README.md
+steiger.config.ts
+tsconfig.json
+--- config ---
+  "apiClient": "fetch",
+  "serverState": "vue-query",
+  "clientState": "pinia",
+  "forms": "vee-validate-zod",
+  "framework": "nuxt"
+--- src ---
+--- app ---
+app
+app.vue
+entities
+features
+pages
+plugins
+shared
+widgets
+===== sveltekit =====
+START Sun 10/04/2026 15:21:03.69
+EXIT 0
+END Sun 10/04/2026 15:21:35.55
+--- top-level ---
+.env.example
+.fsd
+.github
+.gitignore
+.husky
+.npmrc
+.nvmrc
+.vscode
+commitlint.config.cjs
+eslint.config.js
+fsd.config.json
+LICENSE
+package-lock.json
+package.json
+README.md
+src
+static
+steiger.config.ts
+tsconfig.json
+vite.config.ts
+--- config ---
+  "apiClient": "fetch",
+  "serverState": "svelte-query",
+  "clientState": "svelte-store",
+  "forms": "sveltekit-superforms-zod",
+  "framework": "sveltekit"
+--- src ---
+app
+app.d.ts
+app.html
+entities
+features
+pages
+routes
+shared
+widgets
+--- app ---

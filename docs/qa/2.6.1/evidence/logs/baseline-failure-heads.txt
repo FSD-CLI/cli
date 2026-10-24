@@ -1,0 +1,56 @@
+﻿test at tests\core-architecture.test.mjs:99:1
+✖ project paths cannot escape the working directory (1.9935ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+test at tests\hardening.test.mjs:71:1
+✖ dry-run file plans are exact and do not write files (69.6466ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\hardening.test.mjs:83:1
+✖ page generators register framework-native routes (86.1868ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\project-config.test.mjs:121:1
+✖ feature generator reads the saved stack without additional choices (34.1426ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\project-config.test.mjs:143:1
+✖ auth generator creates the complete flow and working mutation submissions (47.6005ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\project-config.test.mjs:188:1
+✖ forms can be generated without a server-state dependency (36.2276ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\project-config.test.mjs:218:1
+✖ Vue projects receive framework-native dependencies, providers, and generators (46.0901ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\project-config.test.mjs:275:1
+✖ SvelteKit projects receive native dependencies, providers, stores, forms, and routes (52.3995ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\project-config.test.mjs:370:1
+✖ Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators (31.9246ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+test at tests\qa-regressions.test.mjs:69:3
+✖ failed installation exits nonzero and rolls back (force=false) (113.6109ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /QA install failure: approval required/. Input:
+  
+test at tests\qa-regressions.test.mjs:69:3
+✖ failed installation exits nonzero and rolls back (force=true) (120.5654ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /QA install failure: approval required/. Input:
+  
+test at tests\qa-regressions.test.mjs:95:1
+✖ intentional no-install remains successful and does not execute installer (163.1665ms)
+  AssertionError [ERR_ASSERTION]: 
+  node:internal/modules/run_main:107
+test at tests\upgrade.test.mjs:415:1
+✖ transaction rollback restores files and retains an internal recovery backup (29.3889ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+test at tests\upgrade.test.mjs:475:1
+✖ symlink escapes are rejected before planning writes (23.4591ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-external-I0EPbi\client.ts' -> 'C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-react-vite-iYEJI3\src\shared\api\client.ts'
+      at Object.symlinkSync (node:fs:1937:11)

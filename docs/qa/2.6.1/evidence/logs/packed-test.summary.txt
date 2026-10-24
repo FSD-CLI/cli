@@ -1,0 +1,26 @@
+EXIT npm pack 0
+--- tarball ---
+create-fsd-architecture-2.6.1.tgz
+SHA256 hash of create-fsd-architecture-2.6.1.tgz:
+d5315921cb381bb6851271325236ef09eabe542ec8cdc4d9996624dff43c8bcd
+CertUtil: -hashfile command completed successfully.
+EXIT npm install tarball 0
+EXIT --version 0
+2.6.1
+START create Sun 10/04/2026 15:29:13.84
+EXIT create 0
+END create Sun 10/04/2026 15:29:15.41
+--- packed-rv src ---
+app
+entities
+features
+main.tsx
+pages
+shared
+widgets
+  "framework": "react-vite"
+--- stderr of install and create ---
+- Downloading template...
+[32m✔[39m Template downloaded.
+- Configuring FSD stack, Git, and Husky...
+[32m✔[39m FSD stack, Git, and Husky configured.

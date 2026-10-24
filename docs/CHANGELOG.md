@@ -2,7 +2,28 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## Unreleased
+## 2.6.3 - 2026-10-11
+
+Published npm gitHead: `9d37a154fd9476ff416941463c6f60c77bab55de`.
+
+### Changed
+
+- Refresh template pins to verified commits on each template's main branch.
+- Accept Angular's native configuration for read-only inspection; reject
+  Angular generation, reconfiguration and managed upgrades before any writes.
+- Keep Chalk on the Node-20-compatible 5.x series to honor the CLI runtime contract.
+
+## 2.6.2 - 2026-10-11
+
+Published npm gitHead: `5f5654cf040a1fa0e6731e594f1b9701da0d18be`.
+The Angular inspection contract, refreshed main pins and Chalk 5 change above
+were merged after this published artifact and are prepared for 2.6.3.
+
+### Changed
+
+- Expand the README badge panel with live npm version/downloads, Node support,
+  GitHub contributors/forks/stars/issues, license and workflow status.
+- Include the Windows toolchain, path and rollback fixes merged after 2.6.1.
 
 - Bind all five template sources to full immutable Git commits, verify downloaded
   identities and retain provenance in `.fsd/template.json`.

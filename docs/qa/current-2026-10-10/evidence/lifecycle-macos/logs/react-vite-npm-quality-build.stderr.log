@@ -1,0 +1,7 @@
+✔ No problems found!
+[33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 3.2s of this 3.3s build (98%).
+The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+  - vite:css-post renderChunk (96%, 3.1s, 1 call)
+Additional hook time came from hooks under 1s.
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+

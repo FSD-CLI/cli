@@ -1,0 +1,13 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src\features\profile\model\profile.types.ts
+    - src\features\profile\ui\profile-view.tsx
+    - src\features\profile\api\profile.api.ts
+    - src\features\profile\api\profile.query.ts
+    - src\features\profile\lib\profile.keys.ts
+    - src\features\profile\model\profile.store.ts
+    - src\features\profile\lib\profile.helpers.ts
+    - src\features\profile\index.ts
+

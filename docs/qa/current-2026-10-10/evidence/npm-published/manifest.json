@@ -1,0 +1,190 @@
+{
+  "reviewedAt": "2026-10-10T16:27:47.390551+00:00",
+  "sourceSha": "fcde52a0b801a6d57b4d5914596dde72bf490ae9",
+  "script": "scripts/post-release-smoke.mjs",
+  "scriptSha256": "b7fc53e44f2b0c8da4b3954298626fbddf70147dcb980ae5360b845ee3982953",
+  "commands": [
+    "CLI_SMOKE_VERSION=2.6.1 CLI_SMOKE_FRAMEWORK=react-vite npm run smoke:published",
+    "CLI_SMOKE_VERSION=2.6.1 CLI_SMOKE_FRAMEWORK=nextjs npm run smoke:published"
+  ],
+  "results": [
+    {
+      "framework": "react-vite",
+      "result": {
+        "status": "PASS",
+        "date": "2026-10-10T16:23:38.985Z",
+        "version": "2.6.1",
+        "framework": "react-vite",
+        "node": "v24.13.0",
+        "os": "darwin/arm64",
+        "npm": "11.6.2",
+        "integrity": "sha512-X1StMp1ytT0g1A8H/5b1ok8HN+5yRSIhoOAoG5w1g7Wz+HxFLRfE364QXrkxyRT35WEZJp9wNYL2qCt+2XAoRg==",
+        "gitHead": "4c83d0a75ec20117edc8880aba065bdb21edfa6d",
+        "tarball": "https://registry.npmjs.org/create-fsd-architecture/-/create-fsd-architecture-2.6.1.tgz"
+      },
+      "files": [
+        {
+          "path": "published-react-vite/01-registry.log",
+          "sha256": "c174d1605ed2ad76b9a8da2f5ae8ad36b6d395ab7ac942205af89319674ab1fc"
+        },
+        {
+          "path": "published-react-vite/02-npm-version.log",
+          "sha256": "875d4cde642cd26b0089626b06b0b473145e718387e5ce67146dae8a065d96b0"
+        },
+        {
+          "path": "published-react-vite/03-package-content.log",
+          "sha256": "8db9bb52e82788647ff176dd1238d8c958ff6f539319a6458c49d66dcecebdd4"
+        },
+        {
+          "path": "published-react-vite/04-install-cli.log",
+          "sha256": "5d5fadfff16aa244fe1d7a7b08b5ab8a2f8f96a9bf8d121578e65bdc6feb57b7"
+        },
+        {
+          "path": "published-react-vite/05-version.log",
+          "sha256": "a0f95760e4c8ee2c5c10c4ca9d3006d30fb1c08046c9140e7146ca0cc8b791e5"
+        },
+        {
+          "path": "published-react-vite/06-help.log",
+          "sha256": "3377bf664371278690e2021b9f3b3e0de8c51a38f745007c0111dd90535db482"
+        },
+        {
+          "path": "published-react-vite/07-templates.log",
+          "sha256": "e34c13bbd369c1b2835f2199d77e34d871f3d2cbe6948ae9dc2e284fc0452fd8"
+        },
+        {
+          "path": "published-react-vite/08-create.log",
+          "sha256": "626f1d1fc235c626d9976788bd53ec2f5a8e0bdad7e726039d091922fbcaa5a6"
+        },
+        {
+          "path": "published-react-vite/09-doctor.log",
+          "sha256": "ef9e425e311c3a13949460615734a67f62d60112bf619e8aaf3efce4665ed088"
+        },
+        {
+          "path": "published-react-vite/10-check.log",
+          "sha256": "574c9cc391659a15aa95a6c45388da8f7449fd964270e46143c6cf35227ffb93"
+        },
+        {
+          "path": "published-react-vite/11-generated-ci.log",
+          "sha256": "d5e5e3429243967399261eed17286b63b0999f497a53eeb2a9831ead64b4e675"
+        },
+        {
+          "path": "published-react-vite/fsd.config.json",
+          "sha256": "26bad19451ae593add0899cd475fc06eb7b4e8280e3bc0900dad4576e8c08632"
+        },
+        {
+          "path": "published-react-vite/generate-entity.log",
+          "sha256": "f2e04689d3a28dcdf7bccd50a7699d1e410ba77c6d03c30894ca208db225168e"
+        },
+        {
+          "path": "published-react-vite/generate-feature.log",
+          "sha256": "f5d60ca0423596720f346fd24c1a224a259b3f216edb28bee89c3c8611c45b53"
+        },
+        {
+          "path": "published-react-vite/generate-page.log",
+          "sha256": "03fae8fc2bb7227210fcec0d3137c3b63222f1f1cd1eacd7e59b89a831c72f00"
+        },
+        {
+          "path": "published-react-vite/generate-widget.log",
+          "sha256": "1b82da0084386b974d14ec78ddbde78c1b7c79d765933814c4f53322c309bc37"
+        },
+        {
+          "path": "published-react-vite/metadata.json",
+          "sha256": "50a54a8cb063bf6af986e52ba6268923c01f1cc7134e6b65833f6fd02e1d52d4"
+        },
+        {
+          "path": "published-react-vite/result.json",
+          "sha256": "c6c010b3838becf549cc281db45f164fd6b81fe9170eb6bb54448112d4350029"
+        }
+      ]
+    },
+    {
+      "framework": "nextjs",
+      "result": {
+        "status": "PASS",
+        "date": "2026-10-10T16:23:39.076Z",
+        "version": "2.6.1",
+        "framework": "nextjs",
+        "node": "v24.13.0",
+        "os": "darwin/arm64",
+        "npm": "11.6.2",
+        "integrity": "sha512-X1StMp1ytT0g1A8H/5b1ok8HN+5yRSIhoOAoG5w1g7Wz+HxFLRfE364QXrkxyRT35WEZJp9wNYL2qCt+2XAoRg==",
+        "gitHead": "4c83d0a75ec20117edc8880aba065bdb21edfa6d",
+        "tarball": "https://registry.npmjs.org/create-fsd-architecture/-/create-fsd-architecture-2.6.1.tgz"
+      },
+      "files": [
+        {
+          "path": "published-nextjs/01-registry.log",
+          "sha256": "c9651418d09cb95bb97d396882afed5b4ec68a0625ce8647cb8fb9fd6e8e7aee"
+        },
+        {
+          "path": "published-nextjs/02-npm-version.log",
+          "sha256": "e0e3d5b4abebdd86c6e27ccc8368b33750eeed9b05ef4564d5aa3a8623309f98"
+        },
+        {
+          "path": "published-nextjs/03-package-content.log",
+          "sha256": "622a1920017909c13c1b92e3b26a3324f7cc330621ae8dd2eb8b95d132097135"
+        },
+        {
+          "path": "published-nextjs/04-install-cli.log",
+          "sha256": "0f07ffe13bcc089445b0d9debd84b8a240d54e91c7a3e04128d213843798f634"
+        },
+        {
+          "path": "published-nextjs/05-version.log",
+          "sha256": "adbba693328e7b8ce66224640e0fb34642dfa13010113b07f64afb8d8bfcedc2"
+        },
+        {
+          "path": "published-nextjs/06-help.log",
+          "sha256": "ccde6f2e866469518e237407c2b8271239479194ff5cbf7b13ba5f6123008752"
+        },
+        {
+          "path": "published-nextjs/07-templates.log",
+          "sha256": "8b1fe16951d594b57363bdde9638d7f2430f76da8cb2d32550a3f3eec3cce6c3"
+        },
+        {
+          "path": "published-nextjs/08-create.log",
+          "sha256": "8f2b61d8050e27bfd8d7505e714bf9e62b387819967430e0f17a39783322da72"
+        },
+        {
+          "path": "published-nextjs/09-doctor.log",
+          "sha256": "72a8f5afd6aef009145611db2990377fb3d69c40fdaa642faa6406f315ff7c27"
+        },
+        {
+          "path": "published-nextjs/10-check.log",
+          "sha256": "60e7be5ed5ee76e3dc0a50f790cd832b1b9a4ed1c7378bfd43ccf50a0d472370"
+        },
+        {
+          "path": "published-nextjs/11-generated-ci.log",
+          "sha256": "e0f9b4ba29a10f9dbf1a54f954b06d0ade928b0d9d69883e66cf20fdcb09a667"
+        },
+        {
+          "path": "published-nextjs/fsd.config.json",
+          "sha256": "2133373764ecf5dc3b8564e276625d92c9a21ffcef1cc91e6cd955380bf04765"
+        },
+        {
+          "path": "published-nextjs/generate-entity.log",
+          "sha256": "451c7cde9cfbf57fe9dda845574a480ce51bd4e65f3905eca2b504c281394b87"
+        },
+        {
+          "path": "published-nextjs/generate-feature.log",
+          "sha256": "90ae9c321d7fb7d506ac91c364ce171e68a570caa4696a592eec885fc4a8fc2d"
+        },
+        {
+          "path": "published-nextjs/generate-page.log",
+          "sha256": "04ac09aedf5a4ed3dc1b83066c4f29b7c986c03383a66213e59e834418d45a1c"
+        },
+        {
+          "path": "published-nextjs/generate-widget.log",
+          "sha256": "35bdf1b241c6447258455d42a79b3b222facb3309a7636cff371c2a39c2c950e"
+        },
+        {
+          "path": "published-nextjs/metadata.json",
+          "sha256": "3176e1493cfcb08940965922a946a4ad0cff1cbcd19057c411f4c6d4f20fce79"
+        },
+        {
+          "path": "published-nextjs/result.json",
+          "sha256": "2fb78d6075655ce2a9c2797c81652e7da7fd669a330a62c5479481db44d759df"
+        }
+      ]
+    }
+  ]
+}

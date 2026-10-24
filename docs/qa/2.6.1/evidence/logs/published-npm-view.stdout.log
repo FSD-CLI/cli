@@ -1,0 +1,5 @@
+version = '2.6.1'
+dist-tags.latest = '2.6.1'
+dist.shasum = '6331b199d29b74ce763c6b9601c5ae42d740ad14'
+dist.integrity = 'sha512-X1StMp1ytT0g1A8H/5b1ok8HN+5yRSIhoOAoG5w1g7Wz+HxFLRfE364QXrkxyRT35WEZJp9wNYL2qCt+2XAoRg=='
+time.modified = '2026-09-27T16:51:43.780Z'

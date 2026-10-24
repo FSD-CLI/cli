@@ -1,0 +1,347 @@
+2026-10-07T20:33:46.8312554Z Current runner version: '2.337.0'
+2026-10-07T20:33:46.8350714Z ##[group]Runner Image Provisioner
+2026-10-07T20:33:46.8352475Z Hosted Compute Agent
+2026-10-07T20:33:46.8353506Z Version: 20261002.596
+2026-10-07T20:33:46.8354763Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-07T20:33:46.8356073Z Build Date: 2026-10-02T22:28:27Z
+2026-10-07T20:33:46.8357517Z Worker ID: {eadd264d-edfc-476a-bdb4-91297bcba255}
+2026-10-07T20:33:46.8358926Z Region: eastus2
+2026-10-07T20:33:46.8359913Z Cloud: Azure
+2026-10-07T20:33:46.8361459Z ##[endgroup]
+2026-10-07T20:33:46.8363920Z ##[group]Operating System
+2026-10-07T20:33:46.8364956Z Ubuntu
+2026-10-07T20:33:46.8365963Z 24.04.5
+2026-10-07T20:33:46.8366831Z LTS
+2026-10-07T20:33:46.8367708Z ##[endgroup]
+2026-10-07T20:33:46.8368590Z ##[group]Runner Image
+2026-10-07T20:33:46.8369524Z Image: ubuntu-24.04
+2026-10-07T20:33:46.8370554Z Version: 20261004.327.1
+2026-10-07T20:33:46.8373003Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-07T20:33:46.8375699Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-07T20:33:46.8377285Z ##[endgroup]
+2026-10-07T20:33:46.8379189Z ##[group]GITHUB_TOKEN Permissions
+2026-10-07T20:33:46.8382444Z Contents: read
+2026-10-07T20:33:46.8383730Z Metadata: read
+2026-10-07T20:33:46.8384722Z ##[endgroup]
+2026-10-07T20:33:46.8388319Z Secret source: Actions
+2026-10-07T20:33:46.8389916Z Cache mode: write
+2026-10-07T20:33:46.8391752Z Prepare workflow directory
+2026-10-07T20:33:46.8886359Z Prepare all required actions
+2026-10-07T20:33:46.8959986Z Getting action download info
+2026-10-07T20:33:47.1443418Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-07T20:33:47.2596267Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-07T20:33:47.3495183Z Download action repository 'pnpm/action-setup@v4' (SHA:b906affcce14559ad1aafd4ab0e942779e9f58b1)
+2026-10-07T20:33:47.7207526Z Complete job name: pnpm 10.26.0 / nuxt
+2026-10-07T20:33:47.8062511Z ##[group]Run actions/checkout@v4
+2026-10-07T20:33:47.8063997Z with:
+2026-10-07T20:33:47.8064803Z   repository: FSD-CLI/cli
+2026-10-07T20:33:47.8072762Z   token: ***
+2026-10-07T20:33:47.8073487Z   ssh-strict: true
+2026-10-07T20:33:47.8074167Z   ssh-user: git
+2026-10-07T20:33:47.8074845Z   persist-credentials: true
+2026-10-07T20:33:47.8075599Z   clean: true
+2026-10-07T20:33:47.8076270Z   sparse-checkout-cone-mode: true
+2026-10-07T20:33:47.8077081Z   fetch-depth: 1
+2026-10-07T20:33:47.8077732Z   fetch-tags: false
+2026-10-07T20:33:47.8078407Z   show-progress: true
+2026-10-07T20:33:47.8079082Z   lfs: false
+2026-10-07T20:33:47.8079705Z   submodules: false
+2026-10-07T20:33:47.8080391Z   set-safe-directory: true
+2026-10-07T20:33:47.8081673Z   allow-unsafe-pr-checkout: false
+2026-10-07T20:33:47.8082911Z ##[endgroup]
+2026-10-07T20:33:47.9183932Z Syncing repository: FSD-CLI/cli
+2026-10-07T20:33:47.9198232Z ##[group]Getting Git version info
+2026-10-07T20:33:47.9199194Z Working directory is '/home/runner/work/cli/cli'
+2026-10-07T20:33:47.9200986Z [command]/usr/bin/git version
+2026-10-07T20:33:47.9296311Z git version 2.55.0
+2026-10-07T20:33:47.9338689Z ##[endgroup]
+2026-10-07T20:33:47.9347227Z Temporarily overriding HOME='/home/runner/work/_temp/3167524b-ebe0-4acd-a306-2bf22c03be10' before making global git config changes
+2026-10-07T20:33:47.9349766Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:33:47.9352056Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:33:47.9414010Z Deleting the contents of '/home/runner/work/cli/cli'
+2026-10-07T20:33:47.9419116Z ##[group]Initializing the repository
+2026-10-07T20:33:47.9423095Z [command]/usr/bin/git init /home/runner/work/cli/cli
+2026-10-07T20:33:47.9565967Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-07T20:33:47.9570210Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-07T20:33:47.9572405Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-07T20:33:47.9573618Z hint: call:
+2026-10-07T20:33:47.9574323Z hint:
+2026-10-07T20:33:47.9575204Z hint: 	git config --global init.defaultBranch <name>
+2026-10-07T20:33:47.9576194Z hint:
+2026-10-07T20:33:47.9577111Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-07T20:33:47.9578648Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-07T20:33:47.9579977Z hint:
+2026-10-07T20:33:47.9580671Z hint: 	git branch -m <name>
+2026-10-07T20:33:47.9581652Z hint:
+2026-10-07T20:33:47.9582651Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-07T20:33:47.9584454Z Initialized empty Git repository in /home/runner/work/cli/cli/.git/
+2026-10-07T20:33:47.9587382Z [command]/usr/bin/git remote add origin https://github.com/FSD-CLI/cli
+2026-10-07T20:33:47.9655259Z ##[endgroup]
+2026-10-07T20:33:47.9657264Z ##[group]Disabling automatic garbage collection
+2026-10-07T20:33:47.9658993Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-07T20:33:47.9701470Z ##[endgroup]
+2026-10-07T20:33:47.9703453Z ##[group]Setting up auth
+2026-10-07T20:33:47.9708610Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:33:47.9758513Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:33:48.0188940Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:33:48.0227114Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:33:48.0458768Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:33:48.0497600Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:33:48.0731320Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-07T20:33:48.0774948Z ##[endgroup]
+2026-10-07T20:33:48.0775770Z ##[group]Fetching the repository
+2026-10-07T20:33:48.0785683Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +fcde52a0b801a6d57b4d5914596dde72bf490ae9:refs/remotes/origin/main
+2026-10-07T20:33:48.3850560Z From https://github.com/FSD-CLI/cli
+2026-10-07T20:33:48.3853566Z  * [new ref]         fcde52a0b801a6d57b4d5914596dde72bf490ae9 -> origin/main
+2026-10-07T20:33:48.3858178Z ##[endgroup]
+2026-10-07T20:33:48.3859664Z ##[group]Determining the checkout info
+2026-10-07T20:33:48.3861873Z ##[endgroup]
+2026-10-07T20:33:48.3865068Z [command]/usr/bin/git sparse-checkout disable
+2026-10-07T20:33:48.3927310Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-07T20:33:48.3965942Z ##[group]Checking out the ref
+2026-10-07T20:33:48.3970700Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-07T20:33:48.4292742Z Switched to a new branch 'main'
+2026-10-07T20:33:48.4298632Z branch 'main' set up to track 'origin/main'.
+2026-10-07T20:33:48.4311214Z ##[endgroup]
+2026-10-07T20:33:48.4373481Z [command]/usr/bin/git log -1 --format=%H
+2026-10-07T20:33:48.4403130Z fcde52a0b801a6d57b4d5914596dde72bf490ae9
+2026-10-07T20:33:48.4795768Z ##[group]Run actions/setup-node@v4
+2026-10-07T20:33:48.4796968Z with:
+2026-10-07T20:33:48.4797762Z   node-version: 22
+2026-10-07T20:33:48.4798644Z   always-auth: false
+2026-10-07T20:33:48.4799571Z   check-latest: false
+2026-10-07T20:33:48.4809513Z   token: ***
+2026-10-07T20:33:48.4810341Z ##[endgroup]
+2026-10-07T20:33:48.6370428Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-07T20:33:48.6374876Z (node:2304) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:33:48.6378367Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:33:48.6381076Z ##[group]Environment details
+2026-10-07T20:33:49.1009946Z node: v22.23.3
+2026-10-07T20:33:49.1011674Z npm: 10.9.9
+2026-10-07T20:33:49.1012226Z yarn: 1.22.22
+2026-10-07T20:33:49.1013858Z ##[endgroup]
+2026-10-07T20:33:49.1179744Z ##[group]Run pnpm/action-setup@v4
+2026-10-07T20:33:49.1180132Z with:
+2026-10-07T20:33:49.1180372Z   version: 10.26.0
+2026-10-07T20:33:49.1180625Z   dest: ~/setup-pnpm
+2026-10-07T20:33:49.1181185Z   run_install: null
+2026-10-07T20:33:49.1181438Z   cache: false
+2026-10-07T20:33:49.1181709Z   cache_dependency_path: pnpm-lock.yaml
+2026-10-07T20:33:49.1182044Z   package_json_file: package.json
+2026-10-07T20:33:49.1182344Z   standalone: false
+2026-10-07T20:33:49.1182601Z ##[endgroup]
+2026-10-07T20:33:49.2701404Z ##[group]Running self-installer...
+2026-10-07T20:33:49.7288679Z (node:2348) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-07T20:33:49.7291116Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:33:49.8949511Z Progress: resolved 1, reused 0, downloaded 0, added 0
+2026-10-07T20:33:49.9048915Z Packages: +1
+2026-10-07T20:33:50.3433258Z +
+2026-10-07T20:33:50.3434095Z Progress: resolved 1, reused 0, downloaded 1, added 1, done
+2026-10-07T20:33:50.3699154Z 
+2026-10-07T20:33:50.3700073Z dependencies:
+2026-10-07T20:33:50.3700974Z + pnpm 10.26.0 (12.10.1 is available)
+2026-10-07T20:33:50.3701411Z 
+2026-10-07T20:33:50.3727577Z Done in 892ms
+2026-10-07T20:33:50.3925735Z ##[endgroup]
+2026-10-07T20:33:50.3926847Z Installation Completed!
+2026-10-07T20:33:50.4077050Z ##[group]Run npm ci
+2026-10-07T20:33:50.4077437Z [36;1mnpm ci[0m
+2026-10-07T20:33:50.4381768Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:50.4382233Z env:
+2026-10-07T20:33:50.4382668Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+2026-10-07T20:33:50.4383176Z ##[endgroup]
+2026-10-07T20:33:51.4050211Z 
+2026-10-07T20:33:51.4051272Z added 20 packages, and audited 21 packages in 903ms
+2026-10-07T20:33:51.4051836Z 
+2026-10-07T20:33:51.4052292Z 17 packages are looking for funding
+2026-10-07T20:33:51.4062801Z   run `npm fund` for details
+2026-10-07T20:33:51.4063424Z 
+2026-10-07T20:33:51.4063983Z found 0 vulnerabilities
+2026-10-07T20:33:51.4524612Z ##[group]Run node bin/index.mjs e2e-app --framework nuxt --package-manager pnpm --yes --no-start
+2026-10-07T20:33:51.4525390Z [36;1mnode bin/index.mjs e2e-app --framework nuxt --package-manager pnpm --yes --no-start[0m
+2026-10-07T20:33:51.4591784Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:33:51.4592132Z env:
+2026-10-07T20:33:51.4592441Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+2026-10-07T20:33:51.4592842Z ##[endgroup]
+2026-10-07T20:33:51.5832272Z 
+2026-10-07T20:33:51.5833388Z ┌─────────────────────────────────────────────────────────────────────────────┐
+2026-10-07T20:33:51.5834313Z │                                                                             │
+2026-10-07T20:33:51.5835093Z │    ███████╗███████╗██████╗                                                  │
+2026-10-07T20:33:51.5835886Z │    ██╔════╝██╔════╝██╔══██╗                                                 │
+2026-10-07T20:33:51.5836737Z │    █████╗  ███████╗██║  ██║                                                 │
+2026-10-07T20:33:51.5837497Z │    ██╔══╝  ╚════██║██║  ██║                                                 │
+2026-10-07T20:33:51.5838248Z │    ██║     ███████║██████╔╝                                                 │
+2026-10-07T20:33:51.5838994Z │    ╚═╝     ╚══════╝╚═════╝                                                  │
+2026-10-07T20:33:51.5839706Z │                                                                             │
+2026-10-07T20:33:51.5841783Z │           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+2026-10-07T20:33:51.5842616Z │                                                                             │
+2026-10-07T20:33:51.5843397Z │   app → pages → widgets → features → entities → shared                     │
+2026-10-07T20:33:51.5844224Z │                                                                             │
+2026-10-07T20:33:51.5844993Z │   Scalable • Maintainable • Enterprise Frontend Architecture                │
+2026-10-07T20:33:51.5845764Z │                                                                             │
+2026-10-07T20:33:51.5846724Z └─────────────────────────────────────────────────────────────────────────────┘
+2026-10-07T20:33:51.5847556Z - Downloading template...
+2026-10-07T20:33:51.5847817Z 
+2026-10-07T20:33:51.8146157Z [32m✔[39m Template downloaded at verified immutable commit.
+2026-10-07T20:33:51.8147071Z - Configuring FSD stack, Git, and Husky...
+2026-10-07T20:33:51.8341676Z [32m✔[39m FSD stack, Git, and Husky configured.
+2026-10-07T20:33:51.8342438Z - Installing dependencies...
+2026-10-07T20:34:03.8736008Z [32m✔[39m Dependencies installed.
+2026-10-07T20:34:03.8736762Z - Verifying Commitlint...
+2026-10-07T20:34:04.6550122Z [32m✔[39m Commitlint rejected invalid message "test".
+2026-10-07T20:34:04.6551447Z 
+2026-10-07T20:34:04.6580285Z   Project created successfully!
+2026-10-07T20:34:04.6581329Z 
+2026-10-07T20:34:04.6581772Z   Next steps:
+2026-10-07T20:34:04.6582214Z 
+2026-10-07T20:34:04.6582567Z     $ cd e2e-app
+2026-10-07T20:34:04.6583271Z     $ pnpm dev
+2026-10-07T20:34:04.6583732Z 
+2026-10-07T20:34:04.8171725Z ##[group]Run node ../bin/index.mjs -g feature checkout
+2026-10-07T20:34:04.8172198Z [36;1mnode ../bin/index.mjs -g feature checkout[0m
+2026-10-07T20:34:04.8172514Z [36;1mpnpm run ci[0m
+2026-10-07T20:34:04.8238218Z shell: /usr/bin/bash -e {0}
+2026-10-07T20:34:04.8238495Z env:
+2026-10-07T20:34:04.8238787Z   PNPM_HOME: /home/runner/setup-pnpm/node_modules/.bin
+2026-10-07T20:34:04.8239186Z ##[endgroup]
+2026-10-07T20:34:05.0349427Z 
+2026-10-07T20:34:05.0354831Z   Slice generated successfully!
+2026-10-07T20:34:05.0355265Z 
+2026-10-07T20:34:05.0355474Z   Created files:
+2026-10-07T20:34:05.0356148Z     - app/features/checkout/model/checkout.types.ts
+2026-10-07T20:34:05.0356878Z     - app/features/checkout/ui/CheckoutView.vue
+2026-10-07T20:34:05.0357568Z     - app/features/checkout/api/checkout.api.ts
+2026-10-07T20:34:05.0358276Z     - app/features/checkout/api/checkout.query.ts
+2026-10-07T20:34:05.0358987Z     - app/features/checkout/lib/checkout.keys.ts
+2026-10-07T20:34:05.0360721Z     - app/features/checkout/model/checkout.store.ts
+2026-10-07T20:34:05.0361879Z     - app/features/checkout/lib/checkout.helpers.ts
+2026-10-07T20:34:05.0362480Z     - app/features/checkout/index.ts
+2026-10-07T20:34:05.0362681Z 
+2026-10-07T20:34:05.3259194Z 
+2026-10-07T20:34:05.3259886Z > fsd-nuxt-starter@0.0.0 ci /home/runner/work/cli/cli/e2e-app
+2026-10-07T20:34:05.3260961Z > npm run fsd:check && npm run lint && npm run typecheck && npm run build
+2026-10-07T20:34:05.3261472Z 
+2026-10-07T20:34:05.4280237Z 
+2026-10-07T20:34:05.4281274Z > fsd-nuxt-starter@0.0.0 fsd:check
+2026-10-07T20:34:05.4281788Z > steiger ./app
+2026-10-07T20:34:05.4281934Z 
+2026-10-07T20:34:06.6829789Z [32m✔ No problems found![39m
+2026-10-07T20:34:06.8290109Z 
+2026-10-07T20:34:06.8290834Z > fsd-nuxt-starter@0.0.0 lint
+2026-10-07T20:34:06.8291620Z > eslint .
+2026-10-07T20:34:06.8291793Z 
+2026-10-07T20:34:09.5596455Z 
+2026-10-07T20:34:09.5597270Z > fsd-nuxt-starter@0.0.0 typecheck
+2026-10-07T20:34:09.5597739Z > nuxt typecheck
+2026-10-07T20:34:09.5597959Z 
+2026-10-07T20:34:10.1811812Z [info] Using zod with vee-validate
+2026-10-07T20:34:15.1988730Z 
+2026-10-07T20:34:15.1989400Z > fsd-nuxt-starter@0.0.0 build
+2026-10-07T20:34:15.1989826Z > nuxt build
+2026-10-07T20:34:15.1990007Z 
+2026-10-07T20:34:15.2959019Z Building Nuxt for production...
+2026-10-07T20:34:15.2965419Z ● Loading Nuxt config
+2026-10-07T20:34:15.6928841Z ● Nuxt 4.6.0 (with Nitro 2.13.4, Vite 8.3.3 and Vue 3.5.43)
+2026-10-07T20:34:15.6996547Z ● Setting up modules
+2026-10-07T20:34:15.8444306Z [info] Using zod with vee-validate
+2026-10-07T20:34:15.9636347Z ● Preparing app
+2026-10-07T20:34:16.4070520Z ● Nitro preset: node-server
+2026-10-07T20:34:16.4248210Z ● Generating types
+2026-10-07T20:34:16.8108952Z ● Bundling client
+2026-10-07T20:34:17.4405825Z [info] Building client...
+2026-10-07T20:34:17.4695412Z [info] [36mvite v8.3.3 [32mbuilding client environment for production...[36m[39m
+2026-10-07T20:34:17.5081373Z transforming...
+2026-10-07T20:34:18.3379755Z ✓ 283 modules transformed.
+2026-10-07T20:34:18.3698960Z rendering chunks...
+2026-10-07T20:34:18.4360026Z computing gzip size...
+2026-10-07T20:34:18.4399560Z [info] node_modules/.cache/nuxt/.nuxt/dist/client/manifest.json                   2.88 kB │ gzip:  0.42 kB
+2026-10-07T20:34:18.4401681Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/error-500.DnWy22Zd.css    1.95 kB │ gzip:  0.72 kB
+2026-10-07T20:34:18.4403427Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/error-404.BgQWEA4c.css    2.70 kB │ gzip:  0.92 kB
+2026-10-07T20:34:18.4405031Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/entry.BZXZ4ra5.css       16.55 kB │ gzip:  4.13 kB
+2026-10-07T20:34:18.4406682Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/BxXCeJts.js               2.67 kB │ gzip:  1.16 kB
+2026-10-07T20:34:18.4408332Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/CiGQAltn.js               4.05 kB │ gzip:  1.71 kB
+2026-10-07T20:34:18.4409923Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/gM_ZgNpI.js               6.43 kB │ gzip:  2.67 kB
+2026-10-07T20:34:18.4412248Z node_modules/.cache/nuxt/.nuxt/dist/client/_nuxt/CaRN64XB.js             219.19 kB │ gzip: 78.78 kB
+2026-10-07T20:34:18.4412979Z 
+2026-10-07T20:34:18.4421968Z [info] [32m✓ built in 970ms[39m
+2026-10-07T20:34:18.4422550Z [success] Client built in 1001ms
+2026-10-07T20:34:18.4433141Z ● Bundling server
+2026-10-07T20:34:18.4433913Z [info] Building server...
+2026-10-07T20:34:18.4483992Z [info] [36mvite v8.3.3 [32mbuilding ssr environment for production...[36m[39m
+2026-10-07T20:34:18.4721942Z transforming...
+2026-10-07T20:34:18.9437315Z ✓ 191 modules transformed.
+2026-10-07T20:34:18.9642010Z rendering chunks...
+2026-10-07T20:34:19.0043651Z [info] node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-404-styles.D1ckwWJw.mjs         0.08 kB
+2026-10-07T20:34:19.0045108Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-500-styles.C2R-s8UH.mjs         0.08 kB
+2026-10-07T20:34:19.0046169Z node_modules/.cache/nuxt/.nuxt/dist/server/styles.mjs                                  0.61 kB
+2026-10-07T20:34:19.0047689Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-500-styles-1.mjs-jC5PjdbE.js    2.48 kB │ map:   4.57 kB
+2026-10-07T20:34:19.0049691Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-404-styles-1.mjs--mPn2VQz.js    3.23 kB │ map:   6.43 kB
+2026-10-07T20:34:19.0051483Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-500-qVYeTem5.js                 3.92 kB │ map:   4.96 kB
+2026-10-07T20:34:19.0052959Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/error-404-BnopsJAz.js                 5.67 kB │ map:   7.16 kB
+2026-10-07T20:34:19.0054320Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/multipart-parser-9-I7egMP.js          6.28 kB │ map:  10.58 kB
+2026-10-07T20:34:19.0055651Z node_modules/.cache/nuxt/.nuxt/dist/server/_nuxt/routes-DVmbEgXk.js                   14.07 kB │ map:  18.93 kB
+2026-10-07T20:34:19.0056609Z node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs                                243.68 kB │ map: 674.30 kB
+2026-10-07T20:34:19.0057022Z 
+2026-10-07T20:34:19.0057281Z [info] [32m✓ built in 556ms[39m
+2026-10-07T20:34:19.0104967Z [success] Server built in 567ms
+2026-10-07T20:34:19.0115806Z ● Building Nitro server
+2026-10-07T20:34:19.0622496Z [success] [nitro] Generated public [36m.output/public[39m
+2026-10-07T20:34:19.0874507Z [info] [nitro] Building Nuxt Nitro server (preset: `node-server`, compatibility date: `2025-07-15`)
+2026-10-07T20:34:20.6882159Z node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs (584:0): A comment
+2026-10-07T20:34:20.6903159Z 
+2026-10-07T20:34:20.6903990Z "/* @__NO_SIDE_EFFECTS__ */"
+2026-10-07T20:34:20.6904228Z 
+2026-10-07T20:34:20.6905061Z in "node_modules/.cache/nuxt/.nuxt/dist/server/server.mjs" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+2026-10-07T20:34:23.7163628Z [success] [nitro] Nuxt Nitro server built
+2026-10-07T20:34:23.8057579Z [90m  ├─ .output/server/chunks/_/error-template.mjs (4.38 kB)[39m[90m (1.71 kB gzip)[39m
+2026-10-07T20:34:23.8059206Z [90m  ├─ .output/server/chunks/_/error-template.mjs.map (323 B)[39m[90m (234 B gzip)[39m
+2026-10-07T20:34:23.8061118Z [90m  ├─ .output/server/chunks/build/error-404-BnopsJAz.mjs (6.21 kB)[39m[90m (2.41 kB gzip)[39m
+2026-10-07T20:34:23.8062817Z [90m  ├─ .output/server/chunks/build/error-404-BnopsJAz.mjs.map (412 B)[39m[90m (300 B gzip)[39m
+2026-10-07T20:34:23.8064590Z [90m  ├─ .output/server/chunks/build/error-404-styles.D1ckwWJw.mjs (3.28 kB)[39m[90m (1.22 kB gzip)[39m
+2026-10-07T20:34:23.8066363Z [90m  ├─ .output/server/chunks/build/error-404-styles.D1ckwWJw.mjs.map (217 B)[39m[90m (168 B gzip)[39m
+2026-10-07T20:34:23.8068091Z [90m  ├─ .output/server/chunks/build/error-500-qVYeTem5.mjs (4.46 kB)[39m[90m (1.77 kB gzip)[39m
+2026-10-07T20:34:23.8069750Z [90m  ├─ .output/server/chunks/build/error-500-qVYeTem5.mjs.map (363 B)[39m[90m (267 B gzip)[39m
+2026-10-07T20:34:23.8072091Z [90m  ├─ .output/server/chunks/build/error-500-styles.C2R-s8UH.mjs (2.53 kB)[39m[90m (1.02 kB gzip)[39m
+2026-10-07T20:34:23.8073919Z [90m  ├─ .output/server/chunks/build/error-500-styles.C2R-s8UH.mjs.map (217 B)[39m[90m (169 B gzip)[39m
+2026-10-07T20:34:23.8075682Z [90m  ├─ .output/server/chunks/build/multipart-parser-9-I7egMP.mjs (6.89 kB)[39m[90m (2.52 kB gzip)[39m
+2026-10-07T20:34:23.8077508Z [90m  ├─ .output/server/chunks/build/multipart-parser-9-I7egMP.mjs.map (243 B)[39m[90m (185 B gzip)[39m
+2026-10-07T20:34:23.8079209Z [90m  ├─ .output/server/chunks/build/routes-DVmbEgXk.mjs (14.6 kB)[39m[90m (3.78 kB gzip)[39m
+2026-10-07T20:34:23.8080502Z [90m  ├─ .output/server/chunks/build/routes-DVmbEgXk.mjs.map (4.66 kB)[39m[90m (1.32 kB gzip)[39m
+2026-10-07T20:34:23.8081901Z [90m  ├─ .output/server/chunks/nitro/nitro.mjs (170 kB)[39m[90m (43.1 kB gzip)[39m
+2026-10-07T20:34:23.8082981Z [90m  ├─ .output/server/chunks/nitro/nitro.mjs.map (7.37 kB)[39m[90m (1.19 kB gzip)[39m
+2026-10-07T20:34:23.8084106Z [90m  ├─ .output/server/chunks/routes/renderer.mjs (22.7 kB)[39m[90m (7.66 kB gzip)[39m
+2026-10-07T20:34:23.8085251Z [90m  ├─ .output/server/chunks/routes/renderer.mjs.map (3.1 kB)[39m[90m (411 B gzip)[39m
+2026-10-07T20:34:23.8086340Z [90m  ├─ .output/server/chunks/virtual/entry.mjs (244 kB)[39m[90m (61 kB gzip)[39m
+2026-10-07T20:34:23.8087436Z [90m  ├─ .output/server/chunks/virtual/entry.mjs.map (12 kB)[39m[90m (2.05 kB gzip)[39m
+2026-10-07T20:34:23.8088627Z [90m  ├─ .output/server/chunks/virtual/precomputed.mjs (6.79 kB)[39m[90m (769 B gzip)[39m
+2026-10-07T20:34:23.8089836Z [90m  ├─ .output/server/chunks/virtual/precomputed.mjs.map (181 B)[39m[90m (150 B gzip)[39m
+2026-10-07T20:34:23.8091210Z [90m  ├─ .output/server/chunks/virtual/styles.mjs (1.18 kB)[39m[90m (387 B gzip)[39m
+2026-10-07T20:34:23.8092340Z [90m  ├─ .output/server/chunks/virtual/styles.mjs.map (164 B)[39m[90m (142 B gzip)[39m
+2026-10-07T20:34:23.8093322Z [90m  ├─ .output/server/index.mjs (440 B)[39m[90m (234 B gzip)[39m
+2026-10-07T20:34:23.8094290Z [90m  └─ .output/server/package.json (918 B)[39m[90m (393 B gzip)[39m
+2026-10-07T20:34:23.8095082Z [36mΣ Total size:[39m 2.6 MB (675 kB gzip)
+2026-10-07T20:34:23.8095854Z [success] [nitro] You can preview this build using `node .output/server/index.mjs`
+2026-10-07T20:34:23.8097078Z config 404ms · modules 264ms · app 461ms · types 386ms · client 1.63s · server 568ms · nitro 4.79s
+2026-10-07T20:34:23.8098177Z ◆ ✨ Build complete in 8.51s!
+2026-10-07T20:34:24.0342178Z Post job cleanup.
+2026-10-07T20:34:24.1825987Z Pruning is unnecessary.
+2026-10-07T20:34:24.2018888Z Post job cleanup.
+2026-10-07T20:34:24.3496201Z (node:2698) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-07T20:34:24.3498080Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-07T20:34:24.3825048Z Post job cleanup.
+2026-10-07T20:34:24.4855347Z [command]/usr/bin/git version
+2026-10-07T20:34:24.4914666Z git version 2.55.0
+2026-10-07T20:34:24.4968686Z Temporarily overriding HOME='/home/runner/work/_temp/13c91e0d-ea29-403d-b625-58a8198351f5' before making global git config changes
+2026-10-07T20:34:24.4970313Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-07T20:34:24.4974750Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/cli/cli
+2026-10-07T20:34:24.5022411Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-07T20:34:24.5072218Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-07T20:34:24.5338645Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-07T20:34:24.5372635Z http.https://github.com/.extraheader
+2026-10-07T20:34:24.5387700Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-07T20:34:24.5424371Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-07T20:34:24.5689150Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-07T20:34:24.5723684Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-07T20:34:24.6116437Z Cleaning up orphan processes
+2026-10-07T20:34:24.6450488Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

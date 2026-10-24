@@ -1,0 +1,248 @@
+label: 03-package-content
+cwd: /var/folders/yr/k35qy9b93hv45grp2h7nj31h0000gn/T/fsd npm smoke-mPeetA
+command: ["/usr/local/bin/node","/usr/local/lib/node_modules/npm/bin/npm-cli.js","pack","create-fsd-architecture@2.6.3","--dry-run","--json"]
+exitCode: 0
+signal: 
+spawnError: 
+
+stdout:
+[
+  {
+    "id": "create-fsd-architecture@2.6.3",
+    "name": "create-fsd-architecture",
+    "version": "2.6.3",
+    "size": 68163,
+    "unpackedSize": 260881,
+    "shasum": "a1581f06006177ea1f9dd0261e43d866334c21d0",
+    "integrity": "sha512-rXD8GOrY3cQ4jvRwsBINMqqTg8DQHwhWbjgHFEV+4kopUWbLIEK9wOSE7cdCh4fL3Gm85t/ljL2FjCzoYENm/g==",
+    "filename": "create-fsd-architecture-2.6.3.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1071,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 17474,
+        "mode": 420
+      },
+      {
+        "path": "SECURITY.md",
+        "size": 1211,
+        "mode": 420
+      },
+      {
+        "path": "bin/cli/args.mjs",
+        "size": 4220,
+        "mode": 420
+      },
+      {
+        "path": "bin/cli/output.mjs",
+        "size": 4953,
+        "mode": 420
+      },
+      {
+        "path": "bin/commands/create-project.mjs",
+        "size": 9445,
+        "mode": 420
+      },
+      {
+        "path": "bin/commands/inspect-project.mjs",
+        "size": 2731,
+        "mode": 420
+      },
+      {
+        "path": "bin/commands/upgrade-project.mjs",
+        "size": 8564,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/capability-matrix.mjs",
+        "size": 5734,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/command-runner.mjs",
+        "size": 5172,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/angular.mjs",
+        "size": 283,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/index.mjs",
+        "size": 1293,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/nextjs.mjs",
+        "size": 875,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/nuxt.mjs",
+        "size": 850,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/react-vite.mjs",
+        "size": 939,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/sveltekit.mjs",
+        "size": 676,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/frameworks/vue-vite.mjs",
+        "size": 766,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/package-managers.mjs",
+        "size": 1230,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/project-lifecycle.mjs",
+        "size": 6973,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/project-path.mjs",
+        "size": 1142,
+        "mode": 420
+      },
+      {
+        "path": "bin/core/template-registry.mjs",
+        "size": 3118,
+        "mode": 420
+      },
+      {
+        "path": "bin/generator.mjs",
+        "size": 37925,
+        "mode": 420
+      },
+      {
+        "path": "bin/generators/basic-slices.mjs",
+        "size": 1323,
+        "mode": 420
+      },
+      {
+        "path": "bin/generators/shared.mjs",
+        "size": 1513,
+        "mode": 420
+      },
+      {
+        "path": "bin/generators/svelte.mjs",
+        "size": 13371,
+        "mode": 420
+      },
+      {
+        "path": "bin/generators/vue.mjs",
+        "size": 14317,
+        "mode": 420
+      },
+      {
+        "path": "bin/index.mjs",
+        "size": 1951,
+        "mode": 493
+      },
+      {
+        "path": "bin/project-config.mjs",
+        "size": 24906,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/config.mjs",
+        "size": 4941,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/manifest.mjs",
+        "size": 10144,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/migrations/index.mjs",
+        "size": 2566,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/planner.mjs",
+        "size": 14456,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/project-root.mjs",
+        "size": 2589,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/transaction.mjs",
+        "size": 7263,
+        "mode": 420
+      },
+      {
+        "path": "bin/upgrade/validation.mjs",
+        "size": 4615,
+        "mode": 420
+      },
+      {
+        "path": "docs/CHANGELOG.md",
+        "size": 9992,
+        "mode": 420
+      },
+      {
+        "path": "docs/EXISTING-PROJECT-SUPPORT.md",
+        "size": 3736,
+        "mode": 420
+      },
+      {
+        "path": "docs/PROPOSALS.md",
+        "size": 1272,
+        "mode": 420
+      },
+      {
+        "path": "docs/PUBLIC-DOCUMENTATION-OUTLINE.md",
+        "size": 3117,
+        "mode": 420
+      },
+      {
+        "path": "docs/RELEASE-STATUS.md",
+        "size": 9338,
+        "mode": 420
+      },
+      {
+        "path": "docs/UPGRADE-ARCHITECTURE.md",
+        "size": 7384,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 2136,
+        "mode": 420
+      },
+      {
+        "path": "schema/fsd.config.schema.json",
+        "size": 1105,
+        "mode": 420
+      },
+      {
+        "path": "schema/fsd.manifest.schema.json",
+        "size": 2201,
+        "mode": 420
+      }
+    ],
+    "entryCount": 44,
+    "bundled": []
+  }
+]
+
+
+stderr:
+

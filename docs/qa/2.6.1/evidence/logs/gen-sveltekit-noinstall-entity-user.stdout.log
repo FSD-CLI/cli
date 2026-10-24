@@ -1,0 +1,8 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - src\entities\user\model\user.types.ts
+    - src\entities\user\ui\UserCard.svelte
+    - src\entities\user\index.ts
+

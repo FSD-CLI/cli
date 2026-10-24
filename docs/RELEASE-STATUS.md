@@ -1,5 +1,51 @@
 # Current release and validation status
 
+## Published 2.6.3 — 11 October 2026
+
+The owner published `create-fsd-architecture@2.6.3` with gitHead
+`9d37a154fd9476ff416941463c6f60c77bab55de` and integrity
+`sha512-rXD8GOrY3cQ4jvRwsBINMqqTg8DQHwhWbjgHFEV+4kopUWbLIEK9wOSE7cdCh4fL3Gm85t/ljL2FjCzoYENm/g==`.
+Registry identity matches the prepared package. The agent did not publish npm.
+
+Exact-artifact React/Vite and Next.js npm smoke passed on macOS/arm64,
+Node 24.13.0/npm 11.6.2: CLI install/version/help/template listing, project
+creation with dependency installation, four slice generators, doctor/check,
+and generated-project quality/build. [Raw evidence](qa/published-2.6.3/macos/manifest.json)
+records commands, tool versions, registry identity and outcomes.
+The [Ubuntu artifact run](https://github.com/FSD-CLI/cli/actions/runs/38154161694)
+also passed both jobs on Node 22.23.0/npm 10.9.8. [Job logs](qa/published-2.6.3/ubuntu/)
+confirm the exact 2.6.3 input and successful artifact smokes.
+
+[PR #13](https://github.com/FSD-CLI/cli/pull/13) added Angular inspection-only
+configuration support, refreshed immutable main template pins and Chalk 5.x
+for Node 20 compatibility. The source release head passed all 25 main checks
+and 95 local tests; the earlier executable head also passed Node 20 locally.
+Angular scaffolding/generators remain outside this release's support scope.
+
+These artifact results cover React/Vite and Next.js with npm on the recorded
+platforms, not all framework/package-manager/runtime/deployment combinations.
+Nuxt's independent production audit remains failing; source builds and CLI
+audit success do not clear that separate security hold.
+The QA baseline below still describes its recorded source and package versions.
+
+## Latest QA baseline — 10 October 2026
+
+The [consolidated Task 7 baseline](https://github.com/FSD-CLI/cli/blob/main/docs/qa/current-2026-10-10/REPORT.md) is the current
+QA assessment. It binds new macOS runs and the inspected 22-job Linux/macOS/Windows
+CI run to executable source `fcde52a0b801a6d57b4d5914596dde72bf490ae9`.
+QA PR #5 is merged; its historical report/matrices and repaired evidence tools
+are present. Published npm remains `create-fsd-architecture@2.6.1` at
+`4c83d0a75ec20117edc8880aba065bdb21edfa6d`, separately verified by exact-artifact
+React/Next install/generate/quality/build smoke. New source validation does not
+publish Windows fixes or close the report's explicit remaining gaps.
+
+## Historical snapshot — 6 October 2026
+
+The sections below preserve the 6 October snapshot, including its then-unmerged
+PR #5 and candidate-branch wording. Use the current baseline above for later
+merge state, source identity and evidence; do not read those older statements as
+current repository status.
+
 Reviewed: 2026-10-06. Owner: FSD CLI maintainers.
 
 ## Published package

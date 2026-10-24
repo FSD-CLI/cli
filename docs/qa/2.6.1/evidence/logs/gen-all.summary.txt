@@ -1,0 +1,249 @@
+===== rv-noinstall =====
+--- feature profile --- START 15:22:57.73
+EXIT 0
+--- entity user --- START 15:22:57.98
+EXIT 0
+--- widget header --- START 15:22:58.23
+EXIT 0
+--- page account --- START 15:22:58.46
+EXIT 0
+--- feature auth --- START 15:22:58.72
+EXIT 0
+--- new files (filtered) ---
+?? src/entities/user/index.ts
+?? src/entities/user/model/user.types.ts
+?? src/entities/user/ui/user-card.tsx
+?? src/features/auth/api/auth.query.ts
+?? src/features/auth/api/forgot-password.api.ts
+?? src/features/auth/api/login.api.ts
+?? src/features/auth/api/register.api.ts
+?? src/features/auth/api/reset-password.api.ts
+?? src/features/auth/api/verify-code.api.ts
+?? src/features/auth/index.ts
+?? src/features/auth/lib/auth.helpers.ts
+?? src/features/auth/lib/auth.keys.ts
+?? src/features/auth/model/auth.store.ts
+?? src/features/auth/model/auth.types.ts
+?? src/features/auth/model/forgot-password.schema.ts
+?? src/features/auth/model/forgot-password.types.ts
+?? src/features/auth/model/login.schema.ts
+?? src/features/auth/model/login.types.ts
+?? src/features/auth/model/register.schema.ts
+?? src/features/auth/model/register.types.ts
+?? src/features/auth/model/reset-password.schema.ts
+?? src/features/auth/model/reset-password.types.ts
+?? src/features/auth/model/verify-code.schema.ts
+?? src/features/auth/model/verify-code.types.ts
+?? src/features/auth/ui/forgot-password-form.tsx
+?? src/features/auth/ui/login-form.tsx
+?? src/features/auth/ui/register-form.tsx
+?? src/features/auth/ui/reset-password-form.tsx
+?? src/features/auth/ui/verify-code-form.tsx
+?? src/features/profile/api/profile.api.ts
+?? src/features/profile/api/profile.query.ts
+?? src/features/profile/index.ts
+?? src/features/profile/lib/profile.helpers.ts
+?? src/features/profile/lib/profile.keys.ts
+?? src/features/profile/model/profile.store.ts
+?? src/features/profile/model/profile.types.ts
+?? src/features/profile/ui/profile-view.tsx
+?? src/pages/account/index.ts
+?? src/pages/account/ui/account-page.tsx
+?? src/widgets/header/index.ts
+?? src/widgets/header/ui/header.tsx
+===== nextjs-noinstall =====
+--- feature profile --- START 15:22:59.04
+EXIT 0
+--- entity user --- START 15:22:59.27
+EXIT 0
+--- widget header --- START 15:22:59.52
+EXIT 0
+--- page account --- START 15:22:59.75
+EXIT 0
+--- feature auth --- START 15:22:59.97
+EXIT 0
+--- new files (filtered) ---
+?? src/app/account/page.route.tsx
+?? src/entities/user/index.ts
+?? src/entities/user/model/user.types.ts
+?? src/entities/user/ui/user-card.tsx
+?? src/features/auth/api/auth.query.ts
+?? src/features/auth/api/forgot-password.api.ts
+?? src/features/auth/api/login.api.ts
+?? src/features/auth/api/register.api.ts
+?? src/features/auth/api/reset-password.api.ts
+?? src/features/auth/api/verify-code.api.ts
+?? src/features/auth/index.ts
+?? src/features/auth/lib/auth.helpers.ts
+?? src/features/auth/lib/auth.keys.ts
+?? src/features/auth/model/auth.store.ts
+?? src/features/auth/model/auth.types.ts
+?? src/features/auth/model/forgot-password.schema.ts
+?? src/features/auth/model/forgot-password.types.ts
+?? src/features/auth/model/login.schema.ts
+?? src/features/auth/model/login.types.ts
+?? src/features/auth/model/register.schema.ts
+?? src/features/auth/model/register.types.ts
+?? src/features/auth/model/reset-password.schema.ts
+?? src/features/auth/model/reset-password.types.ts
+?? src/features/auth/model/verify-code.schema.ts
+?? src/features/auth/model/verify-code.types.ts
+?? src/features/auth/ui/forgot-password-form.tsx
+?? src/features/auth/ui/login-form.tsx
+?? src/features/auth/ui/register-form.tsx
+?? src/features/auth/ui/reset-password-form.tsx
+?? src/features/auth/ui/verify-code-form.tsx
+?? src/features/profile/api/profile.api.ts
+?? src/features/profile/api/profile.query.ts
+?? src/features/profile/index.ts
+?? src/features/profile/lib/profile.helpers.ts
+?? src/features/profile/lib/profile.keys.ts
+?? src/features/profile/model/profile.store.ts
+?? src/features/profile/model/profile.types.ts
+?? src/features/profile/ui/profile-view.tsx
+?? src/pages/account/index.ts
+?? src/pages/account/ui/account-page.tsx
+?? src/widgets/header/index.ts
+?? src/widgets/header/ui/header.tsx
+===== vue-vite-noinstall =====
+--- feature profile --- START 15:23:00.31
+EXIT 0
+--- entity user --- START 15:23:00.56
+EXIT 0
+--- widget header --- START 15:23:00.79
+EXIT 0
+--- page account --- START 15:23:01.03
+EXIT 0
+--- feature auth --- START 15:23:01.27
+EXIT 0
+--- new files (filtered) ---
+?? src/entities/user/index.ts
+?? src/entities/user/model/user.types.ts
+?? src/entities/user/ui/UserCard.vue
+?? src/features/auth/api/auth.query.ts
+?? src/features/auth/api/forgot-password.api.ts
+?? src/features/auth/api/login.api.ts
+?? src/features/auth/api/register.api.ts
+?? src/features/auth/api/reset-password.api.ts
+?? src/features/auth/api/verify-code.api.ts
+?? src/features/auth/index.ts
+?? src/features/auth/lib/auth.keys.ts
+?? src/features/auth/model/auth.store.ts
+?? src/features/auth/model/auth.types.ts
+?? src/features/auth/model/forgot-password.schema.ts
+?? src/features/auth/model/login.schema.ts
+?? src/features/auth/model/register.schema.ts
+?? src/features/auth/model/reset-password.schema.ts
+?? src/features/auth/model/verify-code.schema.ts
+?? src/features/auth/ui/ForgotPasswordForm.vue
+?? src/features/auth/ui/LoginForm.vue
+?? src/features/auth/ui/RegisterForm.vue
+?? src/features/auth/ui/ResetPasswordForm.vue
+?? src/features/auth/ui/VerifyCodeForm.vue
+?? src/features/profile/api/profile.api.ts
+?? src/features/profile/api/profile.query.ts
+?? src/features/profile/index.ts
+?? src/features/profile/lib/profile.helpers.ts
+?? src/features/profile/lib/profile.keys.ts
+?? src/features/profile/model/profile.store.ts
+?? src/features/profile/model/profile.types.ts
+?? src/features/profile/ui/ProfileView.vue
+?? src/pages/account/index.ts
+?? src/pages/account/ui/AccountPage.vue
+?? src/widgets/header/index.ts
+?? src/widgets/header/ui/Header.vue
+===== nuxt-noinstall =====
+--- feature profile --- START 15:23:01.64
+EXIT 0
+--- entity user --- START 15:23:01.87
+EXIT 0
+--- widget header --- START 15:23:02.12
+EXIT 0
+--- page account --- START 15:23:02.36
+EXIT 0
+--- feature auth --- START 15:23:02.60
+EXIT 0
+--- new files (filtered) ---
+?? app/app/routes/account.vue
+?? app/entities/user/index.ts
+?? app/entities/user/model/user.types.ts
+?? app/entities/user/ui/UserCard.vue
+?? app/features/auth/api/auth.query.ts
+?? app/features/auth/api/forgot-password.api.ts
+?? app/features/auth/api/login.api.ts
+?? app/features/auth/api/register.api.ts
+?? app/features/auth/api/reset-password.api.ts
+?? app/features/auth/api/verify-code.api.ts
+?? app/features/auth/index.ts
+?? app/features/auth/lib/auth.keys.ts
+?? app/features/auth/model/auth.store.ts
+?? app/features/auth/model/auth.types.ts
+?? app/features/auth/model/forgot-password.schema.ts
+?? app/features/auth/model/login.schema.ts
+?? app/features/auth/model/register.schema.ts
+?? app/features/auth/model/reset-password.schema.ts
+?? app/features/auth/model/verify-code.schema.ts
+?? app/features/auth/ui/ForgotPasswordForm.vue
+?? app/features/auth/ui/LoginForm.vue
+?? app/features/auth/ui/RegisterForm.vue
+?? app/features/auth/ui/ResetPasswordForm.vue
+?? app/features/auth/ui/VerifyCodeForm.vue
+?? app/features/profile/api/profile.api.ts
+?? app/features/profile/api/profile.query.ts
+?? app/features/profile/index.ts
+?? app/features/profile/lib/profile.helpers.ts
+?? app/features/profile/lib/profile.keys.ts
+?? app/features/profile/model/profile.store.ts
+?? app/features/profile/model/profile.types.ts
+?? app/features/profile/ui/ProfileView.vue
+?? app/pages/account/index.ts
+?? app/pages/account/ui/AccountPage.vue
+?? app/widgets/header/index.ts
+?? app/widgets/header/ui/Header.vue
+===== sveltekit-noinstall =====
+--- feature profile --- START 15:23:02.92
+EXIT 0
+--- entity user --- START 15:23:03.16
+EXIT 0
+--- widget header --- START 15:23:03.40
+EXIT 0
+--- page account --- START 15:23:03.65
+EXIT 0
+--- feature auth --- START 15:23:03.87
+EXIT 0
+--- new files (filtered) ---
+?? src/entities/user/index.ts
+?? src/entities/user/model/user.types.ts
+?? src/entities/user/ui/UserCard.svelte
+?? src/features/auth/api/auth.query.ts
+?? src/features/auth/api/forgot-password.api.ts
+?? src/features/auth/api/login.api.ts
+?? src/features/auth/api/register.api.ts
+?? src/features/auth/api/reset-password.api.ts
+?? src/features/auth/api/verify-code.api.ts
+?? src/features/auth/index.ts
+?? src/features/auth/lib/auth.keys.ts
+?? src/features/auth/model/auth.store.ts
+?? src/features/auth/model/auth.types.ts
+?? src/features/auth/model/forgot-password.schema.ts
+?? src/features/auth/model/login.schema.ts
+?? src/features/auth/model/register.schema.ts
+?? src/features/auth/model/reset-password.schema.ts
+?? src/features/auth/model/verify-code.schema.ts
+?? src/features/auth/ui/ForgotPasswordForm.svelte
+?? src/features/auth/ui/LoginForm.svelte
+?? src/features/auth/ui/RegisterForm.svelte
+?? src/features/auth/ui/ResetPasswordForm.svelte
+?? src/features/auth/ui/VerifyCodeForm.svelte
+?? src/features/profile/api/profile.api.ts
+?? src/features/profile/api/profile.query.ts
+?? src/features/profile/index.ts
+?? src/features/profile/lib/profile.keys.ts
+?? src/features/profile/model/profile.store.ts
+?? src/features/profile/model/profile.types.ts
+?? src/features/profile/ui/ProfileView.svelte
+?? src/pages/account/index.ts
+?? src/pages/account/ui/AccountPage.svelte
+?? src/routes/account/+page.svelte
+?? src/widgets/header/index.ts
+?? src/widgets/header/ui/Header.svelte

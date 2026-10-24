@@ -1,0 +1,8 @@
+
+  Slice generated successfully!
+
+  Created files:
+    - app/entities/product/model/product.types.ts
+    - app/entities/product/ui/ProductCard.vue
+    - app/entities/product/index.ts
+

@@ -1,0 +1,165 @@
+===== rv-noinstall =====
+EXIT check 0
+EXIT doctor 1
+EXIT config 0
+--- check output ---
+
+  FSD check
+
+  PASS  FSD configuration — react-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+
+--- doctor output ---
+
+  FSD doctor
+
+  PASS  FSD configuration — react-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+
+===== nextjs-noinstall =====
+EXIT check 0
+EXIT doctor 1
+EXIT config 0
+--- check output ---
+
+  FSD check
+
+  PASS  FSD configuration — nextjs
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+
+--- doctor output ---
+
+  FSD doctor
+
+  PASS  FSD configuration — nextjs
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+
+===== vue-vite-noinstall =====
+EXIT check 0
+EXIT doctor 1
+EXIT config 0
+--- check output ---
+
+  FSD check
+
+  PASS  FSD configuration — vue-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+
+--- doctor output ---
+
+  FSD doctor
+
+  PASS  FSD configuration — vue-vite
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+
+===== nuxt-noinstall =====
+EXIT check 0
+EXIT doctor 1
+EXIT config 0
+--- check output ---
+
+  FSD check
+
+  PASS  FSD configuration — nuxt
+  PASS  package.json — found
+  PASS  FSD layer: app — app\app
+  PASS  FSD layer: pages — app\pages
+  PASS  FSD layer: widgets — app\widgets
+  PASS  FSD layer: features — app\features
+  PASS  FSD layer: entities — app\entities
+  PASS  FSD layer: shared — app\shared
+
+--- doctor output ---
+
+  FSD doctor
+
+  PASS  FSD configuration — nuxt
+  PASS  package.json — found
+  PASS  FSD layer: app — app\app
+  PASS  FSD layer: pages — app\pages
+  PASS  FSD layer: widgets — app\widgets
+  PASS  FSD layer: features — app\features
+  PASS  FSD layer: entities — app\entities
+  PASS  FSD layer: shared — app\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+
+===== sveltekit-noinstall =====
+EXIT check 0
+EXIT doctor 1
+EXIT config 0
+--- check output ---
+
+  FSD check
+
+  PASS  FSD configuration — sveltekit
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+
+--- doctor output ---
+
+  FSD doctor
+
+  PASS  FSD configuration — sveltekit
+  PASS  package.json — found
+  PASS  FSD layer: app — src\app
+  PASS  FSD layer: pages — src\pages
+  PASS  FSD layer: widgets — src\widgets
+  PASS  FSD layer: features — src\features
+  PASS  FSD layer: entities — src\entities
+  PASS  FSD layer: shared — src\shared
+  PASS  Node.js — v24.21.0
+  PASS  Git — required for generated repositories
+  FAIL  npm — selected in fsd.config.json
+

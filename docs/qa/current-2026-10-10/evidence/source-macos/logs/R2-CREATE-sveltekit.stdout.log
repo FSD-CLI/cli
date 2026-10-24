@@ -1,0 +1,28 @@
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│    ███████╗███████╗██████╗                                                  │
+│    ██╔════╝██╔════╝██╔══██╗                                                 │
+│    █████╗  ███████╗██║  ██║                                                 │
+│    ██╔══╝  ╚════██║██║  ██║                                                 │
+│    ██║     ███████║██████╔╝                                                 │
+│    ╚═╝     ╚══════╝╚═════╝                                                  │
+│                                                                             │
+│           ◢◤◢◤◢◤  FEATURE-SLICED DESIGN ARCHITECTURE  ◢◤◢◤◢◤                │
+│                                                                             │
+│   app → pages → widgets → features → entities → shared                     │
+│                                                                             │
+│   Scalable • Maintainable • Enterprise Frontend Architecture                │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  Commitlint verification skipped until dependencies are installed.
+
+  Project created successfully!
+
+  Next steps:
+
+    $ cd sveltekit-r2
+    $ npm install
+    $ npm run dev
+

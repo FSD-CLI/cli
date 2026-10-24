@@ -1,0 +1,659 @@
+
+> create-fsd-architecture@2.6.1 test
+> node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --test tests/*.test.mjs
+
+✔ CLI parser keeps legacy creation and generation syntax (2.755ms)
+✔ CLI parser supports automation-friendly create flags (0.7011ms)
+✔ CLI parser exposes dry-run, safe replacement, and inspection commands (0.3789ms)
+✔ CLI parser accepts explicit stack choices for repeatable E2E creation (0.531ms)
+✔ --yes resolves defaults from the selected framework (0.599ms)
+✔ CLI exposes version, help, and template discovery without prompts (1152.6978ms)
+✔ CLI fails before cloning an unknown framework (381.4859ms)
+✔ project dry-run prints the plan without cloning a template (381.2212ms)
+✔ template registry exposes stable and planned frameworks (3.6568ms)
+✔ capability matrix owns framework-specific stack choices (0.6802ms)
+✔ configuration validation rejects cross-framework stack values (0.4784ms)
+✔ framework adapters isolate runtime-specific source generation (0.5259ms)
+✖ project paths cannot escape the working directory (1.9935ms)
+✔ package-manager contract supports npm (3.4878ms)
+✔ package-manager contract supports pnpm (0.4803ms)
+✔ package-manager contract supports yarn (0.2519ms)
+✔ package-manager contract supports bun (0.2493ms)
+✖ dry-run file plans are exact and do not write files (69.6466ms)
+✖ page generators register framework-native routes (86.1868ms)
+✔ generator conflicts fail without changing existing files (29.2351ms)
+✔ generator rollback removes partial slices and restores external files (22.1539ms)
+✔ check validates the FSD structure and resolved configuration (16.3333ms)
+✔ legacy Vue projects are detected without fsd.config.json (11.4271ms)
+✔ smart E2E matrix exercises every supported stack choice (3553.8183ms)
+✔ pnpm uses a narrow build allowlist without replacing existing workspace policy (60.3421ms)
+✔ project configuration installs only the selected stack (35.2701ms)
+✔ Yarn projects establish an isolated node-modules workspace (28.874ms)
+✖ feature generator reads the saved stack without additional choices (34.1426ms)
+✖ auth generator creates the complete flow and working mutation submissions (47.6005ms)
+✖ forms can be generated without a server-state dependency (36.2276ms)
+✖ Vue projects receive framework-native dependencies, providers, and generators (46.0901ms)
+✖ SvelteKit projects receive native dependencies, providers, stores, forms, and routes (52.3995ms)
+✖ Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators (31.9246ms)
+✔ project replacement can be committed or rolled back atomically (17.0907ms)
+✔ project lifecycle creates deterministic commit tooling (56.6651ms)
+✔ hook generation rejects unknown package managers (0.9572ms)
+✔ --yes without a framework fails before prompting or replacing a directory (369.17ms)
+✔ react-vite interactive preselection matches unattended defaults (0.8166ms)
+✔ react-vite numeric slice names are rejected before any write, including force (2877.5466ms)
+✔ nextjs interactive preselection matches unattended defaults (0.2115ms)
+✔ nextjs numeric slice names are rejected before any write, including force (1825.1815ms)
+✔ vue-vite interactive preselection matches unattended defaults (0.1551ms)
+✔ vue-vite numeric slice names are rejected before any write, including force (1851.9988ms)
+✔ nuxt interactive preselection matches unattended defaults (0.2368ms)
+✔ nuxt numeric slice names are rejected before any write, including force (1808.6698ms)
+✔ sveltekit interactive preselection matches unattended defaults (0.1892ms)
+✔ sveltekit numeric slice names are rejected before any write, including force (1842.8631ms)
+✔ generic view signatures respect the template formatter line width (0.1782ms)
+✖ failed installation exits nonzero and rolls back (force=false) (113.6109ms)
+✖ failed installation exits nonzero and rolls back (force=true) (120.5654ms)
+✖ intentional no-install remains successful and does not execute installer (163.1665ms)
+✔ npm hooks block lint/build/whitespace failure and permit clean commits (2084.0007ms)
+✔ pnpm hooks block lint/build/whitespace failure and permit clean commits (2206.059ms)
+✔ yarn hooks block lint/build/whitespace failure and permit clean commits (2046.7013ms)
+✔ bun hooks block lint/build/whitespace failure and permit clean commits (2307.0409ms)
+
+FSD project upgrade
+
+Project: C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-react-vite-M5zQY1
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+- npm run lint
++ #!/bin/sh
+
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+- ./node_modules/.bin/commitlint --edit "$1"
++ set -e
+
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+- npm run build
++ #!/bin/sh
+
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: no repository detected; internal transactional backup will be used.
+
+
+FSD project upgrade
+
+Project: C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-react-vite-M5zQY1
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: no repository detected; internal transactional backup will be used.
+
+
+Dependency installation skipped; this migration does not change dependencies.
+
+FSD project upgrade
+
+Project: C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-react-vite-M5zQY1
+Framework: react-vite
+Current state: managed state 2 / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: up to date
+
+ALREADY_APPLIED fsd.config.json  Configuration schema is current.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+PRESERVE        .husky/pre-commit  Verified managed content has no migration in this run.
+PRESERVE        .husky/commit-msg  Verified managed content has no migration in this run.
+PRESERVE        .husky/pre-push  Verified managed content has no migration in this run.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+
+0 creates, 0 safe updates, 0 deletes, 5 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+No files were changed.
+Git: no repository detected; internal transactional backup will be used.
+
+Upgrade state is unsupported or invalid: Required FSD layer is missing: src\widgets
+
+Dependency installation skipped; this migration does not change dependencies.
+
+FSD project upgrade
+
+Project: C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-vue-vite-IVjvUX
+Framework: vue-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+CONFLICT        src/shared/api/client.ts  Legacy ownership cannot be proven because the file does not match a released CLI signature.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@tanstack/vue-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@vee-validate/zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:pinia matches its managed value.
+ALREADY_APPLIED package.json  dependencies:vee-validate matches its managed value.
+ALREADY_APPLIED package.json  dependencies:vue-router matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 1 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+Git: no repository detected; internal transactional backup will be used.
+
+Upgrade state is unsupported or invalid: Unable to read fsd.config.json: Unexpected token 'o', "not json
+" is not valid JSON
+
+Dependency installation skipped; this migration does not change dependencies.
+
+FSD project upgrade
+
+Project: C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-react-vite-J67D7R
+Framework: react-vite
+Current state: legacy (no manifest) / config schema 1
+Target state: managed state 2 / config schema 1
+Migration path: managed-state-v1 -> tooling-hardening-v1
+Mode: conservative legacy ownership analysis
+
+ALREADY_APPLIED fsd.config.json  Validated current configuration schema.
+ALREADY_APPLIED src/shared/config/fsd-stack.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/client.ts  Current content already matches the target.
+ALREADY_APPLIED src/shared/api/index.ts  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/AppProviders.tsx  Current content already matches the target.
+ALREADY_APPLIED src/app/providers/index.ts  Current content already matches the target.
+ALREADY_APPLIED package.json  dependencies:@hookform/resolvers matches its managed value.
+ALREADY_APPLIED package.json  dependencies:@tanstack/react-query matches its managed value.
+ALREADY_APPLIED package.json  dependencies:axios matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-hook-form matches its managed value.
+ALREADY_APPLIED package.json  dependencies:react-router-dom matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zod matches its managed value.
+ALREADY_APPLIED package.json  dependencies:zustand matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/cli matches its managed value.
+ALREADY_APPLIED package.json  devDependencies:@commitlint/config-conventional matches its managed value.
+PRESERVE        package.json  Unmanaged dependencies, scripts, and metadata will remain untouched.
+UPDATE          .husky/pre-commit  Matched a released legacy CLI signature.
+UPDATE          .husky/commit-msg  Matched a released legacy CLI signature.
+UPDATE          .husky/pre-push  Matched a released legacy CLI signature.
+PRESERVE        application code  Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned.
+CREATE          .fsd/manifest.json  A new ownership manifest will be created after all safety checks succeed.
+
+1 creates, 3 safe updates, 0 deletes, 2 preserved, 0 conflicts, 0 manual actions
+Validations:
+  - fsd.config.json schema and capability validation
+  - framework adapter and required FSD layers
+  - package.json and managed dependency consistency
+  - managed-file hashes and marker integrity
+  - ownership manifest schema validation
+Git: main (dirty)
+
+✔ upgrade parser is isolated from create and generate flags (4.2737ms)
+✔ CLI routes upgrade without leaking flags into project creation (561.2169ms)
+✔ root discovery works from nested directories and rejects nested projects (26.6168ms)
+✔ root discovery ignores a package-only workspace above a complete FSD project (27.5757ms)
+✔ all supported framework and package-manager legacy fixtures have a deterministic plan (581.1011ms)
+✔ dry-run and check are read-only, then a clean legacy upgrade is idempotent (536.1231ms)
+✔ manifest serialization is accepted by the Next.js Biome array style (50.6528ms)
+✔ a stale plan refuses to overwrite a file changed after planning (88.2389ms)
+✔ Redux generation refreshes its managed store hash (138.9197ms)
+✔ Redux generation refuses a user-modified managed store (59.4073ms)
+✔ check reports a missing required FSD layer as invalid (36.6523ms)
+✔ manifest projects preserve unclaimed dependency versions (68.9484ms)
+✔ business code is preserved while modified managed code blocks upgrade (282.6394ms)
+✔ managed manifests detect edits, malformed input, future schemas, and missing markers (167.8322ms)
+✖ transaction rollback restores files and retains an internal recovery backup (29.3889ms)
+✔ manifest-write failure rolls back prior hook updates (98.3434ms)
+✔ migration graph rejects gaps, duplicate IDs, cycles, and downgrades (0.4442ms)
+✖ symlink escapes are rejected before planning writes (23.4591ms)
+✔ dirty Git worktrees are refused unless explicitly allowed (394.7988ms)
+ℹ tests 74
+ℹ suites 0
+ℹ pass 60
+ℹ fail 14
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20791.174
+
+✖ failing tests:
+
+test at tests\core-architecture.test.mjs:99:1
+✖ project paths cannot escape the working directory (1.9935ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'E:\\workspace\\apps\\store'
+  - '/workspace/apps/store'
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/core-architecture.test.mjs:100:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'E:\\workspace\\apps\\store',
+    expected: '/workspace/apps/store',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\hardening.test.mjs:71:1
+✖ dry-run file plans are exact and do not write files (69.6466ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(plan.generatedFiles.includes("src/pages/account/ui/account-page.tsx"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/hardening.test.mjs:75:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\hardening.test.mjs:83:1
+✖ page generators register framework-native routes (86.1868ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(files.includes("src/app/account/page.route.tsx"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/hardening.test.mjs:89:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\project-config.test.mjs:121:1
+✖ feature generator reads the saved stack without additional choices (34.1426ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(files.includes("src/features/profile/api/profile.query.ts"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/project-config.test.mjs:135:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\project-config.test.mjs:143:1
+✖ auth generator creates the complete flow and working mutation submissions (47.6005ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(files.includes("src/features/auth/ui/login-form.tsx"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/project-config.test.mjs:157:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\project-config.test.mjs:188:1
+✖ forms can be generated without a server-state dependency (36.2276ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(files.includes("src/features/auth/model/login.types.ts"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/project-config.test.mjs:205:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\project-config.test.mjs:218:1
+✖ Vue projects receive framework-native dependencies, providers, and generators (46.0901ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(files.includes("src/features/auth/ui/LoginForm.vue"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/project-config.test.mjs:253:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\project-config.test.mjs:275:1
+✖ SvelteKit projects receive native dependencies, providers, stores, forms, and routes (52.3995ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(authFiles.includes("src/features/auth/ui/LoginForm.svelte"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/project-config.test.mjs:324:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\project-config.test.mjs:370:1
+✖ Nuxt projects receive modules, SSR providers, runtime API clients, and app-root generators (31.9246ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(files.includes("app/pages/account/ui/AccountPage.vue"))
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/project-config.test.mjs:433:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests\qa-regressions.test.mjs:69:3
+✖ failed installation exits nonzero and rolls back (force=false) (113.6109ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /QA install failure: approval required/. Input:
+  
+  '\r\n' +
+    'node:internal/modules/run_main:107\r\n' +
+    '    triggerUncaughtException(\r\n' +
+    '    ^\r\n' +
+    "Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'e:'\r\n" +
+    '    at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)\r\n' +
+    '    at defaultLoad (node:internal/modules/esm/load:82:3)\r\n' +
+    '    at nextLoad (node:internal/modules/esm/hooks:785:28)\r\n' +
+    '    at AsyncLoaderHooksOnLoaderHookWorker.load (node:internal/modules/esm/hooks:410:26)\r\n' +
+    '    at ModuleLoader.load (node:internal/modules/esm/loader:785:37)\r\n' +
+    '    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)\r\n' +
+    '    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\r\n' +
+    '    at afterResolve (node:internal/modules/esm/loader:611:52)\r\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\r\n' +
+    '    at async node:internal/modules/esm/loader:636:21 {\r\n' +
+    "  code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'\r\n" +
+    '}\r\n' +
+    '\r\n' +
+    'Node.js v24.21.0\r\n'
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/qa-regressions.test.mjs:84:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "\r\nnode:internal/modules/run_main:107\r\n    triggerUncaughtException(\r\n    ^\r\nError [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'e:'\r\n    at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)\r\n    at defaultLoad (node:internal/modules/esm/load:82:3)\r\n    at nextLoad (node:internal/modules/esm/hooks:785:28)\r\n    at AsyncLoaderHooksOnLoaderHookWorker.load (node:internal/modules/esm/hooks:410:26)\r\n    at ModuleLoader.load (node:internal/modules/esm/loader:785:37)\r\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)\r\n    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\r\n    at afterResolve (node:internal/modules/esm/loader:611:52)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\r\n    at async node:internal/modules/esm/loader:636:21 {\r\n  code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'\r\n}\r\n\r\nNode.js v24.21.0\r\n",
+    expected: /QA install failure: approval required/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\qa-regressions.test.mjs:69:3
+✖ failed installation exits nonzero and rolls back (force=true) (120.5654ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /QA install failure: approval required/. Input:
+  
+  '\r\n' +
+    'node:internal/modules/run_main:107\r\n' +
+    '    triggerUncaughtException(\r\n' +
+    '    ^\r\n' +
+    "Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'e:'\r\n" +
+    '    at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)\r\n' +
+    '    at defaultLoad (node:internal/modules/esm/load:82:3)\r\n' +
+    '    at nextLoad (node:internal/modules/esm/hooks:785:28)\r\n' +
+    '    at AsyncLoaderHooksOnLoaderHookWorker.load (node:internal/modules/esm/hooks:410:26)\r\n' +
+    '    at ModuleLoader.load (node:internal/modules/esm/loader:785:37)\r\n' +
+    '    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)\r\n' +
+    '    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\r\n' +
+    '    at afterResolve (node:internal/modules/esm/loader:611:52)\r\n' +
+    '    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\r\n' +
+    '    at async node:internal/modules/esm/loader:636:21 {\r\n' +
+    "  code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'\r\n" +
+    '}\r\n' +
+    '\r\n' +
+    'Node.js v24.21.0\r\n'
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/qa-regressions.test.mjs:84:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "\r\nnode:internal/modules/run_main:107\r\n    triggerUncaughtException(\r\n    ^\r\nError [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'e:'\r\n    at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)\r\n    at defaultLoad (node:internal/modules/esm/load:82:3)\r\n    at nextLoad (node:internal/modules/esm/hooks:785:28)\r\n    at AsyncLoaderHooksOnLoaderHookWorker.load (node:internal/modules/esm/hooks:410:26)\r\n    at ModuleLoader.load (node:internal/modules/esm/loader:785:37)\r\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)\r\n    at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)\r\n    at afterResolve (node:internal/modules/esm/loader:611:52)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\r\n    at async node:internal/modules/esm/loader:636:21 {\r\n  code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'\r\n}\r\n\r\nNode.js v24.21.0\r\n",
+    expected: /QA install failure: approval required/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests\qa-regressions.test.mjs:95:1
+✖ intentional no-install remains successful and does not execute installer (163.1665ms)
+  AssertionError [ERR_ASSERTION]: 
+  node:internal/modules/run_main:107
+      triggerUncaughtException(
+      ^
+  Error [ERR_UNSUPPORTED_ESM_URL_SCHEME]: Only URLs with a scheme in: file, data, and node are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs. Received protocol 'e:'
+      at throwIfUnsupportedURLScheme (node:internal/modules/esm/load:193:11)
+      at defaultLoad (node:internal/modules/esm/load:82:3)
+      at nextLoad (node:internal/modules/esm/hooks:785:28)
+      at AsyncLoaderHooksOnLoaderHookWorker.load (node:internal/modules/esm/hooks:410:26)
+      at ModuleLoader.load (node:internal/modules/esm/loader:785:37)
+      at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:498:31)
+      at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:564:36)
+      at afterResolve (node:internal/modules/esm/loader:611:52)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async node:internal/modules/esm/loader:636:21 {
+    code: 'ERR_UNSUPPORTED_ESM_URL_SCHEME'
+  }
+  
+  Node.js v24.21.0
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/qa-regressions.test.mjs:103:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\upgrade.test.mjs:415:1
+✖ transaction rollback restores files and retains an internal recovery backup (29.3889ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  438 !== 493
+  
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/upgrade.test.mjs:435:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 438,
+    expected: 493,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\upgrade.test.mjs:475:1
+✖ symlink escapes are rejected before planning writes (23.4591ms)
+  Error: EPERM: operation not permitted, symlink 'C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-external-I0EPbi\client.ts' -> 'C:\Users\HSN\AppData\Local\Temp\fsd-cli-upgrade-react-vite-iYEJI3\src\shared\api\client.ts'
+      at Object.symlinkSync (node:fs:1937:11)
+      at TestContext.<anonymous> (file:///E:/P/P/JS%20learn/Open%20Source/cli/tests/upgrade.test.mjs:482:8)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -4048,
+    code: 'EPERM',
+    syscall: 'symlink',
+    path: 'C:\\Users\\HSN\\AppData\\Local\\Temp\\fsd-cli-upgrade-external-I0EPbi\\client.ts',
+    dest: 'C:\\Users\\HSN\\AppData\\Local\\Temp\\fsd-cli-upgrade-react-vite-iYEJI3\\src\\shared\\api\\client.ts'
+  }

@@ -1,0 +1,2 @@
+# Raw command logs retain captured whitespace; prose and scripts use normal checks.
+evidence/**/*.log -whitespace linguist-generated=true

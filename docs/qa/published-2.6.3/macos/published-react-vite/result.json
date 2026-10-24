@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "date": "2026-10-11T16:06:07.129Z",
+  "version": "2.6.3",
+  "framework": "react-vite",
+  "node": "v24.13.0",
+  "os": "darwin/arm64",
+  "npm": "11.6.2",
+  "integrity": "sha512-rXD8GOrY3cQ4jvRwsBINMqqTg8DQHwhWbjgHFEV+4kopUWbLIEK9wOSE7cdCh4fL3Gm85t/ljL2FjCzoYENm/g==",
+  "gitHead": "9d37a154fd9476ff416941463c6f60c77bab55de",
+  "tarball": "https://registry.npmjs.org/create-fsd-architecture/-/create-fsd-architecture-2.6.3.tgz"
+}
