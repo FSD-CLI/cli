@@ -28,6 +28,33 @@ Nuxt's independent production audit remains failing; source builds and CLI
 audit success do not clear that separate security hold.
 The QA baseline below still describes its recorded source and package versions.
 
+## Runtime contract — source change pending CI
+
+The supported runtime is now a declared contract instead of a documented
+assumption. The published `engines.node` field, the `doctor` command, the
+project creation preflight, the README and
+[Runtime requirements](RUNTIME-REQUIREMENTS.md) all read the same constants
+from `bin/core/runtime-requirements.mjs`.
+
+- CLI runtime: Node.js `>=22.12.0`.
+- Generated projects: React, Vue and Next.js follow the CLI floor; Nuxt
+  requires `^22.22.2 || ^24.11.0 || >=26.0.0` and SvelteKit requires
+  `^22.22.2 || >=24.0.0`.
+- Package managers: npm `>=10.9.0`, pnpm `>=10.26.0`, yarn `>=4.18.0`,
+  bun `>=1.2.0`.
+
+This corrects `engines.node: ">=20"` on `main`, which contradicted the
+resolved `chalk@6.0.1` dependency that requires Node `>=22`.
+
+CI now defines a runtime matrix that installs with `--engine-strict` on Node
+`22.12.0`, `22` and `24`, a job that asserts an unsupported runtime is refused
+with the exact required version in the failure message, and a package manager
+matrix pinned to each documented minimum. Those jobs have not run on this
+branch yet, so this entry claims a declared and locally verified contract
+(104 local tests, `npm ci --engine-strict` and `npm pack --dry-run` pass on
+Node 24.15.0), not a green CI run. The historical "exact minimum runtime
+patches" gap is only closed once that matrix passes on the merged commit.
+
 ## Latest QA baseline — 10 October 2026
 
 The [consolidated Task 7 baseline](https://github.com/FSD-CLI/cli/blob/main/docs/qa/current-2026-10-10/REPORT.md) is the current
