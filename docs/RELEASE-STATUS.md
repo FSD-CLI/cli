@@ -49,11 +49,20 @@ resolved `chalk@6.0.1` dependency that requires Node `>=22`.
 CI now defines a runtime matrix that installs with `--engine-strict` on Node
 `22.12.0`, `22` and `24`, a job that asserts an unsupported runtime is refused
 with the exact required version in the failure message, and a package manager
-matrix pinned to each documented minimum. Those jobs have not run on this
-branch yet, so this entry claims a declared and locally verified contract
-(104 local tests, `npm ci --engine-strict` and `npm pack --dry-run` pass on
-Node 24.15.0), not a green CI run. The historical "exact minimum runtime
-patches" gap is only closed once that matrix passes on the merged commit.
+matrix pinned to each documented minimum. The
+[PR #17 run](https://github.com/FSD-CLI/cli/actions/runs/40697034745) passed
+all 27 jobs, including `CLI / Node 22.12.0` with `--engine-strict`, both
+`Unsupported runtime` jobs, all five framework builds, and the npm, pnpm,
+yarn and bun jobs at their documented minimums. Local verification on Node
+22.12.0, 22.23.4 and 24.15.0 passes 104 tests, `npm ci --engine-strict` and
+`npm pack --dry-run`.
+
+This is source and CI evidence on the pull request. Nothing is published to
+npm from this branch, `2.6.3` remains the published artifact, and merge and
+publication stay separate owner steps. The historical "exact minimum runtime
+patches" gap is closed for the CLI runtime and the package manager minimums;
+the exact lower boundary of a *generated project* is still covered for
+React/Vite only.
 
 ## Latest QA baseline — 10 October 2026
 
