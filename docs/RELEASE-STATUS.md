@@ -28,6 +28,42 @@ Nuxt's independent production audit remains failing; source builds and CLI
 audit success do not clear that separate security hold.
 The QA baseline below still describes its recorded source and package versions.
 
+## Runtime contract — source change pending CI
+
+The supported runtime is now a declared contract instead of a documented
+assumption. The published `engines.node` field, the `doctor` command, the
+project creation preflight, the README and
+[Runtime requirements](RUNTIME-REQUIREMENTS.md) all read the same constants
+from `bin/core/runtime-requirements.mjs`.
+
+- CLI runtime: Node.js `>=22.12.0`.
+- Generated projects: React, Vue and Next.js follow the CLI floor; Nuxt
+  requires `^22.22.2 || ^24.11.0 || >=26.0.0` and SvelteKit requires
+  `^22.22.2 || >=24.0.0`.
+- Package managers: npm `>=10.9.0`, pnpm `>=10.26.0`, yarn `>=4.18.0`,
+  bun `>=1.2.0`.
+
+This corrects `engines.node: ">=20"` on `main`, which contradicted the
+resolved `chalk@6.0.1` dependency that requires Node `>=22`.
+
+CI now defines a runtime matrix that installs with `--engine-strict` on Node
+`22.12.0`, `22` and `24`, a job that asserts an unsupported runtime is refused
+with the exact required version in the failure message, and a package manager
+matrix pinned to each documented minimum. The
+[PR #17 run](https://github.com/FSD-CLI/cli/actions/runs/40697034745) passed
+all 27 jobs, including `CLI / Node 22.12.0` with `--engine-strict`, both
+`Unsupported runtime` jobs, all five framework builds, and the npm, pnpm,
+yarn and bun jobs at their documented minimums. Local verification on Node
+22.12.0, 22.23.4 and 24.15.0 passes 104 tests, `npm ci --engine-strict` and
+`npm pack --dry-run`.
+
+This is source and CI evidence on the pull request. Nothing is published to
+npm from this branch, `2.6.3` remains the published artifact, and merge and
+publication stay separate owner steps. The historical "exact minimum runtime
+patches" gap is closed for the CLI runtime and the package manager minimums;
+the exact lower boundary of a *generated project* is still covered for
+React/Vite only.
+
 ## Latest QA baseline — 10 October 2026
 
 The [consolidated Task 7 baseline](https://github.com/FSD-CLI/cli/blob/main/docs/qa/current-2026-10-10/REPORT.md) is the current

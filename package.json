@@ -42,7 +42,8 @@
     "LICENSE",
     "docs/RELEASE-STATUS.md",
     "docs/EXISTING-PROJECT-SUPPORT.md",
-    "docs/PROPOSALS.md"
+    "docs/PROPOSALS.md",
+    "docs/RUNTIME-REQUIREMENTS.md"
   ],
   "keywords": [
     "fsd",
@@ -64,7 +65,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12.0"
   },
   "type": "commonjs"
 }

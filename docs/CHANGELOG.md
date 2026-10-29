@@ -2,6 +2,35 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## Unreleased
+
+### Changed
+
+- Settle the supported runtime and publish it as a verified contract. The CLI
+  requires Node.js `>=22.12.0`, which is the lowest Node that runs the CLI and
+  every shipped Vite based template: `chalk@6.0.1` requires `>=22`, and
+  `vite@8.3.0` and `@sveltejs/vite-plugin-svelte@6.2.1` require `>=22.12.0`.
+- Declare the generated project runtimes per template and enforce them. Nuxt
+  requires `^22.22.2 || ^24.11.0 || >=26.0.0` and SvelteKit requires
+  `^22.22.2 || >=24.0.0`, because `nuxt@4.5.2` rejects Node 23 and the
+  24.0.0 - 24.10.0 band. React, Vue and Next.js follow the CLI floor.
+- Declare the supported package manager versions: npm `>=10.9.0`,
+  pnpm `>=10.26.0`, yarn `>=4.18.0`, and bun `>=1.2.0`.
+- Record the verified requirements in `docs/RUNTIME-REQUIREMENTS.md`.
+
+### Fixed
+
+- `package.json` declared `engines.node: ">=20"` while the lockfile resolved
+  `chalk@6.0.1`, which requires Node `>=22`. The published engines field now
+  matches the resolved dependency tree.
+- The `doctor` command only compared the Node major version against `20`. It
+  now evaluates the same ranges npm publishes and names the exact required
+  version on failure.
+- The `doctor` package manager check only verified that the binary existed. It
+  now compares the installed version against the supported minimum.
+- Project creation now refuses an unsupported runtime before downloading or
+  writing anything, instead of producing a project that cannot be built.
+
 ## 2.6.3 - 2026-10-11
 
 Published npm gitHead: `9d37a154fd9476ff416941463c6f60c77bab55de`.

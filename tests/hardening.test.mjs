@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { commandExists, inspectProject } from "../bin/commands/inspect-project.mjs";
+import { commandExists, commandVersion, inspectProject } from "../bin/commands/inspect-project.mjs";
 import { getCapabilities, getDefaultStack } from "../bin/core/capability-matrix.mjs";
 import { getInstallCommand, getRunScriptCommand } from "../bin/core/package-managers.mjs";
 import { createGeneratorPlan, generateSlice, loadProjectConfig } from "../bin/generator.mjs";
@@ -181,7 +181,7 @@ test("doctor resolves the selected package manager without a shell", () => {
     assert.equal(report.checks.every((item) => item.ok), true);
     assert.equal(
       report.checks.find((item) => item.label === "npm")?.detail,
-      "selected in fsd.config.json"
+      `${commandVersion("npm")} — selected in fsd.config.json`
     );
     assert.equal(commandExists(process.execPath), true);
     assert.equal(commandExists(`${process.execPath} --version`), false);

@@ -3,6 +3,11 @@ import path from "node:path";
 import chalk from "chalk";
 import { getFrameworkAdapter } from "../core/frameworks/index.mjs";
 import { spawnSyncSafe } from "../core/command-runner.mjs";
+import {
+  checkNodeVersion,
+  checkPackageManagerVersion,
+  getPackageManagerRequirement,
+} from "../core/runtime-requirements.mjs";
 import { loadProjectConfig } from "../generator.mjs";
 
 const REQUIRED_LAYERS = ["app", "pages", "widgets", "features", "entities", "shared"];
@@ -14,6 +19,12 @@ function result(label, ok, detail) {
 export function commandExists(command) {
   const probe = spawnSyncSafe(command, ["--version"], { encoding: "utf8" });
   return !probe.error && probe.status === 0;
+}
+
+export function commandVersion(command) {
+  const probe = spawnSyncSafe(command, ["--version"], { encoding: "utf8" });
+  if (probe.error || probe.status !== 0) return null;
+  return String(probe.stdout ?? "").trim().split(/\r?\n/)[0]?.trim() ?? null;
 }
 
 export function inspectProject(cwd = process.cwd(), { includeToolchain = false } = {}) {
@@ -49,14 +60,26 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
   }
 
   if (includeToolchain) {
-    const major = Number(process.versions.node.split(".")[0]);
-    checks.push(result("Node.js", major >= 20, process.version));
-    checks.push(result("Git", commandExists("git"), "required for generated repositories"));
+    const nodeCheck = checkNodeVersion(process.versions.node, { framework: config.framework });
     checks.push(
       result(
-        config.packageManager,
-        commandExists(config.packageManager),
-        `selected in fsd.config.json`
+        "Node.js",
+        nodeCheck.ok,
+        nodeCheck.ok ? process.version : nodeCheck.message
+      )
+    );
+    checks.push(result("Git", commandExists("git"), "required for generated repositories"));
+    const packageManager = config.packageManager;
+    const packageManagerRequirement = getPackageManagerRequirement(packageManager);
+    const installedVersion = commandVersion(packageManager);
+    const packageManagerCheck = checkPackageManagerVersion(packageManager, installedVersion);
+    checks.push(
+      result(
+        packageManager,
+        packageManagerCheck.ok,
+        packageManagerCheck.ok
+          ? `${installedVersion} — selected in fsd.config.json`
+          : `${packageManagerCheck.message} ${packageManagerRequirement?.evidence ?? ""}`.trim()
       )
     );
   }
