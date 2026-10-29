@@ -5,6 +5,11 @@ import {
   toPascalCase,
   toTitle,
 } from "./shared.mjs";
+import {
+  isWidgetPreset,
+  vueWidgetPresetComponent,
+  vueWidgetPresetContent,
+} from "./widget-presets.mjs";
 
 const AUTH_FORMS = [
   {
@@ -74,7 +79,7 @@ export function createVueFilePlan(type, name, config) {
       : createVueFeatureFiles(name, config);
   }
   if (type === "entity") return createVueEntityFiles(name);
-  if (type === "widget") return createVueWidgetFiles(name);
+  if (type === "widget") return createVueWidgetFiles(name, config);
   return createVuePageFiles(name);
 }
 
@@ -126,7 +131,17 @@ function createVueEntityFiles(name) {
   ];
 }
 
-function createVueWidgetFiles(name) {
+function createVueWidgetFiles(name, config) {
+  if (isWidgetPreset(name)) {
+    const componentName = vueWidgetPresetComponent(name);
+    return [
+      vueComponent(
+        `ui/${componentName}.vue`,
+        componentName,
+        vueWidgetPresetContent(name, config)
+      ),
+    ];
+  }
   const componentName = toPascalCase(name);
   return [
     vueComponent(

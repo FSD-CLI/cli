@@ -5,6 +5,7 @@ import {
   toTitle,
   viewContent,
 } from "./shared.mjs";
+import { isWidgetPreset, reactWidgetPresetContent } from "./widget-presets.mjs";
 
 export function createEntityFiles(name) {
   const pascalName = toPascalCase(name);
@@ -14,10 +15,11 @@ export function createEntityFiles(name) {
   ];
 }
 
-export function createWidgetFiles(name) {
-  return [
-    file(`ui/${name}.tsx`, viewContent(toPascalCase(name), `${toTitle(name)} widget`), true),
-  ];
+export function createWidgetFiles(name, config) {
+  const content = isWidgetPreset(name)
+    ? reactWidgetPresetContent(name, config)
+    : viewContent(toPascalCase(name), `${toTitle(name)} widget`);
+  return [file(`ui/${name}.tsx`, content, true)];
 }
 
 export function createPageFiles(name) {

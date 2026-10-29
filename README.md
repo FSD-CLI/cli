@@ -106,6 +106,11 @@ npx create-fsd-architecture@latest --list-templates
 npx create-fsd-architecture@latest --generate feature auth
 npx create-fsd-architecture@latest -g entity product
 
+# Ready-made layout widgets and shared primitives (candidate, not yet published)
+npx create-fsd-architecture@latest -g widget navbar sidebar footer bottom-bar
+npx create-fsd-architecture@latest -g shared ui button input label card
+npx create-fsd-architecture@latest -g shared api
+
 # Preview creation or generation without writing files
 npx create-fsd-architecture@latest my-app --framework vue-vite --yes --dry-run
 npx create-fsd-architecture@latest -g page settings --dry-run

@@ -4,6 +4,14 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ## Unreleased
 
+### Added
+
+- `-g widget navbar|sidebar|footer|bottom-bar` generates accessible layout
+  widget presets on React, Next.js, Vue, Nuxt and SvelteKit.
+- `-g shared ui [button input label card]` and `-g shared api` generate shared
+  ui primitives and an `apiClient` for the configured client, preserving
+  existing files and merging segment `index.ts` exports.
+
 ### Changed
 
 - Settle the supported runtime and publish it as a verified contract. The CLI

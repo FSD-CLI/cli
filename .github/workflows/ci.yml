@@ -135,6 +135,9 @@ jobs:
           node ../bin/index.mjs --generate widget cart-summary
           node ../bin/index.mjs --generate page account
           node ../bin/index.mjs --generate feature auth
+          node ../bin/index.mjs --generate widget navbar sidebar footer bottom-bar
+          node ../bin/index.mjs --generate shared ui
+          node ../bin/index.mjs --generate shared api
       - name: Validate generated project
         working-directory: e2e-app
         run: npm run ci

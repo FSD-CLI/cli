@@ -13,6 +13,47 @@ slices, affected routes/store files and ownership manifest are restored.
 Batch `--force` is refused; review individual replacement instead.
 Normal generation still uses framework adapters and configured source roots.
 
+## Layout widget presets
+
+```sh
+node /path/to/cli/bin/index.mjs -g widget navbar sidebar footer bottom-bar
+```
+
+The widget names `navbar`, `sidebar`, `footer` and `bottom-bar` generate an
+accessible layout component (landmark element, labelled `<nav>`, list of links)
+instead of the empty placeholder. Links come from an `items` prop with sample
+defaults; navbar and footer also take a `brand` prop. Next.js uses `next/link`,
+Nuxt uses `NuxtLink`, other frameworks use plain anchors. Vue presets are named
+`AppNavbar`, `AppSidebar`, `AppFooter` and `AppBottomBar` to satisfy Vue's
+multi-word component rule. Styling, icons, active-route state and mounting the
+widget in a layout stay with the project. Any other widget name keeps the
+generic placeholder.
+
+## Shared layer: ui and api
+
+```sh
+node /path/to/cli/bin/index.mjs -g shared ui                 # button, input, label, card
+node /path/to/cli/bin/index.mjs -g shared ui button input
+node /path/to/cli/bin/index.mjs -g shared api
+node /path/to/cli/bin/index.mjs -g shared ui --dry-run
+```
+
+`shared ui` generates unstyled primitives into `<source>/shared/ui` (React:
+`button.tsx` → `Button`; Vue/Svelte: `AppButton.vue`/`AppButton.svelte`).
+`shared api` generates `<source>/shared/api/client.ts` exporting `apiClient` for
+the configured client: Axios, a typed fetch wrapper, or `$fetch` with
+`runtimeConfig.public.apiBase` on Nuxt. The base URL uses the framework's public
+variable (`VITE_API_URL`, `NEXT_PUBLIC_API_URL`, `PUBLIC_API_BASE`).
+
+Existing files are never overwritten: they are reported as `KEEP`, and only
+export lines for newly created files are appended to the segment `index.ts`.
+Starter templates already ship `shared/api/client.ts` and some ui files, so on a
+fresh project these commands mainly fill gaps. `--force` is refused.
+
+Forgot-password is part of `-g feature auth` (forgot, reset and verify-code
+forms, schemas and API stubs on every supported framework); it is not a separate
+generator.
+
 ## Structure-only segments and custom roots
 
 ```sh
