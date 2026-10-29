@@ -6,6 +6,7 @@ import {
   viewContent,
 } from "./shared.mjs";
 import { isWidgetPreset, reactWidgetPresetContent } from "./widget-presets.mjs";
+import { isPagePreset, reactPagePresetContent } from "./page-presets.mjs";
 
 export function createEntityFiles(name) {
   const pascalName = toPascalCase(name);
@@ -22,14 +23,11 @@ export function createWidgetFiles(name, config) {
   return [file(`ui/${name}.tsx`, content, true)];
 }
 
-export function createPageFiles(name) {
-  return [
-    file(
-      `ui/${name}-page.tsx`,
-      viewContent(`${toPascalCase(name)}Page`, `${toTitle(name)} page`),
-      true
-    ),
-  ];
+export function createPageFiles(name, config) {
+  const content = isPagePreset(name)
+    ? reactPagePresetContent(name, config)
+    : viewContent(`${toPascalCase(name)}Page`, `${toTitle(name)} page`);
+  return [file(`ui/${name}-page.tsx`, content, true)];
 }
 
 function entityTypesContent(pascalName) {

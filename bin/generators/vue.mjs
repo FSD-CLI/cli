@@ -10,6 +10,7 @@ import {
   vueWidgetPresetComponent,
   vueWidgetPresetContent,
 } from "./widget-presets.mjs";
+import { isPagePreset, vuePagePresetContent } from "./page-presets.mjs";
 
 const AUTH_FORMS = [
   {
@@ -158,7 +159,9 @@ function createVuePageFiles(name) {
     vueComponent(
       `ui/${componentName}.vue`,
       componentName,
-      viewContent(`${toTitle(name)} page`)
+      isPagePreset(name)
+        ? vuePagePresetContent(name)
+        : viewContent(`${toTitle(name)} page`)
     ),
   ];
 }

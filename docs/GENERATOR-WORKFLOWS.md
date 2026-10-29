@@ -29,6 +29,23 @@ multi-word component rule. Styling, icons, active-route state and mounting the
 widget in a layout stay with the project. Any other widget name keeps the
 generic placeholder.
 
+## Page presets
+
+```sh
+node /path/to/cli/bin/index.mjs -g page home about consult
+node /path/to/cli/bin/index.mjs -g page pricing        # custom page, placeholder
+```
+
+The page names `home`, `about` and `consult` generate sample page content:
+a hero and highlights list (home), an about section with values (about), and a
+consultation form with name, email and message (consult). The consult page
+calls an optional `onSubmit(request)` prop (Vue emits `submit`, Svelte takes
+`onsubmit`) and shows a confirmation; it sends nothing by itself. On Next.js
+the consult page is a client component. Every page, preset or custom, is
+registered through the framework's normal route handling (`/<name>`); an
+existing root route is left alone. Starter templates already contain a home
+page, so `-g page home` needs `--force` there.
+
 ## Shared layer: ui and api
 
 ```sh

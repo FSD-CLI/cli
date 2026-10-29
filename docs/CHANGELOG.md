@@ -2,6 +2,14 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## Unreleased
+
+### Added
+
+- `-g page home|about|consult` generates page presets (hero, about, and a
+  consultation form with an `onSubmit` callback) on React, Next.js, Vue, Nuxt
+  and SvelteKit. Other page names keep the placeholder; all pages are routed.
+
 ## 2.7.0 - prepared 2026-10-29, not yet published
 
 Breaking: the CLI now requires Node.js `>=22.12.0` (was `>=20`). See

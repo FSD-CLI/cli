@@ -491,7 +491,7 @@ function createFilePlan(type, name, config) {
     return createWidgetFiles(name, config);
   }
 
-  return createPageFiles(name);
+  return createPageFiles(name, config);
 }
 
 function createAuthFeatureFiles(config) {

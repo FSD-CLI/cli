@@ -110,6 +110,7 @@ npx create-fsd-architecture@latest -g entity product
 npx create-fsd-architecture@latest -g widget navbar sidebar footer bottom-bar
 npx create-fsd-architecture@latest -g shared ui button input label card
 npx create-fsd-architecture@latest -g shared api
+npx create-fsd-architecture@latest -g page home about consult
 
 # Preview creation or generation without writing files
 npx create-fsd-architecture@latest my-app --framework vue-vite --yes --dry-run
