@@ -1,0 +1,11 @@
+Supabase auth staging E2E — phase session, @supabase/supabase-js 2.118.0, Node v24.21.0
+PASS  RLS rejects reads and writes without a session — read: 42501, write: 42501
+PASS  invalid credentials reject with the generic error
+PASS  login returns a normalized session — user ef8c9181…, name "E2E User"
+PASS  RLS allows the owner with a valid session — 1 own row(s)
+PASS  SDK refresh issues a new access token — token rotated
+PASS  logout revokes the provider session — refresh after logout: refresh_token_not_found
+PASS  RLS rejects after logout — 42501
+PASS  registration of an existing email does not create a session — null session (confirmation contract)
+
+8/8 checks passed.

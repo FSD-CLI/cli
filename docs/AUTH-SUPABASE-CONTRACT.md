@@ -70,7 +70,15 @@ rejection and read-only output plans across five frameworks. These use an SDK
 contract double and do not prove backend integration. The generated declaration
 was also typechecked against the actual @supabase/supabase-js2.117.2 SDK.
 
-Before claiming live acceptance, use an isolated Supabase test project to check
+Live staging acceptance ran on 2026-10-29 against an isolated project:
+15/15 checks pass for login, invalid credentials, normalized sessions, refresh,
+logout revocation, RLS deny/allow/deny, recovery verify/reset, code reuse,
+expired code and old/new password. Email delivery and the signup confirmation
+link were not exercised (default SMTP limits). See
+[the staging report](qa/supabase-staging-2026-10-29/REPORT.md) and
+`scripts/staging/supabase-auth-e2e.mjs`.
+
+To repeat it, use an isolated Supabase test project to check
 signup/confirmation/login, invalid credentials, recovery mail and expired code,
 reset/login with new password, refresh, logout, RLS rejection without a valid
 session and request-scoped SSR where required. No production account or private

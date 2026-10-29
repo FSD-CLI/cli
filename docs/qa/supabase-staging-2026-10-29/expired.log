@@ -1,0 +1,4 @@
+Supabase auth staging E2E — phase expired, @supabase/supabase-js 2.118.0, Node v24.21.0
+PASS  an expired recovery code is rejected
+
+1/1 checks passed.

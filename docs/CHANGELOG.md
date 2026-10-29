@@ -6,6 +6,9 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- `scripts/staging/supabase-auth-e2e.mjs` and a 2026-10-29 staging report: the
+  generated Supabase adapter passes 15/15 live checks (sessions, refresh, logout
+  revocation, RLS, recovery, code reuse and expiry) on an isolated project.
 - A global `fsd` binary next to `create-fsd-architecture`. `fsd create` scaffolds
   a project and `fsd generate` (alias `fsd g`) generates slices; the flag forms
   keep working. CI installs the packed tarball globally on Linux, macOS and
