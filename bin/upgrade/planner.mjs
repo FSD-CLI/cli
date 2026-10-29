@@ -24,6 +24,11 @@ import {
   selectMigrationPath,
 } from "./migrations/index.mjs";
 import { normalizeRelativePath, resolveManagedPath } from "./project-root.mjs";
+import { compareVersions } from "../core/version-range.mjs";
+
+// The exact generated line, so only that rendering is treated as a signature.
+const CURRENT_DOCS_URL = 'docsUrl: "https://fsdcli.me"';
+const LEGACY_DOCS_URL = 'docsUrl: "https://fsd-docs.vercel.app"';
 
 export const OPERATION_STATUSES = Object.freeze([
   "CREATE",
@@ -211,6 +216,13 @@ function inspectMarker({ projectRoot, relativePath, definition, manifest, target
   );
 }
 
+const SIMPLE_RANGE = /^[\^~]?\d+\.\d+\.\d+$/;
+
+function isNewerRange(actual, managed) {
+  if (!SIMPLE_RANGE.test(actual ?? "") || !SIMPLE_RANGE.test(managed ?? "")) return false;
+  return compareVersions(actual.replace(/^[\^~]/, ""), managed.replace(/^[\^~]/, "")) > 0;
+}
+
 function inspectDependencies({ projectRoot, config, manifest, targetManifest, operations }) {
   const packageJson = readJson(projectRoot, "package.json");
   const expected = {
@@ -228,6 +240,17 @@ function inspectDependencies({ projectRoot, config, manifest, targetManifest, op
     if (actual === entry.value) {
       targetManifest.managedPackageEntries[key] = entry;
       addOperation(operations, "ALREADY_APPLIED", "package.json", `${key} matches its managed value.`);
+      continue;
+    }
+    if (isNewerRange(actual, entry.value)) {
+      // Dependabot or the user raised the range; the upgrade never lowers it.
+      targetManifest.managedPackageEntries[key] = { ...entry, value: actual };
+      addOperation(
+        operations,
+        "ALREADY_APPLIED",
+        "package.json",
+        `${key} is "${actual}", newer than its managed value "${entry.value}"; kept.`
+      );
       continue;
     }
     addOperation(
@@ -310,6 +333,10 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
   const artifacts = getManagedProjectArtifacts(config);
   for (const [relativePath, target] of Object.entries(artifacts.files)) {
     knownPaths.add(relativePath);
+    // Releases before 2.6.1 rendered the old documentation domain; that exact
+    // rendering is a released signature that may be updated to the new domain.
+    const legacyRendering = target.replaceAll(CURRENT_DOCS_URL, LEGACY_DOCS_URL);
+    const legacyDocsBase = legacyRendering === target ? undefined : legacyRendering;
     inspectManagedFile({
       projectRoot,
       relativePath,
@@ -319,6 +346,8 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
       targetManifest,
       operations,
       allowRecordedContent: artifacts.mutableFiles?.includes(relativePath),
+      allowUpdate: legacyDocsBase !== undefined,
+      legacyBase: legacyDocsBase,
     });
   }
   for (const [relativePath, definition] of Object.entries(artifacts.markerRegions)) {
@@ -386,7 +415,12 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
     "Features, entities, widgets, pages, components, styles, routes, and environment files are not CLI-owned."
   );
 
-  if (migrationPath.length) {
+  const sourceWrites = operations.some((operation) =>
+    ["CREATE", "UPDATE", "DELETE"].includes(operation.status)
+  );
+  // Source updates without a pending migration (such as a legacy docs-domain
+  // rendering on a current-state manifest) still need their new hashes recorded.
+  if (migrationPath.length || (manifest && sourceWrites)) {
     targetManifest.stateVersion = CURRENT_UPGRADE_STATE_VERSION;
     targetManifest.lastUpgradedWithCliVersion = cliVersion;
     targetManifest.appliedMigrations = [

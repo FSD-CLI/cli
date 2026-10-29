@@ -115,6 +115,21 @@ schema newer than `1`; managed content whose hash/signature changed; missing or
 duplicate markers; an existing non-CLI pnpm workspace policy; symlinked managed
 paths; incomplete migration graph; project state newer than `2`; and downgrades.
 
+Projects rendered before 2.6.1 point `docsUrl` at the old documentation domain;
+that exact rendering is accepted as a released signature and updated. Managed
+dependency ranges raised above the CLI's value (for example by Dependabot) are
+kept, never lowered; any other difference is still a conflict.
+
+The `upgrade-e2e` CI job creates a real project with each historical release in
+the table (React, Next.js and Vue from 2.3.2, Nuxt from 2.4.0, SvelteKit from
+2.5.0, plus manifest-state projects from 2.6.0 and 2.6.3), then runs
+`upgrade --check`, a read-only dry run, a customized-hook refusal, a mid-
+transaction failure that must roll back, the real upgrade, a second check that
+must report current, `npm install` and `npm run build`. Each run uploads a JSON
+report that states whether dependency versions changed. Historical CLIs download
+their template's current main branch, so these fixtures prove the upgrade path
+on that output rather than byte-identical historical templates.
+
 The unit matrix covers all five framework fixtures and React + Vite under each
 package manager. It covers dry-run/check read-only behavior, nested roots,
 legacy mode, business-code preservation, managed-file conflicts, future/malformed
@@ -122,7 +137,7 @@ config, marker failures, dirty Git refusal, no-Git projects, path escape
 rejection, manifest idempotence, and injected write rollback. Existing CI remains
 the real install/build matrix for freshly generated projects. There is no real
 dependency-version upgrade in this release, so an upgrade install/build E2E is
-not claimed as completed.
+not claimed beyond the CI job above.
 
 ## CLI Contract
 
