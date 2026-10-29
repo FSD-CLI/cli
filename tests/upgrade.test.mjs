@@ -232,7 +232,7 @@ test("manifest serialization is accepted by the Next.js Biome array style", () =
     const content = fs.readFileSync(path.join(root, ".fsd", "manifest.json"), "utf8");
     assert.match(
       content,
-      /"appliedMigrations": \["managed-state-v1", "tooling-hardening-v1", "light-hooks-v1"\]/
+      /"appliedMigrations": \[\n    "managed-state-v1",\n    "tooling-hardening-v1",\n    "light-hooks-v1"\n  \]/
     );
     assert.equal(content, serializeManifest(manifest));
   } finally {

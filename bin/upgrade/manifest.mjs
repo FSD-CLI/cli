@@ -24,9 +24,16 @@ export function serializeManifest(manifest) {
     ...manifest,
     appliedMigrations: migrationsPlaceholder,
   };
+  const ids = manifest.appliedMigrations.map((id) => JSON.stringify(id));
+  const inline = `[${ids.join(", ")}]`;
+  // Match Prettier/Biome: keep the array inline only while the line fits in 80 columns.
+  const migrations =
+    `  "appliedMigrations": ${inline},`.length <= 80
+      ? inline
+      : `[\n${ids.map((id) => `    ${id}`).join(",\n")}\n  ]`;
   return `${JSON.stringify(serializable, null, 2).replace(
     JSON.stringify(migrationsPlaceholder),
-    `[${manifest.appliedMigrations.map((id) => JSON.stringify(id)).join(", ")}]`
+    migrations
   )}\n`;
 }
 
