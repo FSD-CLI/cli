@@ -106,7 +106,7 @@ export function ${component}({ onSubmit }: ${component}Props) {
 ${fields}
         <button type="submit">Send request</button>
       </form>
-      {sent ? <p role="status">Thanks, we received your request.</p> : null}
+      {sent ? <output>Thanks, we received your request.</output> : null}
     </main>
   );
 }
@@ -187,12 +187,9 @@ ${fields}
         Send request
       </button>
     </form>
-    <p
-      v-if="sent"
-      role="status"
-    >
+    <output v-if="sent">
       Thanks, we received your request.
-    </p>
+    </output>
   </main>
 </template>
 `;
@@ -251,7 +248,7 @@ ${fields}
     <button type="submit">Send request</button>
   </form>
   {#if sent}
-    <p role="status">Thanks, we received your request.</p>
+    <output>Thanks, we received your request.</output>
   {/if}
 </main>
 `;
