@@ -2,7 +2,11 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## Unreleased
+## 2.7.1 - prepared 2026-10-29, not yet published
+
+A small update on 2.7: the `fsd` command, page presets, fixes for upgrading
+projects created before 2.6.1, and templates pinned to their security-fixed
+`main` commits. No runtime or dependency changes for the CLI itself.
 
 ### Added
 
