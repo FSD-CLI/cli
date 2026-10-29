@@ -149,11 +149,19 @@ function createVuePageFiles(name) {
 }
 
 function createVueAuthFiles(config) {
-  const files = [file("model/auth.types.ts", authTypesContent(), true)];
+  const forms = AUTH_FORMS.map(form => config.authProvider === "supabase" && form.name === "reset-password" ? {
+    ...form, fields: [
+      ["email", "Email", "email", "email"],
+      ["code", "Recovery code", "text", "one-time-code"],
+      ["password", "New password", "password", "new-password"],
+      ["passwordConfirmation", "Confirm password", "password", "new-password"],
+    ],
+  } : form);
+  const files = [file("model/auth.types.ts", authTypesContent(config.authProvider), true)];
 
   if (config.serverState === "vue-query") {
     files.push(
-      ...AUTH_FORMS.map((form) =>
+      ...forms.map((form) =>
         file(`api/${form.name}.api.ts`, authApiContent(form), false)
       ),
       file("api/auth.query.ts", authQueryContent(), true),
@@ -165,13 +173,13 @@ function createVueAuthFiles(config) {
   }
   if (config.forms === "vee-validate-zod") {
     files.push(
-      ...AUTH_FORMS.map((form) =>
+      ...forms.map((form) =>
         file(`model/${form.name}.schema.ts`, authSchemaContent(form), true)
       )
     );
   }
   files.push(
-    ...AUTH_FORMS.map((form) =>
+    ...forms.map((form) =>
       vueComponent(
         `ui/${form.component}.vue`,
         form.component,
@@ -315,7 +323,7 @@ export function get${pascalName}Label(item: ${pascalName}) {
 `;
 }
 
-function authTypesContent() {
+function authTypesContent(authProvider) {
   return `export type AuthUser = {
   id: string;
   email: string;
@@ -327,7 +335,7 @@ export type AuthActionResult = { message: string };
 export type LoginCredentials = { email: string; password: string };
 export type RegisterPayload = LoginCredentials & { name: string };
 export type ForgotPasswordPayload = { email: string };
-export type ResetPasswordPayload = { token: string; password: string };
+export type ResetPasswordPayload = ${authProvider === "supabase" ? "{ email: string; code: string; password: string; passwordConfirmation: string }" : "{ token: string; password: string }"};
 export type VerifyCodePayload = { email: string; code: string };
 `;
 }

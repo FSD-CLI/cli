@@ -121,7 +121,7 @@ test("intentional no-install remains successful and does not execute installer",
 });
 
 for (const pm of ["npm", "pnpm", "yarn", "bun"]) {
-  test(`${pm} hooks block lint/build/whitespace failure and permit clean commits`, t => {
+  test(`${pm} hooks block opted-in lint/build and whitespace failures while defaults stay light`, t => {
     const cwd = fixture(t);
     const git = (...args) => execFileSync("git", args, { cwd, encoding: "utf8", stdio: "pipe" });
     git("init");
@@ -162,11 +162,9 @@ exit /b 0`
       cwd, encoding: "utf8", timeout: 10000,
       env: { ...process.env, HUSKY: "1", PATH: `${tools}${path.delimiter}${process.env.PATH}`, QA_TRACE: trace, ...extra },
     });
-    let result = commit({ QA_LINT_EXIT: "23" });
+    let result = commit({ QA_LINT_EXIT: "23", FSD_PRE_COMMIT_LINT: "1" });
     assert.notEqual(result.status, 0);
     assert.doesNotMatch(fs.readFileSync(trace, "utf8"), /build/);
-    result = commit({ QA_BUILD_EXIT: "24" });
-    assert.notEqual(result.status, 0);
     fs.writeFileSync(path.join(cwd, "sample.txt"), "trailing space \n");
     git("add", "sample.txt");
     result = commit({});
@@ -177,5 +175,15 @@ exit /b 0`
     result = commit({});
     assert.equal(result.status, 0, result.stdout + result.stderr);
     assert.match(git("log", "-1", "--format=%s"), /test: validate hook/);
+    const remote = path.join(cwd, "remote.git");
+    git("init", "--bare", remote);
+    git("remote", "add", "origin", remote);
+    const push = extra => spawnSync("git", ["push", "origin", "HEAD:refs/heads/test"], {
+      cwd, encoding: "utf8", timeout: 10000,
+      env: { ...process.env, HUSKY: "1", PATH: `${tools}${path.delimiter}${process.env.PATH}`, QA_TRACE: trace, ...extra },
+    });
+    assert.notEqual(push({ QA_BUILD_EXIT: "24", FSD_PRE_PUSH_CHECKS: "1" }).status, 0);
+    result = push({ QA_BUILD_EXIT: "24", FSD_PRE_PUSH_CHECKS: "0" });
+    assert.equal(result.status, 0, result.stdout + result.stderr);
   });
 }

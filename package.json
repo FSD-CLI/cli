@@ -43,6 +43,8 @@
     "docs/RELEASE-STATUS.md",
     "docs/EXISTING-PROJECT-SUPPORT.md",
     "docs/PROPOSALS.md",
+    "docs/AUTH-SUPABASE-CONTRACT.md",
+    "docs/GENERATOR-WORKFLOWS.md",
     "docs/RUNTIME-REQUIREMENTS.md"
   ],
   "keywords": [

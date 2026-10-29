@@ -148,11 +148,19 @@ function createSveltePageFiles(name) {
 }
 
 function createSvelteAuthFiles(config) {
-  const files = [file("model/auth.types.ts", authTypesContent(), true)];
+  const forms = AUTH_FORMS.map(form => config.authProvider === "supabase" && form.name === "reset-password" ? {
+    ...form, fields: [
+      ["email", "Email", "email", "email"],
+      ["code", "Recovery code", "text", "one-time-code"],
+      ["password", "New password", "password", "new-password"],
+      ["passwordConfirmation", "Confirm password", "password", "new-password"],
+    ],
+  } : form);
+  const files = [file("model/auth.types.ts", authTypesContent(config.authProvider), true)];
 
   if (config.serverState === "svelte-query") {
     files.push(
-      ...AUTH_FORMS.map((form) =>
+      ...forms.map((form) =>
         file(`api/${form.name}.api.ts`, authApiContent(form), false)
       ),
       file("api/auth.query.ts", authQueryContent(), true),
@@ -164,13 +172,13 @@ function createSvelteAuthFiles(config) {
   }
   if (config.forms === "sveltekit-superforms-zod") {
     files.push(
-      ...AUTH_FORMS.map((form) =>
+      ...forms.map((form) =>
         file(`model/${form.name}.schema.ts`, authSchemaContent(form), true)
       )
     );
   }
   files.push(
-    ...AUTH_FORMS.map((form) =>
+    ...forms.map((form) =>
       svelteComponent(
         `ui/${form.component}.svelte`,
         form.component,
@@ -307,7 +315,7 @@ export const ${camelName}Store = create${pascalName}Store();
 `;
 }
 
-function authTypesContent() {
+function authTypesContent(authProvider) {
   return `export type AuthUser = {
   id: string;
   email: string;
@@ -319,7 +327,7 @@ export type AuthActionResult = { message: string };
 export type LoginCredentials = { email: string; password: string };
 export type RegisterPayload = LoginCredentials & { name: string };
 export type ForgotPasswordPayload = { email: string };
-export type ResetPasswordPayload = { token: string; password: string };
+export type ResetPasswordPayload = ${authProvider === "supabase" ? "{ email: string; code: string; password: string; passwordConfirmation: string }" : "{ token: string; password: string }"};
 export type VerifyCodePayload = { email: string; code: string };
 `;
 }

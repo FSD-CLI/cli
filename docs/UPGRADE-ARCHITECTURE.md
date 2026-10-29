@@ -26,12 +26,12 @@ It does not infer a framework from `package.json`.
 ```json
 {
   "manifestVersion": 1,
-  "stateVersion": 2,
+  "stateVersion": 3,
   "framework": "react-vite",
   "configSchemaVersion": 1,
   "createdWithCliVersion": "2.6.0",
   "lastUpgradedWithCliVersion": "2.6.0",
-  "appliedMigrations": ["managed-state-v1", "tooling-hardening-v1"],
+  "appliedMigrations": ["managed-state-v1", "tooling-hardening-v1", "light-hooks-v1"],
   "managedFiles": {},
   "managedPackageEntries": {},
   "markerRegions": {}
@@ -60,6 +60,7 @@ invalid transitions, gaps, cycles, unsupported future states, and downgrades.
 | --- | --- | --- |
 | `managed-state-v1` | `0 -> 1` | Establishes proven ownership metadata for legacy projects. |
 | `tooling-hardening-v1` | `1 -> 2` | Updates exact legacy Husky hook signatures and creates the pnpm build policy only at an absent path. |
+| `light-hooks-v1` | `2 -> 3` | Replaces unchanged CLI-owned heavy hooks with light defaults and explicit local lint/build opt-ins. Customized hooks remain conflicts. |
 
 No configuration schema migration is declared merely to demonstrate the engine.
 `bin/upgrade/config.mjs` provides one-step migration plumbing for a future

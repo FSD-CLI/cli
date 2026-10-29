@@ -65,9 +65,9 @@ test("CLI parser supports automation-friendly create flags", () => {
   );
   assert.throws(() => parseCliArgs(["--yes"]), CliUsageError);
   assert.throws(() => parseCliArgs(["shop", "--unknown"]), /Unknown option/);
-  assert.throws(
-    () => parseCliArgs(["--generate", "feature", "auth", "extra"]),
-    /Unexpected argument/
+  assert.deepEqual(
+    parseCliArgs(["--generate", "entity", "product", "customer"]).names,
+    ["product", "customer"]
   );
 });
 

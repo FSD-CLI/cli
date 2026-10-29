@@ -334,7 +334,7 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
   inspectDependencies({ projectRoot, config, manifest, targetManifest, operations });
 
   const toolingPlanned = migrationPath.some((migration) => migration.id === "tooling-hardening-v1");
-  const planToolingMigration = () => {
+  const planToolingMigration = ({ hooksOnly = false } = {}) => {
     const targetHooks = createHuskyHooks(config.packageManager);
     const previousHooks = legacyHuskyHooks(config.packageManager);
     for (const [name, target] of Object.entries(targetHooks)) {
@@ -353,7 +353,7 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
       });
     }
 
-    if (config.packageManager === "pnpm") {
+    if (!hooksOnly && config.packageManager === "pnpm") {
       const relativePath = "pnpm-workspace.yaml";
       knownPaths.add(relativePath);
       inspectManagedFile({
@@ -369,12 +369,12 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
     }
     return [];
   };
-  if (toolingPlanned) {
+  if (toolingPlanned || migrationPath.some(migration => migration.id === "light-hooks-v1")) {
     for (const migration of migrationPath) {
       if (!migration.frameworks.includes(config.framework)) {
         throw new UpgradeStateError(`${migration.id} does not support ${config.framework}.`);
       }
-      migration.plan({ planToolingMigration });
+      migration.plan({ planToolingMigration, planLightHooksMigration: () => toolingPlanned ? [] : planToolingMigration({ hooksOnly: true }) });
     }
   }
 
