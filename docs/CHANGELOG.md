@@ -2,6 +2,24 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
+## Unreleased
+
+### Fixed
+
+- Projects created before 2.6.1 (legacy 2.3.2/2.4.0/2.5.0 signatures and 2.6.0
+  manifests) no longer conflict on `fsd-stack.ts`: the old documentation domain
+  rendering is recognized and updated.
+- A managed dependency range raised above the CLI's value, for example by
+  Dependabot, no longer blocks `upgrade`; it is kept and recorded.
+- Generated-file updates on a current-state manifest now record their new
+  hashes instead of failing post-upgrade validation.
+
+### Added
+
+- `upgrade-e2e` CI job: historical project -> check -> dry-run -> conflict
+  refusal -> rollback -> upgrade -> install -> build for every declared
+  signature, with a JSON report of dependency changes.
+
 ## 2.7.0 - prepared 2026-10-29, not yet published
 
 Breaking: the CLI now requires Node.js `>=22.12.0` (was `>=20`). See

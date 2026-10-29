@@ -63,6 +63,42 @@ jobs:
       - name: Assert informational commands stay available
         run: node bin/index.mjs --help
 
+  upgrade-e2e:
+    name: Upgrade E2E / ${{ matrix.framework }} from ${{ matrix.from }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Every legacy signature declared in docs/UPGRADE-ARCHITECTURE.md,
+          # plus manifest-state projects from 2.6.0 (state 1) and 2.6.3 (state 2).
+          - { framework: react-vite, from: 2.3.2 }
+          - { framework: nextjs, from: 2.3.2 }
+          - { framework: vue-vite, from: 2.3.2 }
+          - { framework: nuxt, from: 2.4.0 }
+          - { framework: sveltekit, from: 2.5.0 }
+          - { framework: react-vite, from: 2.6.0 }
+          - { framework: vue-vite, from: 2.6.3 }
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Historical project -> upgrade -> install -> build
+        env:
+          CI_ARTIFACTS_DIR: ${{ github.workspace }}/ci-artifacts
+        run: node scripts/ci/upgrade-e2e.mjs ${{ matrix.framework }} ${{ matrix.from }}
+      - name: Upload upgrade report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: upgrade-e2e-${{ matrix.framework }}-${{ matrix.from }}
+          path: ci-artifacts/upgrade-e2e/
+          if-no-files-found: ignore
+          retention-days: 14
+
   cross-os-cli:
     name: Cross-OS CLI / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
