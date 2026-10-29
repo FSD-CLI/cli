@@ -26,8 +26,9 @@ import {
 import { normalizeRelativePath, resolveManagedPath } from "./project-root.mjs";
 import { compareVersions } from "../core/version-range.mjs";
 
-const CURRENT_DOCS_URL = "https://fsdcli.me";
-const LEGACY_DOCS_URL = "https://fsd-docs.vercel.app";
+// The exact generated line, so only that rendering is treated as a signature.
+const CURRENT_DOCS_URL = 'docsUrl: "https://fsdcli.me"';
+const LEGACY_DOCS_URL = 'docsUrl: "https://fsd-docs.vercel.app"';
 
 export const OPERATION_STATUSES = Object.freeze([
   "CREATE",
@@ -334,9 +335,8 @@ export function createUpgradePlan({ projectRoot, config, manifest, cliVersion })
     knownPaths.add(relativePath);
     // Releases before 2.6.1 rendered the old documentation domain; that exact
     // rendering is a released signature that may be updated to the new domain.
-    const legacyDocsBase = target.includes(CURRENT_DOCS_URL)
-      ? target.replaceAll(CURRENT_DOCS_URL, LEGACY_DOCS_URL)
-      : undefined;
+    const legacyRendering = target.replaceAll(CURRENT_DOCS_URL, LEGACY_DOCS_URL);
+    const legacyDocsBase = legacyRendering === target ? undefined : legacyRendering;
     inspectManagedFile({
       projectRoot,
       relativePath,

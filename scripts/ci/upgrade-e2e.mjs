@@ -111,7 +111,10 @@ try {
   step("customized managed file blocks the upgrade without writes");
 
   // Negative: a failure late in the transaction must roll back earlier writes.
-  if (!isWindows) {
+  // Only for legacy projects: with an existing .fsd, the read-only directory
+  // that makes the manifest write fail would also block restoring it.
+  const hasManifest = fs.existsSync(path.join(project, ".fsd", "manifest.json"));
+  if (!isWindows && !hasManifest) {
     // Backups stay writable, so hook and config updates are applied first and
     // only the final manifest write into .fsd fails.
     const lockedDir = path.join(project, ".fsd");
@@ -133,7 +136,12 @@ try {
     git(["clean", "-fdq", "-e", "node_modules"], project);
     step("partial failure rolls back tracked files");
   } else {
-    step("partial failure rollback", "skipped on Windows (POSIX permissions)");
+    step(
+      "partial failure rollback",
+      hasManifest
+        ? "skipped for manifest projects (unit test covers injected write rollback)"
+        : "skipped on Windows (POSIX permissions)"
+    );
   }
 
   fsd("upgrade --yes", ["upgrade", "--yes", "--no-install"], project);
