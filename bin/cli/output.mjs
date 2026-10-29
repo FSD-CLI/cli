@@ -21,20 +21,29 @@ export function showBanner() {
   console.log(chalk.cyanBright(banner));
 }
 
-export function showHelp(version) {
-  console.log(`create-fsd-architecture v${version}
+export function showHelp(version, program = "create-fsd-architecture") {
+  console.log(`${program} v${version}
 
 Usage:
+  fsd create [project-name] [options]
+  fsd generate <type> <name...> [--force] [--dry-run]     (alias: fsd g)
+  fsd <check|doctor> [--architecture]
+  fsd config
+  fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
+
+  fsd and create-fsd-architecture are the same CLI; install it globally with
+  npm install -g create-fsd-architecture, or run it once with npx.
+
+Flag form (also works with create-fsd-architecture):
   create-fsd-architecture [project-name] [options]
   create-fsd-architecture --generate <type> <name...> [--force] [--dry-run]
   create-fsd-architecture -g <type> [names...] --segments ui,api [--root src]
   create-fsd-architecture -g shared <ui|api> [components...] [--dry-run]
-  create-fsd-architecture <check|doctor> [--architecture]
-  create-fsd-architecture config
-  create-fsd-architecture upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
 Commands:
-  -g, --generate <type> <name>  Generate an FSD slice in the current project
+      create [project-name]     Scaffold a new FSD project (default action)
+  g,  generate <type> <name>    Generate an FSD slice in the current project
+  -g, --generate <type> <name>  Same as generate
       --list-templates          Show stable and planned framework templates
       check                     Inspect config/layers (not import architecture)
        doctor                    Diagnose the local project and toolchain
@@ -69,6 +78,9 @@ Global options:
   -v, --version                 Show the installed CLI version
 
 Examples:
+  npm install -g create-fsd-architecture
+  fsd create my-app --framework react-vite --yes
+  fsd g widget navbar sidebar footer bottom-bar
   npx create-fsd-architecture my-app
   npx create-fsd-architecture my-app --framework react-vite --yes --no-install
   npx create-fsd-architecture --generate feature auth

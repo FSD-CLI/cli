@@ -4,6 +4,21 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ## Unreleased
 
+### Added
+
+- A global `fsd` binary next to `create-fsd-architecture`. `fsd create` scaffolds
+  a project and `fsd generate` (alias `fsd g`) generates slices; the flag forms
+  keep working. CI installs the packed tarball globally on Linux, macOS and
+  Windows and runs both binaries.
+- `upgrade-e2e` CI job: historical project -> check -> dry-run -> conflict
+  refusal -> rollback -> upgrade -> install -> build for every declared
+  signature, with a JSON report of dependency changes.
+
+### Changed
+
+- A first argument of `create`, `generate` or `g` is now a subcommand. To name a
+  project `create`, use `fsd create create`.
+
 ### Fixed
 
 - Projects created before 2.6.1 (legacy 2.3.2/2.4.0/2.5.0 signatures and 2.6.0
@@ -14,13 +29,10 @@ All notable changes to `create-fsd-architecture` are documented here.
 - Generated-file updates on a current-state manifest now record their new
   hashes instead of failing post-upgrade validation.
 
-### Added
+## 2.7.0 - 2026-10-29
 
-- `upgrade-e2e` CI job: historical project -> check -> dry-run -> conflict
-  refusal -> rollback -> upgrade -> install -> build for every declared
-  signature, with a JSON report of dependency changes.
-
-## 2.7.0 - prepared 2026-10-29, not yet published
+Published npm gitHead: `561d7d94b5a20179e2246d216d4fc80e9236d4ae`,
+integrity `sha512-F9ka7Ov2ImLFie8ZaBFyZbB5erByOiTf5pnwwHN396Q/spT3UfL/DHOiSPYmipKn287Me012by364XlAuS49hg==`.
 
 Breaking: the CLI now requires Node.js `>=22.12.0` (was `>=20`). See
 `docs/RUNTIME-REQUIREMENTS.md`.
