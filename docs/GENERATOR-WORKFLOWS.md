@@ -1,4 +1,4 @@
-# Generator workflows — candidate, not in npm 2.6.1
+# Generator workflows — added in 2.7.0
 
 ## Framework-native batch generation
 

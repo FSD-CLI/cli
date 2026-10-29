@@ -1,5 +1,16 @@
 # Current release and validation status
 
+## Prepared 2.7.0 — not yet published
+
+`package.json` is `2.7.0` on the release branch. It contains the runtime
+contract ([PR #17](https://github.com/FSD-CLI/cli/pull/17)), the Supabase auth
+adapter, batch and structure-only generation and `--architecture` checks
+([PR #16](https://github.com/FSD-CLI/cli/pull/16)), and the layout widget
+presets and shared ui/api generators
+([PR #18](https://github.com/FSD-CLI/cli/pull/18)). Each merged with all CI
+checks green. Publication to npm, the `v2.7.0` tag and the post-release smoke
+remain owner steps; until then `2.6.3` is the published artifact.
+
 ## Published 2.6.3 — 11 October 2026
 
 The owner published `create-fsd-architecture@2.6.3` with gitHead
@@ -28,7 +39,7 @@ Nuxt's independent production audit remains failing; source builds and CLI
 audit success do not clear that separate security hold.
 The QA baseline below still describes its recorded source and package versions.
 
-## Runtime contract — source change pending CI
+## Runtime contract — merged in PR #17
 
 The supported runtime is now a declared contract instead of a documented
 assumption. The published `engines.node` field, the `doctor` command, the
