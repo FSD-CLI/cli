@@ -61,7 +61,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
     clientState: Object.freeze(["zustand", "redux", "none"]),
     forms: Object.freeze(["react-hook-form-zod", "none"]),
     packageManager: Object.freeze([...COMMON_PACKAGE_MANAGERS]),
-    generators: Object.freeze(["feature", "entity", "widget", "page"]),
+    generators: Object.freeze(["feature", "entity", "widget", "page", "shared"]),
   }),
   nextjs: Object.freeze({
     defaults: Object.freeze({
@@ -76,7 +76,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
     clientState: Object.freeze(["zustand", "redux", "none"]),
     forms: Object.freeze(["react-hook-form-zod", "none"]),
     packageManager: Object.freeze([...COMMON_PACKAGE_MANAGERS]),
-    generators: Object.freeze(["feature", "entity", "widget", "page"]),
+    generators: Object.freeze(["feature", "entity", "widget", "page", "shared"]),
   }),
   "vue-vite": Object.freeze({
     defaults: Object.freeze({
@@ -91,7 +91,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
     clientState: Object.freeze(["pinia", "none"]),
     forms: Object.freeze(["vee-validate-zod", "none"]),
     packageManager: Object.freeze([...COMMON_PACKAGE_MANAGERS]),
-    generators: Object.freeze(["feature", "entity", "widget", "page"]),
+    generators: Object.freeze(["feature", "entity", "widget", "page", "shared"]),
   }),
   nuxt: Object.freeze({
     defaults: Object.freeze({
@@ -106,7 +106,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
     clientState: Object.freeze(["pinia", "none"]),
     forms: Object.freeze(["vee-validate-zod", "none"]),
     packageManager: Object.freeze([...COMMON_PACKAGE_MANAGERS]),
-    generators: Object.freeze(["feature", "entity", "widget", "page"]),
+    generators: Object.freeze(["feature", "entity", "widget", "page", "shared"]),
   }),
   sveltekit: Object.freeze({
     defaults: Object.freeze({
@@ -121,7 +121,7 @@ export const CAPABILITY_MATRIX = Object.freeze({
     clientState: Object.freeze(["svelte-store", "none"]),
     forms: Object.freeze(["sveltekit-superforms-zod", "none"]),
     packageManager: Object.freeze([...COMMON_PACKAGE_MANAGERS]),
-    generators: Object.freeze(["feature", "entity", "widget", "page"]),
+    generators: Object.freeze(["feature", "entity", "widget", "page", "shared"]),
   }),
 });
 

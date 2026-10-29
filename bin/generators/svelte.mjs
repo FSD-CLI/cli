@@ -4,6 +4,7 @@ import {
   toPascalCase,
   toTitle,
 } from "./shared.mjs";
+import { isWidgetPreset, svelteWidgetPresetContent } from "./widget-presets.mjs";
 
 const AUTH_FORMS = [
   {
@@ -131,7 +132,9 @@ function createSvelteWidgetFiles(name) {
     svelteComponent(
       `ui/${componentName}.svelte`,
       componentName,
-      viewContent(`${toTitle(name)} widget`)
+      isWidgetPreset(name)
+        ? svelteWidgetPresetContent(name)
+        : viewContent(`${toTitle(name)} widget`)
     ),
   ];
 }

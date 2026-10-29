@@ -22,6 +22,11 @@ import { createSvelteFilePlan } from "./generators/svelte.mjs";
 import { normalizeProjectConfig } from "./project-config.mjs";
 import { generateStructure, generateBatch } from "./generators/structure.mjs";
 import {
+  createSharedLayerPlan,
+  generateSharedLayer,
+  printSharedLayerPlan,
+} from "./generators/shared-layer.mjs";
+import {
   assertManagedFileUnchanged,
   recordManagedFileContent,
 } from "./upgrade/manifest.mjs";
@@ -62,6 +67,9 @@ export async function runGenerator(options) {
     console.log(paths.length ? paths.join("\n") : "Structure already exists; no changes.");
     return;
   }
+  if (options.type === "shared") {
+    return runSharedGenerator(options);
+  }
   if (options.names) {
     return generateBatch(options, { loadProjectConfig, createGeneratorPlan, generateSlice, printFilePlan, printSuccess });
   }
@@ -87,6 +95,30 @@ export async function runGenerator(options) {
   const createdFiles = generateSlice(generatorOptions);
 
   printSuccess(createdFiles);
+}
+
+function runSharedGenerator(options) {
+  if (options.force || options.authProvider) {
+    throw new Error(
+      "Shared generation never overwrites files; --force and --auth-provider are not supported."
+    );
+  }
+  if (!options.name) {
+    throw new Error(
+      "Usage: create-fsd-architecture --generate shared <ui|api> [component...] [--dry-run]"
+    );
+  }
+  const cwd = process.cwd();
+  const config = loadProjectConfig(cwd);
+  assertGeneratorSupported(config.framework, "shared");
+  const plan = createSharedLayerPlan({
+    cwd,
+    segment: options.name,
+    items: (options.names ?? []).slice(1),
+    config,
+  });
+  if (!options.dryRun) generateSharedLayer(plan);
+  printSharedLayerPlan(plan, { dryRun: options.dryRun });
 }
 
 function validateGenerateOptions({ type, name }) {
@@ -456,7 +488,7 @@ function createFilePlan(type, name, config) {
   }
 
   if (type === "widget") {
-    return createWidgetFiles(name);
+    return createWidgetFiles(name, config);
   }
 
   return createPageFiles(name);

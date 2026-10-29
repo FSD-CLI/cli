@@ -28,6 +28,7 @@ Usage:
   create-fsd-architecture [project-name] [options]
   create-fsd-architecture --generate <type> <name...> [--force] [--dry-run]
   create-fsd-architecture -g <type> [names...] --segments ui,api [--root src]
+  create-fsd-architecture -g shared <ui|api> [components...] [--dry-run]
   create-fsd-architecture <check|doctor> [--architecture]
   create-fsd-architecture config
   create-fsd-architecture upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
@@ -73,6 +74,9 @@ Examples:
   npx create-fsd-architecture --generate feature auth
   npx create-fsd-architecture --generate feature auth --auth-provider supabase
   npx create-fsd-architecture -g entity product customer --dry-run
+  npx create-fsd-architecture -g widget navbar sidebar footer bottom-bar
+  npx create-fsd-architecture -g shared ui button input
+  npx create-fsd-architecture -g shared api
   npx create-fsd-architecture -g feature cart --segments ui,api --root src/lib
   npx create-fsd-architecture -g shared --segments ui,lib --root src
 
