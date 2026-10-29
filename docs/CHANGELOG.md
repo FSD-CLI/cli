@@ -22,6 +22,10 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Changed
 
+- Pin all five templates to their `main` commits after the 2026-10-29 security
+  merges: React `55530ec`, Next.js `b360aef`, Vue `82a1227`, Nuxt `533c5f9`,
+  SvelteKit `9ff28cf`. New Nuxt projects no longer carry critical production
+  advisories; templates ship CodeQL/Dependabot/dependency-security workflows.
 - A first argument of `create`, `generate` or `g` is now a subcommand. To name a
   project `create`, use `fsd create create`.
 

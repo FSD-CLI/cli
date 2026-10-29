@@ -1,5 +1,45 @@
 # Security coverage baseline
 
+Reviewed 2026-10-29. Owner: FSD CLI maintainers (ashrafmo-1).
+Scope: CLI, six separate template repositories, documentation and Agent Skill.
+
+## Coverage map (2026-10-29)
+
+Every executable template's `main` now carries Dependabot and a
+`dependency-security` workflow (pull requests, main, weekly, manual). The
+production gate fails on **high and critical** findings unless an owned,
+expiring exception in that repository's `security/audit-exceptions.json` covers
+them; low/moderate findings are printed. Nuxt, Vue and SvelteKit enforce it with
+`npm run audit` plus `npm run test:audit-policy`; React and Next.js use
+`npm audit --omit=dev --audit-level=high` and have no exceptions. The CLI pins
+each template to the `main` commit below.
+
+| Repository | Pinned `main` | CodeQL | Production audit | Exceptions |
+| --- | --- | --- | --- | --- |
+| FSD-CLI/cli | — | GitHub default setup | PASS, 0 findings | none |
+| FSD-CLI/FSD (React) | `55530ec` | GitHub default setup | PASS, 0 findings | none |
+| FSD-CLI/FSD-NEXTJS | `b360aef` | GitHub default setup | PASS | none |
+| FSD-CLI/FSD-VUE | `82a1227` | `codeql.yml` | PASS via exception | zod GHSA-mrhx-c7xc-m3w5 + `@vee-validate/zod`, review by 2026-11-29 |
+| FSD-CLI/FSD-NUXT | `533c5f9` | `codeql.yml` | PASS via exception; 0 critical; 7 low reported | zod GHSA-mrhx-c7xc-m3w5 + `@vee-validate/zod`, review by 2026-11-29 |
+| FSD-CLI/fsd-sveltekit | `9ff28cf` | `codeql.yml` | PASS, 0 high/critical; 5 low reported (fixed only in SvelteKit 3) | none (cookie exception removed) |
+| FSD-CLI/fsd-angular | — (inspection only) | `codeql.yml` | PASS at last review (2026-10-11) | none |
+| ashrafmo-1/fsd-docs | — | `codeql.yml` / analyze | PASS after Next.js 16.4.3 and zod 4.6.7 | none |
+| FSD-CLI/create-fsd-architecture (Agent Skill) | — | Exempt: declarative Markdown/YAML | Exempt: no package.json | — |
+
+The zod exception exists because `@vee-validate/zod` 4.15.1 (latest stable)
+supports only zod 3 and no zod 3 release is patched; zod 4 support via Standard
+Schema exists only in vee-validate 5.0.0-beta.0. Remove both exceptions by
+migrating the Vue/Nuxt forms layer (templates and CLI generator together) to
+zod >= 4.6.6 once vee-validate 5 is stable.
+
+Branch protection with required checks is a repository-administrator setting.
+On 2026-10-29 only FSD-NEXTJS and fsd-docs had required checks; this baseline
+does not claim the others are configured.
+
+The 2026-10-06 baseline below is kept for history.
+
+## 2026-10-06 baseline (history)
+
 Reviewed 2026-10-06. Owner: FSD CLI maintainers (ashrafmo-1).
 Scope: CLI, six separate template repositories, documentation and Agent Skill.
 
