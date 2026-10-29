@@ -5,6 +5,7 @@ import {
   toTitle,
 } from "./shared.mjs";
 import { isWidgetPreset, svelteWidgetPresetContent } from "./widget-presets.mjs";
+import { isPagePreset, sveltePagePresetContent } from "./page-presets.mjs";
 
 const AUTH_FORMS = [
   {
@@ -145,7 +146,9 @@ function createSveltePageFiles(name) {
     svelteComponent(
       `ui/${componentName}.svelte`,
       componentName,
-      viewContent(`${toTitle(name)} page`)
+      isPagePreset(name)
+        ? sveltePagePresetContent(name)
+        : viewContent(`${toTitle(name)} page`)
     ),
   ];
 }

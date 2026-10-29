@@ -89,6 +89,7 @@ Examples:
   npx create-fsd-architecture -g widget navbar sidebar footer bottom-bar
   npx create-fsd-architecture -g shared ui button input
   npx create-fsd-architecture -g shared api
+  npx create-fsd-architecture -g page about consult
   npx create-fsd-architecture -g feature cart --segments ui,api --root src/lib
   npx create-fsd-architecture -g shared --segments ui,lib --root src
 

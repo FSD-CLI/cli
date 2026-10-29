@@ -10,6 +10,9 @@ All notable changes to `create-fsd-architecture` are documented here.
   a project and `fsd generate` (alias `fsd g`) generates slices; the flag forms
   keep working. CI installs the packed tarball globally on Linux, macOS and
   Windows and runs both binaries.
+- `-g page home|about|consult` generates page presets (hero, about, and a
+  consultation form with an `onSubmit` callback) on React, Next.js, Vue, Nuxt
+  and SvelteKit. Other page names keep the placeholder; all pages are routed.
 - `upgrade-e2e` CI job: historical project -> check -> dry-run -> conflict
   refusal -> rollback -> upgrade -> install -> build for every declared
   signature, with a JSON report of dependency changes.
