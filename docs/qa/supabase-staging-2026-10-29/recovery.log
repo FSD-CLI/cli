@@ -1,0 +1,9 @@
+Supabase auth staging E2E — phase recovery, @supabase/supabase-js 2.118.0, Node v24.21.0
+PASS  a wrong recovery code is rejected
+PASS  mismatched password confirmation is rejected before any request
+PASS  verify code then reset password — Password updated.
+PASS  a consumed recovery code cannot be reused
+PASS  the old password no longer logs in
+PASS  the new password logs in — session issued
+
+6/6 checks passed.
