@@ -150,8 +150,8 @@ test("shared generation preserves existing files and merges index exports", (t) 
 
   const result = run("-g", "shared", "ui");
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /KEEP\s+src\/shared\/ui\/input\.tsx/);
-  assert.match(result.stdout, /KEEP\s+src\/shared\/ui\/card\.tsx/);
+  assert.match(result.stdout, /KEEP\s+src[\\/]shared[\\/]ui[\\/]input\.tsx/);
+  assert.match(result.stdout, /KEEP\s+src[\\/]shared[\\/]ui[\\/]card\.tsx/);
   assert.equal(fs.readFileSync(path.join(ui, "input.tsx"), "utf8"), "export const Input = 1;\n");
   assert(!fs.existsSync(path.join(ui, "card.tsx")));
   assert.equal(
@@ -187,7 +187,7 @@ test("shared generation validates input and supports dry runs", (t) => {
   const { source, run } = fixture(t, "react-vite");
   const dryRun = run("-g", "shared", "ui", "--dry-run");
   assert.equal(dryRun.status, 0);
-  assert.match(dryRun.stdout, /CREATE\s+src\/shared\/ui\/button\.tsx/);
+  assert.match(dryRun.stdout, /CREATE\s+src[\\/]shared[\\/]ui[\\/]button\.tsx/);
   assert(!fs.existsSync(path.join(source, "shared")));
 
   assert.match(run("-g", "shared", "ui", "modal").stderr, /Unknown shared ui component "modal"/);
