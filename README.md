@@ -106,7 +106,7 @@ npx create-fsd-architecture@latest --list-templates
 npx create-fsd-architecture@latest --generate feature auth
 npx create-fsd-architecture@latest -g entity product
 
-# Ready-made layout widgets and shared primitives (candidate, not yet published)
+# Ready-made layout widgets and shared primitives (2.7.0)
 npx create-fsd-architecture@latest -g widget navbar sidebar footer bottom-bar
 npx create-fsd-architecture@latest -g shared ui button input label card
 npx create-fsd-architecture@latest -g shared api

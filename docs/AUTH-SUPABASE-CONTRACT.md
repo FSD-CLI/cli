@@ -1,6 +1,6 @@
 # Supabase Auth generator contract
 
-Approved October 6, 2026. Candidate implementation; not in npm 2.6.1.
+Approved October 6, 2026. Ships in 2.7.0.
 
 ```sh
 node bin/index.mjs -g feature auth --auth-provider supabase --dry-run

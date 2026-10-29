@@ -2,10 +2,24 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## Unreleased
+## 2.7.0 - prepared 2026-10-29, not yet published
+
+Breaking: the CLI now requires Node.js `>=22.12.0` (was `>=20`). See
+`docs/RUNTIME-REQUIREMENTS.md`.
 
 ### Added
 
+- `-g feature auth --auth-provider supabase` generates an opt-in Supabase
+  browser auth adapter with session, error and recovery handling. The default
+  auth contract is unchanged. See `docs/AUTH-SUPABASE-CONTRACT.md`.
+- Batch generation (`-g entity product customer`) with preflight and rollback
+  of the whole batch.
+- Structure-only generation with `--segments` and `--root` that creates
+  missing directories and public APIs without overwriting existing files.
+- `check --architecture` and `doctor --architecture` run the project's
+  installed Steiger against its framework source root.
+- `upgrade` adds a light Git hooks migration (`light-hooks-v1`) that keeps
+  customized hooks as conflicts.
 - `-g widget navbar|sidebar|footer|bottom-bar` generates accessible layout
   widget presets on React, Next.js, Vue, Nuxt and SvelteKit.
 - `-g shared ui [button input label card]` and `-g shared api` generate shared
@@ -28,6 +42,8 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Fixed
 
+- `.fsd/manifest.json` wraps `appliedMigrations` once the line passes 80
+  columns, so Biome accepts the manifest in generated Next.js projects.
 - `package.json` declared `engines.node: ">=20"` while the lockfile resolved
   `chalk@6.0.1`, which requires Node `>=22`. The published engines field now
   matches the resolved dependency tree.
