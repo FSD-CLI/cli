@@ -47,6 +47,15 @@ supported scaffolding frameworks.
 npx create-fsd-architecture@latest my-app
 ```
 
+Or install once and use the short `fsd` command (same CLI):
+
+```bash
+npm install -g create-fsd-architecture
+fsd create my-app
+fsd generate entity product   # or: fsd g entity product
+fsd check
+```
+
 ## 🤖 AI Agent Skill (Beta)
 
 Teach Codex, Claude Code, Cursor, and other Agent Skills-compatible coding
