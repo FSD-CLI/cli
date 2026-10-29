@@ -1,8 +1,11 @@
 # Current release and validation status
 
-## Prepared 2.7.1 — not yet published
+## Published 2.7.1 — 29 October 2026
 
-`package.json` is `2.7.1` on the release branch. It adds the global `fsd`
+The owner published `create-fsd-architecture@2.7.1` with gitHead
+`287b61fc742d49e37b9c41f7c759aa1486b275d2` and integrity
+`sha512-FNrVVa+ZrPKRSoeknRAXWh410/9GF8smyAj+LuM8c9F+x4EU8QY4/7WdLAOGHWDQ3B8Ries1IaQYrN4Rr6djWw==`;
+the `v2.7.1` tag created the GitHub Release. It adds the global `fsd`
 command ([PR #20](https://github.com/FSD-CLI/cli/pull/20)), page presets
 ([PR #21](https://github.com/FSD-CLI/cli/pull/21)), the historical upgrade E2E
 with fixes for projects created before 2.6.1 and for Dependabot-raised managed
@@ -10,8 +13,7 @@ dependencies ([PR #22](https://github.com/FSD-CLI/cli/pull/22)), live Supabase
 staging acceptance of the auth adapter
 ([PR #23](https://github.com/FSD-CLI/cli/pull/23)), and template pins on each
 template's security-fixed `main` ([PR #24](https://github.com/FSD-CLI/cli/pull/24)).
-Each merged with all CI checks green. Publication to npm and the `v2.7.1` tag
-remain owner steps; until then `2.7.0` is the published artifact.
+Each merged with all CI checks green.
 
 ## Published 2.7.0 — 29 October 2026
 

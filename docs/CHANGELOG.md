@@ -2,7 +2,10 @@
 
 All notable changes to `create-fsd-architecture` are documented here.
 
-## 2.7.1 - prepared 2026-10-29, not yet published
+## 2.7.1 - 2026-10-29
+
+Published npm gitHead: `287b61fc742d49e37b9c41f7c759aa1486b275d2`,
+integrity `sha512-FNrVVa+ZrPKRSoeknRAXWh410/9GF8smyAj+LuM8c9F+x4EU8QY4/7WdLAOGHWDQ3B8Ries1IaQYrN4Rr6djWw==`.
 
 A small update on 2.7: the `fsd` command, page presets, fixes for upgrading
 projects created before 2.6.1, and templates pinned to their security-fixed
