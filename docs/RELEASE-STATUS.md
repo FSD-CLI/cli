@@ -1,15 +1,17 @@
 # Current release and validation status
 
-## Prepared 2.7.0 — not yet published
+## Published 2.7.0 — 29 October 2026
 
-`package.json` is `2.7.0` on the release branch. It contains the runtime
+The owner published `create-fsd-architecture@2.7.0` with gitHead
+`561d7d94b5a20179e2246d216d4fc80e9236d4ae` and integrity
+`sha512-F9ka7Ov2ImLFie8ZaBFyZbB5erByOiTf5pnwwHN396Q/spT3UfL/DHOiSPYmipKn287Me012by364XlAuS49hg==`;
+the `v2.7.0` tag created the GitHub Release. It contains the runtime
 contract ([PR #17](https://github.com/FSD-CLI/cli/pull/17)), the Supabase auth
 adapter, batch and structure-only generation and `--architecture` checks
 ([PR #16](https://github.com/FSD-CLI/cli/pull/16)), and the layout widget
 presets and shared ui/api generators
 ([PR #18](https://github.com/FSD-CLI/cli/pull/18)). Each merged with all CI
-checks green. Publication to npm, the `v2.7.0` tag and the post-release smoke
-remain owner steps; until then `2.6.3` is the published artifact.
+checks green.
 
 ## Published 2.6.3 — 11 October 2026
 

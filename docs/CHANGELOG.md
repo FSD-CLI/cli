@@ -6,11 +6,23 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- A global `fsd` binary next to `create-fsd-architecture`. `fsd create` scaffolds
+  a project and `fsd generate` (alias `fsd g`) generates slices; the flag forms
+  keep working. CI installs the packed tarball globally on Linux, macOS and
+  Windows and runs both binaries.
 - `-g page home|about|consult` generates page presets (hero, about, and a
   consultation form with an `onSubmit` callback) on React, Next.js, Vue, Nuxt
   and SvelteKit. Other page names keep the placeholder; all pages are routed.
 
-## 2.7.0 - prepared 2026-10-29, not yet published
+### Changed
+
+- A first argument of `create`, `generate` or `g` is now a subcommand. To name a
+  project `create`, use `fsd create create`.
+
+## 2.7.0 - 2026-10-29
+
+Published npm gitHead: `561d7d94b5a20179e2246d216d4fc80e9236d4ae`,
+integrity `sha512-F9ka7Ov2ImLFie8ZaBFyZbB5erByOiTf5pnwwHN396Q/spT3UfL/DHOiSPYmipKn287Me012by364XlAuS49hg==`.
 
 Breaking: the CLI now requires Node.js `>=22.12.0` (was `>=20`). See
 `docs/RUNTIME-REQUIREMENTS.md`.

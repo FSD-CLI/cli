@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import fs from "fs";
+import path from "path";
 import chalk from "chalk";
 import { parseCliArgs, CliUsageError } from "./cli/args.mjs";
 import { showHelp, showTemplateList } from "./cli/output.mjs";
@@ -16,11 +17,16 @@ function readPackageVersion() {
   return JSON.parse(fs.readFileSync(packageUrl, "utf8")).version;
 }
 
+function invokedProgram() {
+  const name = path.basename(process.argv[1] ?? "", path.extname(process.argv[1] ?? ""));
+  return name === "fsd" ? "fsd" : "create-fsd-architecture";
+}
+
 export async function runCli(args = process.argv.slice(2)) {
   const command = parseCliArgs(args);
 
   if (command.command === "help") {
-    showHelp(readPackageVersion());
+    showHelp(readPackageVersion(), invokedProgram());
     return;
   }
   if (command.command === "version") {

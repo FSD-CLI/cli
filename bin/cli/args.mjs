@@ -56,7 +56,18 @@ function parseUpgradeArgs(args) {
   return options;
 }
 
-export function parseCliArgs(args) {
+const GENERATE_SUBCOMMANDS = new Set(["generate", "g"]);
+
+// `fsd create ...` and `fsd generate|g ...` are subcommand spellings of the
+// flag-based commands, so both entry points share one parser.
+export function normalizeSubcommand(args) {
+  if (args[0] === "create") return args.slice(1);
+  if (GENERATE_SUBCOMMANDS.has(args[0])) return ["--generate", ...args.slice(1)];
+  return args;
+}
+
+export function parseCliArgs(rawArgs) {
+  const args = normalizeSubcommand(rawArgs);
   if (args.includes("--help") || args.includes("-h"))
     return { command: "help" };
   if (args.includes("--version") || args.includes("-v"))

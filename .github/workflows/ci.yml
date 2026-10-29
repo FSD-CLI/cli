@@ -63,6 +63,42 @@ jobs:
       - name: Assert informational commands stay available
         run: node bin/index.mjs --help
 
+  global-install:
+    name: Global install / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Install the packed tarball globally
+        shell: bash
+        run: |
+          npm pack
+          npm install --global ./create-fsd-architecture-*.tgz
+      - name: Both binaries resolve to the same CLI
+        shell: bash
+        run: |
+          expected="$(node -p "require('./package.json').version")"
+          test "$(fsd --version)" = "$expected"
+          test "$(create-fsd-architecture --version)" = "$expected"
+          fsd --help | grep -q "fsd generate"
+      - name: fsd creates a project and generates slices
+        shell: bash
+        working-directory: ${{ runner.temp }}
+        run: |
+          fsd create global-app --framework react-vite --package-manager npm --yes --no-install --no-start
+          cd global-app
+          fsd g entity product
+          fsd check
+          test -f src/entities/product/index.ts
+
   cross-os-cli:
     name: Cross-OS CLI / ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
