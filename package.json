@@ -17,7 +17,8 @@
     "url": "https://github.com/sponsors/ashrafmo-1?frequency=one-time&sponsor=ashrafmo-1"
   },
   "bin": {
-    "create-fsd-architecture": "bin/index.mjs"
+    "create-fsd-architecture": "bin/index.mjs",
+    "fsd": "bin/index.mjs"
   },
   "scripts": {
     "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --check bin/core/command-runner.mjs && node --test tests/*.test.mjs",
