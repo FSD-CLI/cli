@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { execFileSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -532,4 +533,75 @@ test('state2 projects receive light hooks without adopting customized hooks or b
     fs.appendFileSync(path.join(root, hook), '\necho custom policy\n');
     assert(buildUpgradePlan(root, CLI_VERSION).conflicts.length > 0);
   } finally { removeFixture(root); }
+});
+
+test("projects rendered with the pre-2.6.1 documentation domain upgrade instead of conflicting", () => {
+  const stackPath = "src/shared/config/fsd-stack.ts";
+  const useLegacyDomain = (root) => {
+    const file = path.join(root, stackPath);
+    fs.writeFileSync(
+      file,
+      fs.readFileSync(file, "utf8").replaceAll("https://fsdcli.me", "https://fsd-docs.vercel.app")
+    );
+  };
+
+  for (const manifest of [false, true]) {
+    const { root, config } = createFixture("react-vite", { legacyHooks: !manifest });
+    try {
+      if (manifest) {
+        // A 2.6.0 manifest recorded the hash of the old-domain rendering.
+        writeInitialManifest(root, config, "2.6.0");
+        useLegacyDomain(root);
+        const manifestPath = path.join(root, ".fsd", "manifest.json");
+        const recorded = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+        recorded.managedFiles[stackPath].contentHash = `sha256:${createHash("sha256")
+          .update(fs.readFileSync(path.join(root, stackPath), "utf8"))
+          .digest("hex")}`;
+        fs.writeFileSync(manifestPath, serializeManifest(recorded));
+      } else {
+        useLegacyDomain(root);
+      }
+      const plan = buildUpgradePlan(root, CLI_VERSION);
+      assert.equal(plan.conflicts.length, 0, `manifest=${manifest}`);
+      assert.ok(
+        plan.operations.some((operation) => operation.path === stackPath && operation.status === "UPDATE"),
+        `manifest=${manifest}: fsd-stack is updated`
+      );
+      applyUpgradePlan(plan, { noInstall: true });
+      assert.match(fs.readFileSync(path.join(root, stackPath), "utf8"), /https:\/\/fsdcli\.me/);
+    } finally {
+      removeFixture(root);
+    }
+  }
+
+  const { root } = createFixture("react-vite");
+  try {
+    useLegacyDomain(root);
+    fs.appendFileSync(path.join(root, stackPath), "// user edit\n");
+    const plan = buildUpgradePlan(root, CLI_VERSION);
+    assert.ok(plan.conflicts.some((operation) => operation.path === stackPath));
+  } finally {
+    removeFixture(root);
+  }
+});
+
+test("a managed dependency raised by Dependabot is kept; a lowered one still conflicts", () => {
+  for (const [value, conflict] of [["^99.0.0", false], ["^1.0.0", true], ["latest", true]]) {
+    const { root } = createFixture("react-vite");
+    try {
+      const packagePath = path.join(root, "package.json");
+      const pkg = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+      pkg.devDependencies["@commitlint/cli"] = value;
+      fs.writeFileSync(packagePath, `${JSON.stringify(pkg, null, 2)}\n`);
+      const plan = buildUpgradePlan(root, CLI_VERSION);
+      const blocked = plan.conflicts.some((operation) => operation.reason.includes("@commitlint/cli"));
+      assert.equal(blocked, conflict, value);
+      if (!conflict) {
+        applyUpgradePlan(plan, { noInstall: true });
+        assert.equal(JSON.parse(fs.readFileSync(packagePath, "utf8")).devDependencies["@commitlint/cli"], value);
+      }
+    } finally {
+      removeFixture(root);
+    }
+  }
 });
