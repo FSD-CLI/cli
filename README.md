@@ -340,8 +340,14 @@ lifecycle while keeping framework-native providers and generated components.
 
 ## Requirements
 
-- Node.js 20 or later for the CLI
+- Node.js 22.12.0 or later for the CLI
 - Node.js 22.22.2 or later for generated Nuxt and SvelteKit projects
+
+The CLI runtime floor, the per-template floors, and the supported package
+manager versions are verified in
+[docs/RUNTIME-REQUIREMENTS.md](./docs/RUNTIME-REQUIREMENTS.md). The `doctor`
+command enforces them and reports the exact required version when the local
+runtime does not match.
 
 ## Development
 

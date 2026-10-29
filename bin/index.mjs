@@ -9,6 +9,7 @@ import { runGenerator } from "./generator.mjs";
 import { runProjectInspection } from "./commands/inspect-project.mjs";
 import { runUpgradeProject } from "./commands/upgrade-project.mjs";
 import { listTemplates } from "./core/template-registry.mjs";
+import { checkNodeVersion } from "./core/runtime-requirements.mjs";
 
 function readPackageVersion() {
   const packageUrl = new URL("../package.json", import.meta.url);
@@ -30,6 +31,17 @@ export async function runCli(args = process.argv.slice(2)) {
     showTemplateList(listTemplates());
     return;
   }
+
+  // The CLI runtime contract is enforced for every command that reads or writes
+  // a project. Diagnostics stay available so `doctor` can report the exact
+  // required version on an unsupported Node.js runtime.
+  const runtimeCheck = checkNodeVersion(process.versions.node);
+  if (!runtimeCheck.ok && !["check", "doctor", "config"].includes(command.command)) {
+    throw new Error(
+      `${runtimeCheck.message} Upgrade Node.js to satisfy the supported runtime range before running this command.`
+    );
+  }
+
   if (command.command === "generate") {
     await runGenerator({
       shouldGenerate: true,
