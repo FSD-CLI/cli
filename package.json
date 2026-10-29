@@ -44,7 +44,8 @@
     "docs/EXISTING-PROJECT-SUPPORT.md",
     "docs/PROPOSALS.md",
     "docs/AUTH-SUPABASE-CONTRACT.md",
-    "docs/GENERATOR-WORKFLOWS.md"
+    "docs/GENERATOR-WORKFLOWS.md",
+    "docs/RUNTIME-REQUIREMENTS.md"
   ],
   "keywords": [
     "fsd",
@@ -66,7 +67,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12.0"
   },
   "type": "commonjs"
 }

@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { loadProjectConfig } from "../bin/generator.mjs";
 import { inspectProject } from "../bin/commands/inspect-project.mjs";
 import { getFrameworkAdapter } from "../bin/core/frameworks/index.mjs";
+import { checkNodeVersion } from "../bin/core/runtime-requirements.mjs";
 
 const cli = fileURLToPath(new URL("../bin/index.mjs", import.meta.url));
 
@@ -35,7 +36,17 @@ for (const [framework, dependency] of [
       assert.equal(printedConfig.status, 0, printedConfig.stderr);
       assert.deepEqual(JSON.parse(printedConfig.stdout), config);
       const doctor = spawnSync(process.execPath, [cli, "doctor"], { cwd: root, encoding: "utf8" });
-      assert.equal(doctor.status, 0, doctor.stderr);
+      // `doctor` reports the runtime requirement of the template. On a runtime
+      // that the template does not support, the doctor run must fail with the
+      // exact required range instead of passing silently.
+      const runtimeCheck = checkNodeVersion(process.versions.node, { framework });
+      if (runtimeCheck.ok) {
+        assert.equal(doctor.status, 0, doctor.stderr);
+      } else {
+        assert.equal(doctor.status, 1);
+        assert(doctor.stdout.includes(runtimeCheck.frameworkRange), doctor.stdout);
+        assert(doctor.stdout.includes("FAIL"), doctor.stdout);
+      }
       const preview = spawnSync(process.execPath, [cli, "-g", "feature", "checkout", "--dry-run"], { cwd: root, encoding: "utf8" });
       assert.equal(preview.status, 0, preview.stderr);
       assert(preview.stdout.includes("checkout"));

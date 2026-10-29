@@ -18,6 +18,7 @@ import {
   getTemplate,
   listTemplates,
 } from "../core/template-registry.mjs";
+import { checkNodeVersion } from "../core/runtime-requirements.mjs";
 import { normalizeProjectConfig } from "../project-config.mjs";
 import { writeInitialManifest } from "../upgrade/manifest.mjs";
 import { showBanner } from "../cli/output.mjs";
@@ -155,6 +156,16 @@ export async function runCreateProject(options) {
   }
 
   const template = await selectTemplate(options.framework);
+
+  // Fail before any download or write so the user never gets a project that
+  // the current Node runtime cannot build.
+  const nodeCheck = checkNodeVersion(process.versions.node, { framework: template.value });
+  if (!nodeCheck.ok) {
+    throw new Error(
+      `${nodeCheck.message} The ${template.title} template cannot be created with this Node.js runtime.`
+    );
+  }
+
   const overrides = getConfigOverrides(options);
   const projectConfig = options.yes
     ? createDefaultProjectConfig(template.value, overrides)
