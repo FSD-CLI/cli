@@ -7,7 +7,7 @@ const templates = [
     value: "react-vite",
     description: "React with Vite and a complete FSD architecture",
     repo: "FSD-CLI/FSD",
-    ref: "e144552d8a766e4d5aba69448c13d398ed80d4d5",
+    ref: "55530ec14fdcabad6491a3b36edb210ddee54100",
     status: "stable",
   },
   {
@@ -15,7 +15,7 @@ const templates = [
     value: "nextjs",
     description: "Next.js with App Router and a complete FSD architecture",
     repo: "FSD-CLI/FSD-NEXTJS",
-    ref: "9d8a0d3af7e49ebd9c83aff3d8c9bfa086644cab",
+    ref: "b360aefb2318df540310daa27f477904790da9eb",
     status: "stable",
   },
   {
@@ -23,7 +23,7 @@ const templates = [
     value: "vue-vite",
     description: "Vue with Vite and framework-native FSD segments",
     repo: "FSD-CLI/FSD-VUE",
-    ref: "33bf851b925998bee2c26d754a195e5442657154",
+    ref: "82a12276ef0c2942e16fc01f42e03872d1b8d321",
     status: "stable",
   },
   {
@@ -31,7 +31,7 @@ const templates = [
     value: "nuxt",
     description: "Nuxt with framework-native FSD segments",
     repo: "FSD-CLI/FSD-NUXT",
-    ref: "0b445b2efe0566263e8b56b28e4954da4a980446",
+    ref: "533c5f99de833e769218188a17b258684beaa52c",
     status: "stable",
   },
   {
@@ -39,7 +39,7 @@ const templates = [
     value: "sveltekit",
     description: "SvelteKit with framework-native FSD segments",
     repo: "FSD-CLI/fsd-sveltekit",
-    ref: "5db760e9091f2deaff26c082271783909fc47734",
+    ref: "9ff28cf67068bd76b6cb26b33338f45d47394fb0",
     status: "stable",
   },
 ];
