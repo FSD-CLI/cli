@@ -6,6 +6,29 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- Adapters declare the project targets they can create — every current
+  adapter declares `targets: ["web"]` — and the registry can list adapters
+  per target (`listFrameworkAdaptersByTarget`). Registration now enforces
+  adapter contract v2 in full, so a registered adapter missing any v2
+  field fails at startup with every violation listed.
+- The capability matrix is now derived from the framework adapters:
+  `bin/core/capability-matrix.mjs` builds every row from the adapter's own
+  `capabilities` and `generators`, so the data lives in exactly one place.
+  The derived matrix is value-identical to the hand-written matrix it
+  replaces. Behaviour is unchanged.
+- Every framework adapter now declares its own `capabilities` and
+  `generators`, moved verbatim from the capability matrix (Angular declares
+  an empty generator list, as an inspection-only adapter). Behaviour is
+  unchanged.
+- Adapter contract v2: `bin/core/frameworks/adapter-contract.mjs` defines the
+  `FrameworkAdapter` JSDoc types covering `id`, `family`, `targets`,
+  `sourceDirectory`, `capabilities`, `generators`, `dependencies` and
+  `dependencyVersions`, exports the allowed vocabularies (`PROJECT_TARGETS`,
+  `CAPABILITY_IDS`, `GENERATOR_TYPES`) and a validator
+  (`validateAdapter` / `assertAdapterContract`) that the test suite runs over
+  every registered adapter. The prose contract is documented in
+  `docs/ADAPTER-CONTRACT.md`. Behaviour is unchanged: the v2 fields are
+  populated by the follow-up adapter migration.
 - `bin/core/package-name.mjs`: `toPackageName()` converts a project name, a
   project path or a scoped package name into a publishable npm package name
   (lowercase, last path segment, spaces to dashes, no leading `.` or `_`, no
