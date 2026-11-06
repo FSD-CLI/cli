@@ -1,9 +1,23 @@
+/** @type {import("./adapter-contract.mjs").FrameworkAdapter} */
 export const nextjsAdapter = Object.freeze({
   id: "nextjs",
   family: "react",
   sourceDirectory: "src",
   clientDirective: '"use client";\n\n',
   publicApiBaseUrlExpression: 'process.env.NEXT_PUBLIC_API_URL ?? "/api"',
+  capabilities: {
+    defaults: {
+      apiClient: "axios",
+      serverState: "react-query",
+      clientState: "zustand",
+      forms: "react-hook-form-zod",
+    },
+    apiClient: ["axios", "fetch"],
+    serverState: ["react-query", "none"],
+    clientState: ["zustand", "redux", "none"],
+    forms: ["react-hook-form-zod", "none"],
+  },
+  generators: ["feature", "entity", "widget", "page", "shared"],
   dependencies: {
     apiClient: { axios: ["axios"], fetch: [] },
     serverState: { "react-query": ["@tanstack/react-query"], none: [] },
