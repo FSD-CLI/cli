@@ -1,10 +1,25 @@
+/** @type {import("./adapter-contract.mjs").FrameworkAdapter} */
 export const vueViteAdapter = Object.freeze({
   id: "vue-vite",
   family: "vue",
+  targets: ["web"],
   sourceDirectory: "src",
   clientDirective: "",
   publicApiBaseUrlExpression: 'import.meta.env.VITE_API_URL ?? "/api"',
   baseDependencies: ["vue-router"],
+  capabilities: {
+    defaults: {
+      apiClient: "axios",
+      serverState: "vue-query",
+      clientState: "pinia",
+      forms: "vee-validate-zod",
+    },
+    apiClient: ["axios", "fetch"],
+    serverState: ["vue-query", "none"],
+    clientState: ["pinia", "none"],
+    forms: ["vee-validate-zod", "none"],
+  },
+  generators: ["feature", "entity", "widget", "page", "shared"],
   dependencies: {
     apiClient: { axios: ["axios"], fetch: [] },
     serverState: { "vue-query": ["@tanstack/vue-query"], none: [] },
