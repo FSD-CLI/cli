@@ -6,6 +6,56 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- The framework step of the create flow is now filtered by the chosen
+  project target: `listTemplatesForTarget` in the template registry keeps
+  only templates whose adapter serves the target, an explicit framework
+  that does not serve it is refused, and a target no adapter serves yet
+  (Mobile) stops with a clear message instead of an empty prompt.
+- The create flow now asks for a **project target** (Web, Multi-web,
+  Mobile, Universal) between the project name and the framework. The
+  selection is flow state in the new `bin/core/project-target.mjs` — it
+  maps to adapter targets for the steps that follow and is shown in the
+  dry-run plan — and non-interactive runs keep behaving exactly as
+  before: `--yes` never asks and defaults to Web. Only Web is implemented
+  today: the other targets appear in the prompt as disabled "Coming
+  Soon" choices, and selecting one programmatically is rejected with a
+  clear message instead of silently creating a web project.
+- RFC: `docs/RFC-PLUGIN-API.md` proposes a public plugin API that lets a
+  third-party package register an adapter (and, for a new family, a family
+  generator) without a core PR — two tiers (data-only adapters, family
+  plugins), explicit opt-in loading, a five-step registration flow built
+  on the contract validator, and a trust/versioning model. It is the
+  re-entry proposal for the parked plugin system in `docs/PROPOSALS.md`.
+  Draft only; nothing is implemented.
+- Generators now sit behind one shared family interface:
+  `bin/generators/family-generators.mjs` registers a frozen
+  `{ family, createFilePlan }` generator per family, and the generate flow
+  resolves the adapter's family through it instead of branching. The React
+  planner moved out of `bin/generator.mjs` into `bin/generators/react.mjs`,
+  alongside the existing Vue and Svelte planners. Behaviour is unchanged.
+- Adapters declare the project targets they can create — every current
+  adapter declares `targets: ["web"]` — and the registry can list adapters
+  per target (`listFrameworkAdaptersByTarget`). Registration now enforces
+  adapter contract v2 in full, so a registered adapter missing any v2
+  field fails at startup with every violation listed.
+- The capability matrix is now derived from the framework adapters:
+  `bin/core/capability-matrix.mjs` builds every row from the adapter's own
+  `capabilities` and `generators`, so the data lives in exactly one place.
+  The derived matrix is value-identical to the hand-written matrix it
+  replaces. Behaviour is unchanged.
+- Every framework adapter now declares its own `capabilities` and
+  `generators`, moved verbatim from the capability matrix (Angular declares
+  an empty generator list, as an inspection-only adapter). Behaviour is
+  unchanged.
+- Adapter contract v2: `bin/core/frameworks/adapter-contract.mjs` defines the
+  `FrameworkAdapter` JSDoc types covering `id`, `family`, `targets`,
+  `sourceDirectory`, `capabilities`, `generators`, `dependencies` and
+  `dependencyVersions`, exports the allowed vocabularies (`PROJECT_TARGETS`,
+  `CAPABILITY_IDS`, `GENERATOR_TYPES`) and a validator
+  (`validateAdapter` / `assertAdapterContract`) that the test suite runs over
+  every registered adapter. The prose contract is documented in
+  `docs/ADAPTER-CONTRACT.md`. Behaviour is unchanged: the v2 fields are
+  populated by the follow-up adapter migration.
 - `bin/core/package-name.mjs`: `toPackageName()` converts a project name, a
   project path or a scoped package name into a publishable npm package name
   (lowercase, last path segment, spaces to dashes, no leading `.` or `_`, no
