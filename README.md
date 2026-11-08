@@ -56,7 +56,7 @@ fsd generate entity product   # or: fsd g entity product
 fsd check
 ```
 
-## 🤖 AI Agent Skill (Beta)
+## 🤖 AI Agent Skill
 
 Teach Codex, Claude Code, Cursor, and other Agent Skills-compatible coding
 agents how to translate natural-language scaffolding requests into verified FSD
@@ -66,9 +66,11 @@ CLI commands:
 npx skills add FSD-CLI/create-fsd-architecture --skill fsd-cli
 ```
 
-The skill is currently available as `v1.0.0-beta.1`. Its commands and
-installation flow are verified, but agent behavior can vary across tools and
-existing project structures. Review generated changes before committing them.
+The skill is currently available as `v2.0.0` (stable). It was verified against
+`create-fsd-architecture` 2.6.1, and its CLI contract was rechecked against
+2.7.1. Its commands and installation flow are verified, but agent behavior can
+vary across tools and existing project structures. Review generated changes
+before committing them.
 
 The skill inspects the project and uses the CLI for supported structural work
 instead of manually recreating equivalent folders. For example:

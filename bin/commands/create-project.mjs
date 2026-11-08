@@ -365,5 +365,6 @@ export async function runCreateProject(options) {
 
   transaction.commit();
   console.log(`\n${chalk.green.bold("  Project created successfully!")}`);
+  console.log(chalk.yellow("  If this saved you time, star FSD CLI on GitHub: https://github.com/FSD-CLI/cli"));
   showNextSteps(projectName, depsInstalled, projectConfig.packageManager);
 }
