@@ -29,6 +29,7 @@ Usage:
   fsd generate <type> <name...> [--force] [--dry-run]     (alias: fsd g)
   fsd <check|doctor> [--architecture]
   fsd config
+  fsd explain [--tour] [--force]
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
   fsd and create-fsd-architecture are the same CLI; install it globally with
@@ -48,6 +49,7 @@ Commands:
       check                     Inspect config/layers (not import architecture)
        doctor                    Diagnose the local project and toolchain
        config                    Print the resolved FSD configuration
+       explain [--tour] [--force] Summarize the project stack and slices per layer
        upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:
