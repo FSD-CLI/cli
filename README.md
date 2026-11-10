@@ -21,6 +21,7 @@ Create frontend starter projects with a complete
 
 - Documentation: https://fsdcli.me
 - GitHub: https://github.com/FSD-CLI/cli
+- Read in Russian: [README.ru.md](./README.ru.md)
 
 ## Validation scope
 
