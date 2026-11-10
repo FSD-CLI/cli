@@ -23,6 +23,7 @@ Create frontend starter projects with a complete
 - GitHub: https://github.com/FSD-CLI/cli
 - Read in Russian: [README.ru.md](./README.ru.md)
 - Read in Simplified Chinese: [README.zh-CN.md](./README.zh-CN.md)
+- Read in Spanish: [README.es.md](./README.es.md)
 
 ## Validation scope
 
