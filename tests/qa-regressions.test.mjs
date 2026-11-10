@@ -116,6 +116,7 @@ test("intentional no-install remains successful and does not execute installer",
   });
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Project created successfully/);
+  assert.match(result.stdout, /github\.com\/FSD-CLI\/cli/);
   assert.ok(fs.existsSync(path.join(cwd, "app", "fsd.config.json")));
   assert.equal(fs.existsSync(path.join(cwd, "app", "installer-was-called")), false);
 });
