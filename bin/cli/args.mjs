@@ -130,6 +130,45 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  // INT-13 (scoped): only the dry-run preview is implemented. Generation
+  // is INT-14/15/16, so a call without --dry-run is a usage error.
+  if (args[0] === "sync") {
+    if (args[1] !== "api") {
+      throw new CliUsageError(
+        "`fsd sync` supports only `api` (for example, `fsd sync api --schema openapi.json --dry-run`).",
+      );
+    }
+    const options = { command: "sync", subcommand: "api", schema: undefined, dryRun: false };
+    const tail = args.slice(2);
+    for (let index = 0; index < tail.length; index += 1) {
+      const argument = tail[index];
+      if (argument === "--schema" || argument.startsWith("--schema=")) {
+        const value = argument.includes("=")
+          ? argument.slice("--schema=".length)
+          : tail[++index];
+        if (!value || value.startsWith("-")) {
+          throw new CliUsageError("--schema requires a file path.");
+        }
+        options.schema = value;
+      } else if (argument === "--dry-run") {
+        options.dryRun = true;
+      } else {
+        throw new CliUsageError(`Unexpected argument "${argument}".`);
+      }
+    }
+    if (!options.schema) {
+      throw new CliUsageError(
+        "`fsd sync api` requires --schema <file> (for example, --schema openapi.json).",
+      );
+    }
+    if (!options.dryRun) {
+      throw new CliUsageError(
+        "`fsd sync api` only supports --dry-run for now. Add --dry-run to preview detected entities and endpoints.",
+      );
+    }
+    return options;
+  }
+
   const generateIndex = args.findIndex(
     (arg) => arg === "--generate" || arg === "-g",
   );

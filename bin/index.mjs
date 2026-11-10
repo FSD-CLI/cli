@@ -10,6 +10,7 @@ import { runGenerator } from "./generator.mjs";
 import { runProjectInspection } from "./commands/inspect-project.mjs";
 import { runExplainProject } from "./commands/explain-project.mjs";
 import { runHistoryProject } from "./commands/history-project.mjs";
+import { runSyncApiProject } from "./commands/sync-api.mjs";
 import { runUpgradeProject } from "./commands/upgrade-project.mjs";
 import { listTemplates } from "./core/template-registry.mjs";
 import { checkNodeVersion } from "./core/runtime-requirements.mjs";
@@ -44,7 +45,7 @@ export async function runCli(args = process.argv.slice(2)) {
   // a project. Diagnostics stay available so `doctor` can report the exact
   // required version on an unsupported Node.js runtime.
   const runtimeCheck = checkNodeVersion(process.versions.node);
-  if (!runtimeCheck.ok && !["check", "doctor", "config", "history", "explain"].includes(command.command)) {
+  if (!runtimeCheck.ok && !["check", "doctor", "config", "history", "explain", "sync"].includes(command.command)) {
     throw new Error(
       `${runtimeCheck.message} Upgrade Node.js to satisfy the supported runtime range before running this command.`
     );
@@ -80,6 +81,13 @@ export async function runCli(args = process.argv.slice(2)) {
   if (command.command === "history") {
     await runHistoryProject(command, process.cwd(), {
       limit: command.limit,
+    });
+    return;
+  }
+  if (command.command === "sync") {
+    await runSyncApiProject(command, process.cwd(), {
+      schema: command.schema,
+      dryRun: command.dryRun,
     });
     return;
   }
