@@ -18,6 +18,9 @@ test("CLI parser keeps legacy creation and generation syntax", () => {
     command: "create",
     projectName: "shop",
     framework: undefined,
+    target: undefined,
+    monorepo: false,
+    mobile: false,
     packageManager: undefined,
     packageName: undefined,
     apiClient: undefined,
@@ -52,6 +55,9 @@ test("CLI parser supports automation-friendly create flags", () => {
       command: "create",
       projectName: "shop",
       framework: "nextjs",
+      target: undefined,
+      monorepo: false,
+      mobile: false,
       packageManager: undefined,
       packageName: undefined,
       apiClient: undefined,
@@ -73,6 +79,56 @@ test("CLI parser supports automation-friendly create flags", () => {
   );
 });
 
+test("CLI parser resolves the project target flags", () => {
+  assert.equal(parseCliArgs(["shop", "--target", "web"]).target, "web");
+  assert.equal(parseCliArgs(["shop", "--target=web"]).target, "web");
+  assert.equal(parseCliArgs(["shop"]).target, undefined);
+});
+
+test("CLI parser rejects targets that are not available yet", () => {
+  // Multi-web, mobile and universal are valid selections whose support
+  // has not landed: every spelling of them fails fast, with the reason,
+  // instead of creating a web project under a different name.
+  assert.throws(
+    () => parseCliArgs(["shop", "--monorepo"]),
+    /The Multi-web project target is not available yet/
+  );
+  assert.throws(
+    () => parseCliArgs(["shop", "--mobile"]),
+    /The Mobile project target is not available yet/
+  );
+  assert.throws(
+    () => parseCliArgs(["shop", "--target", "universal"]),
+    /The Universal project target is not available yet/
+  );
+  assert.throws(() => parseCliArgs(["shop", "--target", "mobile", "--mobile"]), CliUsageError);
+  assert.throws(
+    () => parseCliArgs(["shop", "--target", "multi-web", "--monorepo"]),
+    CliUsageError
+  );
+});
+
+test("CLI parser rejects invalid or conflicting target flags", () => {
+  assert.throws(() => parseCliArgs(["shop", "--target", "desktop"]), CliUsageError);
+  assert.throws(
+    () => parseCliArgs(["shop", "--target", "desktop"]),
+    /--target supports only web, multi-web, mobile, universal \(received "desktop"\)\./
+  );
+  assert.throws(() => parseCliArgs(["shop", "--target"]), /--target requires a value\./);
+  assert.throws(
+    () => parseCliArgs(["shop", "--monorepo", "--mobile"]),
+    /--monorepo and --mobile cannot be combined\./
+  );
+  assert.throws(
+    () => parseCliArgs(["shop", "--target", "web", "--mobile"]),
+    /--target web conflicts with --mobile \(which selects mobile\)\./
+  );
+  assert.throws(
+    () => parseCliArgs(["shop", "--target", "mobile", "--monorepo"]),
+    CliUsageError
+  );
+});
+
 test("CLI parser exposes dry-run, safe replacement, and inspection commands", () => {
   assert.deepEqual(
     parseCliArgs(["shop", "--framework", "vue-vite", "--yes", "--dry-run", "--force"]),
@@ -80,6 +136,9 @@ test("CLI parser exposes dry-run, safe replacement, and inspection commands", ()
       command: "create",
       projectName: "shop",
       framework: "vue-vite",
+      target: undefined,
+      monorepo: false,
+      mobile: false,
       packageManager: undefined,
       packageName: undefined,
       apiClient: undefined,

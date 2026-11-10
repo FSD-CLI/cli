@@ -21,6 +21,7 @@ Create frontend starter projects with a complete
 
 - Documentation: https://fsdcli.me
 - GitHub: https://github.com/FSD-CLI/cli
+- Read in Russian: [README.ru.md](./README.ru.md)
 - Read in Simplified Chinese: [README.zh-CN.md](./README.zh-CN.md)
 
 ## Validation scope
@@ -57,7 +58,7 @@ fsd generate entity product   # or: fsd g entity product
 fsd check
 ```
 
-## 🤖 AI Agent Skill (Beta)
+## 🤖 AI Agent Skill
 
 Teach Codex, Claude Code, Cursor, and other Agent Skills-compatible coding
 agents how to translate natural-language scaffolding requests into verified FSD
@@ -67,9 +68,11 @@ CLI commands:
 npx skills add FSD-CLI/create-fsd-architecture --skill fsd-cli
 ```
 
-The skill is currently available as `v1.0.0-beta.1`. Its commands and
-installation flow are verified, but agent behavior can vary across tools and
-existing project structures. Review generated changes before committing them.
+The skill is currently available as `v2.0.0` (stable). It was verified against
+`create-fsd-architecture` 2.6.1, and its CLI contract was rechecked against
+2.7.1. Its commands and installation flow are verified, but agent behavior can
+vary across tools and existing project structures. Review generated changes
+before committing them.
 
 The skill inspects the project and uses the CLI for supported structural work
 instead of manually recreating equivalent folders. For example:
@@ -131,17 +134,41 @@ npx create-fsd-architecture@latest check
 npx create-fsd-architecture@latest doctor
 npx create-fsd-architecture@latest config
 
+# Explain an existing FSD project: stack and slices per layer
+npx create-fsd-architecture@latest explain
+npx create-fsd-architecture@latest explain --tour
+
+# Sample recent commits by FSD layer
+npx create-fsd-architecture@latest history
+npx create-fsd-architecture@latest history --limit 20
+
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
 npx create-fsd-architecture@latest upgrade --check
 npx create-fsd-architecture@latest upgrade --yes --no-install
 ```
 
+`explain` prints the project stack from `fsd.config.json` and the slice count
+per sliced layer (pages, widgets, features, entities), plus segments in app
+and shared. The total excludes app/shared segments. `explain --tour`
+writes the same summary as `ONBOARDING.md` in the project root; it refuses to
+overwrite an existing file unless `--force` is passed.
+
+`history` samples the last 50 commits (or `--limit <n>`) from `git log`,
+buckets each changed file by FSD layer (app, pages, widgets, features,
+entities, shared), and prints per-layer file-touch counts, the most-touched slices (excluding
+app/shared segments),
+and a chronological per-commit timeline. A repository with no commits prints a
+note and exits successfully; outside a Git repository the command fails.
+
 Create options:
 
 | Option | Purpose |
 | --- | --- |
 | `-f, --framework <id>` | Skip the framework prompt |
+| `--target <target>` | Select the project target: `web` (the only target available today; `multi-web`, `mobile` and `universal` are rejected until their support lands) |
+| `--monorepo` | Shortcut for `--target multi-web` (not yet available) |
+| `--mobile` | Shortcut for `--target mobile` (not yet available) |
 | `-y, --yes` | Accept framework defaults without prompts; requires a project name and `--framework` |
 | `--package-manager <id>` | Select npm, pnpm, Yarn, or Bun non-interactively |
 | `--package-name <name>` | Set the npm package name independently of the folder name; the name must be publishable on npm |
