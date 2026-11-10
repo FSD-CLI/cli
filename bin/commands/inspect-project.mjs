@@ -9,6 +9,7 @@ import {
   getPackageManagerRequirement,
 } from "../core/runtime-requirements.mjs";
 import { loadProjectConfig } from "../generator.mjs";
+import { explainProject } from "./explain-project.mjs";
 
 const REQUIRED_LAYERS = [
   "app",
@@ -95,7 +96,13 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
     );
   }
 
-  return { config, checks };
+  return {
+    config,
+    checks,
+    // Doctor reuses the slice-count summary from `fsd explain` so the
+    // diagnosis also shows the size of the project it is checking.
+    metrics: includeToolchain ? explainProject(cwd) : null,
+  };
 }
 
 function printChecks(checks) {
@@ -105,6 +112,16 @@ function printChecks(checks) {
       `  ${status}  ${check.label}${check.detail ? ` — ${check.detail}` : ""}`,
     );
   }
+}
+
+function printMetrics({ layers, total }) {
+  console.log(chalk.bold("  Project metrics\n"));
+  for (const { layer, slices, kind } of layers) {
+    const noun = slices.length === 1 ? kind : `${kind}s`;
+    const names = slices.length ? ` — ${slices.join(", ")}` : "";
+    console.log(`  ${layer}: ${slices.length} ${noun}${names}`);
+  }
+  console.log(`\n  Total slices: ${total}\n`);
 }
 
 export async function runProjectInspection(
@@ -123,6 +140,9 @@ export async function runProjectInspection(
   console.log(chalk.bold(`\n  FSD ${command}\n`));
   printChecks(report.checks);
   console.log();
+  if (command === "doctor" && report.metrics) {
+    printMetrics(report.metrics);
+  }
 
   const failures = report.checks.filter((check) => !check.ok);
   if (failures.length) {

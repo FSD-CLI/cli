@@ -48,7 +48,7 @@ Commands:
   -g, --generate <type> <name>  Same as generate
       --list-templates          Show stable and planned framework templates
       check                     Inspect config/layers (not import architecture)
-       doctor                    Diagnose the local project and toolchain
+       doctor                    Diagnose the local project and toolchain, with project metrics
        config                    Print the resolved FSD configuration
        explain [--tour] [--force] Summarize the project stack and slices per layer
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
