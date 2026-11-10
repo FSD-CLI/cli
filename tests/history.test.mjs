@@ -129,3 +129,44 @@ test("history rejects unknown options", (t) => {
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Unexpected argument "--bogus"/);
 });
+
+
+test("history resolves project paths through symlinks and Windows junctions", (t) => {
+  const cwd = historyFixture(t);
+  const container = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-history-link-"));
+  t.after(() => fs.rmSync(container, { recursive: true, force: true }));
+  const alias = path.join(container, "project");
+  fs.symlinkSync(cwd, alias, process.platform === "win32" ? "junction" : "dir");
+  const result = runHistory(alias);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /features: 3 touches/);
+  assert.match(result.stdout, /shared: 1 touch/);
+});
+
+test("history counts app/shared activity without calling segments slices", (t) => {
+  const cwd = fixture(t);
+  commit(cwd, "Add segments and a feature", [
+    "src/app/providers/index.ts",
+    "src/shared/ui/button.tsx",
+    "src/features/auth/ui.tsx",
+  ]);
+  const result = runHistory(cwd);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /app: 1 touch/);
+  assert.match(result.stdout, /shared: 1 touch/);
+  assert.match(result.stdout, /features\/auth: 1 touch/);
+  assert.doesNotMatch(result.stdout, /app\/providers:|shared\/ui:/);
+});
+
+test("history resolves an FSD project nested inside a repository", (t) => {
+  const root = fixture(t);
+  const project = path.join(root, "apps", "web");
+  fs.mkdirSync(project, { recursive: true });
+  fs.writeFileSync(path.join(project, "fsd.config.json"), JSON.stringify(createDefaultProjectConfig("react-vite")));
+  commit(root, "Nested project", ["apps/web/src/features/auth/ui.tsx", "src/features/other/ui.tsx"]);
+  const result = runHistory(project);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /features: 1 touch/);
+  assert.match(result.stdout, /features\/auth: 1 touch/);
+  assert.doesNotMatch(result.stdout, /features\/other:/);
+});

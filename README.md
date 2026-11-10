@@ -142,7 +142,8 @@ npx create-fsd-architecture@latest upgrade --yes --no-install
 
 `history` samples the last 50 commits (or `--limit <n>`) from `git log`,
 buckets each changed file by FSD layer (app, pages, widgets, features,
-entities, shared), and prints per-layer touch counts, the most-touched slices,
+entities, shared), and prints per-layer file-touch counts, the most-touched slices (excluding
+app/shared segments),
 and a chronological per-commit timeline. A repository with no commits prints a
 note and exits successfully; outside a Git repository the command fails.
 

@@ -37,7 +37,7 @@ export function bucketFile(filePath, sourceRootRel) {
   if (segments.length < 2) return null;
   const [layer, slice] = segments;
   if (!HISTORY_LAYERS.includes(layer)) return null;
-  return { layer, slice };
+  return { layer, slice: ["app", "shared"].includes(layer) || segments.length < 3 ? null : slice };
 }
 
 export function parseGitLog(output) {
@@ -68,10 +68,6 @@ function runGit(args, cwd) {
 
 export function historyProject(cwd = process.cwd(), { limit = DEFAULT_HISTORY_LIMIT } = {}) {
   const config = loadProjectConfig(cwd);
-  const sourceRoot = path.join(
-    cwd,
-    getFrameworkAdapter(config.framework).sourceDirectory,
-  );
 
   const repoRootResult = runGit(["rev-parse", "--show-toplevel"], cwd);
   if (repoRootResult.status !== 0) {
@@ -79,8 +75,14 @@ export function historyProject(cwd = process.cwd(), { limit = DEFAULT_HISTORY_LI
       "Not a Git repository. Run `fsd history` inside a Git repository.",
     );
   }
-  const repoRoot = repoRootResult.stdout.trim();
-  const sourceRootRel = normalizePosix(path.relative(repoRoot, sourceRoot));
+  // Ask Git for the project prefix: cwd may use a Windows junction or a
+  // symlink while --show-toplevel returns the physical repository path.
+  const prefix = runGit(["rev-parse", "--show-prefix"], cwd);
+  if (prefix.status !== 0) throw new Error(`git rev-parse failed: ${prefix.stderr.trim()}`);
+  const sourceRootRel = path.posix.join(
+    normalizePosix(prefix.stdout.trim()),
+    normalizePosix(getFrameworkAdapter(config.framework).sourceDirectory),
+  );
 
   const log = runGit(
     ["log", "--name-only", LOG_FORMAT, "--date=short", "-n", String(limit)],
@@ -110,8 +112,10 @@ export function historyProject(cwd = process.cwd(), { limit = DEFAULT_HISTORY_LI
       const bucket = bucketFile(file, sourceRootRel);
       if (bucket) {
         layerTouches.set(bucket.layer, layerTouches.get(bucket.layer) + 1);
-        const key = `${bucket.layer}/${bucket.slice}`;
-        sliceTouches.set(key, (sliceTouches.get(key) ?? 0) + 1);
+        if (bucket.slice !== null) {
+          const key = `${bucket.layer}/${bucket.slice}`;
+          sliceTouches.set(key, (sliceTouches.get(key) ?? 0) + 1);
+        }
         return { path: file, ...bucket };
       }
       otherTouches += 1;
