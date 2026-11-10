@@ -169,6 +169,15 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "agent-rules") {
+    const options = { command: "agent-rules", force: false };
+    for (const argument of args.slice(1)) {
+      if (argument === "--force") options.force = true;
+      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    return options;
+  }
+
   const generateIndex = args.findIndex(
     (arg) => arg === "--generate" || arg === "-g",
   );

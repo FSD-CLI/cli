@@ -11,6 +11,11 @@ All notable changes to `create-fsd-architecture` are documented here.
   schema: it prints the detected entities (`components.schemas`) and
   endpoints (HTTP method, path, operation id) and writes no files.
   Generation from the schema is a later task (INT-14).
+- `agent-rules` writes the project stack, per-layer slice counts and FSD layer
+  rules into `AGENTS.md` and `.cursor/rules/fsd-cli.mdc`, reusing the
+  `explain` project summary. It refuses to overwrite either file if it
+  already exists (Next.js templates ship their own `AGENTS.md`) unless
+  `--force` is passed.
 
 ## 2.8.0 - 2026-11-10
 
