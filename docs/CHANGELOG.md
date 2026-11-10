@@ -75,6 +75,16 @@ All notable changes to `create-fsd-architecture` are documented here.
   Node.js core module name, scoped names stay scoped). It reports whether the
   input was already valid and why it changed. The rules are documented in
   `docs/PACKAGE-NAMING.md`.
+- `fsd explain` prints the project's stack from `fsd.config.json` and the
+  slice count for pages, widgets, features and entities, plus segment
+  counts for app and shared (excluded from the total slice count). `fsd explain --tour` writes the same summary as `ONBOARDING.md`
+  and refuses to overwrite an existing file without `--force`.
+- `fsd history` samples the project's Git log and counts changed-file
+  touches per FSD layer, with a timeline of recent commits and the most-touched
+  slices (excluding app/shared segments). A commit changing three files in a
+  layer contributes three touches, not one commit to that layer's count.
+- After a project is created successfully, the CLI asks for a GitHub star
+  with a link to `FSD-CLI/cli`.
 
 ### Fixed
 
