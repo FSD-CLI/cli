@@ -1,3 +1,10 @@
+import {
+  PROJECT_TARGET_OPTIONS,
+  isProjectTargetAvailable,
+  isProjectTargetSelection,
+  projectTargetUnavailableMessage,
+} from "../core/project-target.mjs";
+
 const BOOLEAN_FLAGS = new Map([
   ["--yes", "yes"],
   ["-y", "yes"],
@@ -5,12 +12,15 @@ const BOOLEAN_FLAGS = new Map([
   ["--no-start", "noStart"],
   ["--dry-run", "dryRun"],
   ["--force", "force"],
+  ["--monorepo", "monorepo"],
+  ["--mobile", "mobile"],
 ]);
 
 const VALUE_FLAGS = new Map([
   ["--framework", "framework"],
   ["--template", "framework"],
   ["-f", "framework"],
+  ["--target", "target"],
   ["--package-manager", "packageManager"],
   ["--package-name", "packageName"],
   ["--api-client", "apiClient"],
@@ -88,6 +98,16 @@ export function parseCliArgs(rawArgs) {
       throw new CliUsageError(`Unexpected argument "${args[1]}".`);
     }
     return { command: args[0] };
+  }
+
+  if (args[0] === "explain") {
+    const options = { command: "explain", tour: false, force: false };
+    for (const argument of args.slice(1)) {
+      if (argument === "--tour") options.tour = true;
+      else if (argument === "--force") options.force = true;
+      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    return options;
   }
 
   if (args[0] === "history") {
@@ -182,6 +202,9 @@ export function parseCliArgs(rawArgs) {
     command: "create",
     projectName: undefined,
     framework: undefined,
+    target: undefined,
+    monorepo: false,
+    mobile: false,
     packageManager: undefined,
     packageName: undefined,
     apiClient: undefined,
@@ -222,6 +245,39 @@ export function parseCliArgs(rawArgs) {
       throw new CliUsageError(`Unexpected argument "${argument}".`);
     }
     options.projectName = argument;
+  }
+
+  if (options.target !== undefined && !isProjectTargetSelection(options.target)) {
+    throw new CliUsageError(
+      `--target supports only ${PROJECT_TARGET_OPTIONS.map((option) => option.value).join(", ")} (received "${options.target}").`
+    );
+  }
+
+  // --monorepo and --mobile are shorthands for --target selections. When
+  // several spellings appear they must agree on a single target; the
+  // resolved selection is what the create flow reads.
+  const shorthand = options.monorepo
+    ? { flag: "--monorepo", target: "multi-web" }
+    : options.mobile
+      ? { flag: "--mobile", target: "mobile" }
+      : null;
+  if (options.monorepo && options.mobile) {
+    throw new CliUsageError("--monorepo and --mobile cannot be combined.");
+  }
+  if (shorthand) {
+    if (options.target !== undefined && options.target !== shorthand.target) {
+      throw new CliUsageError(
+        `--target ${options.target} conflicts with ${shorthand.flag} (which selects ${shorthand.target}).`
+      );
+    }
+    options.target = shorthand.target;
+  }
+
+  // Targets whose support has not landed yet are refused here, at the
+  // CLI boundary, instead of failing later or silently creating a web
+  // project: today only web can be created.
+  if (options.target !== undefined && !isProjectTargetAvailable(options.target)) {
+    throw new CliUsageError(projectTargetUnavailableMessage(options.target));
   }
 
   if (options.yes && !options.projectName) {

@@ -29,6 +29,7 @@ Usage:
   fsd generate <type> <name...> [--force] [--dry-run]     (alias: fsd g)
   fsd <check|doctor> [--architecture]
   fsd config
+  fsd explain [--tour] [--force]
   fsd history [--limit <n>]
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
@@ -49,11 +50,15 @@ Commands:
       check                     Inspect config/layers (not import architecture)
        doctor                    Diagnose the local project and toolchain
        config                    Print the resolved FSD configuration
+       explain [--tour] [--force] Summarize the project stack and slices per layer
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
        upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:
   -f, --framework <id>          Select a framework without the template prompt
+      --target <target>         Project target: web (multi-web, mobile and universal are not yet available)
+      --monorepo                Shortcut for --target multi-web (not yet available)
+      --mobile                  Shortcut for --target mobile (not yet available)
   -y, --yes                     Accept defaults (requires name and --framework)
       --package-manager <id>    Select npm, pnpm, yarn, or bun
       --package-name <name>     Set the npm package name independently of the folder name
