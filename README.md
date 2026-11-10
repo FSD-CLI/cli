@@ -25,6 +25,7 @@ Create frontend starter projects with a complete
 - Read in Simplified Chinese: [README.zh-CN.md](./README.zh-CN.md)
 - Read in Spanish: [README.es.md](./README.es.md)
 - Read in Brazilian Portuguese: [README.pt-BR.md](./README.pt-BR.md)
+- Read in Japanese: [README.ja.md](./README.ja.md)
 
 ## Validation scope
 
