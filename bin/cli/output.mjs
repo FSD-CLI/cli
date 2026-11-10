@@ -30,6 +30,7 @@ Usage:
   fsd <check|doctor> [--architecture]
   fsd config
   fsd explain [--tour] [--force]
+  fsd history [--limit <n>]
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
   fsd and create-fsd-architecture are the same CLI; install it globally with
@@ -50,6 +51,7 @@ Commands:
        doctor                    Diagnose the local project and toolchain
        config                    Print the resolved FSD configuration
        explain [--tour] [--force] Summarize the project stack and slices per layer
+       history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
        upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:

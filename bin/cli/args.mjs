@@ -110,6 +110,26 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "history") {
+    const options = { command: "history", limit: 50 };
+    const tail = args.slice(1);
+    for (let index = 0; index < tail.length; index += 1) {
+      const argument = tail[index];
+      if (argument === "--limit" || argument.startsWith("--limit=")) {
+        const value = argument.includes("=")
+          ? argument.slice("--limit=".length)
+          : tail[++index];
+        if (!value || !/^\d+$/.test(value) || Number(value) < 1) {
+          throw new CliUsageError("--limit requires a positive integer.");
+        }
+        options.limit = Number(value);
+      } else {
+        throw new CliUsageError(`Unexpected argument "${argument}".`);
+      }
+    }
+    return options;
+  }
+
   const generateIndex = args.findIndex(
     (arg) => arg === "--generate" || arg === "-g",
   );

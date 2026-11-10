@@ -136,6 +136,10 @@ npx create-fsd-architecture@latest config
 npx create-fsd-architecture@latest explain
 npx create-fsd-architecture@latest explain --tour
 
+# Sample recent commits by FSD layer
+npx create-fsd-architecture@latest history
+npx create-fsd-architecture@latest history --limit 20
+
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
 npx create-fsd-architecture@latest upgrade --check
@@ -147,6 +151,13 @@ per sliced layer (pages, widgets, features, entities), plus segments in app
 and shared. The total excludes app/shared segments. `explain --tour`
 writes the same summary as `ONBOARDING.md` in the project root; it refuses to
 overwrite an existing file unless `--force` is passed.
+
+`history` samples the last 50 commits (or `--limit <n>`) from `git log`,
+buckets each changed file by FSD layer (app, pages, widgets, features,
+entities, shared), and prints per-layer file-touch counts, the most-touched slices (excluding
+app/shared segments),
+and a chronological per-commit timeline. A repository with no commits prints a
+note and exits successfully; outside a Git repository the command fails.
 
 Create options:
 
