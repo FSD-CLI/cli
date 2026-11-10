@@ -132,11 +132,21 @@ npx create-fsd-architecture@latest check
 npx create-fsd-architecture@latest doctor
 npx create-fsd-architecture@latest config
 
+# Explain an existing FSD project: stack and slices per layer
+npx create-fsd-architecture@latest explain
+npx create-fsd-architecture@latest explain --tour
+
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
 npx create-fsd-architecture@latest upgrade --check
 npx create-fsd-architecture@latest upgrade --yes --no-install
 ```
+
+`explain` prints the project stack from `fsd.config.json` and the slice count
+per sliced layer (pages, widgets, features, entities), plus segments in app
+and shared. The total excludes app/shared segments. `explain --tour`
+writes the same summary as `ONBOARDING.md` in the project root; it refuses to
+overwrite an existing file unless `--force` is passed.
 
 Create options:
 

@@ -100,6 +100,16 @@ export function parseCliArgs(rawArgs) {
     return { command: args[0] };
   }
 
+  if (args[0] === "explain") {
+    const options = { command: "explain", tour: false, force: false };
+    for (const argument of args.slice(1)) {
+      if (argument === "--tour") options.tour = true;
+      else if (argument === "--force") options.force = true;
+      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    return options;
+  }
+
   const generateIndex = args.findIndex(
     (arg) => arg === "--generate" || arg === "-g",
   );
