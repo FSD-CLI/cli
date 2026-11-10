@@ -4,6 +4,15 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ## Unreleased
 
+No changes yet.
+
+## 2.8.0 - 2026-11-10
+
+Adds project explanation and Git history commands, consistent project naming,
+README translations in five languages, and the adapter foundation for future
+project targets. Web remains the only supported creation target; the plugin
+API is a proposal, not a shipped runtime feature.
+
 ### Added
 
 - Create flags for the project target: `--target <web|multi-web|mobile|universal>`
@@ -83,11 +92,18 @@ All notable changes to `create-fsd-architecture` are documented here.
   touches per FSD layer, with a timeline of recent commits and the most-touched
   slices (excluding app/shared segments). A commit changing three files in a
   layer contributes three touches, not one commit to that layer's count.
+- README translations in Russian, Simplified Chinese, Spanish, Brazilian
+  Portuguese and Japanese, linked from the English README.
 - After a project is created successfully, the CLI asks for a GitHub star
   with a link to `FSD-CLI/cli`.
 
 ### Fixed
 
+- `fsd history` resolves project paths using Git's prefix, including Windows
+  junctions, symlinked checkouts and projects nested in a repository.
+- `fsd explain` distinguishes app/shared segments from slices; segments are
+  excluded from the total slice count and history's most-touched slice ranking.
+- Preserve the executable permission on the CLI entry point.
 - A created project no longer inherits the template's package identity. The
   generated `package.json` carries the project's own name and is private and
   versionless, and the npm and bun lockfile name fields follow it. The

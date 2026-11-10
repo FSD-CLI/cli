@@ -1,5 +1,14 @@
 # Current release and validation status
 
+## Prepared 2.8.0 — 10 November 2026
+
+Release candidate for project explanation, Git history, project naming and
+README translations. The adapter/target foundation keeps Web as the only
+supported creation target; the plugin API remains a proposal.
+
+Publication and exact-artifact verification are tracked separately from the
+source tests. See [Changelog](CHANGELOG.md#280---2026-11-10) for the release scope.
+
 ## Published 2.7.1 — 29 October 2026
 
 The owner published `create-fsd-architecture@2.7.1` with gitHead
