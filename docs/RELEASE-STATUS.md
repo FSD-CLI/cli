@@ -1,13 +1,33 @@
 # Current release and validation status
 
-## Prepared 2.8.0 — 10 November 2026
+## Published 2.8.0 — 10 November 2026
 
-Release candidate for project explanation, Git history, project naming and
+`create-fsd-architecture@2.8.0` is published on npm with `latest: 2.8.0`,
+gitHead `6496a11077b28d51d42a987bc26c8cbb577ba9ce` and integrity
+`sha512-thNSwU6iZP/2A2m7FkMfOSxiSPlt9a1vyCzzDsiQO0woowZcN1ZsxlEulgyryUHWDR1ns8ljic0k1zzIMo86Og==`.
+The registry identity matches the locally tested package. The `v2.8.0` tag
+points to that release commit and the
+[GitHub Release](https://github.com/FSD-CLI/cli/releases/tag/v2.8.0) is published.
+
+This release adds project explanation, Git history, project naming fixes and
 README translations. The adapter/target foundation keeps Web as the only
 supported creation target; the plugin API remains a proposal.
+See [Changelog](CHANGELOG.md#280---2026-11-10) for the full scope.
 
-Publication and exact-artifact verification are tracked separately from the
-source tests. See [Changelog](CHANGELOG.md#280---2026-11-10) for the release scope.
+Validation: 262/262 local tests, npm package-content/executable checks and a
+zero-advisory dependency audit passed. The
+[source CI](https://github.com/FSD-CLI/cli/actions/runs/42809667028) and
+[tag release checks](https://github.com/FSD-CLI/cli/actions/runs/42810199442)
+passed on the exact release commit.
+
+[Published-artifact smoke](https://github.com/FSD-CLI/cli/actions/runs/42810721661)
+passed for React/Vite and Next.js with npm on Ubuntu/Node 22.23.0 (attempt 3),
+covering registry identity, installation, CLI commands, project creation,
+slice generation, doctor/check and generated-project quality/build. The same
+artifact smoke passed locally on macOS/Node 24.21.0. Earlier GitHub attempts
+received tarball 404 responses during npm availability propagation; no source
+or artifact was changed between attempts. These artifact results do not certify
+all framework/package-manager/runtime combinations.
 
 ## Published 2.7.1 — 29 October 2026
 
