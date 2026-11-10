@@ -6,6 +6,14 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- Create flags for the project target: `--target <web|multi-web|mobile|universal>`
+  plus the `--monorepo` (multi-web) and `--mobile` shorthands. Invalid
+  values and conflicting spellings fail with a usage error, an agreed
+  shorthand resolves into the same `target` option the prompt step uses,
+  and the flags are listed in `--help`. Targets that are not implemented
+  yet (multi-web, mobile, universal) are rejected with a clear message
+  until their support lands, `--help` and the README mark them as not
+  yet available, and the README flag table lists all three flags.
 - The framework step of the create flow is now filtered by the chosen
   project target: `listTemplatesForTarget` in the template registry keeps
   only templates whose adapter serves the target, an explicit framework
