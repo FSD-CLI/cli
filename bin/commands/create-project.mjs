@@ -20,9 +20,15 @@ import {
   resolveExplicitPackageName,
 } from "../core/package-name.mjs";
 import {
+  DEFAULT_PROJECT_TARGET,
+  PROJECT_TARGET_OPTIONS,
+  assertProjectTargetAvailable,
+  getProjectTargetOption,
+} from "../core/project-target.mjs";
+import {
   getAvailableTemplate,
   getTemplate,
-  listTemplates,
+  listTemplatesForTarget,
 } from "../core/template-registry.mjs";
 import { checkNodeVersion } from "../core/runtime-requirements.mjs";
 import { normalizeProjectConfig } from "../project-config.mjs";
@@ -68,15 +74,28 @@ async function selectProjectName(projectName) {
   return answer.projectName;
 }
 
-async function selectTemplate(framework) {
-  if (framework) return getAvailableTemplate(framework);
+export async function selectTemplate(framework, target = DEFAULT_PROJECT_TARGET, ask = prompts) {
+  const supported = listTemplatesForTarget(target);
+  const targetTitle = getProjectTargetOption(target).title;
 
-  const answer = await prompts(
+  if (framework) {
+    const template = getAvailableTemplate(framework);
+    if (!supported.some((candidate) => candidate.value === template.value)) {
+      throw new Error(`${template.title} does not support the ${targetTitle} target.`);
+    }
+    return template;
+  }
+
+  if (supported.length === 0) {
+    throw new Error(`No frameworks support the ${targetTitle} target yet.`);
+  }
+
+  const answer = await ask(
     {
       type: "select",
       name: "template",
       message: "Select framework",
-      choices: listTemplates().map((template) => ({
+      choices: supported.map((template) => ({
         title: template.available
           ? template.title
           : `${template.title} ${chalk.dim("(Coming Soon)")}`,
@@ -128,10 +147,11 @@ function showNextSteps(projectName, depsInstalled, packageManager) {
   console.log();
 }
 
-function showProjectPlan({ projectName, targetDir, template, projectConfig, options }) {
+function showProjectPlan({ projectName, targetDir, target, template, projectConfig, options }) {
   const replace = fs.existsSync(targetDir) && options.force;
   console.log(chalk.bold("  Project plan (dry run)\n"));
   console.log(`  Target: ${targetDir}`);
+  console.log(`  Project target: ${getProjectTargetOption(target).title} (${target})`);
   console.log(`  Template: ${template.title} (${template.repo}#${template.ref})`);
   console.log(`  Package manager: ${projectConfig.packageManager}`);
   console.log(`  API client: ${projectConfig.apiClient}`);
@@ -208,6 +228,52 @@ export async function resolvePackageName(projectName, options = {}, ask = prompt
   };
 }
 
+/**
+ * Resolves the project target for the create flow.
+ *
+ * The target step sits between the project name and the framework: the
+ * chosen target decides what the rest of the flow can offer (the tool
+ * step for multi-app targets, and framework filtering once it lands).
+ *
+ * An explicit `options.target` wins and is validated. `--yes` never asks
+ * and defaults to "web", so existing non-interactive commands behave
+ * exactly as before. The selection is flow state only — persisting it
+ * into the project config is separate follow-up work.
+ *
+ * @param {{yes?: boolean, target?: string}} options
+ * @param {Function} ask the prompt implementation, injectable for the tests
+ * @returns {Promise<string>} the project target selection
+ */
+export async function resolveProjectTarget(options = {}, ask = prompts) {
+  if (options.target !== undefined) {
+    const selection = getProjectTargetOption(options.target).value;
+    assertProjectTargetAvailable(selection);
+    return selection;
+  }
+
+  if (options.yes) return DEFAULT_PROJECT_TARGET;
+
+  const answer = await ask(
+    {
+      type: "select",
+      name: "target",
+      message: "Project target",
+      choices: PROJECT_TARGET_OPTIONS.map((option) => ({
+        title: option.available ? option.title : `${option.title} (Coming Soon)`,
+        value: option.value,
+        description: option.description,
+        disabled: !option.available,
+      })),
+      initial: PROJECT_TARGET_OPTIONS.findIndex(
+        ({ value }) => value === DEFAULT_PROJECT_TARGET
+      ),
+    },
+    onCancel
+  );
+  assertProjectTargetAvailable(answer.target);
+  return answer.target;
+}
+
 export async function runCreateProject(options) {
   showBanner();
   const projectName = await selectProjectName(options.projectName);
@@ -225,7 +291,9 @@ export async function runCreateProject(options) {
   const { packageName, warning } = await resolvePackageName(projectName, options);
   if (warning) console.log(chalk.yellow(`  ${warning}`));
 
-  const template = await selectTemplate(options.framework);
+  const target = await resolveProjectTarget(options);
+
+  const template = await selectTemplate(options.framework, target);
 
   // Fail before any download or write so the user never gets a project that
   // the current Node runtime cannot build.
@@ -245,7 +313,7 @@ export async function runCreateProject(options) {
       });
 
   if (options.dryRun) {
-    showProjectPlan({ projectName, targetDir, template, projectConfig, options });
+    showProjectPlan({ projectName, targetDir, target, template, projectConfig, options });
     return;
   }
 
@@ -365,5 +433,6 @@ export async function runCreateProject(options) {
 
   transaction.commit();
   console.log(`\n${chalk.green.bold("  Project created successfully!")}`);
+  console.log(chalk.yellow("  If this saved you time, star FSD CLI on GitHub: https://github.com/FSD-CLI/cli"));
   showNextSteps(projectName, depsInstalled, projectConfig.packageManager);
 }
