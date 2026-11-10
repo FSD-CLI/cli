@@ -50,7 +50,9 @@ test("explain prints framework, stack and per-layer slice counts", (t) => {
   assert.match(result.stdout, /features: 2 slices — auth, cart/);
   assert.match(result.stdout, /entities: 1 slice — product/);
   assert.match(result.stdout, /widgets: 0 slices/);
-  assert.match(result.stdout, /Total slices: 7/);
+  assert.match(result.stdout, /Total slices: 4/);
+  assert.match(result.stdout, /app: 1 segment — providers/);
+  assert.match(result.stdout, /shared: 2 segments — api, ui/);
 });
 
 test("explain --tour writes ONBOARDING.md with stack, layers and commands", (t) => {
@@ -63,7 +65,8 @@ test("explain --tour writes ONBOARDING.md with stack, layers and commands", (t) 
   assert.match(content, /Framework: react-vite/);
   assert.match(content, /features — 2 slices: auth, cart/);
   assert.match(content, /entities — 1 slice: product/);
-  assert.match(content, /Total slices: 7/);
+  assert.match(content, /Total slices: 4/);
+  assert.match(content, /shared — 2 segments: api, ui/);
   assert.match(content, /check/);
   assert.match(content, /doctor/);
 });

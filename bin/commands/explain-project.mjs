@@ -30,9 +30,10 @@ export function explainProject(cwd = process.cwd()) {
   );
   const layers = EXPLAIN_LAYERS.map((layer) => ({
     layer,
+    kind: ["app", "shared"].includes(layer) ? "segment" : "slice",
     slices: listSlices(path.join(sourceRoot, layer)),
   }));
-  const total = layers.reduce((sum, { slices }) => sum + slices.length, 0);
+  const total = layers.reduce((sum, { slices, kind }) => sum + (kind === "slice" ? slices.length : 0), 0);
   return { config, sourceRoot, layers, total };
 }
 
@@ -46,8 +47,8 @@ function printSummary(report) {
   console.log(`  Client state: ${config.clientState}`);
   console.log(`  Forms: ${config.forms}`);
   console.log();
-  for (const { layer, slices } of layers) {
-    const noun = slices.length === 1 ? "slice" : "slices";
+  for (const { layer, slices, kind } of layers) {
+    const noun = slices.length === 1 ? kind : `${kind}s`;
     const names = slices.length ? ` — ${slices.join(", ")}` : "";
     console.log(`  ${layer}: ${slices.length} ${noun}${names}`);
   }
@@ -75,8 +76,8 @@ function renderTour(report) {
     `Layers live under \`${path.relative(process.cwd(), sourceRoot) || sourceRoot}/\`:`,
     "",
   ];
-  for (const { layer, slices } of layers) {
-    const noun = slices.length === 1 ? "slice" : "slices";
+  for (const { layer, slices, kind } of layers) {
+    const noun = slices.length === 1 ? kind : `${kind}s`;
     const names = slices.length ? `: ${slices.join(", ")}` : "";
     lines.push(`- ${layer} — ${slices.length} ${noun}${names}`);
   }

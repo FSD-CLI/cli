@@ -141,7 +141,8 @@ npx create-fsd-architecture@latest upgrade --yes --no-install
 ```
 
 `explain` prints the project stack from `fsd.config.json` and the slice count
-per layer (app, pages, widgets, features, entities, shared). `explain --tour`
+per sliced layer (pages, widgets, features, entities), plus segments in app
+and shared. The total excludes app/shared segments. `explain --tour`
 writes the same summary as `ONBOARDING.md` in the project root; it refuses to
 overwrite an existing file unless `--force` is passed.
 
