@@ -150,6 +150,8 @@ npx create-fsd-architecture@latest sync api --schema openapi.json --dry-run
 # Generate agent rules (AGENTS.md + Cursor rules) for an existing FSD project
 npx create-fsd-architecture@latest agent-rules
 npx create-fsd-architecture@latest agent-rules --force
+# Load and validate the project policy file (fsd.policy.ts)
+npx create-fsd-architecture@latest policy
 
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
@@ -175,11 +177,18 @@ prints the detected entities (from `components.schemas`) and endpoints
 (HTTP method, path, operation id and summary). It is a preview only: no
 files are written, and running it without `--dry-run` fails with a usage
 error. Generation from the schema is a later task.
+
 `agent-rules` writes the project stack, slice counts and FSD layer rules into
 `AGENTS.md` and `.cursor/rules/fsd-cli.mdc` in the project root, reusing the
 same data `explain` prints. It refuses to overwrite either file if it already
 exists (Next.js templates ship their own `AGENTS.md`) unless `--force` is
 passed.
+
+`policy` loads and validates `fsd.policy.ts` (or `fsd.policy.mjs` /
+`fsd.policy.js`) in the project root and prints the declared rules. The
+format is specified in [docs/POLICY-FORMAT.md](./docs/POLICY-FORMAT.md).
+Rules are only declared, not evaluated yet — enforcement inside `check`
+is a separate task (INT-36).
 
 Create options:
 
