@@ -152,6 +152,8 @@ npx create-fsd-architecture@latest agent-rules
 npx create-fsd-architecture@latest agent-rules --force
 # Load and validate the project policy file (fsd.policy.ts)
 npx create-fsd-architecture@latest policy
+# Serve project inspection over MCP (stdio JSON-RPC 2.0)
+npx create-fsd-architecture@latest mcp
 
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
@@ -189,6 +191,14 @@ passed.
 format is specified in [docs/POLICY-FORMAT.md](./docs/POLICY-FORMAT.md).
 Rules are only declared, not evaluated yet — enforcement inside `check`
 is a separate task (INT-36).
+
+`mcp` starts a minimal MCP server over stdio (newline-delimited JSON-RPC
+2.0) with exactly two tools: `check` (configuration, package.json and layer
+presence, as `fsd check` reports them) and `explain` (framework, stack and
+slice counts per layer, as `fsd explain` reports them). Both tools accept an
+optional `projectPath` and default to the server's working directory. The
+server answers `initialize`, `ping`, `tools/list` and `tools/call`, and exits
+when its stdin closes.
 
 Create options:
 

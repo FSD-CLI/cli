@@ -34,6 +34,7 @@ Usage:
   fsd sync api --schema <file> --dry-run
   fsd agent-rules [--force]
   fsd policy
+  fsd mcp
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
   fsd and create-fsd-architecture are the same CLI; install it globally with
@@ -58,6 +59,7 @@ Commands:
        sync api --schema <file> --dry-run Preview entities/endpoints from a JSON OpenAPI schema (no files written)
        agent-rules [--force]       Write AGENTS.md + .cursor/rules/fsd-cli.mdc
        policy                    Load and validate fsd.policy.ts (rules are not evaluated yet)
+       mcp                         Minimal MCP server over stdio (tools: check, explain)
        upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:

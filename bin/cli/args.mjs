@@ -185,6 +185,13 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "mcp") {
+    if (args.length > 1) {
+      throw new CliUsageError(`Unexpected argument "${args[1]}".`);
+    }
+    return { command: "mcp" };
+  }
+
   const generateIndex = args.findIndex(
     (arg) => arg === "--generate" || arg === "-g",
   );
