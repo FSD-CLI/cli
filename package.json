@@ -65,7 +65,12 @@
     "scaffolding",
     "cli",
     "scaffold",
-    "template"
+    "template",
+    "typescript",
+    "feature-sliced",
+    "boilerplate",
+    "starter-kit",
+    "generator"
   ],
   "license": "MIT",
   "engines": {
