@@ -4,7 +4,9 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ## Unreleased
 
-No changes yet.
+### Added
+
+- `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 
 ## 2.8.0 - 2026-11-10
 
