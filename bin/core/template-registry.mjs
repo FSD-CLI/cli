@@ -8,7 +8,7 @@ const templates = [
     value: "react-vite",
     description: "React with Vite and a complete FSD architecture",
     repo: "FSD-CLI/FSD",
-    ref: "55530ec14fdcabad6491a3b36edb210ddee54100",
+    ref: "aac6cebd4db0e12dffeef716cc29df09587a5aaf",
     status: "stable",
   },
   {
