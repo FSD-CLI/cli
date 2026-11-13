@@ -28,6 +28,12 @@ All notable changes to `create-fsd-architecture` are documented here.
   default to the server's working directory; the server exits when stdin
   closes.
 
+### Fixed
+
+- New React + Vite projects no longer contain `DEVTO-FSD-CLI-DRAFT.md`, an
+  unpublished article draft that shipped from the template root. The template
+  pin moves to `FSD-CLI/FSD@aac6ceb`, whose only change is removing that file.
+
 ## 2.8.0 - 2026-11-10
 
 Adds project explanation and Git history commands, consistent project naming,
