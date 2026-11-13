@@ -22,6 +22,11 @@ All notable changes to `create-fsd-architecture` are documented here.
   `bin/core/policy.mjs` and reported by the new `fsd policy` command.
   Rules are declared only — evaluation inside `fsd check` is INT-36.
   The format is specified in `docs/POLICY-FORMAT.md`.
+- `fsd mcp`: a minimal MCP server over stdio (newline-delimited JSON-RPC
+  2.0) with exactly two tools, `check` and `explain`, reusing the CLI's own
+  inspection helpers. Both tools accept an optional `projectPath` and
+  default to the server's working directory; the server exits when stdin
+  closes.
 
 ## 2.8.0 - 2026-11-10
 
