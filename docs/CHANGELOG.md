@@ -30,9 +30,15 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Fixed
 
+- Templates are pinned to their November dependency updates: React + Vite
+  `59a2506` (ESLint 10), Next.js `3d0ba89` (fixes the high follow-redirects
+  advisory in its audit), Vue + Vite `60fec4b`, Nuxt `3e16cb6` and SvelteKit
+  `904812e` (fixes the high joi advisory in its audit). The stack versions the
+  CLI writes for the selected options are unchanged, so `fsd upgrade` keeps
+  treating existing projects as up to date.
 - New React + Vite projects no longer contain `DEVTO-FSD-CLI-DRAFT.md`, an
-  unpublished article draft that shipped from the template root. The template
-  pin moves to `FSD-CLI/FSD@aac6ceb`, whose only change is removing that file.
+  unpublished article draft that shipped from the template root
+  (removed in `FSD-CLI/FSD@aac6ceb`).
 
 ## 2.8.0 - 2026-11-10
 
