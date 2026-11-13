@@ -1,0 +1,1 @@
+{"$schema":"https://raw.githubusercontent.com/FSD-CLI/cli/main/schema/fsd.config.schema.json","apiClient":"axios","clientState":"zustand","forms":"react-hook-form-zod","framework":"react-vite","packageManager":"npm","schemaVersion":1,"serverState":"react-query","ui":"shared-ui"}
