@@ -7,6 +7,10 @@ All notable changes to `create-fsd-architecture` are documented here.
 ### Added
 
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
+- `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
+  schema: it prints the detected entities (`components.schemas`) and
+  endpoints (HTTP method, path, operation id) and writes no files.
+  Generation from the schema is a later task (INT-14).
 
 ## 2.8.0 - 2026-11-10
 

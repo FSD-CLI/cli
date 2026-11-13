@@ -31,6 +31,7 @@ Usage:
   fsd config
   fsd explain [--tour] [--force]
   fsd history [--limit <n>]
+  fsd sync api --schema <file> --dry-run
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
   fsd and create-fsd-architecture are the same CLI; install it globally with
@@ -52,6 +53,7 @@ Commands:
        config                    Print the resolved FSD configuration
        explain [--tour] [--force] Summarize the project stack and slices per layer
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
+       sync api --schema <file> --dry-run Preview entities/endpoints from a JSON OpenAPI schema (no files written)
        upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:

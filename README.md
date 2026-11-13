@@ -145,6 +145,9 @@ npx create-fsd-architecture@latest explain --tour
 npx create-fsd-architecture@latest history
 npx create-fsd-architecture@latest history --limit 20
 
+# Preview what a JSON OpenAPI schema contains (dry run only, no files written)
+npx create-fsd-architecture@latest sync api --schema openapi.json --dry-run
+
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
 npx create-fsd-architecture@latest upgrade --check
@@ -163,6 +166,12 @@ entities, shared), and prints per-layer file-touch counts, the most-touched slic
 app/shared segments),
 and a chronological per-commit timeline. A repository with no commits prints a
 note and exits successfully; outside a Git repository the command fails.
+
+`sync api --schema <file> --dry-run` reads a JSON OpenAPI 3.x schema and
+prints the detected entities (from `components.schemas`) and endpoints
+(HTTP method, path, operation id and summary). It is a preview only: no
+files are written, and running it without `--dry-run` fails with a usage
+error. Generation from the schema is a later task.
 
 Create options:
 
