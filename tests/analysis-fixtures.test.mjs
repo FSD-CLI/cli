@@ -33,10 +33,19 @@ function read(fixture, relativePath) {
   );
 }
 
+// Escapes every RegExp metacharacter, so an import path is matched literally.
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&");
+}
+
+function importPattern(to) {
+  return new RegExp(`from\\s+"[^"]*${escapeRegExp(to)}"`);
+}
+
 function assertImport(content, from, to) {
   assert.match(
     content,
-    new RegExp(`from\\s+"[^"]*${to.replace(/\//g, "\\/")}"`),
+    importPattern(to),
     `${from} should import from ${to}`,
   );
 }
@@ -44,7 +53,7 @@ function assertImport(content, from, to) {
 function assertNoImport(content, from, to) {
   assert.doesNotMatch(
     content,
-    new RegExp(`from\\s+"[^"]*${to.replace(/\//g, "\\/")}"`),
+    importPattern(to),
     `${from} should not import from ${to}`,
   );
 }
