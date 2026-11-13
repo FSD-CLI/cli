@@ -10,3 +10,9 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # 8.x changes nothing but its engines field, which requires
+      # Node ^22.22.2 || ^24.15.0. The CLI supports Node >=22.12.0, so the bump
+      # would break installs on 22.12-22.22.1. Revisit when engines rises.
+      - dependency-name: validate-npm-package-name
+        update-types: ["version-update:semver-major"]
