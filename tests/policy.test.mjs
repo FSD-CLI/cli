@@ -139,15 +139,41 @@ test("loadPolicy loads and validates a .mjs policy file", async (t) => {
   assert.deepEqual(result.errors, []);
 });
 
-test("loadPolicy loads a .ts policy file on a runtime with type stripping", async (t) => {
-  const cwd = fixture(t, {
-    "fsd.policy.ts": `export default ${JSON.stringify(validPolicy)};\n`,
-  });
-  const result = await loadPolicy(cwd);
-  assert.equal(result.found, true);
-  assert.deepEqual(result.policy, validPolicy);
-  assert.deepEqual(result.errors, []);
-});
+// Node strips types from .ts files by default only from 22.18. The CLI
+// supports 22.12+, so the .ts tests check whichever behaviour this runtime has.
+const canStripTypes = Boolean(process.features?.typescript);
+const NO_STRIP_REASON = "this Node runtime does not strip types by default";
+
+test(
+  "loadPolicy loads a .ts policy file on a runtime with type stripping",
+  { skip: !canStripTypes && NO_STRIP_REASON },
+  async (t) => {
+    const cwd = fixture(t, {
+      "fsd.policy.ts": `export default ${JSON.stringify(validPolicy)};\n`,
+    });
+    const result = await loadPolicy(cwd);
+    assert.equal(result.found, true);
+    assert.deepEqual(result.policy, validPolicy);
+    assert.deepEqual(result.errors, []);
+  },
+);
+
+test(
+  "loadPolicy explains how to fix a .ts policy on a runtime without type stripping",
+  { skip: canStripTypes && "this Node runtime strips types" },
+  async (t) => {
+    const cwd = fixture(t, {
+      "fsd.policy.ts": `export default ${JSON.stringify(validPolicy)};\n`,
+    });
+    const result = await loadPolicy(cwd);
+    assert.equal(result.found, true);
+    assert.equal(result.policy, null);
+    assert.equal(result.errors.length, 1);
+    assert.match(result.errors[0], /Failed to load fsd\.policy\.ts/);
+    assert.match(result.errors[0], /needs Node >= 22\.18/);
+    assert.match(result.errors[0], /fsd\.policy\.mjs/);
+  },
+);
 
 test("loadPolicy surfaces validation errors from the file", async (t) => {
   const cwd = fixture(t, {
@@ -184,15 +210,33 @@ test("policy prints a valid policy with its rules and severities", (t) => {
   assert.match(result.stdout, /not evaluated yet/);
 });
 
-test("policy accepts a .ts policy file from the command line", (t) => {
-  const cwd = fixture(t, {
-    "fsd.policy.ts": `export default ${JSON.stringify(validPolicy)};\n`,
-  });
-  const result = runPolicy(cwd);
-  assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /File: fsd\.policy\.ts/);
-  assert.match(result.stdout, /Rules: 3/);
-});
+test(
+  "policy accepts a .ts policy file from the command line",
+  { skip: !canStripTypes && NO_STRIP_REASON },
+  (t) => {
+    const cwd = fixture(t, {
+      "fsd.policy.ts": `export default ${JSON.stringify(validPolicy)};\n`,
+    });
+    const result = runPolicy(cwd);
+    assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /File: fsd\.policy\.ts/);
+    assert.match(result.stdout, /Rules: 3/);
+  },
+);
+
+test(
+  "policy points to fsd.policy.mjs when this runtime cannot load a .ts policy",
+  { skip: canStripTypes && "this Node runtime strips types" },
+  (t) => {
+    const cwd = fixture(t, {
+      "fsd.policy.ts": `export default ${JSON.stringify(validPolicy)};\n`,
+    });
+    const result = runPolicy(cwd);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /needs Node >= 22\.18/);
+    assert.match(result.stderr, /fsd\.policy\.mjs/);
+  },
+);
 
 test("policy fails on an invalid policy file", (t) => {
   const cwd = fixture(t, {
