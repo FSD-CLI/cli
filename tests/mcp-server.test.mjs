@@ -18,9 +18,41 @@ const SLICES = {
   shared: ["api", "ui"],
 };
 
+// Servers started by each test. A temp dir is removed only after its test's
+// servers have exited: Windows cannot delete a directory that is still a
+// running process's working directory (EBUSY).
+const serversByTest = new Map();
+
+async function stopServers(t) {
+  const children = serversByTest.get(t) ?? [];
+  serversByTest.delete(t);
+  await Promise.all(
+    children.map(
+      (child) =>
+        new Promise((resolve) => {
+          if (child.exitCode !== null || child.signalCode !== null) return resolve();
+          const timer = setTimeout(() => child.kill(), 2000);
+          child.once("exit", () => {
+            clearTimeout(timer);
+            resolve();
+          });
+          child.stdin.end();
+        }),
+    ),
+  );
+}
+
+function tempDir(t, prefix) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
+  t.after(async () => {
+    await stopServers(t);
+    fs.rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+  });
+  return dir;
+}
+
 function fixture(t) {
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-mcp-"));
-  t.after(() => fs.rmSync(cwd, { recursive: true, force: true }));
+  const cwd = tempDir(t, "fsd-mcp-");
   fs.writeFileSync(
     path.join(cwd, "fsd.config.json"),
     JSON.stringify(createDefaultProjectConfig("react-vite")),
@@ -40,9 +72,9 @@ function startServer(t, cwd) {
     cwd,
     stdio: ["pipe", "pipe", "pipe"],
   });
-  t.after(() => {
-    if (!child.killed) child.kill();
-  });
+  if (!serversByTest.has(t)) serversByTest.set(t, []);
+  serversByTest.get(t).push(child);
+  t.after(() => stopServers(t));
   const lines = [];
   let buffer = "";
   const waiters = [];
@@ -167,8 +199,7 @@ test("mcp tools accept an explicit projectPath", async (t) => {
 });
 
 test("mcp check reports failure, not an error, for a project without config", async (t) => {
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-mcp-noconfig-"));
-  t.after(() => fs.rmSync(cwd, { recursive: true, force: true }));
+  const cwd = tempDir(t, "fsd-mcp-noconfig-");
   const server = startServer(t, cwd);
   server.send({
     jsonrpc: "2.0",
@@ -187,8 +218,7 @@ test("mcp check reports failure, not an error, for a project without config", as
 });
 
 test("mcp explain infers a config for a project without fsd.config.json", async (t) => {
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-mcp-noconfig-"));
-  t.after(() => fs.rmSync(cwd, { recursive: true, force: true }));
+  const cwd = tempDir(t, "fsd-mcp-noconfig-");
   const server = startServer(t, cwd);
   server.send({
     jsonrpc: "2.0",
@@ -205,8 +235,7 @@ test("mcp explain infers a config for a project without fsd.config.json", async 
 });
 
 test("mcp explain reports a tool error for an unsupported config schema", async (t) => {
-  const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-mcp-badconfig-"));
-  t.after(() => fs.rmSync(cwd, { recursive: true, force: true }));
+  const cwd = tempDir(t, "fsd-mcp-badconfig-");
   fs.writeFileSync(
     path.join(cwd, "fsd.config.json"),
     JSON.stringify({ framework: "react-vite", schemaVersion: 99 }),
