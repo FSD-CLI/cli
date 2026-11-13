@@ -147,6 +147,9 @@ npx create-fsd-architecture@latest history --limit 20
 
 # Preview what a JSON OpenAPI schema contains (dry run only, no files written)
 npx create-fsd-architecture@latest sync api --schema openapi.json --dry-run
+# Generate agent rules (AGENTS.md + Cursor rules) for an existing FSD project
+npx create-fsd-architecture@latest agent-rules
+npx create-fsd-architecture@latest agent-rules --force
 
 # Safely inspect or migrate CLI-owned tooling in an existing project
 npx create-fsd-architecture@latest upgrade --dry-run
@@ -172,6 +175,11 @@ prints the detected entities (from `components.schemas`) and endpoints
 (HTTP method, path, operation id and summary). It is a preview only: no
 files are written, and running it without `--dry-run` fails with a usage
 error. Generation from the schema is a later task.
+`agent-rules` writes the project stack, slice counts and FSD layer rules into
+`AGENTS.md` and `.cursor/rules/fsd-cli.mdc` in the project root, reusing the
+same data `explain` prints. It refuses to overwrite either file if it already
+exists (Next.js templates ship their own `AGENTS.md`) unless `--force` is
+passed.
 
 Create options:
 
