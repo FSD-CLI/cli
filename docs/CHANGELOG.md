@@ -16,6 +16,12 @@ All notable changes to `create-fsd-architecture` are documented here.
   `explain` project summary. It refuses to overwrite either file if it
   already exists (Next.js templates ship their own `AGENTS.md`) unless
   `--force` is passed.
+- Policy as Code format and loader (INT-35): `fsd.policy.ts` declares
+  project rules (`layer-boundaries`, `no-slice-cross-imports`,
+  `no-public-api-bypass`) with `error`/`warn` severities, validated by
+  `bin/core/policy.mjs` and reported by the new `fsd policy` command.
+  Rules are declared only — evaluation inside `fsd check` is INT-36.
+  The format is specified in `docs/POLICY-FORMAT.md`.
 
 ## 2.8.0 - 2026-11-10
 

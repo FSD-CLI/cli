@@ -110,6 +110,13 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "policy") {
+    if (args.length > 1) {
+      throw new CliUsageError(`Unexpected argument "${args[1]}".`);
+    }
+    return { command: "policy" };
+  }
+
   if (args[0] === "history") {
     const options = { command: "history", limit: 50 };
     const tail = args.slice(1);
