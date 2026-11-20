@@ -135,7 +135,7 @@ export const GENERATOR_TYPES = Object.freeze([
  *   code uses to read the public API base URL in this framework.
  * @property {boolean} [inspectionOnly] - True when the adapter exists so
  *   existing projects can be inspected, but the CLI cannot generate or
- *   upgrade projects for it yet (Angular today).
+ *   upgrade projects for it yet. No built-in adapter uses it today.
  */
 
 function isPlainObject(value) {

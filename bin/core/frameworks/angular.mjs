@@ -1,4 +1,3 @@
-// Inspection only: Angular generation and managed upgrades are separate work.
 /** @type {import("./adapter-contract.mjs").FrameworkAdapter} */
 export const angularAdapter = Object.freeze({
   id: "angular",
@@ -6,7 +5,7 @@ export const angularAdapter = Object.freeze({
   targets: ["web"],
   runtime: "angular",
   sourceDirectory: "src",
-  inspectionOnly: true,
+  clientDirective: "",
   baseDependencies: [],
   capabilities: {
     defaults: {
@@ -20,6 +19,18 @@ export const angularAdapter = Object.freeze({
     clientState: ["ngrx-signals"],
     forms: ["angular-forms-zod"],
   },
+  // Generators (feature/entity/widget/page/shared) land separately.
   generators: [],
-  dependencies: {},
+  dependencies: {
+    apiClient: { "angular-http": [] },
+    serverState: { "angular-query": ["@tanstack/angular-query-experimental"] },
+    clientState: { "ngrx-signals": ["@ngrx/signals"] },
+    forms: { "angular-forms-zod": ["@angular/forms", "zod"] },
+  },
+  dependencyVersions: {
+    "@angular/forms": "^22.2.2",
+    "@ngrx/signals": "^22.0.1",
+    "@tanstack/angular-query-experimental": "^5.103.1",
+    zod: "^4.6.7",
+  },
 });
