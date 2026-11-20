@@ -1,0 +1,33 @@
+{
+  "schematics": {
+    "ng-add": {
+      "description": "Set up Feature-Sliced Design in an Angular workspace: layers, aliases, fsd.config.json, ApiClient, TanStack Query provider and route markers.",
+      "factory": "./index.cjs#ngAdd",
+      "schema": "./ng-add.schema.json"
+    },
+    "feature": {
+      "description": "Generate an FSD feature slice (TanStack Angular Query, NgRx Signal Store; `auth` adds typed reactive forms validated with zod).",
+      "factory": "./index.cjs#feature",
+      "schema": "./slice.schema.json",
+      "aliases": ["f"]
+    },
+    "entity": {
+      "description": "Generate an FSD entity slice.",
+      "factory": "./index.cjs#entity",
+      "schema": "./slice.schema.json",
+      "aliases": ["e"]
+    },
+    "widget": {
+      "description": "Generate an FSD widget slice (navbar, sidebar, footer and bottom-bar are presets).",
+      "factory": "./index.cjs#widget",
+      "schema": "./slice.schema.json",
+      "aliases": ["w"]
+    },
+    "page": {
+      "description": "Generate an FSD page slice and register it as a lazy route in src/app/app.routes.ts.",
+      "factory": "./index.cjs#page",
+      "schema": "./slice.schema.json",
+      "aliases": ["p"]
+    }
+  }
+}

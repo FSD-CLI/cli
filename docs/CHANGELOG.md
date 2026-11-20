@@ -15,6 +15,10 @@ All notable changes to `create-fsd-architecture` are documented here.
   Yarn and Bun, and `doctor` enforces Angular's Node range.
 - Projects without `fsd.config.json` are detected as Angular from
   `@angular/core`.
+- Angular CLI schematics: `ng add create-fsd-architecture` sets up FSD in an
+  existing Angular workspace, `ng g feature|entity|widget|page <name>` generates
+  slices through the Angular CLI, and `ng update create-fsd-architecture`
+  refreshes the setup (or runs the managed upgrade for CLI-created projects).
 
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x

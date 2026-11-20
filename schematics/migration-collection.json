@@ -1,0 +1,9 @@
+{
+  "schematics": {
+    "fsd-managed-upgrade": {
+      "version": "2.9.0",
+      "description": "Run the FSD CLI managed upgrade (fsd upgrade) for CLI-owned project tooling.",
+      "factory": "./index.cjs#managedUpgrade"
+    }
+  }
+}

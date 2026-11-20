@@ -340,6 +340,34 @@ zoneless change detection, Angular `HttpClient`, TanStack Angular Query
 Zod 4. Generated files follow the template's single-quoted Prettier style and
 `@app`/`@pages`/`@widgets`/`@features`/`@entities`/`@shared` aliases.
 
+## Angular CLI schematics
+
+Existing Angular workspaces (for example a fresh `ng new` project) can adopt
+FSD without recreating the project:
+
+```bash
+ng add create-fsd-architecture
+ng g feature checkout        # also: entity, widget, page (aliases f, e, w, p)
+ng g feature auth            # typed reactive forms validated with zod
+ng g page account            # registers a lazy route in src/app/app.routes.ts
+```
+
+`ng add` writes `fsd.config.json`, adds the `@app`…`@shared` path aliases to
+`tsconfig.json`, creates the FSD layers, the shared `ApiClient` and the TanStack
+Query provider, registers `provideHttpClient(withFetch())` and
+`provideAppQuery()` in `src/app/app.config.ts`, adds the `fsd-cli:routes`
+markers to `src/app/app.routes.ts`, installs the missing TanStack Angular Query,
+NgRx Signal Store and Zod dependencies, and registers the collection in
+`angular.json` so `ng g feature <name>` works without a prefix
+(`ng g create-fsd-architecture:feature <name>` always works). It is
+idempotent and never overwrites existing files; steps it cannot apply
+automatically are printed as manual steps.
+
+`ng update create-fsd-architecture` refreshes an `ng add` workspace the same
+way (missing FSD files and new managed dependencies only). Projects created by
+the CLI itself, which carry `.fsd/manifest.json`, run the managed upgrade
+described above instead.
+
 ## Generated architecture
 
 ```text

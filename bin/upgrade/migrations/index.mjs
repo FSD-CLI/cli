@@ -7,6 +7,7 @@ export const SUPPORTED_FRAMEWORKS = Object.freeze([
   "vue-vite",
   "nuxt",
   "sveltekit",
+  "angular",
 ]);
 
 export const MIGRATIONS = Object.freeze([

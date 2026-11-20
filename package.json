@@ -20,6 +20,13 @@
     "create-fsd-architecture": "bin/index.mjs",
     "fsd": "bin/index.mjs"
   },
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "devDependencies"
+  },
+  "ng-update": {
+    "migrations": "./schematics/migration-collection.json"
+  },
   "scripts": {
     "test": "node --check bin/index.mjs && node --check bin/commands/create-project.mjs && node --check bin/commands/inspect-project.mjs && node --check bin/commands/upgrade-project.mjs && node --check bin/upgrade/config.mjs && node --check bin/upgrade/manifest.mjs && node --check bin/upgrade/planner.mjs && node --check bin/upgrade/transaction.mjs && node --check bin/upgrade/validation.mjs && node --check bin/project-config.mjs && node --check bin/generator.mjs && node --check bin/core/command-runner.mjs && node --check bin/core/package-name.mjs && node --check bin/core/package-identity.mjs && node --check bin/core/template-identity.mjs && node --test tests/*.test.mjs",
     "check": "npm test && npm pack --dry-run",
@@ -35,6 +42,7 @@
   },
   "files": [
     "bin",
+    "schematics",
     "schema",
     "README.md",
     "SECURITY.md",
@@ -76,5 +84,8 @@
   "engines": {
     "node": ">=22.12.0"
   },
-  "type": "commonjs"
+  "type": "commonjs",
+  "devDependencies": {
+    "@angular-devkit/schematics": "^22.2.2"
+  }
 }
