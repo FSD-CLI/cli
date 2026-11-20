@@ -148,7 +148,7 @@ test("the prompt offers the four targets with web preselected and the rest disab
   );
 });
 
-const WEB_TEMPLATES = ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"];
+const WEB_TEMPLATES = ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit", "angular"];
 
 test("templates are filtered to the adapters serving the chosen target", () => {
   const values = (selection) => listTemplatesForTarget(selection).map((template) => template.value);
