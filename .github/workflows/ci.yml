@@ -256,7 +256,8 @@ jobs:
         with:
           # Node 22.12.0 ships npm 10.9.0, the documented npm minimum, so this
           # job proves the lowest supported npm against a generated project.
-          node-version: '22.12.0'
+          # Angular requires ^22.22.3, its lowest supported Node release.
+          node-version: ${{ matrix.framework == 'angular' && '22.22.3' || '22.12.0' }}
       - uses: pnpm/action-setup@v6
         if: matrix.package-manager == 'pnpm'
         with:

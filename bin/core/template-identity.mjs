@@ -39,12 +39,12 @@ function rewriteHtmlTitle(content, title) {
 
 // Angular project names must match ^[a-zA-Z][.0-9a-zA-Z]*(-[.0-9a-zA-Z]*)*$.
 function toAngularProjectName(title) {
-  const name = String(title)
+  let name = String(title)
     .toLowerCase()
     .replace(/[^a-z0-9.-]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^[^a-z]+/, "")
-    .replace(/-+$/, "");
+    .replace(/-{2,}/g, "-")
+    .replace(/^[^a-z]+/, "");
+  while (name.endsWith("-")) name = name.slice(0, -1);
   return name || "app";
 }
 
