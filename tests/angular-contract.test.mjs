@@ -6,7 +6,7 @@ import test from 'node:test';
 import { normalizeProjectConfig, configureProject, getManagedProjectArtifacts } from '../bin/project-config.mjs';
 import { inspectProject } from '../bin/commands/inspect-project.mjs';
 import { createGeneratorPlan } from '../bin/generator.mjs';
-import { getAvailableTemplate, listTemplates } from '../bin/core/template-registry.mjs';
+import { getAvailableTemplate, getTemplate, getTemplateProvenance, listTemplates } from '../bin/core/template-registry.mjs';
 import { migrateProjectConfig } from '../bin/upgrade/config.mjs';
 
 test('Angular config is valid and inspectable without advertising scaffolding', () => {
@@ -19,7 +19,7 @@ test('Angular config is valid and inspectable without advertising scaffolding', 
     for (const layer of ['app', 'pages', 'widgets', 'features', 'entities', 'shared']) fs.mkdirSync(path.join(root, 'src', layer), { recursive: true });
     assert.equal(inspectProject(root).checks.every(check => check.ok), true);
     assert.equal(listTemplates({ includePlanned: false }).length, 5);
-    assert.throws(() => getAvailableTemplate('angular'), /Unknown framework/);
+    assert.throws(() => getAvailableTemplate('angular'), /planned but not available/);
     assert.throws(() => normalizeProjectConfig('angular', { clientState: 'redux' }), /Unsupported clientState/);
     assert.throws(() => normalizeProjectConfig('react-vite', { apiClient: 'angular-http' }), /Unsupported apiClient/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
@@ -36,4 +36,16 @@ test('Angular writes and upgrades fail before creating React artifacts', () => {
     assert.deepEqual(fs.readdirSync(root), ['package.json']);
     assert.equal(fs.readFileSync(path.join(root, 'package.json'), 'utf8'), '{"name":"sentinel"}');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('Angular template source is pinned to an immutable fsd-angular commit', () => {
+  const template = getTemplate('angular');
+  assert.equal(template.repo, 'FSD-CLI/fsd-angular');
+  assert.match(template.ref, /^[a-f0-9]{40}$/);
+  assert.equal(template.status, 'planned');
+  assert.equal(template.available, false);
+  assert.deepEqual(getTemplateProvenance(template), {
+    schemaVersion: 1, framework: 'angular', repository: 'FSD-CLI/fsd-angular',
+    requestedRef: template.ref, resolvedCommit: template.ref,
+  });
 });

@@ -31,6 +31,7 @@ test("template registry exposes stable and planned frameworks", () => {
       ["vue-vite", "stable"],
       ["nuxt", "stable"],
       ["sveltekit", "stable"],
+      ["angular", "planned"],
     ]
   );
   assert.equal(listTemplates({ includePlanned: false }).length, 5);
@@ -39,6 +40,8 @@ test("template registry exposes stable and planned frameworks", () => {
   assert.equal(getAvailableTemplate("vue-vite").repo, "FSD-CLI/FSD-VUE");
   assert.equal(getAvailableTemplate("nuxt").repo, "FSD-CLI/FSD-NUXT");
   assert.equal(getAvailableTemplate("sveltekit").repo, "FSD-CLI/fsd-sveltekit");
+  assert.equal(getTemplate("angular").available, false);
+  assert.throws(() => getAvailableTemplate("angular"), /planned but not available/);
   assert.throws(() => getAvailableTemplate("unknown"), /Unknown framework/);
 });
 
