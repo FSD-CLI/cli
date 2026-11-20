@@ -8,7 +8,7 @@ const templates = [
     value: "react-vite",
     description: "React with Vite and a complete FSD architecture",
     repo: "FSD-CLI/FSD",
-    ref: "59a2506657c097aa0f67dc9c4a5f582a9f9b13d0",
+    ref: "ca3420e912639d41572f550b8f73363ac4bcc8b4",
     status: "stable",
   },
   {
@@ -24,7 +24,7 @@ const templates = [
     value: "vue-vite",
     description: "Vue with Vite and framework-native FSD segments",
     repo: "FSD-CLI/FSD-VUE",
-    ref: "60fec4b67e9ed5d73fb243682d009eb38f18feec",
+    ref: "fd0f80d81e2e977ab6974b520c941cd23e31ab61",
     status: "stable",
   },
   {
@@ -50,7 +50,7 @@ const templates = [
     value: "angular",
     description: "Angular with standalone, signals, zoneless and FSD layers",
     repo: "FSD-CLI/fsd-angular",
-    ref: "7531bca3c2fbb2e88fbc54ddaa0624fa04b7af86",
+    ref: "ae8090c9e3d9c8e5ee2acd5b9ca6ef415ca663f6",
     status: "planned",
   },
 ];
