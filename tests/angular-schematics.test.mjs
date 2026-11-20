@@ -5,15 +5,27 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
-const { SchematicTestRunner, UnitTestTree } = require("@angular-devkit/schematics/testing");
-const { HostTree } = require("@angular-devkit/schematics");
-
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const runner = new SchematicTestRunner(
-  "create-fsd-architecture",
-  path.join(root, "schematics", "collection.json")
-);
 const packageJson = require("../package.json");
+
+// @angular-devkit/schematics requires Node ^22.22.3, above the CLI's 22.12.0
+// floor, so it is not a devDependency (the floor job installs with
+// --engine-strict). The "Angular schematics / ng new" CI job installs it with
+// `npm install --no-save @angular-devkit/schematics` and runs these tests.
+let devkit = null;
+try {
+  devkit = {
+    ...require("@angular-devkit/schematics/testing"),
+    ...require("@angular-devkit/schematics"),
+  };
+} catch {
+  devkit = null;
+}
+const skip = devkit ? false : "@angular-devkit/schematics is not installed";
+const { SchematicTestRunner, UnitTestTree, HostTree } = devkit ?? {};
+const runner = devkit
+  ? new SchematicTestRunner("create-fsd-architecture", path.join(root, "schematics", "collection.json"))
+  : null;
 
 // The files `ng new demo` (Angular CLI 22.2.2) writes that ng-add touches.
 function ngNewWorkspace() {
@@ -80,7 +92,7 @@ test("package.json exposes the schematic collection, ng-add and ng-update", () =
   for (const migration of Object.values(migrations)) assert.match(migration.version, /^\d+\.\d+\.\d+$/);
 });
 
-test("ng-add sets up FSD in a fresh ng new workspace", async () => {
+test("ng-add sets up FSD in a fresh ng new workspace", { skip }, async () => {
   const tree = await runner.runSchematic("ng-add", { skipInstall: true }, ngNewWorkspace());
 
   const config = JSON.parse(tree.readContent("fsd.config.json"));
@@ -128,7 +140,7 @@ test("ng-add sets up FSD in a fresh ng new workspace", async () => {
   assert.equal(runner.tasks.length, 0, "skipInstall schedules no install");
 });
 
-test("ng-add is idempotent and schedules an install only for new dependencies", async () => {
+test("ng-add is idempotent and schedules an install only for new dependencies", { skip }, async () => {
   const once = await runner.runSchematic("ng-add", {}, ngNewWorkspace());
   assert.equal(runner.tasks.filter((task) => task.name === "node-package").length, 1);
   const snapshot = Object.fromEntries(once.files.map((file) => [file, once.readContent(file)]));
@@ -137,7 +149,7 @@ test("ng-add is idempotent and schedules an install only for new dependencies", 
   assert.equal(runner.tasks.filter((task) => task.name === "node-package").length, 0);
 });
 
-test("ng-add refuses non-Angular projects and other frameworks", async () => {
+test("ng-add refuses non-Angular projects and other frameworks", { skip }, async () => {
   const tree = new UnitTestTree(new HostTree());
   tree.create("package.json", '{"dependencies":{"react":"^19.0.0"}}');
   tree.create("angular.json", '{"version":1,"projects":{}}');
@@ -148,7 +160,7 @@ test("ng-add refuses non-Angular projects and other frameworks", async () => {
   await assert.rejects(() => runner.runSchematic("ng-add", {}, other), /already targets "react-vite"/);
 });
 
-test("ng-add keeps wildcard routes last and detects the package manager", async () => {
+test("ng-add keeps wildcard routes last and detects the package manager", { skip }, async () => {
   const workspace = ngNewWorkspace();
   workspace.overwrite(
     "src/app/app.routes.ts",
@@ -162,7 +174,7 @@ test("ng-add keeps wildcard routes last and detects the package manager", async 
   assert.equal(JSON.parse(tree.readContent("fsd.config.json")).packageManager, "pnpm");
 });
 
-test("slice schematics generate Angular slices and register page routes", async () => {
+test("slice schematics generate Angular slices and register page routes", { skip }, async () => {
   let tree = await runner.runSchematic("ng-add", { skipInstall: true }, ngNewWorkspace());
   tree = await runner.runSchematic("feature", { name: "Checkout" }, tree);
   tree = await runner.runSchematic("entity", { name: "product" }, tree);
@@ -186,14 +198,14 @@ test("slice schematics generate Angular slices and register page routes", async 
   assert.ok(forced.exists("src/features/checkout/index.ts"));
 });
 
-test("slice schematics require ng-add first", async () => {
+test("slice schematics require ng-add first", { skip }, async () => {
   await assert.rejects(
     () => runner.runSchematic("feature", { name: "checkout" }, ngNewWorkspace()),
     /Run `ng add create-fsd-architecture` first/
   );
 });
 
-test("ng update refreshes an ng-add workspace without overwriting edits", async () => {
+test("ng update refreshes an ng-add workspace without overwriting edits", { skip }, async () => {
   const migrations = new SchematicTestRunner(
     "create-fsd-architecture",
     path.join(root, "schematics", "migration-collection.json")

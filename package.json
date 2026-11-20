@@ -84,8 +84,5 @@
   "engines": {
     "node": ">=22.12.0"
   },
-  "type": "commonjs",
-  "devDependencies": {
-    "@angular-devkit/schematics": "^22.2.2"
-  }
+  "type": "commonjs"
 }

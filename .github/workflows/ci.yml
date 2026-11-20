@@ -252,6 +252,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Schematic unit tests
+        run: |
+          npm install --no-save --no-audit --no-fund @angular-devkit/schematics@22
+          node --test tests/angular-schematics.test.mjs
       - name: Pack the CLI
         run: npm pack --pack-destination "$RUNNER_TEMP"
       - name: Create a fresh Angular workspace
