@@ -152,6 +152,10 @@ export function loadProjectConfig(cwd) {
     ...packageJson.devDependencies,
   };
 
+  if (dependencies["@angular/core"]) {
+    return normalizeProjectConfig("angular", { ui: "shared-ui" });
+  }
+
   const framework = dependencies["@sveltejs/kit"]
     ? "sveltekit"
     : dependencies.nuxt
@@ -332,6 +336,16 @@ function getPageRouteFiles(cwd, name, config, force) {
     return [path.relative(cwd, routeFile)];
   }
 
+  if (config.framework === "angular") {
+    const routeFile = path.join(cwd, "src", "app", "app.routes.ts");
+    if (!fs.existsSync(routeFile)) {
+      throw new Error(
+        `Routing entry "${path.relative(cwd, routeFile)}" is missing. Update the project template before generating pages.`
+      );
+    }
+    return [path.relative(cwd, routeFile)];
+  }
+
   if (config.framework === "sveltekit") {
     const routeFile = path.join(cwd, "src", "routes", name, "+page.svelte");
     if (fs.existsSync(routeFile) && !force) {
@@ -371,6 +385,11 @@ function registerPageRoute(cwd, name, config) {
       routeFile,
       `<script setup lang="ts">\nimport { ${componentName} } from "@/pages/${name}";\n</script>\n\n<template>\n  <${componentName} />\n</template>\n`
     );
+    return;
+  }
+
+  if (config.framework === "angular") {
+    registerAngularRoute(cwd, name, componentName);
     return;
   }
 
@@ -414,6 +433,21 @@ function registerPageRoute(cwd, name, config) {
     "  // fsd-cli:routes:end",
     routeLine
   );
+  fs.writeFileSync(routeFile, content);
+}
+
+// Angular routes are lazy standalone components registered between the
+// template's marker comments in src/app/app.routes.ts.
+function registerAngularRoute(cwd, name, componentName) {
+  const routeFile = path.join(cwd, "src", "app", "app.routes.ts");
+  let content = fs.readFileSync(routeFile, "utf8");
+  for (const marker of ["// fsd-cli:routes:start", "// fsd-cli:routes:end"]) {
+    if (!content.includes(marker)) {
+      throw new Error(`Routing entry "${path.relative(cwd, routeFile)}" is missing ${marker}.`);
+    }
+  }
+  const routeLine = `  { path: '${name}', loadComponent: () => import('@pages/${name}').then((m) => m.${componentName}) },`;
+  content = updateMarkerBlock(content, "  // fsd-cli:routes:start", "  // fsd-cli:routes:end", routeLine);
   fs.writeFileSync(routeFile, content);
 }
 

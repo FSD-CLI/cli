@@ -1,3 +1,4 @@
+import { createAngularFilePlan } from "../bin/generators/angular.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
@@ -14,7 +15,7 @@ import { normalizeProjectConfig } from "../bin/project-config.mjs";
 test("every generator family implements the shared interface", () => {
   assert.deepEqual(
     listFamilyGenerators().map((generator) => generator.family),
-    ["react", "vue", "svelte"]
+    ["react", "vue", "svelte", "angular"]
   );
   for (const generator of listFamilyGenerators()) {
     assert.equal(typeof generator.createFilePlan, "function", `family "${generator.family}"`);
@@ -27,13 +28,14 @@ test("registry delegates to the family implementations", () => {
   assert.equal(getFamilyGenerator("react").createFilePlan, createReactFilePlan);
   assert.equal(getFamilyGenerator("vue").createFilePlan, createVueFilePlan);
   assert.equal(getFamilyGenerator("svelte").createFilePlan, createSvelteFilePlan);
+  assert.equal(getFamilyGenerator("angular").createFilePlan, createAngularFilePlan);
 });
 
 test("families without an implementation are rejected clearly", () => {
-  assert.equal(hasFamilyGenerator("angular"), false);
+  assert.equal(hasFamilyGenerator("ember"), false);
   assert.throws(
-    () => getFamilyGenerator("angular"),
-    /Framework family "angular" does not have a generator implementation yet/
+    () => getFamilyGenerator("ember"),
+    /Framework family "ember" does not have a generator implementation yet/
   );
 });
 
@@ -50,6 +52,7 @@ test("each family builds a file plan through the shared interface", () => {
     ["react", "react-vite"],
     ["vue", "vue-vite"],
     ["svelte", "sveltekit"],
+    ["angular", "angular"],
   ];
   for (const [family, framework] of cases) {
     const config = normalizeProjectConfig(framework);

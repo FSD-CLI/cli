@@ -44,14 +44,12 @@ const templates = [
     status: "stable",
   },
   {
-    // Pinned ahead of scaffolding support: the adapter is still inspection
-    // only, so the template stays planned until generators and upgrades land.
     title: "Angular",
     value: "angular",
     description: "Angular with standalone, signals, zoneless and FSD layers",
     repo: "FSD-CLI/fsd-angular",
-    ref: "ae8090c9e3d9c8e5ee2acd5b9ca6ef415ca663f6",
-    status: "planned",
+    ref: "50e5087b76dbd35e76df3a2fa70d255969907809",
+    status: "stable",
   },
 ];
 

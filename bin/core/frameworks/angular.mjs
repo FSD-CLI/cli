@@ -19,8 +19,7 @@ export const angularAdapter = Object.freeze({
     clientState: ["ngrx-signals"],
     forms: ["angular-forms-zod"],
   },
-  // Generators (feature/entity/widget/page/shared) land separately.
-  generators: [],
+  generators: ["feature", "entity", "widget", "page", "shared"],
   dependencies: {
     apiClient: { "angular-http": [] },
     serverState: { "angular-query": ["@tanstack/angular-query-experimental"] },

@@ -97,10 +97,51 @@ test("the Angular project name no longer carries the template name", () => {
     const angularJson = JSON.parse(
       fs.readFileSync(path.join(root, "angular.json"), "utf8")
     );
+    assert.deepEqual(Object.keys(angularJson.projects), ["my-app"]);
+    assert.equal(angularJson.projects["my-app"].projectName, "my-app");
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("the Angular workspace project key, build targets and document title are renamed", () => {
+  const root = createProject({
+    "angular.json": `${JSON.stringify(
+      {
+        version: 1,
+        projects: {
+          "fsd-angular": {
+            projectType: "application",
+            architect: {
+              build: { builder: "@angular/build:application" },
+              serve: {
+                configurations: {
+                  production: { buildTarget: "fsd-angular:build:production" },
+                  development: { buildTarget: "fsd-angular:build:development" },
+                },
+              },
+            },
+          },
+        },
+      },
+      null,
+      2
+    )}\n`,
+    "src/index.html": "<html><head><title>FSD CLI · Angular template</title></head></html>\n",
+  });
+
+  try {
+    const result = applyTemplateIdentity(root, "@acme/My Shop");
+    assert.deepEqual(result.changed.sort(), ["angular.json", "src/index.html"]);
+    const content = fs.readFileSync(path.join(root, "angular.json"), "utf8");
+    assert.doesNotMatch(content, /fsd-angular/);
+    const angularJson = JSON.parse(content);
+    assert.deepEqual(Object.keys(angularJson.projects), ["my-shop"]);
     assert.equal(
-      angularJson.projects["fsd-angular-starter"].projectName,
-      "my-app"
+      angularJson.projects["my-shop"].architect.serve.configurations.production.buildTarget,
+      "my-shop:build:production"
     );
+    assert.match(fs.readFileSync(path.join(root, "src/index.html"), "utf8"), /<title>My Shop<\/title>/);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

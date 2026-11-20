@@ -31,17 +31,16 @@ test("template registry exposes stable and planned frameworks", () => {
       ["vue-vite", "stable"],
       ["nuxt", "stable"],
       ["sveltekit", "stable"],
-      ["angular", "planned"],
+      ["angular", "stable"],
     ]
   );
-  assert.equal(listTemplates({ includePlanned: false }).length, 5);
+  assert.equal(listTemplates({ includePlanned: false }).length, 6);
   assert.equal(getAvailableTemplate("nextjs").repo, "FSD-CLI/FSD-NEXTJS");
   assert.equal(getTemplate("vue-vite").available, true);
   assert.equal(getAvailableTemplate("vue-vite").repo, "FSD-CLI/FSD-VUE");
   assert.equal(getAvailableTemplate("nuxt").repo, "FSD-CLI/FSD-NUXT");
   assert.equal(getAvailableTemplate("sveltekit").repo, "FSD-CLI/fsd-sveltekit");
-  assert.equal(getTemplate("angular").available, false);
-  assert.throws(() => getAvailableTemplate("angular"), /planned but not available/);
+  assert.equal(getAvailableTemplate("angular").repo, "FSD-CLI/fsd-angular");
   assert.throws(() => getAvailableTemplate("unknown"), /Unknown framework/);
 });
 

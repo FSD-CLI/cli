@@ -6,6 +6,16 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- Angular is a stable template (`--framework angular`, FSD-CLI/fsd-angular).
+  Generators cover `feature`, `entity`, `widget` (including the navbar,
+  sidebar, footer and bottom-bar presets), `page` (home, about and consult
+  presets, registered as lazy routes in `src/app/app.routes.ts`), `shared ui`
+  and `shared api`, and `feature auth` with typed reactive forms validated by
+  Zod (also with `--auth-provider supabase`). Projects work with npm, pnpm,
+  Yarn and Bun, and `doctor` enforces Angular's Node range.
+- Projects without `fsd.config.json` are detected as Angular from
+  `@angular/core`.
+
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
   schema: it prints the detected entities (`components.schemas`) and
@@ -30,6 +40,10 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Fixed
 
+- New Angular projects no longer keep the template's `fsd-angular` workspace
+  project key, build-target references or document title.
+- A template `packageManager` pin for another manager is removed when the
+  project uses a different package manager, so pnpm and Corepack install.
 - Templates are pinned to their November dependency updates: React + Vite
   `59a2506` (ESLint 10), Next.js `3d0ba89` (fixes the high follow-redirects
   advisory in its audit), Vue + Vite `60fec4b`, Nuxt `3e16cb6` and SvelteKit

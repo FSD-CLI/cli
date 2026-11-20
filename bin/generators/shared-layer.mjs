@@ -148,6 +148,17 @@ function mergeExports(content, lines) {
 }
 
 function createSharedUiFiles(adapter, components) {
+  if (adapter.family === "angular") {
+    return components.map((name) => {
+      const exportName = `App${toPascalCase(name)}`;
+      return {
+        path: `app-${name}.ts`,
+        content: angularUi[name](),
+        exportName,
+        exportLine: `export { ${exportName} } from './app-${name}';`,
+      };
+    });
+  }
   if (adapter.family === "vue") {
     return components.map((name) => {
       const componentName = `App${toPascalCase(name)}`;
@@ -171,6 +182,16 @@ function createSharedUiFiles(adapter, components) {
 function createSharedApiFiles(adapter, config, items) {
   if (items.length) {
     throw new Error("Shared api does not take extra names (use -g shared api).");
+  }
+  if (adapter.family === "angular") {
+    return [
+      {
+        path: "api-client.ts",
+        content: angularApiClientContent(),
+        exportName: "ApiClient",
+        exportLine: "export { ApiClient } from './api-client';",
+      },
+    ];
   }
   const content =
     adapter.id === "nuxt"
@@ -395,5 +416,83 @@ const svelteUi = {
 <article {...rest}>
   {@render children?.()}
 </article>
+`,
+};
+
+// Mirrors FSD-CLI/fsd-angular src/shared/api/api-client.ts byte for byte; the
+// project configuration renderer reuses it so both paths stay identical.
+export function angularApiClientContent() {
+  return `import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { publicConfig } from '@shared/config';
+
+@Injectable({ providedIn: 'root' })
+export class ApiClient {
+  readonly #http = inject(HttpClient);
+
+  get<T>(path: string) {
+    return this.#http.get<T>(\`\${publicConfig.apiBaseUrl}\${path}\`);
+  }
+
+  post<TResponse, TBody>(path: string, body: TBody) {
+    return this.#http.post<TResponse>(\`\${publicConfig.apiBaseUrl}\${path}\`, body);
+  }
+}
+`;
+}
+
+// Angular shared UI: components for content containers and attribute
+// directives for native form controls, so reactive forms keep working.
+const angularUi = {
+  button: () => `import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+
+@Component({
+  selector: 'app-button',
+  template: \`
+    <button
+      class="rounded-xl bg-red-400 px-4 py-2 font-medium text-zinc-950 disabled:opacity-60"
+      [type]="type()"
+      [disabled]="disabled()"
+    >
+      <ng-content />
+    </button>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppButton {
+  readonly type = input<'button' | 'submit' | 'reset'>('button');
+  readonly disabled = input(false);
+}
+`,
+  input: () => `import { Directive } from '@angular/core';
+
+@Directive({
+  selector: 'input[appInput], textarea[appInput]',
+  host: {
+    class: 'w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm',
+  },
+})
+export class AppInput {}
+`,
+  label: () => `import { Directive } from '@angular/core';
+
+@Directive({
+  selector: 'label[appLabel]',
+  host: { class: 'mb-1 block text-sm font-medium' },
+})
+export class AppLabel {}
+`,
+  card: () => `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-card',
+  template: \`
+    <article class="rounded-3xl border border-white/10 bg-white/[0.035] p-7">
+      <ng-content />
+    </article>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppCard {}
 `,
 };

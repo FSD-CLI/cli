@@ -1,3 +1,4 @@
+import { angularFamilyGenerator } from "./angular.mjs";
 import { reactFamilyGenerator } from "./react.mjs";
 import { svelteFamilyGenerator } from "./svelte.mjs";
 import { vueFamilyGenerator } from "./vue.mjs";
@@ -16,14 +17,14 @@ import { vueFamilyGenerator } from "./vue.mjs";
  *
  * @typedef {object} FamilyGenerator
  * @property {string} family - Framework family this generator serves
- *   ("react", "vue", "svelte"). Matches the adapter contract's `family`.
+ *   ("react", "vue", "svelte", "angular"). Matches the adapter contract's `family`.
  * @property {(type: string, name: string, config: object) => object[]} createFilePlan -
  *   Builds the planned files for a slice: an array of file entries as
  *   produced by `file()` in `./shared.mjs`.
  */
 
 const familyGenerators = new Map(
-  [reactFamilyGenerator, vueFamilyGenerator, svelteFamilyGenerator].map((generator) => [
+  [reactFamilyGenerator, vueFamilyGenerator, svelteFamilyGenerator, angularFamilyGenerator].map((generator) => [
     generator.family,
     generator,
   ])

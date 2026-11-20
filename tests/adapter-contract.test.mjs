@@ -127,7 +127,7 @@ test("derived matrix rows keep their exact pre-derivation values", () => {
     clientState: ["ngrx-signals"],
     forms: ["angular-forms-zod"],
     packageManager: ["npm", "pnpm", "yarn", "bun"],
-    generators: [],
+    generators: ["feature", "entity", "widget", "page", "shared"],
   });
 });
 

@@ -7,6 +7,7 @@ import path from "path";
 // "FSD CLI — Vue + Vite", but both are replaced the same way.
 const README_PATH = "README.md";
 const INDEX_HTML_PATH = "index.html";
+const ANGULAR_INDEX_HTML_PATH = "src/index.html";
 const ANGULAR_JSON_PATH = "angular.json";
 // SvelteKit renders the document title from a plain <title> element in the
 // root layout's <svelte:head>, so that layout is the title slot for it.
@@ -36,6 +37,32 @@ function rewriteHtmlTitle(content, title) {
   return content.replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`);
 }
 
+// Angular project names must match ^[a-zA-Z][.0-9a-zA-Z]*(-[.0-9a-zA-Z]*)*$.
+function toAngularProjectName(title) {
+  let name = String(title)
+    .toLowerCase()
+    .replace(/[^a-z0-9.-]+/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/^[^a-z]+/, "");
+  while (name.endsWith("-")) name = name.slice(0, -1);
+  return name || "app";
+}
+
+// Rewrites a value tree, replacing "<from>:<target>" references such as
+// "fsd-angular:build:production" with the renamed project.
+function renameTargetReferences(value, from, to) {
+  if (typeof value === "string") {
+    return value.startsWith(`${from}:`) ? `${to}${value.slice(from.length)}` : value;
+  }
+  if (Array.isArray(value)) return value.map((item) => renameTargetReferences(item, from, to));
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, renameTargetReferences(item, from, to)])
+    );
+  }
+  return value;
+}
+
 function rewriteAngularProjectName(content, title) {
   let angularJson;
   try {
@@ -53,6 +80,17 @@ function rewriteAngularProjectName(content, title) {
       project.projectName = title;
       changed = true;
     }
+  }
+
+  // A single-project workspace (the template) is renamed by its key, which
+  // also names the build output and every "<project>:<target>" reference.
+  const keys = Object.keys(projects);
+  const name = toAngularProjectName(title);
+  if (keys.length === 1 && keys[0] !== name) {
+    const [from] = keys;
+    angularJson.projects = { [name]: renameTargetReferences(projects[from], from, name) };
+    if (angularJson.defaultProject === from) angularJson.defaultProject = name;
+    changed = true;
   }
   if (!changed) return null;
 
@@ -117,6 +155,9 @@ export function applyTemplateIdentity(targetDir, projectName) {
 
   applyToFile(targetDir, README_PATH, rewriteMarkdownTitle, title, changed);
   applyToFile(targetDir, INDEX_HTML_PATH, rewriteHtmlTitle, title, changed);
+  if (fs.existsSync(path.join(targetDir, ANGULAR_JSON_PATH))) {
+    applyToFile(targetDir, ANGULAR_INDEX_HTML_PATH, rewriteHtmlTitle, title, changed);
+  }
   applyToFile(
     targetDir,
     SVELTEKIT_LAYOUT_PATH,

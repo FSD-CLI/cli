@@ -31,9 +31,10 @@ the published field.
 | Vue + Vite | `>=22.12.0` | `vite@8.3.0` requires `^20.19.0 \|\| >=22.12.0` |
 | Next.js | `>=22.12.0` | `next@16.4.3` requires `>=20.9.0`; the CLI floor is stricter |
 | Nuxt | `^22.22.2 \|\| ^24.11.0 \|\| >=26.0.0` | the `FSD-NUXT` template requires `>=22.22.2` and `nuxt@4.5.2` requires `^22.19.0 \|\| ^24.11.0 \|\| >=26.0.0` |
+| Angular | `^22.22.3 \|\| ^24.15.0 \|\| >=26.0.0` | `@angular/core@22.2.2` and `@angular/build@22.2.2` require `^22.22.3 \|\| ^24.15.0 \|\| >=26.0.0` |
 | SvelteKit | `^22.22.2 \|\| >=24.0.0` | the `fsd-sveltekit` template requires `>=22.22.2` and `@sveltejs/vite-plugin-svelte@6.2.1` requires `^20.19 \|\| ^22.12 \|\| >=24` |
 
-The Nuxt and SvelteKit templates declare a stricter floor than the CLI itself,
+The Nuxt, SvelteKit and Angular templates declare a stricter floor than the CLI itself,
 so the CLI checks the template requirement separately. A Node runtime that
 satisfies the CLI floor can still be rejected for a specific template, and the
 failure message names the exact range that was not satisfied.
