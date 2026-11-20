@@ -154,6 +154,7 @@ export function getPnpmWorkspaceContent(framework) {
     "vue-vite": ["esbuild", "vue-demi"],
     nuxt: ["esbuild", "unrs-resolver", "vue-demi"],
     sveltekit: ["esbuild"],
+    angular: ["@parcel/watcher", "esbuild", "lmdb", "msgpackr-extract"],
   }[framework];
   if (!buildDependencies) throw new UpgradeStateError(`Unknown framework "${framework}".`);
   return [

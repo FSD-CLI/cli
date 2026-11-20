@@ -194,6 +194,32 @@ export function loadProjectConfig(cwd) {
   });
 }
 
+/**
+ * Builds a slice's files, including its public index, relative to the slice
+ * directory. Pure: the CLI writes them to disk and the Angular schematics
+ * write them through the schematic Tree.
+ */
+export function buildSliceFiles({ type, name, config, authProvider }) {
+  if (authProvider && (authProvider !== "supabase" || type !== "feature" || name !== "auth")) {
+    throw new Error("--auth-provider supabase is only valid for feature auth.");
+  }
+  const files = createFilePlan(type, name, { ...config, authProvider });
+  if (authProvider === "supabase") addSupabaseAuthFiles(files);
+  const publicExports = files
+    .filter((file) => file.public)
+    .map((file) => file.exportLine ?? exportLine(file.path))
+    .sort();
+
+  files.push({
+    path: "index.ts",
+    content: `${publicExports.join("\n")}\n`,
+    public: false,
+  });
+  return files;
+}
+
+export { LAYER_DIRS, validateGenerateOptions };
+
 export function createGeneratorPlan({ cwd, type, name, config, force = false, authProvider }) {
   validateGenerateOptions({ type, name });
   assertGeneratorSupported(config.framework, type);
@@ -211,21 +237,7 @@ export function createGeneratorPlan({ cwd, type, name, config, force = false, au
     );
   }
 
-  if (authProvider && (authProvider !== "supabase" || type !== "feature" || name !== "auth")) {
-    throw new Error("--auth-provider supabase is only valid for feature auth.");
-  }
-  const files = createFilePlan(type, name, { ...config, authProvider });
-  if (authProvider === "supabase") addSupabaseAuthFiles(files);
-  const publicExports = files
-    .filter((file) => file.public)
-    .map((file) => file.exportLine ?? exportLine(file.path))
-    .sort();
-
-  files.push({
-    path: "index.ts",
-    content: `${publicExports.join("\n")}\n`,
-    public: false,
-  });
+  const files = buildSliceFiles({ type, name, config, authProvider });
 
   const generatedFiles = files.map((item) =>
     path.relative(cwd, path.join(sliceDir, item.path))
@@ -440,15 +452,27 @@ function registerPageRoute(cwd, name, config) {
 // template's marker comments in src/app/app.routes.ts.
 function registerAngularRoute(cwd, name, componentName) {
   const routeFile = path.join(cwd, "src", "app", "app.routes.ts");
-  let content = fs.readFileSync(routeFile, "utf8");
+  const content = angularRouteContent(
+    fs.readFileSync(routeFile, "utf8"),
+    name,
+    componentName,
+    path.relative(cwd, routeFile)
+  );
+  fs.writeFileSync(routeFile, content);
+}
+
+/**
+ * Returns app.routes.ts with a lazy route for the page slice registered
+ * between the fsd-cli:routes markers (sorted, without duplicates).
+ */
+export function angularRouteContent(content, name, componentName, label = "src/app/app.routes.ts") {
   for (const marker of ["// fsd-cli:routes:start", "// fsd-cli:routes:end"]) {
     if (!content.includes(marker)) {
-      throw new Error(`Routing entry "${path.relative(cwd, routeFile)}" is missing ${marker}.`);
+      throw new Error(`Routing entry "${label}" is missing ${marker}.`);
     }
   }
   const routeLine = `  { path: '${name}', loadComponent: () => import('@pages/${name}').then((m) => m.${componentName}) },`;
-  content = updateMarkerBlock(content, "  // fsd-cli:routes:start", "  // fsd-cli:routes:end", routeLine);
-  fs.writeFileSync(routeFile, content);
+  return updateMarkerBlock(content, "  // fsd-cli:routes:start", "  // fsd-cli:routes:end", routeLine);
 }
 
 function snapshotFiles(filePaths) {

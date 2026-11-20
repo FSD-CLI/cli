@@ -7,7 +7,9 @@ Approved by the project owner on 2026-10-06. Owner: FSD CLI maintainers.
 Existing applications on React/Vite, Next.js App Router, Vue/Vite, Nuxt and
 SvelteKit are supported for architecture audit, migration planning and guided,
 incremental migration with a compatible coding agent. The application need not
-have been created by FSD CLI. Angular CLI integration remains planned.
+have been created by FSD CLI. Existing Angular CLI workspaces are set up with
+`ng add create-fsd-architecture` (see the README section "Angular CLI
+schematics").
 
 | Project state | Supported workflow | Write boundary |
 | --- | --- | --- |

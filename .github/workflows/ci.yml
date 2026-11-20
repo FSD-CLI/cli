@@ -242,6 +242,54 @@ jobs:
         working-directory: e2e-app
         run: npm run ci
 
+  angular-schematics:
+    name: Angular schematics / ng new
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Schematic unit tests
+        run: |
+          npm install --no-save --no-audit --no-fund @angular-devkit/schematics@22
+          node --test tests/angular-schematics.test.mjs
+      - name: Pack the CLI
+        run: npm pack --pack-destination "$RUNNER_TEMP"
+      - name: Create a fresh Angular workspace
+        working-directory: ${{ runner.temp }}
+        run: npx -y @angular/cli@22 new demo --defaults --skip-git --style=css --ssr=false --ai-config=none
+      - name: ng add, ng generate, build, typecheck and test
+        working-directory: ${{ runner.temp }}/demo
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx ng add "$RUNNER_TEMP"/create-fsd-architecture-*.tgz --skip-confirmation
+          test -f fsd.config.json
+          npx ng g feature checkout
+          npx ng g entity product
+          npx ng g widget cart-summary
+          npx ng g widget navbar
+          npx ng g page account
+          npx ng g page consult
+          npx ng g feature auth
+          npx ng g create-fsd-architecture:widget footer
+          grep -q "path: 'account'" src/app/app.routes.ts
+          npx ng build
+          npx tsc --noEmit -p tsconfig.app.json
+          npx ng test --watch=false
+      - name: ng update migration restores FSD setup
+        working-directory: ${{ runner.temp }}/demo
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm src/app/providers/query/query-provider.ts
+          npx ng update create-fsd-architecture --migrate-only --from=2.8.0 --to=2.9.0 --allow-dirty
+          test -f src/app/providers/query/query-provider.ts
+          npx ng build
+
   package-manager-smoke:
     name: ${{ matrix.framework == 'angular' && 'Angular' || 'React' }} / ${{ matrix.package-manager }}
     runs-on: ubuntu-latest

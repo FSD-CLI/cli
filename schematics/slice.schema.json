@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "FsdSlice",
+  "title": "FSD slice",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Slice name (kebab-case is applied).",
+      "$default": { "$source": "argv", "index": 0 },
+      "x-prompt": "Slice name:"
+    },
+    "force": {
+      "type": "boolean",
+      "default": false,
+      "description": "Replace an existing slice."
+    },
+    "authProvider": {
+      "type": "string",
+      "enum": ["supabase"],
+      "description": "For `feature auth` only: use the opt-in Supabase browser adapter."
+    }
+  },
+  "required": ["name"]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "FsdNgAdd",
+  "title": "Add Feature-Sliced Design",
+  "type": "object",
+  "properties": {
+    "skipInstall": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not install the added dependencies."
+    }
+  }
+}
