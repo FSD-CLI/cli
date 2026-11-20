@@ -253,3 +253,98 @@ ${fields}
 </main>
 `;
 }
+
+// Angular page presets are standalone OnPush components. The consult page is
+// a typed reactive form that emits the request through an output.
+export function angularPagePresetContent(name) {
+  const className = `${name.charAt(0).toUpperCase()}${name.slice(1)}Page`;
+  if (name === "consult") return angularConsultContent(className);
+  const page = copy[name];
+  return `import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-${name}-page',
+  template: \`
+    <main>
+      <section>
+        <h1>${page.heading}</h1>
+        <p>${page.intro}</p>
+      </section>
+      <section aria-label="${page.listLabel}">
+        <h2>${page.listLabel}</h2>
+        <ul>
+${page.items.map((item) => `          <li>${item}</li>`).join("\n")}
+        </ul>
+      </section>
+    </main>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ${className} {}
+`;
+}
+
+function angularConsultContent(className) {
+  const fields = CONSULT_FIELDS.map(([field, label, type, autoComplete]) => {
+    const control =
+      type === "textarea"
+        ? `<textarea id="consult-${field}" rows="5" formControlName="${field}"></textarea>`
+        : `<input
+            id="consult-${field}"
+            type="${type}"
+            autocomplete="${autoComplete}"
+            formControlName="${field}"
+          />`;
+    return `        <div>
+          <label for="consult-${field}">${label}</label>
+          ${control}
+        </div>`;
+  }).join("\n");
+
+  return `import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
+export interface ConsultRequest {
+  name: string;
+  email: string;
+  message: string;
+}
+
+@Component({
+  selector: 'app-consult-page',
+  imports: [ReactiveFormsModule],
+  template: \`
+    <main>
+      <h1>Book a consultation</h1>
+      <p>Tell us about your project and we will get back to you.</p>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+${fields}
+        <button type="submit" [disabled]="form.invalid">Send request</button>
+      </form>
+      @if (sent()) {
+        <output>Thanks, we received your request.</output>
+      }
+    </main>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ${className} {
+  readonly requested = output<ConsultRequest>();
+  protected readonly sent = signal(false);
+  protected readonly form = new FormGroup({
+    name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+    message: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+  });
+
+  submit() {
+    if (this.form.invalid) return;
+    this.requested.emit(this.form.getRawValue());
+    this.sent.set(true);
+  }
+}
+`;
+}

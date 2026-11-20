@@ -9,6 +9,7 @@ import {
   listManagedDependencies,
 } from "./core/frameworks/index.mjs";
 import { getLockfiles } from "./core/package-managers.mjs";
+import { angularApiClientContent } from "./generators/shared-layer.mjs";
 
 export const DEFAULT_PROJECT_CONFIG = {
   schemaVersion: 1,
@@ -243,6 +244,7 @@ function toTypeScriptLiteral(value, depth = 0) {
 }
 
 function configurePackageManager(targetDir, packageManager, framework) {
+  dropForeignPackageManagerPin(targetDir, packageManager);
   if (packageManager === "pnpm") {
     const workspacePath = path.join(targetDir, "pnpm-workspace.yaml");
     // pnpm >=10.26 and 11 use allowBuilds. Do not replace a template-owned
@@ -275,6 +277,18 @@ function configurePackageManager(targetDir, packageManager, framework) {
   }
 
   if (fs.existsSync(yarnConfigPath)) fs.rmSync(yarnConfigPath);
+}
+
+// A template's "packageManager" pin for another manager makes Corepack and
+// pnpm >=10 refuse to install, so it is removed when the user picks another.
+function dropForeignPackageManagerPin(targetDir, packageManager) {
+  const packagePath = path.join(targetDir, "package.json");
+  if (!fs.existsSync(packagePath)) return;
+  const packageJson = JSON.parse(fs.readFileSync(packagePath, "utf8"));
+  const pin = packageJson.packageManager;
+  if (typeof pin !== "string" || pin.startsWith(`${packageManager}@`)) return;
+  delete packageJson.packageManager;
+  writeJson(packagePath, packageJson);
 }
 
 function removeForeignLockfiles(targetDir, packageManager) {
@@ -798,26 +812,6 @@ function angularArtifactFiles(config) {
     "src/app/providers/query/index.ts": "export { provideAppQuery } from './query-provider';\n",
     "src/app/providers/index.ts": "export { provideAppQuery } from './query';\n",
   };
-}
-
-function angularApiClientContent() {
-  return `import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { publicConfig } from '@shared/config';
-
-@Injectable({ providedIn: 'root' })
-export class ApiClient {
-  readonly #http = inject(HttpClient);
-
-  get<T>(path: string) {
-    return this.#http.get<T>(\`\${publicConfig.apiBaseUrl}\${path}\`);
-  }
-
-  post<TResponse, TBody>(path: string, body: TBody) {
-    return this.#http.post<TResponse>(\`\${publicConfig.apiBaseUrl}\${path}\`, body);
-  }
-}
-`;
 }
 
 function angularQueryProviderContent() {

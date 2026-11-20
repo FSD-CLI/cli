@@ -19,7 +19,7 @@
   "properties": {
     "manifestVersion": { "const": 1 },
     "stateVersion": { "type": "integer", "minimum": 1 },
-    "framework": { "enum": ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"] },
+    "framework": { "enum": ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit", "angular"] },
     "configSchemaVersion": { "const": 1 },
     "createdWithCliVersion": { "type": "string", "minLength": 1 },
     "lastUpgradedWithCliVersion": { "type": "string", "minLength": 1 },

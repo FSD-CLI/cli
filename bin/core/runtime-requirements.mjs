@@ -11,6 +11,7 @@
 //   - nuxt 4.5.2                -> "^22.19.0 || ^24.11.0 || >=26.0.0"
 //   - FSD-NUXT template         -> ">=22.22.2"
 //   - fsd-sveltekit template    -> ">=22.22.2"
+//   - @angular/core 22.2.2        -> "^22.22.3 || ^24.15.0 || >=26.0.0" (Angular template)
 //
 // The CLI floor is the lowest Node that runs the CLI itself *and* every
 // shipped Vite based template. The CLI dependency floor is Node 22 (chalk 6),
@@ -32,6 +33,7 @@ export const FRAMEWORK_NODE_RANGES = Object.freeze({
   "vue-vite": ">=22.12.0",
   nuxt: "^22.22.2 || ^24.11.0 || >=26.0.0",
   sveltekit: "^22.22.2 || >=24.0.0",
+  angular: "^22.22.3 || ^24.15.0 || >=26.0.0",
 });
 
 export const FRAMEWORK_NODE_EVIDENCE = Object.freeze({
@@ -42,6 +44,8 @@ export const FRAMEWORK_NODE_EVIDENCE = Object.freeze({
     "the FSD-NUXT template requires >=22.22.2 and nuxt 4.5.2 requires ^22.19.0 || ^24.11.0 || >=26.0.0",
   sveltekit:
     "the fsd-sveltekit template requires >=22.22.2 and @sveltejs/vite-plugin-svelte 6.2.1 requires ^20.19 || ^22.12 || >=24",
+  angular:
+    "@angular/core and @angular/build 22.2.2 require ^22.22.3 || ^24.15.0 || >=26.0.0",
 });
 
 // Minimum supported package manager versions. These are the versions the CI

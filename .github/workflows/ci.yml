@@ -141,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        framework: [react-vite, nextjs, vue-vite, nuxt, sveltekit]
+        framework: [react-vite, nextjs, vue-vite, nuxt, sveltekit, angular]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -212,7 +212,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        framework: [react-vite, nextjs, vue-vite, nuxt, sveltekit]
+        framework: [react-vite, nextjs, vue-vite, nuxt, sveltekit, angular]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -243,11 +243,12 @@ jobs:
         run: npm run ci
 
   package-manager-smoke:
-    name: React / ${{ matrix.package-manager }}
+    name: ${{ matrix.framework == 'angular' && 'Angular' || 'React' }} / ${{ matrix.package-manager }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        framework: [react-vite, angular]
         package-manager: [npm, pnpm, yarn, bun]
     steps:
       - uses: actions/checkout@v7
@@ -276,7 +277,7 @@ jobs:
       - name: Create and install project
         run: >-
           node bin/index.mjs e2e-app
-          --framework react-vite
+          --framework ${{ matrix.framework }}
           --package-manager ${{ matrix.package-manager }}
           --yes --no-start
       - name: Build with selected package manager
@@ -317,7 +318,7 @@ jobs:
       fail-fast: false
       matrix:
         pnpm: ['10.26.0', '11']
-        framework: [react-vite, nuxt]
+        framework: [react-vite, nuxt, angular]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7

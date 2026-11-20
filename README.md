@@ -36,11 +36,6 @@ for evidence and untested combinations.
 
 ## Repository documentation
 
-Angular's standalone starter has an inspectable configuration contract in CLI
-source (`check`, `doctor`, `config`). Angular project creation, slice generation
-and managed upgrades are unavailable; the five stable templates below are the
-supported scaffolding frameworks.
-
 - [Changelog](./docs/CHANGELOG.md)
 - [Safe upgrade architecture](./docs/UPGRADE-ARCHITECTURE.md)
 - [Public documentation outline](./docs/PUBLIC-DOCUMENTATION-OUTLINE.md)
@@ -285,7 +280,7 @@ manifest, and lockfile paths are restored; run the selected package manager's
 | `4` | Project state or configuration is unsupported or invalid |
 
 The first managed-state release supports clean signature-matching projects from
-the tested React + Vite, Next.js, Vue + Vite, Nuxt, and SvelteKit stacks using
+the tested React + Vite, Next.js, Vue + Vite, Nuxt, SvelteKit and Angular stacks using
 npm, pnpm, Yarn, or Bun. It installs the ownership manifest, hardens verified
 legacy Husky hooks, and adds the CLI-owned pnpm build policy only when the path
 does not already exist. No dependency version migration is currently declared;
@@ -316,7 +311,9 @@ Existing slices are protected. Use `--force` only when you intentionally want
 to replace a slice. Page generators also register framework-native routes:
 React Router for React + Vite, Vue Router for Vue + Vite, and App Router route
 files for Next.js. Nuxt and SvelteKit pages get thin file-based route wrappers
-without turning FSD page slices into route directories.
+without turning FSD page slices into route directories. Angular pages are
+registered as lazy `loadComponent` routes between the `fsd-cli:routes` markers in
+`src/app/app.routes.ts`.
 
 ## Templates
 
@@ -327,6 +324,7 @@ without turning FSD page slices into route directories.
 | `vue-vite` | Vue + Vite | Stable |
 | `nuxt` | Nuxt 4 | Stable |
 | `sveltekit` | SvelteKit | Stable |
+| `angular` | Angular 22 | Stable |
 
 Vue and Nuxt projects use Pinia, TanStack Vue Query, VeeValidate, and Zod
 through framework-native modules, providers, and generators. Nuxt defaults to
@@ -335,6 +333,12 @@ its native `$fetch` client and includes SSR hydration for Vue Query.
 SvelteKit projects use Svelte 5 runes, TanStack Svelte Query, Svelte stores,
 SvelteKit Superforms, and Zod 4. They default to native Fetch and use
 `PUBLIC_API_BASE` for public runtime API configuration.
+
+Angular projects use standalone `OnPush` components with signal inputs,
+zoneless change detection, Angular `HttpClient`, TanStack Angular Query
+(`inject*` helpers), NgRx Signal Store and typed reactive forms validated with
+Zod 4. Generated files follow the template's single-quoted Prettier style and
+`@app`/`@pages`/`@widgets`/`@features`/`@entities`/`@shared` aliases.
 
 ## Generated architecture
 
@@ -418,13 +422,14 @@ bin/
   installation behavior.
 - The CLI entrypoint only parses and routes commands.
 
-This separation allows React, Next.js, Vue, Nuxt, and SvelteKit to share one CLI
+This separation allows React, Next.js, Vue, Nuxt, SvelteKit and Angular to share one CLI
 lifecycle while keeping framework-native providers and generated components.
 
 ## Requirements
 
 - Node.js 22.12.0 or later for the CLI
 - Node.js 22.22.2 or later for generated Nuxt and SvelteKit projects
+- Node.js `^22.22.3 || ^24.15.0 || >=26.0.0` for generated Angular projects
 
 The CLI runtime floor, the per-template floors, and the supported package
 manager versions are verified in

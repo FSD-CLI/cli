@@ -225,3 +225,59 @@ ${body}${year}
 </${tag}>
 `;
 }
+
+// Angular presets are standalone OnPush components. Items are a signal input
+// with RouterLink navigation, so projects can pass their own routes.
+export function angularWidgetPresetContent(name) {
+  const preset = presets[name];
+  const tag = preset.element;
+  const className = preset.component;
+  const selector = `app-${name}`;
+  const itemType = `${className}Item`;
+  const indent = tag === "nav" ? "      " : "        ";
+  const list = `${indent}<ul>
+${indent}  @for (item of items(); track item.href) {
+${indent}    <li><a [routerLink]="item.href">{{ item.label }}</a></li>
+${indent}  }
+${indent}</ul>`;
+  const open = tag === "nav" ? `<nav aria-label="${preset.navLabel}">` : `<${tag}>`;
+  const brand = preset.brand ? "\n      <strong>{{ brand() }}</strong>" : "";
+  const body =
+    tag === "nav"
+      ? list
+      : `      <nav aria-label="${preset.navLabel}">
+${list}
+      </nav>`;
+  const year =
+    className === "Footer" ? "\n      <p>&copy; {{ year }} {{ brand() }}</p>" : "";
+  const members = [
+    `  readonly items = input<${itemType}[]>([
+${preset.items.map(([label, href]) => `    { label: '${label}', href: '${href}' },`).join("\n")}
+  ]);`,
+    ...(preset.brand ? ["  readonly brand = input('App');"] : []),
+    ...(className === "Footer" ? ["  protected readonly year = new Date().getFullYear();"] : []),
+  ];
+
+  return `import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+export interface ${itemType} {
+  label: string;
+  href: string;
+}
+
+@Component({
+  selector: '${selector}',
+  imports: [RouterLink],
+  template: \`
+    ${open}${brand}
+${body}${year}
+    </${tag}>
+  \`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ${className} {
+${members.join("\n")}
+}
+`;
+}

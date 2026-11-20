@@ -313,7 +313,7 @@ async function main() {
   const frameworks =
     requested.length > 0
       ? requested
-      : ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit"];
+      : ["react-vite", "nextjs", "vue-vite", "nuxt", "sveltekit", "angular"];
 
   const reports = runPackageNameE2E(frameworks);
   const failed = reports.filter((report) => report.result !== "pass");
