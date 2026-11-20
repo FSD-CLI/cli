@@ -111,7 +111,7 @@ export default {
 
 `template` may be omitted for an inspection-only plugin adapter
 (`inspectionOnly: true`, no generators), mirroring how the core Angular
-adapter exists without a template today.
+adapter existed before its template and dependencies were wired in.
 
 ### 3. Enabling a plugin (explicit, never discovered)
 

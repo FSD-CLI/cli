@@ -25,16 +25,55 @@ test('Angular config is valid and inspectable without advertising scaffolding', 
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
-test('Angular writes and upgrades fail before creating React artifacts', () => {
+test('Angular configuration writes Angular artifacts and adapter dependencies only', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fsd-angular-write-'));
   try {
     const config = normalizeProjectConfig('angular');
-    fs.writeFileSync(path.join(root, 'package.json'), '{"name":"sentinel"}');
-    assert.throws(() => configureProject(root, config), /inspection only/);
-    assert.throws(() => getManagedProjectArtifacts(config), /inspection only/);
+    fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify({
+      name: 'sentinel',
+      dependencies: { '@angular/core': '^22.2.2', '@ngrx/signals': '^1.0.0', axios: '^1.0.0', 'react-hook-form': '^7.0.0' },
+    }));
+    configureProject(root, config);
+
+    const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+    assert.deepEqual(pkg.dependencies, {
+      '@angular/core': '^22.2.2',
+      '@angular/forms': '^22.2.2',
+      '@ngrx/signals': '^22.0.1',
+      '@tanstack/angular-query-experimental': '^5.103.1',
+      zod: '^4.6.7',
+    });
+
+    const { files } = getManagedProjectArtifacts(config);
+    assert.deepEqual(Object.keys(files).sort(), [
+      'src/app/providers/index.ts',
+      'src/app/providers/query/index.ts',
+      'src/app/providers/query/query-provider.ts',
+      'src/shared/api/api-client.ts',
+      'src/shared/api/index.ts',
+      'src/shared/config/fsd-stack.ts',
+    ]);
+    for (const [file, content] of Object.entries(files)) {
+      assert.equal(fs.readFileSync(path.join(root, file), 'utf8'), content, file);
+    }
+    assert.match(files['src/shared/api/api-client.ts'], /export class ApiClient/);
+    assert.match(files['src/app/providers/query/query-provider.ts'], /provideTanStackQuery/);
+    assert.match(files['src/shared/config/fsd-stack.ts'], /frameworkLabel: "Angular"/);
+    for (const reactArtifact of ['src/app/providers/AppProviders.tsx', 'src/shared/api/client.ts']) {
+      assert.equal(fs.existsSync(path.join(root, reactArtifact)), false, reactArtifact);
+    }
     for (const type of ['feature', 'entity', 'widget', 'page']) assert.throws(() => createGeneratorPlan({ cwd: root, type, name: 'example', config }), /not supported/);
-    assert.deepEqual(fs.readdirSync(root), ['package.json']);
-    assert.equal(fs.readFileSync(path.join(root, 'package.json'), 'utf8'), '{"name":"sentinel"}');
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('Angular pnpm projects only approve Angular build dependencies', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fsd-angular-pnpm-'));
+  try {
+    fs.writeFileSync(path.join(root, 'package.json'), '{}');
+    configureProject(root, normalizeProjectConfig('angular', { packageManager: 'pnpm' }));
+    const workspace = fs.readFileSync(path.join(root, 'pnpm-workspace.yaml'), 'utf8');
+    for (const name of ['@parcel/watcher', 'esbuild', 'lmdb', 'msgpackr-extract']) assert.match(workspace, new RegExp(`"${name}": true`));
+    assert.match(workspace, /strictDepBuilds: true/);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 

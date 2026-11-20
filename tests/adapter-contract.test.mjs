@@ -126,7 +126,7 @@ test("derived matrix rows keep their exact pre-derivation values", () => {
     serverState: ["angular-query"],
     clientState: ["ngrx-signals"],
     forms: ["angular-forms-zod"],
-    packageManager: ["npm"],
+    packageManager: ["npm", "pnpm", "yarn", "bun"],
     generators: [],
   });
 });

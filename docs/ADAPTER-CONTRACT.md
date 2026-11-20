@@ -26,7 +26,7 @@ Nothing else in the CLI hard-codes framework knowledge.
 | `runtime` | `string` | optional | Runtime flavour when it differs from the family default (`nuxt`, `sveltekit`, `angular`). |
 | `clientDirective` | `string` | optional | Directive prepended to generated client modules (Next.js `"use client"`); `""` when the framework has none. |
 | `publicApiBaseUrlExpression` | `string` | optional | Expression generated code uses to read the public API base URL. |
-| `inspectionOnly` | `boolean` | optional | The adapter exists so existing projects can be inspected, but the CLI cannot generate or upgrade projects for it yet (Angular today). Relaxes the `dependencies` / `dependencyVersions` requirements. |
+| `inspectionOnly` | `boolean` | optional | The adapter exists so existing projects can be inspected, but the CLI cannot generate or upgrade projects for it yet. No built-in adapter uses it today. Relaxes the `dependencies` / `dependencyVersions` requirements. |
 
 Adapters are frozen objects (`Object.freeze`): the registry hands the same
 instance to every caller, so an adapter must never be mutated at runtime.
