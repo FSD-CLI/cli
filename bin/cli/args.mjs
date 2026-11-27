@@ -4,6 +4,7 @@ import {
   isProjectTargetSelection,
   projectTargetUnavailableMessage,
 } from "../core/project-target.mjs";
+import { POLICY_PRESET_NAMES } from "../core/policy.mjs";
 
 const BOOLEAN_FLAGS = new Map([
   ["--yes", "yes"],
@@ -110,11 +111,41 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  // INT-37/38: `fsd policy codeowners [--force]` generates CODEOWNERS from
+  // the policy's `owners`, and `fsd policy --preset <name>` scaffolds a
+  // starter policy file from a built-in preset. The two do not combine.
   if (args[0] === "policy") {
-    if (args.length > 1) {
-      throw new CliUsageError(`Unexpected argument "${args[1]}".`);
+    const options = { command: "policy", subcommand: null, preset: null, force: false };
+    const tail = args.slice(1);
+    for (let index = 0; index < tail.length; index += 1) {
+      const argument = tail[index];
+      if (argument === "codeowners") {
+        if (options.subcommand) {
+          throw new CliUsageError('Unexpected argument "codeowners".');
+        }
+        options.subcommand = "codeowners";
+      } else if (argument === "--force") {
+        options.force = true;
+      } else if (argument === "--preset" || argument.startsWith("--preset=")) {
+        const value = argument.includes("=")
+          ? argument.slice("--preset=".length)
+          : tail[++index];
+        if (!value || !POLICY_PRESET_NAMES.includes(value)) {
+          throw new CliUsageError(
+            `--preset requires a preset name (${POLICY_PRESET_NAMES.join(", ")}).`,
+          );
+        }
+        options.preset = value;
+      } else {
+        throw new CliUsageError(`Unexpected argument "${argument}".`);
+      }
     }
-    return { command: "policy" };
+    if (options.subcommand && options.preset) {
+      throw new CliUsageError(
+        '"codeowners" and --preset cannot be combined.',
+      );
+    }
+    return options;
   }
 
   if (args[0] === "history") {

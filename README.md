@@ -147,6 +147,10 @@ npx create-fsd-architecture@latest agent-rules
 npx create-fsd-architecture@latest agent-rules --force
 # Load and validate the project policy file (fsd.policy.ts)
 npx create-fsd-architecture@latest policy
+# Scaffold a starter policy from a built-in preset (recommended, strict)
+npx create-fsd-architecture@latest policy --preset recommended
+# Generate .github/CODEOWNERS from the policy owners
+npx create-fsd-architecture@latest policy codeowners
 # Serve project inspection over MCP (stdio JSON-RPC 2.0)
 npx create-fsd-architecture@latest mcp
 
@@ -185,7 +189,13 @@ passed.
 `fsd.policy.js`) in the project root and prints the declared rules. The
 format is specified in [docs/POLICY-FORMAT.md](./docs/POLICY-FORMAT.md).
 Rules are only declared, not evaluated yet — enforcement inside `check`
-is a separate task (INT-36).
+is a separate task (INT-36). A policy can extend a built-in preset
+(`preset: "recommended"` or `"strict"` — `strict` turns every rule into an
+error and forbids widgets from importing features) and declare `owners`
+per layer or slice (`"features/auth": "@team-auth"`); `policy --preset
+<name>` scaffolds a starter policy file from a preset, and `policy
+codeowners` generates `.github/CODEOWNERS` from the owners, refusing to
+overwrite a hand-written file without `--force`.
 
 `mcp` starts a minimal MCP server over stdio (newline-delimited JSON-RPC
 2.0) with exactly two tools: `check` (configuration, package.json and layer

@@ -33,7 +33,7 @@ Usage:
   fsd history [--limit <n>]
   fsd sync api --schema <file> --dry-run
   fsd agent-rules [--force]
-  fsd policy
+  fsd policy [--preset <name>] | fsd policy codeowners [--force]
   fsd mcp
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
@@ -58,7 +58,8 @@ Commands:
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
        sync api --schema <file> --dry-run Preview entities/endpoints from a JSON OpenAPI schema (no files written)
        agent-rules [--force]       Write AGENTS.md + .cursor/rules/fsd-cli.mdc
-       policy                    Load and validate fsd.policy.ts (rules are not evaluated yet)
+       policy [--preset <name>]      Load and validate fsd.policy.ts (rules are not evaluated yet); --preset scaffolds one from a preset (recommended, strict)
+       policy codeowners [--force]   Generate .github/CODEOWNERS from the policy owners (never overwrites a hand-written file without --force)
        mcp                         Minimal MCP server over stdio (tools: check, explain)
        upgrade                   Safely migrate CLI-owned project tooling
 
