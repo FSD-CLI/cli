@@ -24,6 +24,106 @@ function result(label, ok, detail) {
   return { label, ok, detail };
 }
 
+function readPackageJson(cwd) {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(cwd, "package.json"), "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+function hasWorkspacesField(packageJson) {
+  const workspaces = packageJson?.workspaces;
+  if (Array.isArray(workspaces)) return workspaces.length > 0;
+  if (workspaces && typeof workspaces === "object") {
+    return (
+      Array.isArray(workspaces.packages) && workspaces.packages.length > 0
+    );
+  }
+  return false;
+}
+
+// Read-only detection of a monorepo layout. Returns null for a single
+// package, otherwise the detected workspace tool and every signal found.
+// Informational only: a monorepo is a supported layout, never a failure.
+export function detectMonorepo(cwd) {
+  const signals = [];
+  if (fs.existsSync(path.join(cwd, "pnpm-workspace.yaml"))) {
+    signals.push("pnpm-workspace.yaml");
+  }
+  const packageJson = readPackageJson(cwd);
+  const hasWorkspaces = hasWorkspacesField(packageJson);
+  if (hasWorkspaces) signals.push("package.json workspaces");
+  if (fs.existsSync(path.join(cwd, "turbo.json"))) signals.push("turbo.json");
+  if (fs.existsSync(path.join(cwd, "nx.json"))) signals.push("nx.json");
+  if (fs.existsSync(path.join(cwd, "lerna.json"))) signals.push("lerna.json");
+  try {
+    if (fs.statSync(path.join(cwd, "apps")).isDirectory()) {
+      signals.push("apps/ directory");
+    }
+  } catch {
+    // No apps/ directory.
+  }
+  if (signals.length === 0) return null;
+  const tool = signals.includes("pnpm-workspace.yaml")
+    ? "pnpm workspaces"
+    : hasWorkspaces
+      ? "npm/yarn workspaces"
+      : signals.includes("turbo.json")
+        ? "Turborepo"
+        : signals.includes("nx.json")
+          ? "Nx"
+          : signals.includes("lerna.json")
+            ? "Lerna"
+            : "apps/ layout";
+  return { detected: true, tool, signals };
+}
+
+// Read-only detection of a mobile (Expo / React Native) project. Returns
+// null for a plain web project, otherwise the detected setup and every
+// signal found. Informational only, never a failure.
+export function detectMobile(cwd) {
+  const signals = [];
+  const packageJson = readPackageJson(cwd);
+  const dependencies = {
+    ...packageJson?.dependencies,
+    ...packageJson?.devDependencies,
+  };
+  if (dependencies.expo) signals.push("expo dependency");
+  if (dependencies["react-native"]) signals.push("react-native dependency");
+  if (fs.existsSync(path.join(cwd, "app.json"))) signals.push("app.json");
+  if (fs.existsSync(path.join(cwd, "app.config.js"))) {
+    signals.push("app.config.js");
+  }
+  if (signals.length === 0) return null;
+  const setup = dependencies.expo
+    ? "Expo"
+    : dependencies["react-native"]
+      ? "React Native"
+      : "Expo config";
+  return { detected: true, setup, signals };
+}
+
+function monorepoCheck(monorepo) {
+  return result(
+    "Monorepo",
+    true,
+    monorepo
+      ? `${monorepo.tool} — ${monorepo.signals.join(", ")}`
+      : "not detected — single package",
+  );
+}
+
+function mobileCheck(mobile) {
+  return result(
+    "Mobile project",
+    true,
+    mobile
+      ? `${mobile.setup} — ${mobile.signals.join(", ")}`
+      : "not detected — web project",
+  );
+}
+
 export function commandExists(command) {
   const probe = spawnSyncSafe(command, ["--version"], { encoding: "utf8" });
   return !probe.error && probe.status === 0;
@@ -38,14 +138,23 @@ export function commandVersion(command) {
 export function inspectProject(cwd = process.cwd(), { includeToolchain = false } = {}) {
   const checks = [];
   let config;
+  // Layout detection is independent of the FSD configuration, so it runs
+  // first and is reported even when the configuration cannot be loaded.
+  const monorepo = detectMonorepo(cwd);
+  const mobile = detectMobile(cwd);
 
   try {
     config = loadProjectConfig(cwd);
     checks.push(result("FSD configuration", true, config.framework));
   } catch (error) {
     checks.push(result("FSD configuration", false, error.message));
-    return { config: null, checks };
+    checks.push(monorepoCheck(monorepo));
+    checks.push(mobileCheck(mobile));
+    return { config: null, checks, monorepo, mobile };
   }
+
+  checks.push(monorepoCheck(monorepo));
+  checks.push(mobileCheck(mobile));
 
   const packagePath = path.join(cwd, "package.json");
   checks.push(
@@ -99,6 +208,8 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
   return {
     config,
     checks,
+    monorepo,
+    mobile,
     // Doctor reuses the slice-count summary from `fsd explain` so the
     // diagnosis also shows the size of the project it is checking.
     metrics: includeToolchain ? explainProject(cwd) : null,

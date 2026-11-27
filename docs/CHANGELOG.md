@@ -20,6 +20,15 @@ All notable changes to `create-fsd-architecture` are documented here.
   slices through the Angular CLI, and `ng update create-fsd-architecture`
   refreshes the setup (or runs the managed upgrade for CLI-created projects).
 
+- `fsd check` and `fsd doctor` now detect the project layout: a monorepo
+  (`pnpm-workspace.yaml`, the `package.json` `workspaces` field, `turbo.json`,
+  `nx.json`, `lerna.json` or an `apps/` directory, reporting the workspace
+  tool found) and a mobile project (`expo` or `react-native` dependency,
+  `app.json` or `app.config.js`, reporting the setup found). Both findings
+  are informational checks that always pass, and are also exposed as the
+  `monorepo` and `mobile` fields of the inspection report (the
+  `fsd.config.json` schema is unchanged). Detection is read-only: no files
+  are written and no new commands are added.
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
   schema: it prints the detected entities (`components.schemas`) and
