@@ -185,6 +185,21 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "turbo") {
+    const options = { command: "turbo", force: false, verify: false };
+    for (const argument of args.slice(1)) {
+      if (argument === "--force") options.force = true;
+      else if (argument === "--verify") options.verify = true;
+      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    if (options.force && options.verify) {
+      throw new CliUsageError(
+        "`fsd turbo` cannot combine --force with --verify: --force writes turbo.json, --verify only checks it.",
+      );
+    }
+    return options;
+  }
+
   if (args[0] === "mcp") {
     if (args.length > 1) {
       throw new CliUsageError(`Unexpected argument "${args[1]}".`);

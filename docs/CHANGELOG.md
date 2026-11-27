@@ -41,6 +41,23 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- `fsd turbo [--force]` generates `turbo.json` for a monorepo workspace
+  root (MONO-07, layout in `docs/MONOREPO-LAYOUT.md`): `build`, `lint`,
+  `test` and `typecheck` pipelines that each depend on `^build`, with
+  inputs and build outputs for Turborepo caching, plus a non-cached
+  persistent `dev` task and a non-cached `clean` task. The pipelines cover
+  the discovered `apps/*` and `packages/*` members, with build outputs
+  following each app's framework (`.next/**` for Next.js, `.output/**` for
+  Nuxt, `dist/**` otherwise). It refuses to overwrite an existing
+  `turbo.json` without `--force`, and refuses when `nx.json` is present —
+  a workspace uses Turborepo or Nx, not both.
+- `fsd turbo --verify` verifies Turborepo caching for a monorepo workspace
+  (MONO-08): it validates `turbo.json` against what the generator promises,
+  checks that each app's framework build output is declared for caching,
+  warns about members without a `build` script, and flags a coexisting
+  `nx.json`. When a `turbo` binary is available it also runs
+  `turbo build --dry-run` to prove Turborepo loads the config; without one
+  it reports the static checks only.
 
 ### Fixed
 

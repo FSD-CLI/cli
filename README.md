@@ -145,6 +145,9 @@ npx create-fsd-architecture@latest sync api --schema openapi.json --dry-run
 # Generate agent rules (AGENTS.md + Cursor rules) for an existing FSD project
 npx create-fsd-architecture@latest agent-rules
 npx create-fsd-architecture@latest agent-rules --force
+# Generate turbo.json task pipelines for a monorepo workspace
+npx create-fsd-architecture@latest turbo
+npx create-fsd-architecture@latest turbo --force
 # Load and validate the project policy file (fsd.policy.ts)
 npx create-fsd-architecture@latest policy
 # Serve project inspection over MCP (stdio JSON-RPC 2.0)
@@ -180,6 +183,21 @@ error. Generation from the schema is a later task.
 same data `explain` prints. It refuses to overwrite either file if it already
 exists (Next.js templates ship their own `AGENTS.md`) unless `--force` is
 passed.
+
+`turbo` writes `turbo.json` into a monorepo workspace root (see
+[docs/MONOREPO-LAYOUT.md](./docs/MONOREPO-LAYOUT.md)): `build`, `lint`,
+`test` and `typecheck` pipelines that each run after the workspace
+dependencies' build (`^build`), with inputs and build outputs for Turborepo
+caching, plus a non-cached persistent `dev` task and a non-cached `clean`
+task. The pipelines cover the discovered `apps/*` and `packages/*` members
+(build outputs follow each app's framework: `.next/**` for Next.js,
+`.output/**` for Nuxt, `dist/**` otherwise). It refuses to overwrite an
+existing `turbo.json` unless `--force` is passed, and refuses when `nx.json`
+is present — a workspace uses Turborepo or Nx, not both. `turbo --verify`
+checks the file instead of writing it: it validates the config, confirms
+each app's framework build output is declared for caching, warns about
+members without a `build` script, and — when a `turbo` binary is available —
+runs `turbo build --dry-run` to prove Turborepo loads the config.
 
 `policy` loads and validates `fsd.policy.ts` (or `fsd.policy.mjs` /
 `fsd.policy.js`) in the project root and prints the declared rules. The
