@@ -41,6 +41,11 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- Workspace member naming (MONO-02): `workspaceMemberName()` in
+  `bin/core/package-name.mjs` derives `@<project>/<member>` names for
+  workspace apps and packages from a project name, keeping an existing
+  scope (`@acme/shop` → `@acme/web`). Naming contract for the monorepo
+  workspace generator (MONO-03); no workspace is created yet.
 
 ### Fixed
 
