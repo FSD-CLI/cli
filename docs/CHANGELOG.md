@@ -41,6 +41,12 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- `fsd adopt --analyze` analyzes an existing project for FSD adoption
+  (INT-05): an adoption score (the share of source files already in FSD
+  layers), per-file classification (in-layer, layer-root, flat with a
+  suggested target, unmapped), and the layer/slice inventory from
+  `fsd explain`. Read-only — it never writes or moves a file; the editable
+  migration plan is INT-06.
 
 ### Fixed
 

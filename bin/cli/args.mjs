@@ -192,6 +192,24 @@ export function parseCliArgs(rawArgs) {
     return { command: "mcp" };
   }
 
+  // INT-05: only the analysis is implemented. The editable migration plan
+  // is INT-06 and execution is INT-07, so a call without --analyze is a
+  // usage error.
+  if (args[0] === "adopt") {
+    const options = { command: "adopt", analyze: false, json: false };
+    for (const argument of args.slice(1)) {
+      if (argument === "--analyze") options.analyze = true;
+      else if (argument === "--json") options.json = true;
+      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    if (!options.analyze) {
+      throw new CliUsageError(
+        "`fsd adopt` only supports --analyze for now. The migration plan (INT-06) and execution (INT-07) are later tasks.",
+      );
+    }
+    return options;
+  }
+
   const generateIndex = args.findIndex(
     (arg) => arg === "--generate" || arg === "-g",
   );

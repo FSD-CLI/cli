@@ -35,6 +35,7 @@ Usage:
   fsd agent-rules [--force]
   fsd policy
   fsd mcp
+  fsd adopt --analyze [--json]
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
 
   fsd and create-fsd-architecture are the same CLI; install it globally with
@@ -60,6 +61,7 @@ Commands:
        agent-rules [--force]       Write AGENTS.md + .cursor/rules/fsd-cli.mdc
        policy                    Load and validate fsd.policy.ts (rules are not evaluated yet)
        mcp                         Minimal MCP server over stdio (tools: check, explain)
+       adopt --analyze [--json]    Analyze an existing project for FSD adoption (read-only, no files written)
        upgrade                   Safely migrate CLI-owned project tooling
 
 Create options:
