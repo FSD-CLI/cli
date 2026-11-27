@@ -6,6 +6,12 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- Contract test harness for every adapter: a shared harness
+  (`tests/adapter-contract-harness.mjs`) runs the full v2 contract checks
+  for one adapter id — conformance, declared targets, capability matrix
+  row, config round-trip, generator coverage and template identity — and
+  react-vite, nextjs, vue-vite, nuxt and sveltekit each have a dedicated
+  contract test file using it (Angular already had one).
 - Angular is a stable template (`--framework angular`, FSD-CLI/fsd-angular).
   Generators cover `feature`, `entity`, `widget` (including the navbar,
   sidebar, footer and bottom-bar presets), `page` (home, about and consult
