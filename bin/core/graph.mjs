@@ -12,6 +12,9 @@
 // imports from a layer above its own as a `layer-boundaries` violation —
 // the same rule id `bin/core/policy.mjs` (INT-35) defines, so INT-36's
 // policy evaluation can consume these violations directly.
+// Slice 4 adds graph queries: `dependenciesOf` / `dependentsOf` and
+// `findSliceCycles` over the slice-2 edges, at slice granularity —
+// internal API only, no command yet; `fsd impact` (INT-25) will call it.
 //
 // The layer layout is never re-derived in this module: it reuses
 // `explainProject()` from bin/commands/explain-project.mjs, which resolves
@@ -226,6 +229,106 @@ export function findViolations(graph, allow = defaultLayerAllow()) {
     });
   }
   return violations;
+}
+
+// Graph queries (slice 4) — internal API only, no command yet. This is
+// the piece `fsd impact` (INT-25) will call: which slices a slice depends
+// on, which slices depend on it, and whether the slice graph has cycles.
+// All three work at slice granularity ("layer/slice", e.g.
+// "features/auth"): node-level edges are collapsed to slice edges first,
+// unresolved edges are ignored, and a slice importing itself is not a
+// dependency and not a cycle.
+
+export function sliceKeyOf(node) {
+  return `${node.layer}/${node.slice}`;
+}
+
+// Slice adjacency: each slice key mapped to the sorted slice keys it
+// imports from (resolved edges only, self-edges excluded).
+function sliceAdjacency(graph) {
+  const nodeById = new Map(graph.nodes.map((node) => [node.id, node]));
+  const adjacency = new Map();
+  for (const node of graph.nodes) {
+    adjacency.set(sliceKeyOf(node), new Set());
+  }
+  for (const edge of graph.edges) {
+    if (!edge.resolved) continue;
+    const fromNode = nodeById.get(edge.from);
+    const toNode = nodeById.get(edge.to);
+    if (!fromNode || !toNode) continue;
+    const fromKey = sliceKeyOf(fromNode);
+    const toKey = sliceKeyOf(toNode);
+    if (fromKey === toKey) continue;
+    adjacency.get(fromKey).add(toKey);
+  }
+  return new Map(
+    [...adjacency.entries()].map(([key, deps]) => [
+      key,
+      [...deps].sort(),
+    ]),
+  );
+}
+
+// The slices `key` imports from, sorted. Unknown slices have no
+// dependencies.
+export function dependenciesOf(graph, key) {
+  return sliceAdjacency(graph).get(key) ?? [];
+}
+
+// The slices that import from `key`, sorted. Unknown slices have no
+// dependents.
+export function dependentsOf(graph, key) {
+  const adjacency = sliceAdjacency(graph);
+  const dependents = [];
+  for (const [from, deps] of adjacency) {
+    if (deps.includes(key)) dependents.push(from);
+  }
+  return dependents.sort();
+}
+
+// Canonical cycle form: rotate so the lexicographically smallest slice key
+// comes first, so the same cycle found from different entry points dedupes.
+function canonicalCycle(cycle) {
+  let min = 0;
+  for (let i = 1; i < cycle.length; i++) {
+    if (cycle[i] < cycle[min]) min = i;
+  }
+  return [...cycle.slice(min), ...cycle.slice(0, min)];
+}
+
+// Every slice-level cycle in the graph, as arrays of slice keys in import
+// order (each entry imports the next, the last imports the first). Found
+// by depth-first search: one cycle per back edge, deduplicated by
+// canonical form, sorted for determinism. A graph with no cycles returns
+// []. Note this reports the cycles the search encounters, not a
+// mathematical enumeration of every simple cycle — enough for impact
+// analysis, which needs to know a cycle exists and which slices it spans.
+export function findSliceCycles(graph) {
+  const adjacency = sliceAdjacency(graph);
+  const keys = [...adjacency.keys()].sort();
+  const state = new Map(); // 1 = on the DFS stack, 2 = done
+  const stack = [];
+  const found = new Map();
+  function visit(key) {
+    state.set(key, 1);
+    stack.push(key);
+    for (const next of adjacency.get(key) ?? []) {
+      if (state.get(next) === 1) {
+        const cycle = canonicalCycle(stack.slice(stack.indexOf(next)));
+        found.set(JSON.stringify(cycle), cycle);
+      } else if (!state.has(next)) {
+        visit(next);
+      }
+    }
+    stack.pop();
+    state.set(key, 2);
+  }
+  for (const key of keys) {
+    if (!state.has(key)) visit(key);
+  }
+  return [...found.values()].sort((a, b) =>
+    JSON.stringify(a) < JSON.stringify(b) ? -1 : 1,
+  );
 }
 
 export function buildGraph(cwd = process.cwd()) {

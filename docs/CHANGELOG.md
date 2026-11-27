@@ -62,6 +62,14 @@ All notable changes to `create-fsd-architecture` are documented here.
   policy evaluation can consume them directly. `findViolations(graph,
   allow)` accepts a project allow list; same-layer and unresolved edges
   are never layer-boundaries violations.
+- Project graph engine (INT-01, slice 4): graph queries in
+  `bin/core/graph.mjs` — `dependenciesOf(graph, key)` /
+  `dependentsOf(graph, key)` answer slice-level reverse lookups and
+  `findSliceCycles(graph)` reports slice-level import cycles, all at
+  "layer/slice" granularity with self-imports excluded. Internal API only
+  (no command yet); `fsd impact` (INT-25) will call it. A new `cyclic`
+  analysis fixture pins the smallest possible cycle
+  (`features/a` ↔ `features/b`).
 
 ### Fixed
 
