@@ -29,7 +29,7 @@ Usage:
   fsd generate <type> <name...> [--force] [--dry-run]     (alias: fsd g)
   fsd <check|doctor> [--architecture]
   fsd config
-  fsd explain [--tour] [--force]
+  fsd explain [<slice>] [--tour] [--force] [--interactive|-i]
   fsd history [--limit <n>]
   fsd sync api --schema <file> --dry-run
   fsd agent-rules [--force]
@@ -54,7 +54,7 @@ Commands:
       check                     Inspect config/layers (not import architecture)
        doctor                    Diagnose the local project and toolchain, with project metrics
        config                    Print the resolved FSD configuration
-       explain [--tour] [--force] Summarize the project stack and slices per layer
+       explain [<slice>] [--tour] [--force] [--interactive|-i] Summarize the project stack and slices per layer; with <slice> (layer/slice, or a bare name when unambiguous) deep-dive into one slice; --interactive picks slices in a prompt loop
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
        sync api --schema <file> --dry-run Preview entities/endpoints from a JSON OpenAPI schema (no files written)
        agent-rules [--force]       Write AGENTS.md + .cursor/rules/fsd-cli.mdc

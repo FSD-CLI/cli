@@ -101,11 +101,34 @@ export function parseCliArgs(rawArgs) {
   }
 
   if (args[0] === "explain") {
-    const options = { command: "explain", tour: false, force: false };
+    const options = {
+      command: "explain",
+      tour: false,
+      force: false,
+      slice: undefined,
+      interactive: false,
+    };
     for (const argument of args.slice(1)) {
       if (argument === "--tour") options.tour = true;
       else if (argument === "--force") options.force = true;
-      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+      else if (argument === "--interactive" || argument === "-i")
+        options.interactive = true;
+      else if (argument.startsWith("-"))
+        throw new CliUsageError(`Unexpected argument "${argument}".`);
+      else if (options.slice !== undefined)
+        throw new CliUsageError(`Unexpected argument "${argument}".`);
+      else options.slice = argument;
+    }
+    if (options.slice !== undefined && options.interactive) {
+      throw new CliUsageError(
+        "A slice and --interactive cannot be combined.",
+      );
+    }
+    if (options.slice !== undefined && options.tour) {
+      throw new CliUsageError("A slice and --tour cannot be combined.");
+    }
+    if (options.interactive && options.tour) {
+      throw new CliUsageError("--interactive and --tour cannot be combined.");
     }
     return options;
   }
