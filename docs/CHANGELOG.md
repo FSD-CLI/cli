@@ -46,6 +46,13 @@ All notable changes to `create-fsd-architecture` are documented here.
   its (layer, slice/segment) using `fsd explain`'s layer list, emitting
   `{ nodes: [{ id, file, layer, slice }], edges: [] }`. No import parsing
   yet — edges arrive in slice 2.
+- Project graph engine (INT-01, slice 2): the zero-dependency import parser
+  in `bin/core/graph.mjs` fills the graph's edges — it parses `import`,
+  `import type`, `export ... from`, `require()` and dynamic `import()` in
+  `.js/.mjs/.ts/.tsx/.jsx` files and resolves relative specifiers to nodes
+  (directory imports resolve to their index file). Bare and alias imports
+  are recorded as unresolved edges (`to: null`) instead of being dropped.
+  No judgement yet — violation detection is slice 3.
 
 ### Fixed
 

@@ -6,8 +6,8 @@ import test from "node:test";
 import { buildGraph } from "../bin/core/graph.mjs";
 
 // INT-01 slice 1 — file discovery + node model. Tests the node inventory
-// against the INT-04 analysis fixtures (tests/fixtures/analysis/); no
-// import parsing happens in this slice, so edges are always empty.
+// against the INT-04 analysis fixtures (tests/fixtures/analysis/); edge
+// lists are asserted in tests/graph-parser.test.mjs (slice 2).
 
 const fixturesDir = fileURLToPath(new URL("fixtures/analysis", import.meta.url));
 
@@ -34,10 +34,9 @@ function assertEveryFileExists(fixture, graph) {
   }
 }
 
-test("minimal fixture: 11 nodes, one per source file, edges empty", () => {
+test("minimal fixture: 11 nodes, one per source file", () => {
   const graph = buildGraph(fixturePath("minimal"));
   assert.equal(graph.nodes.length, 11);
-  assert.deepEqual(graph.edges, []);
   assertSortedUniqueIds(graph);
   assertEveryFileExists("minimal", graph);
 
@@ -97,14 +96,13 @@ test("minimal fixture: 11 nodes, one per source file, edges empty", () => {
   });
 });
 
-test("with-violations fixture: same 11 nodes, edges empty", () => {
+test("with-violations fixture: same 11 nodes", () => {
   const graph = buildGraph(fixturePath("with-violations"));
   assert.equal(graph.nodes.length, 11);
-  assert.deepEqual(graph.edges, []);
   assertSortedUniqueIds(graph);
   assertEveryFileExists("with-violations", graph);
   // Same node inventory as minimal — the fixtures differ only in imports,
-  // which slice 1 does not parse.
+  // whose edges slice 2 parses (see tests/graph-parser.test.mjs).
   assert.deepEqual(
     graph.nodes.map(({ id, layer, slice }) => ({ id, layer, slice })),
     buildGraph(fixturePath("minimal")).nodes.map(
