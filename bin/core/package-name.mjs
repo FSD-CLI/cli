@@ -180,6 +180,63 @@ export function toPackageName(input) {
 }
 
 /**
+ * Derives the npm name of a workspace member from a project name.
+ *
+ * The workspace scope is the npm-safe kebab-case project name: a plain
+ * project name becomes its own scope (`my-app` → `@my-app/<member>`), and
+ * a project name that already carries a scope keeps it (`@acme/shop` →
+ * `@acme/web`). The member is the last segment of the given member path
+ * (`apps/web` → `web`, `packages/shared-ui` → `shared-ui`) and must
+ * already be a valid unscoped npm package name — it is never rewritten,
+ * so a typo surfaces as an error instead of a silently different
+ * package name.
+ *
+ * Naming contract for the monorepo workspace generator (MONO-03, spec
+ * docs/MONOREPO-LAYOUT.md); no workspace is created here.
+ *
+ * @param {string} projectName project name or scoped package name
+ * @param {string} member member name or member path (e.g. "apps/web")
+ * @returns {string} the scoped workspace member name, e.g. "@my-app/web"
+ */
+export function workspaceMemberName(projectName, member) {
+  const project = toPackageName(projectName);
+  const scope = project.name.includes("/")
+    ? project.name.slice(0, project.name.indexOf("/"))
+    : `@${project.name}`;
+
+  const rawMember = typeof member === "string" ? member.trim() : "";
+  if (!rawMember) {
+    throw new Error("A workspace member name is required.");
+  }
+  if (rawMember.startsWith("@")) {
+    throw new Error(
+      `"${rawMember}" is a scoped name. Pass the member name without a scope, e.g. "web".`
+    );
+  }
+  const segments = rawMember.split("/").filter((segment) => segment.trim() !== "");
+  const leaf = segments[segments.length - 1] ?? "";
+  const validation = validateNpmPackageName(leaf);
+  if (!validation.validForNewPackages) {
+    const reason = [...(validation.errors ?? []), ...(validation.warnings ?? [])].join(
+      "; "
+    );
+    throw new Error(
+      `"${rawMember}" is not a valid workspace member name${
+        reason ? `: ${reason}` : "."
+      }`
+    );
+  }
+
+  const name = `${scope}/${leaf}`;
+  if (!validateNpmPackageName(name).validForNewPackages) {
+    throw new Error(
+      `"${projectName}" and "${rawMember}" do not combine into a valid npm package name ("${name}").`
+    );
+  }
+  return name;
+}
+
+/**
  * Describes what the CLI has to tell the user about a project name that is a
  * valid folder name but not a valid npm package name.
  *

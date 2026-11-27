@@ -18,14 +18,14 @@
  * config is separate follow-up work, and the `--target` flag arrives with
  * the CLI flags work. Nothing here writes to disk.
  *
- * Only the web target is implemented today. The other selections are
- * roadmap items (multi-app workspaces, mobile support), so they carry
- * `available: false` plus the reason: the prompt offers them as disabled
- * "Coming Soon" choices — the same treatment planned templates get — and
- * every programmatic entry point rejects them through
- * `assertProjectTargetAvailable` instead of silently creating a plain
- * web project. When a target's support lands, flipping its `available`
- * flag is the only change needed here.
+ * Only the web target and the pnpm multi-web workspace are implemented
+ * today. The other selections are roadmap items (mobile support), so
+ * they carry `available: false` plus the reason: the prompt offers them
+ * as disabled "Coming Soon" choices — the same treatment planned
+ * templates get — and every programmatic entry point rejects them
+ * through `assertProjectTargetAvailable` instead of silently creating
+ * a plain web project. When a target's support lands, flipping its
+ * `available` flag is the only change needed here.
  */
 
 /**
@@ -55,8 +55,10 @@ export const PROJECT_TARGET_OPTIONS = Object.freeze([
     title: "Multi-web",
     description: "Several web applications in one workspace",
     adapterTargets: Object.freeze(["web"]),
-    available: false,
-    unavailableReason: "monorepo workspaces are not supported yet",
+    // MONO-03: the pnpm workspace root generator. npm, Yarn and Bun
+    // workspaces are MONO-04–06, so the create flow still refuses any
+    // other package manager for this target.
+    available: true,
   }),
   Object.freeze({
     value: "mobile",
@@ -132,7 +134,7 @@ export function isProjectTargetAvailable(selection) {
  */
 export function projectTargetUnavailableMessage(selection) {
   const option = getProjectTargetOption(selection);
-  return `The ${option.title} project target is not available yet: ${option.unavailableReason}. Only Web projects can be created today.`;
+  return `The ${option.title} project target is not available yet: ${option.unavailableReason}. Only Web and Multi-web (pnpm) projects can be created today.`;
 }
 
 /**
