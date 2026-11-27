@@ -140,6 +140,10 @@ npx create-fsd-architecture@latest explain --tour
 npx create-fsd-architecture@latest history
 npx create-fsd-architecture@latest history --limit 20
 
+# Print the project import graph (nodes, edges, layer-boundary violations)
+npx create-fsd-architecture@latest graph
+npx create-fsd-architecture@latest graph --json
+
 # Preview what a JSON OpenAPI schema contains (dry run only, no files written)
 npx create-fsd-architecture@latest sync api --schema openapi.json --dry-run
 # Generate agent rules (AGENTS.md + Cursor rules) for an existing FSD project
@@ -168,6 +172,18 @@ entities, shared), and prints per-layer file-touch counts, the most-touched slic
 app/shared segments),
 and a chronological per-commit timeline. A repository with no commits prints a
 note and exits successfully; outside a Git repository the command fails.
+
+`graph` builds the project import graph: every source file mapped to its
+FSD layer and slice, every import edge between them, and every
+layer-boundary violation (a layer importing from a layer above it).
+`graph --json` prints the same data as JSON for tooling. `graph --html`
+writes the same graph as a self-contained interactive `fsd-graph.html`
+page instead (or `--html=<file>` for a custom path): one column per FSD
+layer, click a node to highlight its dependencies and dependents, filter
+by layer, and inspect the layer-boundary violations — no dependencies, no
+server, open the file in a browser. It is the only graph mode that writes
+a file; it does not enforce the policy — enforcement inside `check` is a
+separate task (INT-36).
 
 `sync api --schema <file> --dry-run` reads a JSON OpenAPI 3.x schema and
 prints the detected entities (from `components.schemas`) and endpoints

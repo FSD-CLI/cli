@@ -137,6 +137,27 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "graph") {
+    const options = { command: "graph", json: false, html: null };
+    for (const argument of args.slice(1)) {
+      if (argument === "--json") options.json = true;
+      else if (argument === "--html") options.html = "fsd-graph.html";
+      else if (argument.startsWith("--html=")) {
+        const value = argument.slice("--html=".length);
+        if (!value) {
+          throw new CliUsageError("--html requires a file path.");
+        }
+        options.html = value;
+      } else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    if (options.json && options.html) {
+      throw new CliUsageError(
+        "`fsd graph` cannot combine --json with --html: --json prints to stdout, --html writes a file.",
+      );
+    }
+    return options;
+  }
+
   // INT-13 (scoped): only the dry-run preview is implemented. Generation
   // is INT-14/15/16, so a call without --dry-run is a usage error.
   if (args[0] === "sync") {
