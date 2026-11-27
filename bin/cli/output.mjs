@@ -27,6 +27,7 @@ export function showHelp(version, program = "create-fsd-architecture") {
 Usage:
   fsd create [project-name] [options]
   fsd generate <type> <name...> [--force] [--dry-run]     (alias: fsd g)
+  fsd move <type> <old-name> <new-name> [--to <type>] [--dry-run]  (alias: fsd rename)
   fsd <check|doctor> [--architecture]
   fsd config
   fsd explain [--tour] [--force]
@@ -50,6 +51,7 @@ Commands:
       create [project-name]     Scaffold a new FSD project (default action)
   g,  generate <type> <name>    Generate an FSD slice in the current project
   -g, --generate <type> <name>  Same as generate
+      move <type> <old> <new>   Move/rename an FSD slice and rewrite its imports (alias: rename)
       --list-templates          Show stable and planned framework templates
       check                     Inspect config/layers (not import architecture)
        doctor                    Diagnose the local project and toolchain, with project metrics
@@ -101,6 +103,9 @@ Examples:
   npx create-fsd-architecture my-app --framework react-vite --yes --no-install
   npx create-fsd-architecture --generate feature auth
   npx create-fsd-architecture --generate feature auth --auth-provider supabase
+  fsd move feature auth account --dry-run
+  fsd rename entity product item
+  fsd move feature auth --to widget account
   npx create-fsd-architecture -g entity product customer --dry-run
   npx create-fsd-architecture -g widget navbar sidebar footer bottom-bar
   npx create-fsd-architecture -g shared ui button input

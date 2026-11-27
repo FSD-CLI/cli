@@ -100,6 +100,53 @@ export function parseCliArgs(rawArgs) {
     return { command: args[0] };
   }
 
+  if (args[0] === "move" || args[0] === "rename") {
+    const options = {
+      command: "move",
+      type: undefined,
+      oldName: undefined,
+      newName: undefined,
+      toType: undefined,
+      dryRun: false,
+    };
+    const tail = args.slice(1);
+    for (let index = 0; index < tail.length; index += 1) {
+      const argument = tail[index];
+      if (argument === "--dry-run") {
+        options.dryRun = true;
+      } else if (argument === "--to" || argument.startsWith("--to=")) {
+        const value = argument.includes("=")
+          ? argument.slice("--to=".length)
+          : tail[++index];
+        if (!value || value.startsWith("-")) {
+          throw new CliUsageError("--to requires a slice type.");
+        }
+        options.toType = value;
+      } else if (argument.startsWith("-")) {
+        throw new CliUsageError(`Unknown move option "${argument}".`);
+      } else if (!options.type) {
+        options.type = argument;
+      } else if (!options.oldName) {
+        options.oldName = argument;
+      } else if (!options.newName) {
+        options.newName = argument;
+      } else {
+        throw new CliUsageError(`Unexpected argument "${argument}".`);
+      }
+    }
+    if (args[0] === "rename" && options.toType) {
+      throw new CliUsageError(
+        "`fsd rename` moves within the same layer; use `fsd move --to <type>` to move across layers."
+      );
+    }
+    if (!options.type || !options.oldName || !options.newName) {
+      throw new CliUsageError(
+        "Usage: fsd move <type> <old-name> <new-name> [--to <type>] [--dry-run]."
+      );
+    }
+    return options;
+  }
+
   if (args[0] === "explain") {
     const options = { command: "explain", tour: false, force: false };
     for (const argument of args.slice(1)) {
