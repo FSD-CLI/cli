@@ -13,6 +13,7 @@ import { runMcpServer } from "./commands/mcp-server.mjs";
 import { runHistoryProject } from "./commands/history-project.mjs";
 import { runSyncApiProject } from "./commands/sync-api.mjs";
 import { runAgentRules } from "./commands/agent-rules.mjs";
+import { runTurboProject } from "./commands/turbo-project.mjs";
 import { runPolicyProject } from "./commands/policy-project.mjs";
 import { runUpgradeProject } from "./commands/upgrade-project.mjs";
 import { listTemplates } from "./core/template-registry.mjs";
@@ -48,7 +49,7 @@ export async function runCli(args = process.argv.slice(2)) {
   // a project. Diagnostics stay available so `doctor` can report the exact
   // required version on an unsupported Node.js runtime.
   const runtimeCheck = checkNodeVersion(process.versions.node);
-  if (!runtimeCheck.ok && !["check", "doctor", "config", "history", "explain", "sync", "agent-rules", "policy", "mcp"].includes(command.command)) {
+  if (!runtimeCheck.ok && !["check", "doctor", "config", "history", "explain", "sync", "agent-rules", "turbo", "policy", "mcp"].includes(command.command)) {
     throw new Error(
       `${runtimeCheck.message} Upgrade Node.js to satisfy the supported runtime range before running this command.`
     );
@@ -100,6 +101,12 @@ export async function runCli(args = process.argv.slice(2)) {
   }
   if (command.command === "agent-rules") {
     await runAgentRules(command, process.cwd(), {
+      force: command.force,
+    });
+    return;
+  }
+  if (command.command === "turbo") {
+    await runTurboProject(command, process.cwd(), {
       force: command.force,
     });
     return;
