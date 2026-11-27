@@ -7,6 +7,11 @@
 // the graph's edges. No judgement happens here — violation detection is
 // slice 3; edges are plain facts, including the 3 deliberate upward imports
 // in the with-violations fixture.
+// Slice 3 adds layer-boundary violation detection: it applies the FSD
+// layer order to the slice-2 edges and reports every resolved edge that
+// imports from a layer above its own as a `layer-boundaries` violation —
+// the same rule id `bin/core/policy.mjs` (INT-35) defines, so INT-36's
+// policy evaluation can consume these violations directly.
 //
 // The layer layout is never re-derived in this module: it reuses
 // `explainProject()` from bin/commands/explain-project.mjs, which resolves
@@ -44,6 +49,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { explainProject } from "../commands/explain-project.mjs";
+import { POLICY_LAYERS } from "./policy.mjs";
 
 // Source extensions the graph tracks. The parser parses exactly these files.
 export const GRAPH_SOURCE_EXTENSIONS = [".js", ".mjs", ".ts", ".tsx", ".jsx"];
@@ -174,6 +180,54 @@ function resolveToNode(specifier, fromFile, sourceRoot, nodeById) {
   return null;
 }
 
+// Layer-boundary violations (slice 3).
+//
+// The FSD layer order is app -> pages -> widgets -> features -> entities ->
+// shared: a layer may import layers below it, never above. Same-layer
+// imports are not layer-boundaries violations (cross-slice imports inside
+// one layer are the separate `no-slice-cross-imports` policy rule, and
+// INT-36 evaluates that one). Unresolved edges cannot be judged and are
+// skipped.
+//
+// A violation is shaped for INT-36's policy evaluation to consume: it
+// carries the policy rule id (`layer-boundaries`, as defined in
+// bin/core/policy.mjs), the offending edge, and both layers.
+//
+// The `allow` map is the `layer-boundaries` rule's allow list — a layer
+// mapped to the layers it may import. It defaults to the FSD order above;
+// INT-36 will pass the project's own policy allow list here instead.
+export function defaultLayerAllow() {
+  const allow = {};
+  POLICY_LAYERS.forEach((layer, index) => {
+    allow[layer] = POLICY_LAYERS.slice(index + 1);
+  });
+  return allow;
+}
+
+export function findViolations(graph, allow = defaultLayerAllow()) {
+  const nodeById = new Map(graph.nodes.map((node) => [node.id, node]));
+  const violations = [];
+  for (const edge of graph.edges) {
+    if (!edge.resolved) continue;
+    const fromNode = nodeById.get(edge.from);
+    const toNode = nodeById.get(edge.to);
+    if (!fromNode || !toNode) continue;
+    if (fromNode.layer === toNode.layer) continue;
+    const allowed = allow[fromNode.layer] ?? [];
+    if (allowed.includes(toNode.layer)) continue;
+    violations.push({
+      rule: "layer-boundaries",
+      from: edge.from,
+      to: edge.to,
+      fromLayer: fromNode.layer,
+      toLayer: toNode.layer,
+      specifier: edge.specifier,
+      message: `${fromNode.layer} must not import from ${toNode.layer} (layer-boundaries)`,
+    });
+  }
+  return violations;
+}
+
 export function buildGraph(cwd = process.cwd()) {
   const { sourceRoot, layers } = explainProject(cwd);
   const knownLayers = new Set(layers.map(({ layer }) => layer));
@@ -237,5 +291,7 @@ export function buildGraph(cwd = process.cwd()) {
                 : 0,
   );
 
-  return { nodes, edges };
+  const graph = { nodes, edges };
+  graph.violations = findViolations(graph);
+  return graph;
 }

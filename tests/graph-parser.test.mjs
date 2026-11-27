@@ -120,9 +120,9 @@ test("with-violations fixture: 14 edges, including the 3 violation edges as plai
   );
 });
 
-test("empty fixture: 0 nodes, 0 edges", () => {
+test("empty fixture: 0 nodes, 0 edges, 0 violations", () => {
   const graph = buildGraph(fixturePath("empty"));
-  assert.deepEqual(graph, { nodes: [], edges: [] });
+  assert.deepEqual(graph, { nodes: [], edges: [], violations: [] });
 });
 
 test("parseImports: every import form, in source order", () => {

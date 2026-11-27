@@ -53,6 +53,15 @@ All notable changes to `create-fsd-architecture` are documented here.
   (directory imports resolve to their index file). Bare and alias imports
   are recorded as unresolved edges (`to: null`) instead of being dropped.
   No judgement yet — violation detection is slice 3.
+- Project graph engine (INT-01, slice 3): layer-boundary violation
+  detection in `bin/core/graph.mjs` — `buildGraph` now also returns
+  `violations`, applying the FSD layer order (app → pages → widgets →
+  features → entities → shared) to the parsed edges. Each violation carries
+  the policy rule id `layer-boundaries` (the same id INT-35 defines in
+  `bin/core/policy.mjs`), the offending edge and both layers, so INT-36's
+  policy evaluation can consume them directly. `findViolations(graph,
+  allow)` accepts a project allow list; same-layer and unresolved edges
+  are never layer-boundaries violations.
 
 ### Fixed
 
