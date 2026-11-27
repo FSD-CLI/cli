@@ -70,6 +70,12 @@ All notable changes to `create-fsd-architecture` are documented here.
   (no command yet); `fsd impact` (INT-25) will call it. A new `cyclic`
   analysis fixture pins the smallest possible cycle
   (`features/a` ↔ `features/b`).
+- Project graph engine (INT-01, slice 5): `fsd graph [--json]` prints the
+  project import graph — node and edge counts, nodes per layer, and
+  layer-boundary violations; `--json` prints the same graph as JSON for
+  tooling. The command is read-only and never writes files; it does not
+  enforce the policy (enforcement inside `check` is INT-36). Wired into
+  `--help` and the README. This completes INT-01's five slices.
 
 ### Fixed
 
