@@ -41,6 +41,11 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- `fsd move` / `fsd rename` (PLAT-05): relocate a feature, entity or widget
+  slice and rewrite every import pointing at it (relative and `@/`/`@app/`
+  alias specifiers, including subpaths), with `--to <type>` for cross-layer
+  moves and `--dry-run` to preview. Moving pages is not supported yet
+  because page routes are framework-specific.
 
 ### Fixed
 
