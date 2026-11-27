@@ -176,9 +176,14 @@ note and exits successfully; outside a Git repository the command fails.
 `graph` builds the project import graph: every source file mapped to its
 FSD layer and slice, every import edge between them, and every
 layer-boundary violation (a layer importing from a layer above it).
-`graph --json` prints the same data as JSON for tooling. It reads the
-project only and never writes files; it does not enforce the policy —
-enforcement inside `check` is a separate task (INT-36).
+`graph --json` prints the same data as JSON for tooling. `graph --html`
+writes the same graph as a self-contained interactive `fsd-graph.html`
+page instead (or `--html=<file>` for a custom path): one column per FSD
+layer, click a node to highlight its dependencies and dependents, filter
+by layer, and inspect the layer-boundary violations — no dependencies, no
+server, open the file in a browser. It is the only graph mode that writes
+a file; it does not enforce the policy — enforcement inside `check` is a
+separate task (INT-36).
 
 `sync api --schema <file> --dry-run` reads a JSON OpenAPI 3.x schema and
 prints the detected entities (from `components.schemas`) and endpoints

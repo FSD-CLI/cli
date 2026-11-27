@@ -76,6 +76,13 @@ All notable changes to `create-fsd-architecture` are documented here.
   tooling. The command is read-only and never writes files; it does not
   enforce the policy (enforcement inside `check` is INT-36). Wired into
   `--help` and the README. This completes INT-01's five slices.
+- Interactive dependency graph (PLAT-03): `fsd graph --html` writes the
+  project graph as a self-contained interactive `fsd-graph.html` page
+  (`--html=<file>` for a custom path) — one column per FSD layer, click a
+  node to highlight its dependencies and dependents, filter layers, search
+  by node id, and inspect the layer-boundary violations. No dependencies,
+  no server: open the file in a browser. The only graph mode that writes
+  a file.
 
 ### Fixed
 

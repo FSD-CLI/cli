@@ -1,13 +1,17 @@
 import chalk from "chalk";
+import path from "node:path";
 import { buildGraph } from "../core/graph.mjs";
+import { writeGraphHtml } from "../core/graph-html.mjs";
 import { POLICY_LAYERS } from "../core/policy.mjs";
 
 // `fsd graph` (INT-01, slice 5) — the thin public surface of the project
 // graph engine. Prints the import graph of the current project: nodes
 // (source files mapped to layer/slice), edges (import specifiers resolved
 // to nodes), and layer-boundary violations. `--json` prints the same data
-// as JSON for tooling. Read-only: it never writes files, and it does NOT
-// enforce the policy — enforcement inside `fsd check` is INT-36's job.
+// as JSON for tooling. `--html` (PLAT-03) writes the same graph as a
+// self-contained interactive page instead; that is the only mode that
+// writes a file. It does NOT enforce the policy — enforcement inside
+// `fsd check` is INT-36's job.
 
 function plural(count, singular, pluralForm) {
   return count === 1 ? singular : pluralForm;
@@ -43,8 +47,18 @@ function printSummary(graph) {
 export async function runGraphProject(
   command,
   cwd = process.cwd(),
-  { json = false } = {},
+  { json = false, html = null } = {},
 ) {
+  if (html) {
+    const written = writeGraphHtml(cwd, { out: html });
+    console.log(`  Wrote ${path.relative(cwd, written.path)}`);
+    console.log(
+      chalk.dim(
+        `  ${written.nodes} nodes, ${written.edges} edges, ${written.violations} layer-boundary violations — open the file in a browser to explore the graph.`,
+      ),
+    );
+    return;
+  }
   const graph = buildGraph(cwd);
   if (json) {
     console.log(JSON.stringify(graph, null, 2));

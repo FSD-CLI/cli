@@ -95,6 +95,7 @@ export async function runCli(args = process.argv.slice(2)) {
   if (command.command === "graph") {
     await runGraphProject(command, process.cwd(), {
       json: command.json,
+      html: command.html,
     });
     return;
   }

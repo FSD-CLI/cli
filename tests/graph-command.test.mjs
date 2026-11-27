@@ -23,10 +23,15 @@ function runGraph(fixture, args = []) {
 }
 
 test("parseCliArgs: graph accepts --json only", () => {
-  assert.deepEqual(parseCliArgs(["graph"]), { command: "graph", json: false });
+  assert.deepEqual(parseCliArgs(["graph"]), {
+    command: "graph",
+    json: false,
+    html: null,
+  });
   assert.deepEqual(parseCliArgs(["graph", "--json"]), {
     command: "graph",
     json: true,
+    html: null,
   });
   assert.throws(() => parseCliArgs(["graph", "--bogus"]), CliUsageError);
 });
