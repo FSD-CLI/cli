@@ -41,6 +41,10 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- The project target is now stored in `fsd.config.json` (`target`: `web`
+  today, `multi-web` / `mobile` / `universal` as they land) and read back by
+  every command that loads the project config. Projects created before this
+  field existed load as `web` (CORE-19).
 
 ### Fixed
 

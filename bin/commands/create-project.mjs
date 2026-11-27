@@ -306,10 +306,11 @@ export async function runCreateProject(options) {
 
   const overrides = getConfigOverrides(options);
   const projectConfig = options.yes
-    ? createDefaultProjectConfig(template.value, overrides)
+    ? createDefaultProjectConfig(template.value, { ...overrides, target })
     : normalizeProjectConfig(template.value, {
         ...(await promptProjectConfig(template.value)),
         ...overrides,
+        target,
       });
 
   if (options.dryRun) {
