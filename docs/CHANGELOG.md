@@ -41,6 +41,12 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- Monorepo layout spec (MONO-01): `docs/MONOREPO-LAYOUT.md` defines the
+  workspace layout — `apps/*` for runnable FSD projects,
+  `packages/shared-*` and `packages/entities-*` for libraries, `@<project>/
+  <member>` naming via `workspaceMemberName()`, the `workspace:*` protocol,
+  and the cross-workspace import rules the generators and MONO-17 boundary
+  rules must follow. Spec only; no generator writes this layout yet.
 
 ### Fixed
 
