@@ -184,8 +184,10 @@ passed.
 `policy` loads and validates `fsd.policy.ts` (or `fsd.policy.mjs` /
 `fsd.policy.js`) in the project root and prints the declared rules. The
 format is specified in [docs/POLICY-FORMAT.md](./docs/POLICY-FORMAT.md).
-Rules are only declared, not evaluated yet — enforcement inside `check`
-is a separate task (INT-36).
+`fsd check` evaluates the project against those rules: `error`-severity
+violations fail the check, `warn`-severity violations are reported
+without failing it, and a project with no policy file is checked exactly
+as before.
 
 `mcp` starts a minimal MCP server over stdio (newline-delimited JSON-RPC
 2.0) with exactly two tools: `check` (configuration, package.json and layer

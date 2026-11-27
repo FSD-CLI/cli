@@ -1,10 +1,8 @@
 # Policy as Code — `fsd.policy.ts` format (INT-35)
 
-This document specifies the policy file format and its loader. It is a
-**proposal**: the format is deliberately minimal and may change before
-evaluation lands. Nothing in this document is enforced yet — `fsd policy`
-only loads and validates the file; evaluating the project against the
-rules is INT-36 (`fsd check`).
+This document specifies the policy file format, its loader, and how
+`fsd check` evaluates a project against it (INT-36). `fsd policy` only
+loads and validates the file; `fsd check` enforces the rules.
 
 ## File location and shape
 
@@ -57,6 +55,53 @@ instead of silently doing nothing.
 | `no-slice-cross-imports` | none | Slices in the same layer must not import each other. |
 | `no-public-api-bypass` | none | Imports must go through a slice's public API instead of reaching into its internals. |
 
+## Evaluation (`fsd check`, INT-36)
+
+When a policy file is present, `fsd check` loads it and evaluates the
+project source (the framework's source root, usually `src/`) against
+every declared rule. When no policy file exists, `check` behaves exactly
+as before — no policy output at all. An invalid policy file fails the
+check instead of being silently skipped.
+
+How the evaluation works (`bin/core/policy-evaluate.mjs`, no dependency
+on the INT-01 graph engine):
+
+- Every source file (`.ts`, `.tsx`, `.js`, `.jsx`, `.mjs`, `.cjs`, `.vue`,
+  `.svelte`) under the source root is scanned for import specifiers
+  (`import` / `export ... from` / dynamic `import()` / `require()`).
+- Only relative imports (`./`, `../`) and the `@/` alias (the source
+  root, as generated code uses it, e.g. `@/shared/api`) are resolved.
+  Bare package specifiers are ignored, and imports that cannot be
+  resolved to a file under the source root are skipped, not reported.
+- Each resolved import is classified by FSD layer and slice from its
+  path under the source root (`features/auth`, `shared/ui`, ...).
+
+Rule semantics:
+
+- `layer-boundaries` — an import from one layer to a different layer
+  must be allowed by the rule's `allow` map for the importing layer, or
+  by the standard FSD order when `allow` does not mention that layer
+  (`app → pages → widgets → features → entities → shared`; a layer may
+  import only layers below it, never itself or above). Imports inside
+  the same layer are not layer-boundary violations.
+- `no-slice-cross-imports` — slices in the same layer must not import
+  each other. The `app` and `shared` layers are exempt: app segments
+  compose the application, and shared segments are low-level building
+  blocks that legitimately compose each other.
+- `no-public-api-bypass` — an import into another slice must target the
+  slice's public API (the slice directory itself, which resolves to its
+  index file, or an index file directly inside it), not a file nested
+  inside the slice. Imports within the same slice are always allowed,
+  and imports into the `app` layer are exempt (app is the composition
+  root and has no per-slice public API).
+
+Reporting: each `error`-severity violation is a failing `check` line
+(`FAIL  Policy: <rule-id> — <message>`) and makes `fsd check` exit
+non-zero. `warn`-severity violations print as `WARN  Policy: ...` lines
+and do not fail the run. A clean policy prints one passing line
+(`PASS  Policy — <file>: N rules evaluated, M files, K imports, W
+warnings`).
+
 ## Loader behaviour
 
 - `bin/core/policy.mjs` exports `findPolicyFile`, `validatePolicy`, and
@@ -70,11 +115,13 @@ instead of silently doing nothing.
 - `fsd policy` prints the loaded policy (file, version, rules with
   severities) and exits non-zero when the file exists but is invalid.
   When no policy file exists it prints a note and exits successfully.
+- `fsd check` evaluates the loaded policy against the project source
+  (see Evaluation above) and exits non-zero on `error`-severity
+  violations or an invalid policy file.
 
-## Open questions (for INT-36)
+## Open questions
 
-- Whether `layer-boundaries` should also cover `app`/`shared` segments
-  and cross-framework imports.
+- Whether `layer-boundaries` should also cover cross-framework imports.
 - Whether presets (for example a `strict` preset that turns every rule
   on) belong in the format — that is INT-38.
 - Whether ownership (`CODEOWNERS`-style per-slice owners) belongs in the
