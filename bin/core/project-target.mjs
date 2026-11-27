@@ -14,9 +14,11 @@
  * more than one adapter target. `adapterTargetsForSelection` is that
  * mapping, and it is the only place the two vocabularies meet.
  *
- * The selection is flow state for now: persisting it into the project
- * config is separate follow-up work, and the `--target` flag arrives with
- * the CLI flags work. Nothing here writes to disk.
+ * The selection is flow state and persisted state: the create flow stores
+ * the chosen target in `fsd.config.json` (`target`), and loading a project
+ * without one defaults it to "web", so projects created before this field
+ * existed keep working unchanged. The `--target` flag arrives with the CLI
+ * flags work. Nothing here writes to disk directly.
  *
  * Only the web target is implemented today. The other selections are
  * roadmap items (multi-app workspaces, mobile support), so they carry

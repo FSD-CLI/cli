@@ -13,6 +13,7 @@ import { angularApiClientContent } from "./generators/shared-layer.mjs";
 
 export const DEFAULT_PROJECT_CONFIG = {
   schemaVersion: 1,
+  target: "web",
   packageManager: "npm",
   apiClient: "axios",
   serverState: "react-query",

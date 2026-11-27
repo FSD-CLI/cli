@@ -8,6 +8,7 @@ import {
   normalizeProjectConfig,
 } from "../bin/project-config.mjs";
 import { generateSlice, loadProjectConfig } from "../bin/generator.mjs";
+import { readProjectConfig } from "../bin/upgrade/config.mjs";
 
 function toPosixFiles(files) {
   return files.map((file) => file.replace(/\\/g, "/"));
@@ -467,6 +468,66 @@ test("Nuxt projects receive modules, SSR providers, runtime API clients, and app
     );
     assert.doesNotMatch(strippedNuxtConfig, /'@pinia\/nuxt'/);
     assert.doesNotMatch(strippedNuxtConfig, /'@vee-validate\/nuxt'/);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
+test("project config stores the target and defaults it to web", () => {
+  assert.equal(normalizeProjectConfig("react-vite").target, "web");
+  assert.equal(
+    normalizeProjectConfig("react-vite", { target: "universal" }).target,
+    "universal"
+  );
+});
+
+test("project config round-trips the target through fsd.config.json", () => {
+  const fixture = createFixture();
+
+  try {
+    const config = normalizeProjectConfig("react-vite", { target: "web" });
+    configureProject(fixture, config);
+    const stored = JSON.parse(
+      fs.readFileSync(path.join(fixture, "fsd.config.json"), "utf8")
+    );
+    assert.equal(stored.target, "web");
+    assert.deepEqual(loadProjectConfig(fixture), config);
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
+test("legacy configs without a target load as web", () => {
+  const fixture = createFixture();
+
+  try {
+    const legacy = normalizeProjectConfig("react-vite");
+    delete legacy.target;
+    fs.writeFileSync(
+      path.join(fixture, "fsd.config.json"),
+      `${JSON.stringify(legacy)}\n`
+    );
+    assert.equal(loadProjectConfig(fixture).target, "web");
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
+
+test("stored configs accept a target and reject an unknown one", () => {
+  const fixture = createFixture();
+
+  try {
+    const base = normalizeProjectConfig("react-vite", { target: "web" });
+    fs.writeFileSync(
+      path.join(fixture, "fsd.config.json"),
+      `${JSON.stringify(base)}\n`
+    );
+    assert.equal(readProjectConfig(fixture).target, "web");
+    fs.writeFileSync(
+      path.join(fixture, "fsd.config.json"),
+      `${JSON.stringify({ ...base, target: "desktop" })}\n`
+    );
+    assert.throws(() => readProjectConfig(fixture), /must be one of/);
   } finally {
     fs.rmSync(fixture, { recursive: true, force: true });
   }
