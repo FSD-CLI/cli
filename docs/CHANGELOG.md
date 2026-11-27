@@ -45,8 +45,14 @@ All notable changes to `create-fsd-architecture` are documented here.
   (INT-05): an adoption score (the share of source files already in FSD
   layers), per-file classification (in-layer, layer-root, flat with a
   suggested target, unmapped), and the layer/slice inventory from
-  `fsd explain`. Read-only — it never writes or moves a file; the editable
-  migration plan is INT-06.
+  `fsd explain`. Read-only — it never writes or moves a file.
+- `fsd adopt --plan` writes the adoption analysis as an editable migration
+  plan (INT-06, `.fsd/adopt-plan.json`): one move per flat file (all
+  `pending`), with the layer-root and unmapped files listed for a manual
+  decision. Edit the file to change a target or mark a move `approved` or
+  `skipped`; `fsd adopt --show-plan` prints the plan back, and `--plan
+  --force` regenerates it (discarding edits). Nothing moves yet —
+  execution is INT-07.
 
 ### Fixed
 

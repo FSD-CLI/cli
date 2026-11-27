@@ -131,17 +131,23 @@ test("parseCliArgs: adopt requires --analyze", () => {
   assert.deepEqual(parseCliArgs(["adopt", "--analyze"]), {
     command: "adopt",
     analyze: true,
+    plan: false,
+    showPlan: false,
+    force: false,
     json: false,
   });
   assert.deepEqual(parseCliArgs(["adopt", "--analyze", "--json"]), {
     command: "adopt",
     analyze: true,
+    plan: false,
+    showPlan: false,
+    force: false,
     json: true,
   });
   assert.throws(
     () => parseCliArgs(["adopt"]),
     (error) =>
-      error instanceof CliUsageError && /only supports --analyze/.test(error.message),
+      error instanceof CliUsageError && /needs one of --analyze/.test(error.message),
   );
   assert.throws(() => parseCliArgs(["adopt", "--bogus"]), CliUsageError);
 });
@@ -166,9 +172,9 @@ test("fsd adopt --analyze --json prints the analysis object", (t) => {
   assert.deepEqual(JSON.parse(result.stdout), analyzeAdoption(cwd));
 });
 
-test("fsd adopt without --analyze is a usage error", (t) => {
+test("fsd adopt without a mode is a usage error", (t) => {
   const cwd = legacyFixture(t);
   const result = runAdopt(cwd, []);
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /only supports --analyze/);
+  assert.match(result.stderr, /needs one of --analyze/);
 });

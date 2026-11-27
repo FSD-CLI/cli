@@ -112,6 +112,9 @@ export async function runCli(args = process.argv.slice(2)) {
   if (command.command === "adopt") {
     await runAdoptProject(command, process.cwd(), {
       analyze: command.analyze,
+      plan: command.plan,
+      showPlan: command.showPlan,
+      force: command.force,
       json: command.json,
     });
     return;

@@ -192,19 +192,35 @@ export function parseCliArgs(rawArgs) {
     return { command: "mcp" };
   }
 
-  // INT-05: only the analysis is implemented. The editable migration plan
-  // is INT-06 and execution is INT-07, so a call without --analyze is a
-  // usage error.
+  // INT-05 (--analyze) and INT-06 (--plan, --show-plan) are implemented.
+  // Execution is INT-07, so a call without a mode is a usage error, and
+  // the modes cannot be combined.
   if (args[0] === "adopt") {
-    const options = { command: "adopt", analyze: false, json: false };
+    const options = {
+      command: "adopt",
+      analyze: false,
+      plan: false,
+      showPlan: false,
+      force: false,
+      json: false,
+    };
     for (const argument of args.slice(1)) {
       if (argument === "--analyze") options.analyze = true;
+      else if (argument === "--plan") options.plan = true;
+      else if (argument === "--show-plan") options.showPlan = true;
+      else if (argument === "--force") options.force = true;
       else if (argument === "--json") options.json = true;
       else throw new CliUsageError(`Unexpected argument "${argument}".`);
     }
-    if (!options.analyze) {
+    const modes = [options.analyze, options.plan, options.showPlan].filter(Boolean).length;
+    if (modes === 0) {
       throw new CliUsageError(
-        "`fsd adopt` only supports --analyze for now. The migration plan (INT-06) and execution (INT-07) are later tasks.",
+        "`fsd adopt` needs one of --analyze, --plan or --show-plan. Execution (INT-07) is a later task.",
+      );
+    }
+    if (modes > 1) {
+      throw new CliUsageError(
+        "`fsd adopt` takes exactly one of --analyze, --plan or --show-plan.",
       );
     }
     return options;
