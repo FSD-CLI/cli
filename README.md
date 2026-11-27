@@ -169,6 +169,21 @@ app/shared segments),
 and a chronological per-commit timeline. A repository with no commits prints a
 note and exits successfully; outside a Git repository the command fails.
 
+`adopt --analyze` analyzes an existing (not yet FSD) project for adoption:
+it prints an adoption score — the share of source files already living in
+FSD layers — and where every other file should go. Files inside a layer
+slice are already home; files directly under a layer need restructuring
+into a slice; flat files (`components/`, `utils/`, `hooks/`, `api/`, …) get
+a suggested target (`components/Button.tsx` → `shared/ui/Button.tsx`);
+anything else is listed for a manual decision. `--json` prints the same
+analysis as JSON. `adopt --plan` writes the analysis as an editable
+migration plan (`.fsd/adopt-plan.json`): one move per flat file, all
+`pending`, with the layer-root and unmapped files listed for a manual
+decision. Edit the file to change a target or mark a move `approved` or
+`skipped`; `adopt --show-plan` prints the plan back. Regenerating with
+`--plan --force` discards edits. Nothing moves yet — execution is a later
+task.
+
 `sync api --schema <file> --dry-run` reads a JSON OpenAPI 3.x schema and
 prints the detected entities (from `components.schemas`) and endpoints
 (HTTP method, path, operation id and summary). It is a preview only: no
