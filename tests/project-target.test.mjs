@@ -80,7 +80,7 @@ test("an explicit target wins and is validated without asking", async () => {
 
 test("a target that is not implemented yet is rejected, never silently downgraded", async () => {
   const ask = fakeAsk({});
-  for (const target of ["multi-web", "mobile", "universal"]) {
+  for (const target of ["mobile", "universal"]) {
     await assert.rejects(
       () => resolveProjectTarget({ target }, ask),
       /project target is not available yet/
@@ -95,13 +95,22 @@ test("a target that is not implemented yet is rejected, never silently downgrade
   assert.equal(ask.calls.length, 0);
 });
 
-test("only the web target is available today", () => {
+test("multi-web is available since MONO-03 (pnpm workspace root)", async () => {
+  const ask = fakeAsk({});
+  assert.equal(await resolveProjectTarget({ target: "multi-web" }, ask), "multi-web");
+  assert.equal(isProjectTargetAvailable("multi-web"), true);
+  assert.doesNotThrow(() => assertProjectTargetAvailable("multi-web"));
+  assert.equal(ask.calls.length, 0);
+});
+
+test("only the web and multi-web targets are available today", () => {
   assert.equal(isProjectTargetAvailable("web"), true);
-  for (const target of ["multi-web", "mobile", "universal"]) {
+  assert.equal(isProjectTargetAvailable("multi-web"), true);
+  for (const target of ["mobile", "universal"]) {
     assert.equal(isProjectTargetAvailable(target), false);
     assert.match(
       projectTargetUnavailableMessage(target),
-      /is not available yet: .+\. Only Web projects can be created today\./
+      /is not available yet: .+\. Only Web and Multi-web \(pnpm\) projects can be created today\./
     );
     assert.throws(() => assertProjectTargetAvailable(target), /not available yet/);
   }
@@ -137,14 +146,15 @@ test("the prompt offers the four targets with web preselected and the rest disab
   );
   assert.equal(question.choices[question.initial].value, "web");
   // Unimplemented targets are visible but cannot be picked, mirroring how
-  // the framework prompt treats planned templates.
+  // the framework prompt treats planned templates. Multi-web is
+  // implemented since MONO-03, so only mobile and universal are disabled.
   assert.deepEqual(
     question.choices.map((choice) => choice.disabled),
-    [false, true, true, true]
+    [false, false, true, true]
   );
   assert.deepEqual(
     question.choices.map((choice) => choice.title),
-    ["Web", "Multi-web (Coming Soon)", "Mobile (Coming Soon)", "Universal (Coming Soon)"]
+    ["Web", "Multi-web", "Mobile (Coming Soon)", "Universal (Coming Soon)"]
   );
 });
 
