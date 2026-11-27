@@ -143,15 +143,16 @@ test("createWorkspaceRoot writes the rendered files to disk", (t) => {
   assert.equal(fs.existsSync(path.join(targetDir, "apps", "web")), false);
 });
 
-test("the workspace root refuses any package manager but pnpm and npm", (t) => {
+test("the workspace root refuses any package manager but pnpm, npm, yarn and bun", (t) => {
   const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-mono03-"));
   t.after(() => fs.rmSync(targetDir, { recursive: true, force: true }));
 
-  // MONO-04 added npm; Yarn and Bun are MONO-05–06.
-  for (const packageManager of ["yarn", "bun"]) {
+  // MONO-04 added npm, MONO-05 added yarn, MONO-06 added bun: only a
+  // genuinely unknown manager is refused now.
+  for (const packageManager of ["deno"]) {
     assert.throws(
       () => createWorkspaceRoot(targetDir, { ...OPTIONS, packageManager }),
-      /support pnpm and npm today/
+      /support pnpm, npm, yarn and bun/
     );
     assert.equal(fs.existsSync(path.join(targetDir, "fsd.config.json")), false);
   }
@@ -221,7 +222,7 @@ test("`--target multi-web` with nextjs writes the nextjs build policy", (t) => {
   );
 });
 
-test("`--monorepo` with yarn refuses before writing anything", (t) => {
+test("`--monorepo` with an unknown package manager refuses before writing anything", (t) => {
   const result = runCli(t, [
     "shop",
     "--framework",
@@ -229,10 +230,10 @@ test("`--monorepo` with yarn refuses before writing anything", (t) => {
     "--yes",
     "--monorepo",
     "--package-manager",
-    "yarn",
+    "deno",
   ]);
 
   assert.notEqual(result.status, 0, result.output);
-  assert.match(result.output, /support pnpm and npm today/);
+  assert.match(result.output, /support pnpm, npm, yarn and bun/);
   assert.equal(fs.existsSync(path.join(result.cwd, "shop")), false);
 });

@@ -83,8 +83,8 @@ test("an npm workspace root declares its members in package.json, with no pnpm-w
   assert.match(files["README.md"], /`@my-workspace\/shared-ui`/);
 });
 
-test("the supported workspace managers are pnpm and npm", () => {
-  assert.deepEqual([...WORKSPACE_PACKAGE_MANAGERS], ["pnpm", "npm"]);
+test("the supported workspace managers are pnpm, npm, yarn and bun", () => {
+  assert.deepEqual([...WORKSPACE_PACKAGE_MANAGERS], ["pnpm", "npm", "yarn", "bun"]);
   assert.ok(Object.isFrozen(WORKSPACE_PACKAGE_MANAGERS));
 });
 
@@ -147,14 +147,15 @@ test("createWorkspaceRoot writes the npm root to disk, without pnpm-workspace.ya
   assert.equal(fs.existsSync(path.join(targetDir, "apps", "web")), false);
 });
 
-test("the npm root refuses Yarn, Bun and unknown managers before writing anything", (t) => {
+test("the npm root refuses unknown managers before writing anything", (t) => {
   const targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "fsd-mono04-"));
   t.after(() => fs.rmSync(targetDir, { recursive: true, force: true }));
 
-  for (const packageManager of ["yarn", "bun", "deno"]) {
+  // MONO-05 added yarn, MONO-06 added bun: only unknown managers refuse.
+  for (const packageManager of ["deno"]) {
     assert.throws(
       () => createWorkspaceRoot(targetDir, { ...NPM_OPTIONS, packageManager }),
-      /support pnpm and npm today/
+      /support pnpm, npm, yarn and bun/
     );
     assert.equal(fs.existsSync(path.join(targetDir, "fsd.config.json")), false);
   }
@@ -251,22 +252,6 @@ test("`--monorepo --package-manager npm --dry-run` plans an npm root and writes 
   assert.equal(fs.existsSync(path.join(result.cwd, "shop")), false);
 });
 
-test("`--monorepo` with bun refuses before writing anything", (t) => {
-  const result = runCli(t, [
-    "shop",
-    "--framework",
-    "react-vite",
-    "--yes",
-    "--monorepo",
-    "--package-manager",
-    "bun",
-  ]);
-
-  assert.notEqual(result.status, 0, result.output);
-  assert.match(result.output, /support pnpm and npm today/);
-  assert.equal(fs.existsSync(path.join(result.cwd, "shop")), false);
-});
-
 test("`--monorepo` with an unknown package manager refuses before writing anything", (t) => {
   const result = runCli(t, [
     "shop",
@@ -279,6 +264,6 @@ test("`--monorepo` with an unknown package manager refuses before writing anythi
   ]);
 
   assert.notEqual(result.status, 0, result.output);
-  assert.match(result.output, /support pnpm and npm today/);
+  assert.match(result.output, /support pnpm, npm, yarn and bun/);
   assert.equal(fs.existsSync(path.join(result.cwd, "shop")), false);
 });

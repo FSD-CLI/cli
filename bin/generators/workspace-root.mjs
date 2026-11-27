@@ -1,20 +1,36 @@
 /**
- * Monorepo workspace root generator (MONO-03, MONO-04).
+ * Monorepo workspace root generator (MONO-03, MONO-04, MONO-05, MONO-06).
  *
- * Writes the root of a pnpm or npm workspace exactly as specified in
- * docs/MONOREPO-LAYOUT.md (MONO-01): a root `fsd.config.json` with
- * `target: "multi-web"`, a private root `package.json` listing the
- * workspace members, the empty `apps/` and `packages/` member
- * directories, and — for pnpm only — a `pnpm-workspace.yaml` with the
- * member globs. npm workspaces are declared through the `workspaces`
- * field of the root `package.json` instead, so an npm root has no
+ * Writes the root of a pnpm, npm, yarn or bun workspace exactly as
+ * specified in docs/MONOREPO-LAYOUT.md (MONO-01): a root
+ * `fsd.config.json` with `target: "multi-web"`, a private root
+ * `package.json` listing the workspace members, the empty `apps/` and
+ * `packages/` member directories, and — for pnpm only — a
+ * `pnpm-workspace.yaml` with the member globs. npm, yarn and bun
+ * workspaces are declared through the `workspaces` field of the root
+ * `package.json` instead, so an npm, yarn or bun root has no
  * `pnpm-workspace.yaml`. The root has no `src/` of its own and no
- * dependencies: apps are added later with `fsd add app` (MONO-13) and
- * shared packages with MONO-14–16.
+ * dependencies: apps are added later with `fsd add app`
+ * (MONO-13) and shared packages with MONO-14–16.
  *
- * pnpm and npm are the package managers the workspace root supports
- * today: Yarn and Bun workspaces are MONO-05–06. The generator refuses
- * any other manager instead of writing a root the manager cannot install.
+ * Yarn here means Yarn 1 (classic): `yarn install` and
+ * `yarn workspaces run <script>` recurse into the members, and no
+ * `.yarnrc.yml` or other Berry ceremony is written. Berry uses
+ * `yarn workspaces foreach` instead, so a Berry user re-runs the root
+ * scripts with that command — the `workspaces` field itself is the
+ * same in both.
+ *
+ * Bun reads the same `workspaces` field as npm and yarn. Its root
+ * scripts recurse with `bun run --filter '*' <script>`: the `--filter`
+ * flag (Bun docs, "bun --filter") selects workspace packages by name
+ * glob, and `'*'` matches every member, running the script in each
+ * (in dependency order where relevant). `bun run --workspaces
+ * <script>` would do the same, but `--filter '*'` is the form Bun's
+ * own docs lead with for running a script across packages.
+ *
+ * pnpm, npm, yarn and bun are the package managers the workspace root
+ * supports: the generator refuses any other manager instead of writing
+ * a root the manager cannot install.
  *
  * The file contents are pure renderers (`renderWorkspaceRootFiles`), so
  * tests can assert the exact bytes without touching disk; the create
@@ -25,8 +41,8 @@ import fs from "fs";
 import path from "path";
 import { inspectPackageName, workspaceMemberName } from "../core/package-name.mjs";
 
-/** The package managers a workspace root supports (MONO-03 pnpm, MONO-04 npm). */
-export const WORKSPACE_PACKAGE_MANAGERS = Object.freeze(["pnpm", "npm"]);
+/** The package managers a workspace root supports (MONO-03 pnpm, MONO-04 npm, MONO-05 yarn, MONO-06 bun). */
+export const WORKSPACE_PACKAGE_MANAGERS = Object.freeze(["pnpm", "npm", "yarn", "bun"]);
 
 /** The workspace member globs, from the MONO-01 layout spec. */
 export const WORKSPACE_MEMBER_PATTERNS = Object.freeze(["apps/*", "packages/*"]);
@@ -58,8 +74,7 @@ const FRAMEWORK_BUILD_DEPENDENCIES = Object.freeze({
 function assertWorkspaceOptions({ projectName, packageName, framework, packageManager }) {
   if (!WORKSPACE_PACKAGE_MANAGERS.includes(packageManager)) {
     throw new Error(
-      `Multi-web workspaces support pnpm and npm today (received "${packageManager}"). ` +
-        "Yarn and Bun workspaces are separate tasks (MONO-05–06)."
+      `Multi-web workspaces support pnpm, npm, yarn and bun (received "${packageManager}").`
     );
   }
   if (!WORKSPACE_FRAMEWORKS.includes(framework)) {
@@ -95,7 +110,10 @@ function renderFsdConfig({ projectName, framework, packageManager }) {
 
 // The root scripts run a script in every member: pnpm recurses with
 // `-r`, npm with `--workspaces` (npm reads the member globs from the
-// `workspaces` field below, so there is no separate workspace file).
+// `workspaces` field below, so there is no separate workspace file),
+// Yarn 1 with `workspaces run` (yarn reads the same field), and Bun
+// with `run --filter '*'` (bun reads the same field too; see the header
+// comment for why `--filter '*'` instead of `--workspaces`).
 const WORKSPACE_SCRIPTS = Object.freeze({
   pnpm: Object.freeze({
     dev: "pnpm -r run dev",
@@ -108,6 +126,18 @@ const WORKSPACE_SCRIPTS = Object.freeze({
     build: "npm run build --workspaces",
     lint: "npm run lint --workspaces",
     test: "npm run test --workspaces",
+  }),
+  yarn: Object.freeze({
+    dev: "yarn workspaces run dev",
+    build: "yarn workspaces run build",
+    lint: "yarn workspaces run lint",
+    test: "yarn workspaces run test",
+  }),
+  bun: Object.freeze({
+    dev: "bun run --filter '*' dev",
+    build: "bun run --filter '*' build",
+    lint: "bun run --filter '*' lint",
+    test: "bun run --filter '*' test",
   }),
 });
 
@@ -143,15 +173,27 @@ function renderPnpmWorkspace({ framework }) {
 function renderWorkspaceReadme({ projectName, packageManager }) {
   const web = workspaceMemberName(projectName, "apps/web");
   const sharedUi = workspaceMemberName(projectName, "packages/shared-ui");
-  const install = packageManager === "npm" ? "npm install" : "pnpm install";
+  const install =
+    packageManager === "npm"
+      ? "npm install"
+      : packageManager === "yarn"
+        ? "yarn install"
+        : packageManager === "bun"
+          ? "bun install"
+          : "pnpm install";
   const runAll = (script) =>
-    packageManager === "npm" ? `npm run ${script} --workspaces` : `pnpm -r run ${script}`;
-  const managerName = packageManager === "npm" ? "npm" : "pnpm";
+    packageManager === "npm"
+      ? `npm run ${script} --workspaces`
+      : packageManager === "yarn"
+        ? `yarn workspaces run ${script}`
+        : packageManager === "bun"
+          ? `bun run --filter '*' ${script}`
+          : `pnpm -r run ${script}`;
   const article = packageManager === "npm" ? "An" : "A";
   return [
     `# ${projectName}`,
     "",
-    `${article} ${managerName} workspace of FSD applications, created with FSD CLI (\`fsd --monorepo\`).`,
+    `${article} ${packageManager} workspace of FSD applications, created with FSD CLI (\`fsd --monorepo\`).`,
     "",
     "## Layout",
     "",
@@ -173,6 +215,14 @@ function renderWorkspaceReadme({ projectName, packageManager }) {
     `- \`${runAll("build")}\` — build every member`,
     `- \`${runAll("test")}\` — test every member`,
     "",
+    ...(packageManager === "yarn"
+      ? [
+          "This root targets Yarn 1 (classic). Berry (Yarn 2+) reads the",
+          "same `workspaces` field, but recurses with",
+          "`yarn workspaces foreach run <script>` instead.",
+          "",
+        ]
+      : []),
     "Run `fsd check` and `fsd doctor` inside an app directory: at the",
     "workspace root they report the workspace, never a failure.",
     "",
@@ -192,9 +242,10 @@ export function renderWorkspaceRootFiles(options) {
   const resolved = { packageManager: "pnpm", ...options };
   assertWorkspaceOptions(resolved);
   const { projectName, packageName, framework, packageManager } = resolved;
-  // npm declares its members in the root package.json `workspaces`
-  // field; only pnpm needs the separate pnpm-workspace.yaml (which also
-  // carries the pnpm build-approval policy for the default framework).
+  // npm, yarn and bun declare their members in the root package.json
+  // `workspaces` field; only pnpm needs the separate pnpm-workspace.yaml
+  // (which also carries the pnpm build-approval policy for the default
+  // framework).
   return {
     "fsd.config.json": `${renderFsdConfig({ projectName, framework, packageManager })}\n`,
     "package.json": `${renderRootPackageJson({ packageName, packageManager })}\n`,

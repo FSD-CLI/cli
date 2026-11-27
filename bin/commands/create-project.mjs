@@ -287,7 +287,7 @@ function showWorkspacePlan({ projectName, targetDir, framework, packageManager }
   console.log(
     packageManager === "pnpm"
       ? "  4. Write pnpm-workspace.yaml"
-      : "  4. No pnpm-workspace.yaml — npm reads the workspaces from package.json"
+      : `  4. No pnpm-workspace.yaml — ${packageManager} reads the workspaces from package.json`
   );
   console.log("  5. Create the empty apps/ and packages/ member directories");
   console.log("  6. Write README.md and .gitignore\n");
@@ -295,23 +295,22 @@ function showWorkspacePlan({ projectName, targetDir, framework, packageManager }
 }
 
 /**
- * Creates a monorepo workspace root (MONO-03, MONO-04).
+ * Creates a monorepo workspace root (MONO-03, MONO-04, MONO-05, MONO-06).
  *
  * Unlike a web project, a workspace root is generated, not cloned from a
  * template: it has no template, no stack config, no dependencies to
  * install and no dev server to start. The framework is the workspace
- * default for apps added later (MONO-13), and pnpm and npm are the
- * package managers workspaces support today (MONO-05–06 add Yarn
- * and Bun).
+ * default for apps added later (MONO-13), and pnpm, npm, yarn and bun
+ * are the package managers workspaces support.
  *
  * @param {{projectName: string, targetDir: string, packageName: string, options: object}} args
  */
 export async function runCreateWorkspace({ projectName, targetDir, packageName, options }) {
   const packageManager = options.packageManager ?? "pnpm";
-  if (packageManager !== "pnpm" && packageManager !== "npm") {
+  if (!["pnpm", "npm", "yarn", "bun"].includes(packageManager)) {
     throw new Error(
-      `Multi-web workspaces support pnpm and npm today (--package-manager pnpm or npm). ` +
-        "Yarn and Bun workspaces are separate tasks (MONO-05–06)."
+      "Multi-web workspaces support pnpm, npm, yarn and bun " +
+        "(--package-manager pnpm, npm, yarn or bun)."
     );
   }
 
