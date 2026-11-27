@@ -200,8 +200,8 @@ Create options:
 | Option | Purpose |
 | --- | --- |
 | `-f, --framework <id>` | Skip the framework prompt |
-| `--target <target>` | Select the project target: `web` (the only target available today; `multi-web`, `mobile` and `universal` are rejected until their support lands) |
-| `--monorepo` | Shortcut for `--target multi-web` (not yet available) |
+| `--target <target>` | Select the project target: `web`, or `multi-web` for a pnpm, npm, yarn or bun workspace root (`mobile` and `universal` are rejected until their support lands) |
+| `--monorepo` | Shortcut for `--target multi-web`: generates a pnpm, npm, yarn or bun workspace root (`fsd.config.json` with `target: multi-web`, root `package.json` with `workspaces: ["apps/*", "packages/*"]`, empty `apps/` and `packages/`). pnpm roots also get a `pnpm-workspace.yaml`; npm, yarn and bun roots declare the workspaces in `package.json` only. Yarn roots target Yarn 1 (classic): `yarn install` and `yarn workspaces run <script>`. Bun roots recurse with `bun run --filter '*' <script>`. `--package-manager` must be `pnpm` (default), `npm`, `yarn` or `bun` if given |
 | `--mobile` | Shortcut for `--target mobile` (not yet available) |
 | `-y, --yes` | Accept framework defaults without prompts; requires a project name and `--framework` |
 | `--package-manager <id>` | Select npm, pnpm, Yarn, or Bun non-interactively |

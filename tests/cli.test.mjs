@@ -86,13 +86,12 @@ test("CLI parser resolves the project target flags", () => {
 });
 
 test("CLI parser rejects targets that are not available yet", () => {
-  // Multi-web, mobile and universal are valid selections whose support
-  // has not landed: every spelling of them fails fast, with the reason,
-  // instead of creating a web project under a different name.
-  assert.throws(
-    () => parseCliArgs(["shop", "--monorepo"]),
-    /The Multi-web project target is not available yet/
-  );
+  // Mobile and universal are valid selections whose support has not
+  // landed: every spelling of them fails fast, with the reason, instead
+  // of creating a web project under a different name. Multi-web is
+  // implemented since MONO-03, so --monorepo parses to it.
+  assert.equal(parseCliArgs(["shop", "--monorepo"]).target, "multi-web");
+  assert.equal(parseCliArgs(["shop", "--target", "multi-web", "--monorepo"]).target, "multi-web");
   assert.throws(
     () => parseCliArgs(["shop", "--mobile"]),
     /The Mobile project target is not available yet/
@@ -102,10 +101,6 @@ test("CLI parser rejects targets that are not available yet", () => {
     /The Universal project target is not available yet/
   );
   assert.throws(() => parseCliArgs(["shop", "--target", "mobile", "--mobile"]), CliUsageError);
-  assert.throws(
-    () => parseCliArgs(["shop", "--target", "multi-web", "--monorepo"]),
-    CliUsageError
-  );
 });
 
 test("CLI parser rejects invalid or conflicting target flags", () => {

@@ -1,0 +1,281 @@
+/**
+ * Monorepo workspace root generator (MONO-03, MONO-04, MONO-05, MONO-06).
+ *
+ * Writes the root of a pnpm, npm, yarn or bun workspace exactly as
+ * specified in docs/MONOREPO-LAYOUT.md (MONO-01): a root
+ * `fsd.config.json` with `target: "multi-web"`, a private root
+ * `package.json` listing the workspace members, the empty `apps/` and
+ * `packages/` member directories, and — for pnpm only — a
+ * `pnpm-workspace.yaml` with the member globs. npm, yarn and bun
+ * workspaces are declared through the `workspaces` field of the root
+ * `package.json` instead, so an npm, yarn or bun root has no
+ * `pnpm-workspace.yaml`. The root has no `src/` of its own and no
+ * dependencies: apps are added later with `fsd add app`
+ * (MONO-13) and shared packages with MONO-14–16.
+ *
+ * Yarn here means Yarn 1 (classic): `yarn install` and
+ * `yarn workspaces run <script>` recurse into the members, and no
+ * `.yarnrc.yml` or other Berry ceremony is written. Berry uses
+ * `yarn workspaces foreach` instead, so a Berry user re-runs the root
+ * scripts with that command — the `workspaces` field itself is the
+ * same in both.
+ *
+ * Bun reads the same `workspaces` field as npm and yarn. Its root
+ * scripts recurse with `bun run --filter '*' <script>`: the `--filter`
+ * flag (Bun docs, "bun --filter") selects workspace packages by name
+ * glob, and `'*'` matches every member, running the script in each
+ * (in dependency order where relevant). `bun run --workspaces
+ * <script>` would do the same, but `--filter '*'` is the form Bun's
+ * own docs lead with for running a script across packages.
+ *
+ * pnpm, npm, yarn and bun are the package managers the workspace root
+ * supports: the generator refuses any other manager instead of writing
+ * a root the manager cannot install.
+ *
+ * The file contents are pure renderers (`renderWorkspaceRootFiles`), so
+ * tests can assert the exact bytes without touching disk; the create
+ * flow owns the target directory (transaction, `--force`) and calls
+ * `createWorkspaceRoot` to write them.
+ */
+import fs from "fs";
+import path from "path";
+import { inspectPackageName, workspaceMemberName } from "../core/package-name.mjs";
+
+/** The package managers a workspace root supports (MONO-03 pnpm, MONO-04 npm, MONO-05 yarn, MONO-06 bun). */
+export const WORKSPACE_PACKAGE_MANAGERS = Object.freeze(["pnpm", "npm", "yarn", "bun"]);
+
+/** The workspace member globs, from the MONO-01 layout spec. */
+export const WORKSPACE_MEMBER_PATTERNS = Object.freeze(["apps/*", "packages/*"]);
+
+/** The frameworks a workspace can default to (same six as fsd.config.json). */
+export const WORKSPACE_FRAMEWORKS = Object.freeze([
+  "react-vite",
+  "nextjs",
+  "vue-vite",
+  "nuxt",
+  "sveltekit",
+  "angular",
+]);
+
+// pnpm >=10.26 refuses to run install-time scripts unless the package is
+// approved. This mirrors the allowBuilds policy configureProject writes
+// for a single pnpm project (bin/project-config.mjs): the same framework
+// build dependencies, so an app created under this workspace installs
+// exactly as it would on its own.
+const FRAMEWORK_BUILD_DEPENDENCIES = Object.freeze({
+  "react-vite": Object.freeze(["@swc/core", "esbuild"]),
+  nextjs: Object.freeze(["sharp", "unrs-resolver"]),
+  "vue-vite": Object.freeze(["esbuild", "vue-demi"]),
+  nuxt: Object.freeze(["esbuild", "unrs-resolver", "vue-demi"]),
+  sveltekit: Object.freeze(["esbuild"]),
+  angular: Object.freeze(["@parcel/watcher", "esbuild", "lmdb", "msgpackr-extract"]),
+});
+
+function assertWorkspaceOptions({ projectName, packageName, framework, packageManager }) {
+  if (!WORKSPACE_PACKAGE_MANAGERS.includes(packageManager)) {
+    throw new Error(
+      `Multi-web workspaces support pnpm, npm, yarn and bun (received "${packageManager}").`
+    );
+  }
+  if (!WORKSPACE_FRAMEWORKS.includes(framework)) {
+    throw new Error(
+      `Unknown framework "${framework}". Supported frameworks: ${WORKSPACE_FRAMEWORKS.join(", ")}.`
+    );
+  }
+  const packageCheck = inspectPackageName(packageName ?? "");
+  if (!packageCheck.valid) {
+    const reasons = [...packageCheck.errors, ...packageCheck.warnings].join(", ");
+    throw new Error(
+      `"${packageName}" is not a valid npm package name${reasons ? ` (${reasons})` : "."}`
+    );
+  }
+  // Deriving one member name validates the project name the same way:
+  // an unusable name fails here instead of producing a broken scope.
+  workspaceMemberName(projectName, "web");
+}
+
+function renderFsdConfig({ projectName, framework, packageManager }) {
+  return JSON.stringify(
+    {
+      schemaVersion: 1,
+      framework,
+      projectName,
+      packageManager,
+      target: "multi-web",
+    },
+    null,
+    2
+  );
+}
+
+// The root scripts run a script in every member: pnpm recurses with
+// `-r`, npm with `--workspaces` (npm reads the member globs from the
+// `workspaces` field below, so there is no separate workspace file),
+// Yarn 1 with `workspaces run` (yarn reads the same field), and Bun
+// with `run --filter '*'` (bun reads the same field too; see the header
+// comment for why `--filter '*'` instead of `--workspaces`).
+const WORKSPACE_SCRIPTS = Object.freeze({
+  pnpm: Object.freeze({
+    dev: "pnpm -r run dev",
+    build: "pnpm -r run build",
+    lint: "pnpm -r run lint",
+    test: "pnpm -r run test",
+  }),
+  npm: Object.freeze({
+    dev: "npm run dev --workspaces",
+    build: "npm run build --workspaces",
+    lint: "npm run lint --workspaces",
+    test: "npm run test --workspaces",
+  }),
+  yarn: Object.freeze({
+    dev: "yarn workspaces run dev",
+    build: "yarn workspaces run build",
+    lint: "yarn workspaces run lint",
+    test: "yarn workspaces run test",
+  }),
+  bun: Object.freeze({
+    dev: "bun run --filter '*' dev",
+    build: "bun run --filter '*' build",
+    lint: "bun run --filter '*' lint",
+    test: "bun run --filter '*' test",
+  }),
+});
+
+function renderRootPackageJson({ packageName, packageManager }) {
+  return JSON.stringify(
+    {
+      name: packageName,
+      private: true,
+      version: "0.1.0",
+      workspaces: [...WORKSPACE_MEMBER_PATTERNS],
+      scripts: { ...WORKSPACE_SCRIPTS[packageManager] },
+    },
+    null,
+    2
+  );
+}
+
+function renderPnpmWorkspace({ framework }) {
+  return [
+    "# pnpm workspace: every directory under apps/ and packages/ is a member.",
+    "packages:",
+    ...WORKSPACE_MEMBER_PATTERNS.map((pattern) => `  - ${JSON.stringify(pattern)}`),
+    "",
+    "# pnpm >=10.26: only these framework build dependencies may run scripts.",
+    "# Review new dependencies explicitly with pnpm approve-builds.",
+    "strictDepBuilds: true",
+    "allowBuilds:",
+    ...FRAMEWORK_BUILD_DEPENDENCIES[framework].map((name) => `  ${JSON.stringify(name)}: true`),
+    "",
+  ].join("\n");
+}
+
+function renderWorkspaceReadme({ projectName, packageManager }) {
+  const web = workspaceMemberName(projectName, "apps/web");
+  const sharedUi = workspaceMemberName(projectName, "packages/shared-ui");
+  const install =
+    packageManager === "npm"
+      ? "npm install"
+      : packageManager === "yarn"
+        ? "yarn install"
+        : packageManager === "bun"
+          ? "bun install"
+          : "pnpm install";
+  const runAll = (script) =>
+    packageManager === "npm"
+      ? `npm run ${script} --workspaces`
+      : packageManager === "yarn"
+        ? `yarn workspaces run ${script}`
+        : packageManager === "bun"
+          ? `bun run --filter '*' ${script}`
+          : `pnpm -r run ${script}`;
+  const article = packageManager === "npm" ? "An" : "A";
+  return [
+    `# ${projectName}`,
+    "",
+    `${article} ${packageManager} workspace of FSD applications, created with FSD CLI (\`fsd --monorepo\`).`,
+    "",
+    "## Layout",
+    "",
+    "- `apps/` — runnable FSD applications, one full FSD project each",
+    `  (for example \`apps/web\` is \`${web}\`).`,
+    "- `packages/` — shared libraries, never applications:",
+    `  \`packages/shared-*\` for shared-layer primitives (for example \`${sharedUi}\`)`,
+    "  and `packages/entities-<name>` for one shared entity each.",
+    "",
+    "An app imports a package only by its workspace name",
+    `(\`"${sharedUi}": "workspace:*"\`); an app never imports from another app,`,
+    "and a package never imports from an app. See `docs/MONOREPO-LAYOUT.md`",
+    "in the FSD CLI repository for the full layout contract.",
+    "",
+    "## Commands",
+    "",
+    `- \`${install}\` — install dependencies for every member`,
+    `- \`${runAll("dev")}\` — start every app's dev server`,
+    `- \`${runAll("build")}\` — build every member`,
+    `- \`${runAll("test")}\` — test every member`,
+    "",
+    ...(packageManager === "yarn"
+      ? [
+          "This root targets Yarn 1 (classic). Berry (Yarn 2+) reads the",
+          "same `workspaces` field, but recurses with",
+          "`yarn workspaces foreach run <script>` instead.",
+          "",
+        ]
+      : []),
+    "Run `fsd check` and `fsd doctor` inside an app directory: at the",
+    "workspace root they report the workspace, never a failure.",
+    "",
+  ].join("\n");
+}
+
+/**
+ * Renders every file the workspace root contains, as relative paths to
+ * exact contents. The root `fsd.config.json` is the MONO-01 shape
+ * (`target: "multi-web"`, no stack fields): it is not a single-project
+ * config, so the single-project schema does not apply to it.
+ *
+ * @param {{projectName: string, packageName: string, framework: string, packageManager?: string}} options
+ * @returns {Record<string, string>} relative path → file contents
+ */
+export function renderWorkspaceRootFiles(options) {
+  const resolved = { packageManager: "pnpm", ...options };
+  assertWorkspaceOptions(resolved);
+  const { projectName, packageName, framework, packageManager } = resolved;
+  // npm, yarn and bun declare their members in the root package.json
+  // `workspaces` field; only pnpm needs the separate pnpm-workspace.yaml
+  // (which also carries the pnpm build-approval policy for the default
+  // framework).
+  return {
+    "fsd.config.json": `${renderFsdConfig({ projectName, framework, packageManager })}\n`,
+    "package.json": `${renderRootPackageJson({ packageName, packageManager })}\n`,
+    ...(packageManager === "pnpm"
+      ? { "pnpm-workspace.yaml": renderPnpmWorkspace({ framework }) }
+      : {}),
+    "apps/.gitkeep": "",
+    "packages/.gitkeep": "",
+    "README.md": renderWorkspaceReadme({ projectName, packageManager }),
+    ".gitignore": "node_modules\ndist\n",
+  };
+}
+
+/**
+ * Writes the workspace root into `targetDir`. The caller owns the
+ * directory (the create flow's transaction creates or replaces it), so
+ * existing root files are overwritten.
+ *
+ * @param {string} targetDir
+ * @param {{projectName: string, packageName: string, framework: string, packageManager?: string}} options
+ * @returns {string[]} the written files, as relative paths in write order
+ */
+export function createWorkspaceRoot(targetDir, options) {
+  const files = renderWorkspaceRootFiles(options);
+  const written = [];
+  for (const [relativePath, contents] of Object.entries(files)) {
+    const filePath = path.join(targetDir, relativePath);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(filePath, contents);
+    written.push(relativePath);
+  }
+  return written;
+}

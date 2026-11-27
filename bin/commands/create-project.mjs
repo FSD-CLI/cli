@@ -32,6 +32,7 @@ import {
 } from "../core/template-registry.mjs";
 import { checkNodeVersion } from "../core/runtime-requirements.mjs";
 import { normalizeProjectConfig } from "../project-config.mjs";
+import { createWorkspaceRoot } from "../generators/workspace-root.mjs";
 import { writeInitialManifest } from "../upgrade/manifest.mjs";
 import { showBanner } from "../cli/output.mjs";
 
@@ -274,6 +275,76 @@ export async function resolveProjectTarget(options = {}, ask = prompts) {
   return answer.target;
 }
 
+function showWorkspacePlan({ projectName, targetDir, framework, packageManager }) {
+  console.log(chalk.bold("  Workspace plan (dry run)\n"));
+  console.log(`  Target: ${targetDir}`);
+  console.log(`  Project target: Multi-web (multi-web)`);
+  console.log(`  Default framework: ${framework}`);
+  console.log(`  Package manager: ${packageManager}\n`);
+  console.log("  1. Create the target directory");
+  console.log('  2. Write fsd.config.json (target: "multi-web")');
+  console.log("  3. Write package.json (private, workspaces: apps/*, packages/*)");
+  console.log(
+    packageManager === "pnpm"
+      ? "  4. Write pnpm-workspace.yaml"
+      : `  4. No pnpm-workspace.yaml — ${packageManager} reads the workspaces from package.json`
+  );
+  console.log("  5. Create the empty apps/ and packages/ member directories");
+  console.log("  6. Write README.md and .gitignore\n");
+  console.log(chalk.dim(`  No files were changed for ${projectName}.`));
+}
+
+/**
+ * Creates a monorepo workspace root (MONO-03, MONO-04, MONO-05, MONO-06).
+ *
+ * Unlike a web project, a workspace root is generated, not cloned from a
+ * template: it has no template, no stack config, no dependencies to
+ * install and no dev server to start. The framework is the workspace
+ * default for apps added later (MONO-13), and pnpm, npm, yarn and bun
+ * are the package managers workspaces support.
+ *
+ * @param {{projectName: string, targetDir: string, packageName: string, options: object}} args
+ */
+export async function runCreateWorkspace({ projectName, targetDir, packageName, options }) {
+  const packageManager = options.packageManager ?? "pnpm";
+  if (!["pnpm", "npm", "yarn", "bun"].includes(packageManager)) {
+    throw new Error(
+      "Multi-web workspaces support pnpm, npm, yarn and bun " +
+        "(--package-manager pnpm, npm, yarn or bun)."
+    );
+  }
+
+  const template = await selectTemplate(options.framework, "multi-web");
+  const framework = template.value;
+
+  if (options.dryRun) {
+    showWorkspacePlan({ projectName, targetDir, framework, packageManager });
+    return;
+  }
+
+  const transaction = beginProjectTransaction(targetDir, { force: options.force });
+  try {
+    createWorkspaceRoot(targetDir, {
+      projectName,
+      packageName,
+      framework,
+      packageManager,
+    });
+  } catch (error) {
+    transaction.rollback();
+    throw error;
+  }
+  transaction.commit();
+
+  console.log(`\n${chalk.green.bold("  Workspace created successfully!")}`);
+  console.log(chalk.yellow("  If this saved you time, star FSD CLI on GitHub: https://github.com/FSD-CLI/cli"));
+  console.log(`\n${chalk.bold.white("  Next steps:")}\n`);
+  console.log(`    ${chalk.cyan("$")} cd ${projectName}`);
+  console.log(`    ${chalk.cyan("$")} ${packageManager} install`);
+  console.log(chalk.dim("  Then add your first app under apps/ — each app is a full FSD project."));
+  console.log();
+}
+
 export async function runCreateProject(options) {
   showBanner();
   const projectName = await selectProjectName(options.projectName);
@@ -292,6 +363,13 @@ export async function runCreateProject(options) {
   if (warning) console.log(chalk.yellow(`  ${warning}`));
 
   const target = await resolveProjectTarget(options);
+
+  // A workspace root is generated, not cloned from a template: it has no
+  // template, no stack config and no dependencies to install.
+  if (target === "multi-web") {
+    await runCreateWorkspace({ projectName, targetDir, packageName, options });
+    return;
+  }
 
   const template = await selectTemplate(options.framework, target);
 
