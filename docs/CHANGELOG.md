@@ -20,6 +20,14 @@ All notable changes to `create-fsd-architecture` are documented here.
   slices through the Angular CLI, and `ng update create-fsd-architecture`
   refreshes the setup (or runs the managed upgrade for CLI-created projects).
 
+- `fsd history` now attributes structural erosion to the commit that
+  introduced it (INT-31): files a commit placed outside the FSD layers
+  (for example under `src/components/`) and new imports from a higher
+  layer (for example `shared` importing from `features`), reported per
+  commit with expected vs actual layer, a per-commit erosion count, the
+  worst offending commits, and erosion summed per author. Deleting an
+  eroded file and touching an already-eroded file without adding imports
+  are not blamed.
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
   schema: it prints the detected entities (`components.schemas`) and
