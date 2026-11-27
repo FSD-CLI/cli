@@ -31,6 +31,7 @@ Usage:
   fsd config
   fsd explain [--tour] [--force]
   fsd history [--limit <n>]
+  fsd graph [--json]
   fsd sync api --schema <file> --dry-run
   fsd agent-rules [--force]
   fsd policy
@@ -56,6 +57,7 @@ Commands:
        config                    Print the resolved FSD configuration
        explain [--tour] [--force] Summarize the project stack and slices per layer
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
+       graph [--json]              Print the project import graph (nodes, edges, layer-boundary violations)
        sync api --schema <file> --dry-run Preview entities/endpoints from a JSON OpenAPI schema (no files written)
        agent-rules [--force]       Write AGENTS.md + .cursor/rules/fsd-cli.mdc
        policy                    Load and validate fsd.policy.ts (rules are not evaluated yet)

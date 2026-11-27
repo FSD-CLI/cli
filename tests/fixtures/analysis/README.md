@@ -6,7 +6,7 @@ They exist so INT-01 (and the analysis commands built on it: adopt, heal,
 impact, cost, history) can be tested against known project shapes instead of
 building throwaway projects inline in every test.
 
-All three fixtures are `react-vite` projects with a valid `fsd.config.json`
+All four fixtures are `react-vite` projects with a valid `fsd.config.json`
 (the default stack: npm, axios, react-query, zustand, react-hook-form-zod)
 and a minimal `package.json`. Source files are TypeScript (`.ts` / `.tsx`)
 and use relative imports, matching what `fsd create` generates.
@@ -55,6 +55,16 @@ exactly these three upward imports and no others:
 Only `fsd.config.json`, `package.json`, and an empty `src/` (kept tracked
 via `.gitkeep`). The graph engine must handle a project with zero slices
 without failing.
+
+### `cyclic/` — two slices importing each other (added by INT-01 slice 4)
+
+The smallest possible slice cycle: `features/a` imports `features/b` and
+`features/b` imports `features/a`. The graph engine must report exactly
+one cycle, `["features/a", "features/b"]`. Note the `with-violations`
+fixture also contains slice cycles (e.g. `features/auth` ↔ `pages/home`
+via the deliberate upward imports) — those are asserted loosely
+(presence + validity), not enumerated, because a tangled graph has
+several overlapping simple cycles.
 
 ## Rules for changing these fixtures
 
