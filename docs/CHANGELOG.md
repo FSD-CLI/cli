@@ -6,6 +6,15 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- npm workspaces for the monorepo workspace root (MONO-04): `fsd <name>
+  --monorepo --package-manager npm` (or `--target multi-web`) now
+  generates an npm workspace root — `fsd.config.json` with
+  `packageManager: "npm"`, a private root `package.json` whose
+  `workspaces: ["apps/*", "packages/*"]` field declares the members,
+  root scripts that recurse with `npm run <script> --workspaces`, and
+  the workspace README with npm commands. An npm root has no
+  `pnpm-workspace.yaml`. pnpm roots are unchanged. Yarn and Bun
+  workspaces are MONO-05–06.
 - Monorepo workspace root generator with pnpm (MONO-03): `fsd <name>
   --monorepo` (or `--target multi-web`) now generates a workspace root —
   `fsd.config.json` with `target: "multi-web"`, a private root
@@ -16,8 +25,8 @@ All notable changes to `create-fsd-architecture` are documented here.
   Member names follow the MONO-01 layout (`apps/web` →
   `@<project>/web`) via `workspaceMemberName()` (MONO-02). The root has
   no `src/` and no dependencies; apps are added later (`fsd add app`,
-  MONO-13). pnpm is the only supported package manager for workspaces
-  today — npm, Yarn and Bun workspaces are MONO-04–06.
+  MONO-13). pnpm and npm are the supported package managers for
+  workspaces — Yarn and Bun workspaces are MONO-05–06.
 - Angular is a stable template (`--framework angular`, FSD-CLI/fsd-angular).
   Generators cover `feature`, `entity`, `widget` (including the navbar,
   sidebar, footer and bottom-bar presets), `page` (home, about and consult

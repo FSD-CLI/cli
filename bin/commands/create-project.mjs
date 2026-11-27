@@ -280,32 +280,38 @@ function showWorkspacePlan({ projectName, targetDir, framework, packageManager }
   console.log(`  Target: ${targetDir}`);
   console.log(`  Project target: Multi-web (multi-web)`);
   console.log(`  Default framework: ${framework}`);
-  console.log(`  Package manager: ${packageManager} (workspaces require pnpm)\n`);
+  console.log(`  Package manager: ${packageManager}\n`);
   console.log("  1. Create the target directory");
   console.log('  2. Write fsd.config.json (target: "multi-web")');
   console.log("  3. Write package.json (private, workspaces: apps/*, packages/*)");
-  console.log("  4. Write pnpm-workspace.yaml");
+  console.log(
+    packageManager === "pnpm"
+      ? "  4. Write pnpm-workspace.yaml"
+      : "  4. No pnpm-workspace.yaml — npm reads the workspaces from package.json"
+  );
   console.log("  5. Create the empty apps/ and packages/ member directories");
   console.log("  6. Write README.md and .gitignore\n");
   console.log(chalk.dim(`  No files were changed for ${projectName}.`));
 }
 
 /**
- * Creates a monorepo workspace root (MONO-03).
+ * Creates a monorepo workspace root (MONO-03, MONO-04).
  *
  * Unlike a web project, a workspace root is generated, not cloned from a
  * template: it has no template, no stack config, no dependencies to
  * install and no dev server to start. The framework is the workspace
- * default for apps added later (MONO-13), and pnpm is the only package
- * manager workspaces support today (MONO-04–06 add the others).
+ * default for apps added later (MONO-13), and pnpm and npm are the
+ * package managers workspaces support today (MONO-05–06 add Yarn
+ * and Bun).
  *
  * @param {{projectName: string, targetDir: string, packageName: string, options: object}} args
  */
 export async function runCreateWorkspace({ projectName, targetDir, packageName, options }) {
-  if (options.packageManager !== undefined && options.packageManager !== "pnpm") {
+  const packageManager = options.packageManager ?? "pnpm";
+  if (packageManager !== "pnpm" && packageManager !== "npm") {
     throw new Error(
-      `Multi-web workspaces support only pnpm today (--package-manager pnpm). ` +
-        "npm, Yarn and Bun workspaces are separate tasks (MONO-04–06)."
+      `Multi-web workspaces support pnpm and npm today (--package-manager pnpm or npm). ` +
+        "Yarn and Bun workspaces are separate tasks (MONO-05–06)."
     );
   }
 
@@ -313,7 +319,7 @@ export async function runCreateWorkspace({ projectName, targetDir, packageName, 
   const framework = template.value;
 
   if (options.dryRun) {
-    showWorkspacePlan({ projectName, targetDir, framework, packageManager: "pnpm" });
+    showWorkspacePlan({ projectName, targetDir, framework, packageManager });
     return;
   }
 
@@ -323,7 +329,7 @@ export async function runCreateWorkspace({ projectName, targetDir, packageName, 
       projectName,
       packageName,
       framework,
-      packageManager: "pnpm",
+      packageManager,
     });
   } catch (error) {
     transaction.rollback();
@@ -335,7 +341,7 @@ export async function runCreateWorkspace({ projectName, targetDir, packageName, 
   console.log(chalk.yellow("  If this saved you time, star FSD CLI on GitHub: https://github.com/FSD-CLI/cli"));
   console.log(`\n${chalk.bold.white("  Next steps:")}\n`);
   console.log(`    ${chalk.cyan("$")} cd ${projectName}`);
-  console.log(`    ${chalk.cyan("$")} pnpm install`);
+  console.log(`    ${chalk.cyan("$")} ${packageManager} install`);
   console.log(chalk.dim("  Then add your first app under apps/ — each app is a full FSD project."));
   console.log();
 }

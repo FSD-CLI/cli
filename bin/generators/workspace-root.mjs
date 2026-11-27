@@ -1,17 +1,20 @@
 /**
- * Monorepo workspace root generator (MONO-03).
+ * Monorepo workspace root generator (MONO-03, MONO-04).
  *
- * Writes the root of a pnpm workspace exactly as specified in
+ * Writes the root of a pnpm or npm workspace exactly as specified in
  * docs/MONOREPO-LAYOUT.md (MONO-01): a root `fsd.config.json` with
  * `target: "multi-web"`, a private root `package.json` listing the
- * workspace members, a `pnpm-workspace.yaml` with the member globs, and
- * the empty `apps/` and `packages/` member directories. The root has no
- * `src/` of its own and no dependencies: apps are added later with
- * `fsd add app` (MONO-13) and shared packages with MONO-14–16.
+ * workspace members, the empty `apps/` and `packages/` member
+ * directories, and — for pnpm only — a `pnpm-workspace.yaml` with the
+ * member globs. npm workspaces are declared through the `workspaces`
+ * field of the root `package.json` instead, so an npm root has no
+ * `pnpm-workspace.yaml`. The root has no `src/` of its own and no
+ * dependencies: apps are added later with `fsd add app` (MONO-13) and
+ * shared packages with MONO-14–16.
  *
- * pnpm is the only package manager the workspace root supports today:
- * npm, Yarn and Bun workspaces are MONO-04–06. The generator refuses
- * any other manager instead of writing a root pnpm cannot install.
+ * pnpm and npm are the package managers the workspace root supports
+ * today: Yarn and Bun workspaces are MONO-05–06. The generator refuses
+ * any other manager instead of writing a root the manager cannot install.
  *
  * The file contents are pure renderers (`renderWorkspaceRootFiles`), so
  * tests can assert the exact bytes without touching disk; the create
@@ -21,6 +24,9 @@
 import fs from "fs";
 import path from "path";
 import { inspectPackageName, workspaceMemberName } from "../core/package-name.mjs";
+
+/** The package managers a workspace root supports (MONO-03 pnpm, MONO-04 npm). */
+export const WORKSPACE_PACKAGE_MANAGERS = Object.freeze(["pnpm", "npm"]);
 
 /** The workspace member globs, from the MONO-01 layout spec. */
 export const WORKSPACE_MEMBER_PATTERNS = Object.freeze(["apps/*", "packages/*"]);
@@ -50,10 +56,10 @@ const FRAMEWORK_BUILD_DEPENDENCIES = Object.freeze({
 });
 
 function assertWorkspaceOptions({ projectName, packageName, framework, packageManager }) {
-  if (packageManager !== "pnpm") {
+  if (!WORKSPACE_PACKAGE_MANAGERS.includes(packageManager)) {
     throw new Error(
-      `Multi-web workspaces support only pnpm today (received "${packageManager}"). ` +
-        "npm, Yarn and Bun workspaces are separate tasks (MONO-04–06)."
+      `Multi-web workspaces support pnpm and npm today (received "${packageManager}"). ` +
+        "Yarn and Bun workspaces are separate tasks (MONO-05–06)."
     );
   }
   if (!WORKSPACE_FRAMEWORKS.includes(framework)) {
@@ -73,13 +79,13 @@ function assertWorkspaceOptions({ projectName, packageName, framework, packageMa
   workspaceMemberName(projectName, "web");
 }
 
-function renderFsdConfig({ projectName, framework }) {
+function renderFsdConfig({ projectName, framework, packageManager }) {
   return JSON.stringify(
     {
       schemaVersion: 1,
       framework,
       projectName,
-      packageManager: "pnpm",
+      packageManager,
       target: "multi-web",
     },
     null,
@@ -87,19 +93,32 @@ function renderFsdConfig({ projectName, framework }) {
   );
 }
 
-function renderRootPackageJson({ packageName }) {
+// The root scripts run a script in every member: pnpm recurses with
+// `-r`, npm with `--workspaces` (npm reads the member globs from the
+// `workspaces` field below, so there is no separate workspace file).
+const WORKSPACE_SCRIPTS = Object.freeze({
+  pnpm: Object.freeze({
+    dev: "pnpm -r run dev",
+    build: "pnpm -r run build",
+    lint: "pnpm -r run lint",
+    test: "pnpm -r run test",
+  }),
+  npm: Object.freeze({
+    dev: "npm run dev --workspaces",
+    build: "npm run build --workspaces",
+    lint: "npm run lint --workspaces",
+    test: "npm run test --workspaces",
+  }),
+});
+
+function renderRootPackageJson({ packageName, packageManager }) {
   return JSON.stringify(
     {
       name: packageName,
       private: true,
       version: "0.1.0",
       workspaces: [...WORKSPACE_MEMBER_PATTERNS],
-      scripts: {
-        dev: "pnpm -r run dev",
-        build: "pnpm -r run build",
-        lint: "pnpm -r run lint",
-        test: "pnpm -r run test",
-      },
+      scripts: { ...WORKSPACE_SCRIPTS[packageManager] },
     },
     null,
     2
@@ -121,13 +140,18 @@ function renderPnpmWorkspace({ framework }) {
   ].join("\n");
 }
 
-function renderWorkspaceReadme({ projectName }) {
+function renderWorkspaceReadme({ projectName, packageManager }) {
   const web = workspaceMemberName(projectName, "apps/web");
   const sharedUi = workspaceMemberName(projectName, "packages/shared-ui");
+  const install = packageManager === "npm" ? "npm install" : "pnpm install";
+  const runAll = (script) =>
+    packageManager === "npm" ? `npm run ${script} --workspaces` : `pnpm -r run ${script}`;
+  const managerName = packageManager === "npm" ? "npm" : "pnpm";
+  const article = packageManager === "npm" ? "An" : "A";
   return [
     `# ${projectName}`,
     "",
-    "A pnpm workspace of FSD applications, created with FSD CLI (`fsd --monorepo`).",
+    `${article} ${managerName} workspace of FSD applications, created with FSD CLI (\`fsd --monorepo\`).`,
     "",
     "## Layout",
     "",
@@ -144,10 +168,10 @@ function renderWorkspaceReadme({ projectName }) {
     "",
     "## Commands",
     "",
-    "- `pnpm install` — install dependencies for every member",
-    "- `pnpm -r run dev` — start every app's dev server",
-    "- `pnpm -r run build` — build every member",
-    "- `pnpm -r run test` — test every member",
+    `- \`${install}\` — install dependencies for every member`,
+    `- \`${runAll("dev")}\` — start every app's dev server`,
+    `- \`${runAll("build")}\` — build every member`,
+    `- \`${runAll("test")}\` — test every member`,
     "",
     "Run `fsd check` and `fsd doctor` inside an app directory: at the",
     "workspace root they report the workspace, never a failure.",
@@ -167,14 +191,19 @@ function renderWorkspaceReadme({ projectName }) {
 export function renderWorkspaceRootFiles(options) {
   const resolved = { packageManager: "pnpm", ...options };
   assertWorkspaceOptions(resolved);
-  const { projectName, packageName, framework } = resolved;
+  const { projectName, packageName, framework, packageManager } = resolved;
+  // npm declares its members in the root package.json `workspaces`
+  // field; only pnpm needs the separate pnpm-workspace.yaml (which also
+  // carries the pnpm build-approval policy for the default framework).
   return {
-    "fsd.config.json": `${renderFsdConfig({ projectName, framework })}\n`,
-    "package.json": `${renderRootPackageJson({ packageName })}\n`,
-    "pnpm-workspace.yaml": renderPnpmWorkspace({ framework }),
+    "fsd.config.json": `${renderFsdConfig({ projectName, framework, packageManager })}\n`,
+    "package.json": `${renderRootPackageJson({ packageName, packageManager })}\n`,
+    ...(packageManager === "pnpm"
+      ? { "pnpm-workspace.yaml": renderPnpmWorkspace({ framework }) }
+      : {}),
     "apps/.gitkeep": "",
     "packages/.gitkeep": "",
-    "README.md": renderWorkspaceReadme({ projectName }),
+    "README.md": renderWorkspaceReadme({ projectName, packageManager }),
     ".gitignore": "node_modules\ndist\n",
   };
 }

@@ -18,7 +18,7 @@
  * config is separate follow-up work, and the `--target` flag arrives with
  * the CLI flags work. Nothing here writes to disk.
  *
- * Only the web target and the pnpm multi-web workspace are implemented
+ * Only the web target and the pnpm/npm multi-web workspace are implemented
  * today. The other selections are roadmap items (mobile support), so
  * they carry `available: false` plus the reason: the prompt offers them
  * as disabled "Coming Soon" choices — the same treatment planned
@@ -55,9 +55,9 @@ export const PROJECT_TARGET_OPTIONS = Object.freeze([
     title: "Multi-web",
     description: "Several web applications in one workspace",
     adapterTargets: Object.freeze(["web"]),
-    // MONO-03: the pnpm workspace root generator. npm, Yarn and Bun
-    // workspaces are MONO-04–06, so the create flow still refuses any
-    // other package manager for this target.
+    // MONO-03: the pnpm workspace root generator; MONO-04 added npm.
+    // Yarn and Bun workspaces are MONO-05–06, so the create flow still
+    // refuses any other package manager for this target.
     available: true,
   }),
   Object.freeze({
