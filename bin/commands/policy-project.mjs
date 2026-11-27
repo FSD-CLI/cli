@@ -7,8 +7,8 @@ import {
 
 // `fsd policy` loads and validates the project's policy file
 // (fsd.policy.ts, or fsd.policy.mjs / fsd.policy.js). It reports what the
-// policy declares; it does not evaluate the project against the rules —
-// that is INT-36. Exit code 1 when the file exists but is invalid.
+// policy declares; evaluating the project against the rules is what
+// `fsd check` does (INT-36). Exit code 1 when the file exists but is invalid.
 export async function runPolicyProject(command, cwd = process.cwd()) {
   const { found, path: file, policy, errors } = await loadPolicy(cwd);
   if (!found) {
@@ -43,6 +43,6 @@ export async function runPolicyProject(command, cwd = process.cwd()) {
     console.log(`  - ${rule.id} (${severity})${detail}`);
   }
   console.log(
-    "\n  Rules are declared here but not evaluated yet — enforcement lands with fsd check (INT-36).\n",
+    "\n  The project is evaluated against these rules by `fsd check`.\n",
   );
 }

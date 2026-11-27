@@ -8,6 +8,8 @@ import {
   checkPackageManagerVersion,
   getPackageManagerRequirement,
 } from "../core/runtime-requirements.mjs";
+import { loadPolicy } from "../core/policy.mjs";
+import { evaluatePolicy } from "../core/policy-evaluate.mjs";
 import { loadProjectConfig } from "../generator.mjs";
 import { explainProject } from "./explain-project.mjs";
 
@@ -124,6 +126,74 @@ function printMetrics({ layers, total }) {
   console.log(`\n  Total slices: ${total}\n`);
 }
 
+function printPolicyWarnings(warnings) {
+  for (const warning of warnings) {
+    console.log(
+      `  ${chalk.yellow("WARN")}  Policy: ${warning.ruleId} — ${warning.message}`,
+    );
+  }
+}
+
+// Policy as Code (INT-36): `fsd check` loads `fsd.policy.ts` when present
+// and evaluates it against the project source. When no policy file exists
+// this returns no checks and `check` behaves exactly as before. Error
+// violations become failing checks (so `check` exits non-zero); `warn`
+// violations are reported but do not fail the run. An invalid policy file
+// is a failing check, not a silent skip.
+async function evaluateProjectPolicy(cwd, report) {
+  const checks = [];
+  const warnings = [];
+  const { found, path: file, policy, errors } = await loadPolicy(cwd);
+  if (!found) return { checks, warnings };
+
+  const fileName = path.basename(file);
+  if (errors.length) {
+    checks.push(
+      result(
+        `Policy: ${fileName}`,
+        false,
+        errors.length === 1
+          ? errors[0]
+          : `${errors.length} errors — ${errors[0]}`,
+      ),
+    );
+    return { checks, warnings };
+  }
+
+  const sourceRoot = path.join(
+    cwd,
+    getFrameworkAdapter(report.config.framework).sourceDirectory,
+  );
+  const { filesScanned, importsChecked, violations } = evaluatePolicy(
+    policy,
+    cwd,
+    sourceRoot,
+  );
+  const errorViolations = violations.filter(
+    (violation) => violation.severity === "error",
+  );
+  const warnViolations = violations.filter(
+    (violation) => violation.severity === "warn",
+  );
+  for (const violation of errorViolations) {
+    checks.push(result(`Policy: ${violation.ruleId}`, false, violation.message));
+  }
+  warnings.push(...warnViolations);
+  if (!errorViolations.length) {
+    const plural = (count, noun) => `${count} ${noun}${count === 1 ? "" : "s"}`;
+    checks.push(
+      result(
+        "Policy",
+        true,
+        `${fileName} — ${plural(policy.rules.length, "rule")} evaluated, ` +
+          `${plural(filesScanned, "file")}, ${plural(importsChecked, "import")}, ` +
+          `${plural(warnViolations.length, "warning")}`,
+      ),
+    );
+  }
+  return { checks, warnings };
+}
+
 export async function runProjectInspection(
   command,
   cwd = process.cwd(),
@@ -137,8 +207,17 @@ export async function runProjectInspection(
   const report = inspectProject(cwd, {
     includeToolchain: command === "doctor",
   });
+
+  let policyWarnings = [];
+  if (command === "check" && report.config) {
+    const policyOutcome = await evaluateProjectPolicy(cwd, report);
+    report.checks.push(...policyOutcome.checks);
+    policyWarnings = policyOutcome.warnings;
+  }
+
   console.log(chalk.bold(`\n  FSD ${command}\n`));
   printChecks(report.checks);
+  printPolicyWarnings(policyWarnings);
   console.log();
   if (command === "doctor" && report.metrics) {
     printMetrics(report.metrics);

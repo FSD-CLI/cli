@@ -34,8 +34,15 @@ All notable changes to `create-fsd-architecture` are documented here.
   project rules (`layer-boundaries`, `no-slice-cross-imports`,
   `no-public-api-bypass`) with `error`/`warn` severities, validated by
   `bin/core/policy.mjs` and reported by the new `fsd policy` command.
-  Rules are declared only — evaluation inside `fsd check` is INT-36.
   The format is specified in `docs/POLICY-FORMAT.md`.
+- Policy as Code evaluation inside `fsd check` (INT-36): when a policy
+  file is present, `check` scans the project source, resolves relative
+  and `@/` imports to FSD layers/slices, and reports each rule
+  violation — `error` violations fail the check, `warn` violations are
+  reported without failing it, and an invalid policy file fails the
+  check. No policy file means `check` behaves exactly as before.
+  Implemented in `bin/core/policy-evaluate.mjs` with no new
+  dependencies and no dependency on the INT-01 graph engine.
 - `fsd mcp`: a minimal MCP server over stdio (newline-delimited JSON-RPC
   2.0) with exactly two tools, `check` and `explain`, reusing the CLI's own
   inspection helpers. Both tools accept an optional `projectPath` and

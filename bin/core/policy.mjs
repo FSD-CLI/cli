@@ -5,11 +5,10 @@ import { pathToFileURL } from "node:url";
 // Policy as Code (INT-35): the `fsd.policy.ts` format and its loader.
 //
 // This module only defines the format and loads + validates a policy file.
-// It does NOT evaluate the project against the rules — that is INT-36
-// (`fsd check` will enforce the loaded policy there). The format below is a
-// proposal: it is deliberately minimal and may change before evaluation
-// lands, so keep new rule ids behind this module instead of spreading
-// policy knowledge across commands.
+// Evaluating the project against the rules lives in
+// `bin/core/policy-evaluate.mjs` and is wired into `fsd check` (INT-36).
+// Keep new rule ids behind this module instead of spreading policy
+// knowledge across commands.
 
 export const POLICY_VERSION = 1;
 

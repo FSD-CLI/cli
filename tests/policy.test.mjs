@@ -207,7 +207,7 @@ test("policy prints a valid policy with its rules and severities", (t) => {
   assert.match(result.stdout, /features → entities, shared/);
   assert.match(result.stdout, /no-slice-cross-imports \(error\)/);
   assert.match(result.stdout, /no-public-api-bypass \(warn\)/);
-  assert.match(result.stdout, /not evaluated yet/);
+  assert.match(result.stdout, /evaluated against these rules by `fsd check`/);
 });
 
 test(
