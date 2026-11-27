@@ -20,6 +20,17 @@ All notable changes to `create-fsd-architecture` are documented here.
   slices through the Angular CLI, and `ng update create-fsd-architecture`
   refreshes the setup (or runs the managed upgrade for CLI-created projects).
 
+- Architecture health score (INT-02): `bin/core/health-score.mjs`
+  computes a 0–100 score from the INT-01 import graph, as a weighted sum
+  of five dimensions — layer boundaries (40), slice isolation (25), slice
+  cycles (15), orphan slices (10) and layer coverage (10) — with a grade
+  (A–F) and the worst issues (high: violations and cycles; medium:
+  cross-slice imports; low: orphan slices and missing layers), capped at
+  10. `fsd doctor` prints the score, the per-dimension breakdown and the
+  worst issues after the project metrics; a low score never fails doctor,
+  and a project with no source files scores 0/F. No `fsd score` command
+  (that is the separate future task INT-54). The formula is specified in
+  `docs/HEALTH-SCORE.md`.
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
   schema: it prints the detected entities (`components.schemas`) and

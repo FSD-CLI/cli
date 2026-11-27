@@ -144,6 +144,9 @@ npx create-fsd-architecture@latest history --limit 20
 npx create-fsd-architecture@latest graph
 npx create-fsd-architecture@latest graph --json
 
+# `doctor` also prints the architecture health score (0-100) with a
+# per-dimension breakdown and the worst issues — see docs/HEALTH-SCORE.md
+
 # Preview what a JSON OpenAPI schema contains (dry run only, no files written)
 npx create-fsd-architecture@latest sync api --schema openapi.json --dry-run
 # Generate agent rules (AGENTS.md + Cursor rules) for an existing FSD project

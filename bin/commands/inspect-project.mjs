@@ -10,6 +10,8 @@ import {
 } from "../core/runtime-requirements.mjs";
 import { loadProjectConfig } from "../generator.mjs";
 import { explainProject } from "./explain-project.mjs";
+import { buildGraph } from "../core/graph.mjs";
+import { computeHealthScore } from "../core/health-score.mjs";
 
 const REQUIRED_LAYERS = [
   "app",
@@ -102,7 +104,21 @@ export function inspectProject(cwd = process.cwd(), { includeToolchain = false }
     // Doctor reuses the slice-count summary from `fsd explain` so the
     // diagnosis also shows the size of the project it is checking.
     metrics: includeToolchain ? explainProject(cwd) : null,
+    // Doctor also scores the architecture from the import graph (INT-02).
+    // Scoring never fails the diagnosis: if the graph cannot be built
+    // (e.g. the source root is missing), doctor reports that instead.
+    healthScore: includeToolchain ? scoreProject(cwd) : null,
   };
+}
+
+// The health score is a diagnosis, not a check: a low score never fails
+// `doctor`, and an unbuildable graph is reported, not thrown.
+function scoreProject(cwd) {
+  try {
+    return { result: computeHealthScore(buildGraph(cwd)), error: null };
+  } catch (error) {
+    return { result: null, error: error.message };
+  }
 }
 
 function printChecks(checks) {
@@ -124,6 +140,33 @@ function printMetrics({ layers, total }) {
   console.log(`\n  Total slices: ${total}\n`);
 }
 
+function printHealthScore({ result, error }) {
+  console.log(chalk.bold("  Architecture health score\n"));
+  if (error) {
+    console.log(`  Unavailable — could not build the import graph: ${error}\n`);
+    return;
+  }
+  console.log(`  ${result.score}/100 (${result.grade})`);
+  for (const dimension of result.dimensions) {
+    console.log(
+      `  ${dimension.label}: ${dimension.score}/100 — ${dimension.detail}`,
+    );
+  }
+  if (!result.issues.length) {
+    console.log("\n  No architecture issues found.\n");
+    return;
+  }
+  const shown = result.issues.length;
+  const total = result.totals.issues;
+  console.log(
+    `\n  Worst issues${total > shown ? ` (showing ${shown} of ${total})` : ""}:`,
+  );
+  for (const issue of result.issues) {
+    console.log(`  [${issue.severity}] ${issue.message}`);
+  }
+  console.log();
+}
+
 export async function runProjectInspection(
   command,
   cwd = process.cwd(),
@@ -142,6 +185,9 @@ export async function runProjectInspection(
   console.log();
   if (command === "doctor" && report.metrics) {
     printMetrics(report.metrics);
+  }
+  if (command === "doctor" && report.healthScore) {
+    printHealthScore(report.healthScore);
   }
 
   const failures = report.checks.filter((check) => !check.ok);
