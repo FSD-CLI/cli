@@ -244,6 +244,15 @@ then prints the selected root, migration path, every create/update/preserve/
 conflict/manual action, and validations. `--dry-run` and `--check` do not create
 backups, manifests, logs, lockfiles, or temporary project files.
 
+### Verified change runner
+
+Applies run through a verified change runner (`bin/core/change-runner.mjs`,
+spec in `docs/CHANGE-RUNNER.md`): the affected files are snapshotted first,
+the change is applied atomically, the project is verified (`fsd check` by
+default, plus the affected tests when they are cheap to run), and the change
+is committed only if every check passes — otherwise it is rolled back to the
+snapshot. It is an internal engine for other commands, not a CLI command.
+
 New projects contain `.fsd/manifest.json`, an atomically written ownership
 manifest. It records SHA-256 hashes only for CLI-owned files, marker regions, and
 specific managed dependency entries. It contains no environment values, secrets,
@@ -436,6 +445,7 @@ bin/
 ├── core/
 │   ├── frameworks/       # Runtime-specific adapters
 │   ├── capability-matrix.mjs
+│   ├── change-runner.mjs     # Verified change runner (snapshot → verify → commit/rollback)
 │   ├── template-registry.mjs
 │   ├── package-managers.mjs
 │   └── project-lifecycle.mjs
@@ -444,6 +454,9 @@ bin/
 
 - The Template Registry is the single source of truth for template identity,
   repository, and release status.
+- The Verified Change Runner snapshots the files a change touches, verifies
+  the result (`fsd check` by default, plus the affected tests when cheap),
+  and commits only on success — otherwise it rolls back to the snapshot.
 - The Capability Matrix prevents invalid cross-framework stack combinations.
 - Framework Adapters own environment variables and client-component behavior.
 - Project Lifecycle owns cloning, configuration, Git, Husky, Commitlint, and

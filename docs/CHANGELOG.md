@@ -6,6 +6,12 @@ All notable changes to `create-fsd-architecture` are documented here.
 
 ### Added
 
+- Verified change runner (`bin/core/change-runner.mjs`, spec in
+  `docs/CHANGE-RUNNER.md`): an internal engine that snapshots the files a
+  change touches, applies it atomically, verifies the result (`fsd check`
+  by default, plus the affected tests when they are cheap to run), and
+  commits only on success — otherwise it rolls back to the snapshot. It is
+  not a CLI command; other commands use it through its module API.
 - Angular is a stable template (`--framework angular`, FSD-CLI/fsd-angular).
   Generators cover `feature`, `entity`, `widget` (including the navbar,
   sidebar, footer and bottom-bar presets), `page` (home, about and consult
