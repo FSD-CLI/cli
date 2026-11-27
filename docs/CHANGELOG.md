@@ -20,6 +20,17 @@ All notable changes to `create-fsd-architecture` are documented here.
   slices through the Angular CLI, and `ng update create-fsd-architecture`
   refreshes the setup (or runs the managed upgrade for CLI-created projects).
 
+- Architecture health score (INT-02): `bin/core/health-score.mjs`
+  computes a 0–100 score from the INT-01 import graph, as a weighted sum
+  of five dimensions — layer boundaries (40), slice isolation (25), slice
+  cycles (15), orphan slices (10) and layer coverage (10) — with a grade
+  (A–F) and the worst issues (high: violations and cycles; medium:
+  cross-slice imports; low: orphan slices and missing layers), capped at
+  10. `fsd doctor` prints the score, the per-dimension breakdown and the
+  worst issues after the project metrics; a low score never fails doctor,
+  and a project with no source files scores 0/F. No `fsd score` command
+  (that is the separate future task INT-54). The formula is specified in
+  `docs/HEALTH-SCORE.md`.
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
   schema: it prints the detected entities (`components.schemas`) and
@@ -41,6 +52,41 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- Project graph engine (INT-01, slice 1): `bin/core/graph.mjs` builds the
+  node inventory — it walks the source root and maps every source file to
+  its (layer, slice/segment) using `fsd explain`'s layer list, emitting
+  `{ nodes: [{ id, file, layer, slice }], edges: [] }`. No import parsing
+  yet — edges arrive in slice 2.
+- Project graph engine (INT-01, slice 2): the zero-dependency import parser
+  in `bin/core/graph.mjs` fills the graph's edges — it parses `import`,
+  `import type`, `export ... from`, `require()` and dynamic `import()` in
+  `.js/.mjs/.ts/.tsx/.jsx` files and resolves relative specifiers to nodes
+  (directory imports resolve to their index file). Bare and alias imports
+  are recorded as unresolved edges (`to: null`) instead of being dropped.
+  No judgement yet — violation detection is slice 3.
+- Project graph engine (INT-01, slice 3): layer-boundary violation
+  detection in `bin/core/graph.mjs` — `buildGraph` now also returns
+  `violations`, applying the FSD layer order (app → pages → widgets →
+  features → entities → shared) to the parsed edges. Each violation carries
+  the policy rule id `layer-boundaries` (the same id INT-35 defines in
+  `bin/core/policy.mjs`), the offending edge and both layers, so INT-36's
+  policy evaluation can consume them directly. `findViolations(graph,
+  allow)` accepts a project allow list; same-layer and unresolved edges
+  are never layer-boundaries violations.
+- Project graph engine (INT-01, slice 4): graph queries in
+  `bin/core/graph.mjs` — `dependenciesOf(graph, key)` /
+  `dependentsOf(graph, key)` answer slice-level reverse lookups and
+  `findSliceCycles(graph)` reports slice-level import cycles, all at
+  "layer/slice" granularity with self-imports excluded. Internal API only
+  (no command yet); `fsd impact` (INT-25) will call it. A new `cyclic`
+  analysis fixture pins the smallest possible cycle
+  (`features/a` ↔ `features/b`).
+- Project graph engine (INT-01, slice 5): `fsd graph [--json]` prints the
+  project import graph — node and edge counts, nodes per layer, and
+  layer-boundary violations; `--json` prints the same graph as JSON for
+  tooling. The command is read-only and never writes files; it does not
+  enforce the policy (enforcement inside `check` is INT-36). Wired into
+  `--help` and the README. This completes INT-01's five slices.
 
 ### Fixed
 

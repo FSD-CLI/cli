@@ -137,6 +137,15 @@ export function parseCliArgs(rawArgs) {
     return options;
   }
 
+  if (args[0] === "graph") {
+    const options = { command: "graph", json: false };
+    for (const argument of args.slice(1)) {
+      if (argument === "--json") options.json = true;
+      else throw new CliUsageError(`Unexpected argument "${argument}".`);
+    }
+    return options;
+  }
+
   // INT-13 (scoped): only the dry-run preview is implemented. Generation
   // is INT-14/15/16, so a call without --dry-run is a usage error.
   if (args[0] === "sync") {
