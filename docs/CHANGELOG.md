@@ -41,6 +41,35 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- Project graph engine (INT-01, slice 1): `bin/core/graph.mjs` builds the
+  node inventory — it walks the source root and maps every source file to
+  its (layer, slice/segment) using `fsd explain`'s layer list, emitting
+  `{ nodes: [{ id, file, layer, slice }], edges: [] }`. No import parsing
+  yet — edges arrive in slice 2.
+- Project graph engine (INT-01, slice 2): the zero-dependency import parser
+  in `bin/core/graph.mjs` fills the graph's edges — it parses `import`,
+  `import type`, `export ... from`, `require()` and dynamic `import()` in
+  `.js/.mjs/.ts/.tsx/.jsx` files and resolves relative specifiers to nodes
+  (directory imports resolve to their index file). Bare and alias imports
+  are recorded as unresolved edges (`to: null`) instead of being dropped.
+  No judgement yet — violation detection is slice 3.
+- Project graph engine (INT-01, slice 3): layer-boundary violation
+  detection in `bin/core/graph.mjs` — `buildGraph` now also returns
+  `violations`, applying the FSD layer order (app → pages → widgets →
+  features → entities → shared) to the parsed edges. Each violation carries
+  the policy rule id `layer-boundaries` (the same id INT-35 defines in
+  `bin/core/policy.mjs`), the offending edge and both layers, so INT-36's
+  policy evaluation can consume them directly. `findViolations(graph,
+  allow)` accepts a project allow list; same-layer and unresolved edges
+  are never layer-boundaries violations.
+- Project graph engine (INT-01, slice 4): graph queries in
+  `bin/core/graph.mjs` — `dependenciesOf(graph, key)` /
+  `dependentsOf(graph, key)` answer slice-level reverse lookups and
+  `findSliceCycles(graph)` reports slice-level import cycles, all at
+  "layer/slice" granularity with self-imports excluded. Internal API only
+  (no command yet); `fsd impact` (INT-25) will call it. A new `cyclic`
+  analysis fixture pins the smallest possible cycle
+  (`features/a` ↔ `features/b`).
 
 ### Fixed
 
