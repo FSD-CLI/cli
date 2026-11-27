@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { inspectPackageName, toPackageName } from "../bin/core/package-name.mjs";
+import { inspectPackageName, toPackageName, workspaceMemberName } from "../bin/core/package-name.mjs";
 
 test("toPackageName converts the documented project names into valid npm names", () => {
   assert.equal(toPackageName("MyApp").name, "myapp");
@@ -79,6 +79,45 @@ test("toPackageName rejects input without a usable name", () => {
   assert.throws(() => toPackageName(""), /project name is required/i);
   assert.throws(() => toPackageName("   "), /project name is required/i);
   assert.throws(() => toPackageName("@scope"), /not a scoped package name/);
+});
+
+test("workspaceMemberName derives the scope from a plain project name", () => {
+  assert.equal(workspaceMemberName("MyApp", "web"), "@myapp/web");
+  assert.equal(workspaceMemberName("my app", "web"), "@my-app/web");
+  assert.equal(workspaceMemberName("apps/shop", "web"), "@shop/web");
+  assert.equal(workspaceMemberName("http", "web"), "@http-app/web");
+});
+
+test("workspaceMemberName keeps the scope of a scoped project name", () => {
+  assert.equal(workspaceMemberName("@acme/shop", "web"), "@acme/web");
+  assert.equal(workspaceMemberName("@my scope/shop", "web"), "@my-scope/web");
+});
+
+test("workspaceMemberName names app and package members from their paths", () => {
+  assert.equal(workspaceMemberName("my-app", "apps/web"), "@my-app/web");
+  assert.equal(workspaceMemberName("my-app", "packages/shared-ui"), "@my-app/shared-ui");
+  assert.equal(workspaceMemberName("my-app", "docs"), "@my-app/docs");
+});
+
+test("workspaceMemberName rejects invalid member names", () => {
+  assert.throws(() => workspaceMemberName("my-app", ""), /member name is required/i);
+  assert.throws(
+    () => workspaceMemberName("my-app", "MyApp"),
+    /not a valid workspace member name/i
+  );
+  assert.throws(
+    () => workspaceMemberName("my-app", "my app"),
+    /not a valid workspace member name/i
+  );
+  assert.throws(
+    () => workspaceMemberName("my-app", "@acme/web"),
+    /without a scope/i
+  );
+  assert.throws(
+    () => workspaceMemberName("my-app", "_web"),
+    /not a valid workspace member name/i
+  );
+  assert.throws(() => workspaceMemberName("", "web"), /project name is required/i);
 });
 
 test("inspectPackageName reports npm validity without changing anything", () => {
