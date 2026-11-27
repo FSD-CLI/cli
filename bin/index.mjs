@@ -78,6 +78,8 @@ export async function runCli(args = process.argv.slice(2)) {
     await runExplainProject(command, process.cwd(), {
       tour: command.tour,
       force: command.force,
+      slice: command.slice,
+      interactive: command.interactive,
     });
     return;
   }

@@ -21,6 +21,14 @@ All notable changes to `create-fsd-architecture` are documented here.
   refreshes the setup (or runs the managed upgrade for CLI-created projects).
 
 - `fsd doctor` now prints project metrics — per-layer slice counts and the total slice count — reusing the summary from `fsd explain`.
+- `fsd explain <slice>` deep-dives into one slice (INT-49): `features/auth`,
+  or a bare name such as `auth` when it matches exactly one slice. It prints
+  the slice's layer and files, what it depends on (other slices it imports
+  from, plus its external imports), what depends on it, and any
+  layer-boundary violations touching it (an upward import, in either
+  direction). An unknown or ambiguous slice name fails with an error listing
+  the available slices. `fsd explain --interactive` (or `-i`) opens a prompt
+  loop to pick slices to deep-dive into, then pick another or quit.
 - `fsd sync api --schema <file> --dry-run` previews a JSON OpenAPI 3.x
   schema: it prints the detected entities (`components.schemas`) and
   endpoints (HTTP method, path, operation id) and writes no files.

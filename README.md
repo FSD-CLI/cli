@@ -136,6 +136,13 @@ npx create-fsd-architecture@latest config
 npx create-fsd-architecture@latest explain
 npx create-fsd-architecture@latest explain --tour
 
+# Deep-dive into one slice (layer/slice, or a bare name when unambiguous)
+npx create-fsd-architecture@latest explain features/auth
+npx create-fsd-architecture@latest explain auth
+
+# Pick slices to deep-dive into in a prompt loop
+npx create-fsd-architecture@latest explain --interactive
+
 # Sample recent commits by FSD layer
 npx create-fsd-architecture@latest history
 npx create-fsd-architecture@latest history --limit 20
@@ -161,6 +168,15 @@ per sliced layer (pages, widgets, features, entities), plus segments in app
 and shared. The total excludes app/shared segments. `explain --tour`
 writes the same summary as `ONBOARDING.md` in the project root; it refuses to
 overwrite an existing file unless `--force` is passed.
+
+`explain <slice>` deep-dives into one slice — `features/auth`, or a bare name
+such as `auth` when it matches exactly one slice — and prints its layer, its
+files, what it depends on (other slices it imports from, plus its external
+imports), what depends on it, and any layer-boundary violations touching it
+(an upward import, in either direction). An unknown or ambiguous slice name
+fails with an error listing the available slices. `explain --interactive`
+(or `-i`) opens a prompt loop: pick a slice to deep-dive into, then pick
+another or quit.
 
 `history` samples the last 50 commits (or `--limit <n>`) from `git log`,
 buckets each changed file by FSD layer (app, pages, widgets, features,
