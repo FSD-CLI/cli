@@ -36,6 +36,15 @@ All notable changes to `create-fsd-architecture` are documented here.
   `bin/core/policy.mjs` and reported by the new `fsd policy` command.
   Rules are declared only — evaluation inside `fsd check` is INT-36.
   The format is specified in `docs/POLICY-FORMAT.md`.
+- Policy ownership and presets (INT-37/INT-38): a policy can declare
+  `owners` per layer or `layer/slice` (handles like `@team`/`@org/team`
+  or emails), and `fsd policy codeowners` generates `.github/CODEOWNERS`
+  from them — it never overwrites a hand-written file without `--force`.
+  Built-in presets `recommended` and `strict` (rule severities plus the
+  default `layer-boundaries` allow-list; `strict` makes every rule an
+  error and forbids widgets from importing features) apply via a `preset`
+  field in the policy file or `fsd policy --preset <name>`, which
+  scaffolds a starter policy file.
 - `fsd mcp`: a minimal MCP server over stdio (newline-delimited JSON-RPC
   2.0) with exactly two tools, `check` and `explain`, reusing the CLI's own
   inspection helpers. Both tools accept an optional `projectPath` and
