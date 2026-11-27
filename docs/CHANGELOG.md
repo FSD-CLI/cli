@@ -41,6 +41,11 @@ All notable changes to `create-fsd-architecture` are documented here.
   inspection helpers. Both tools accept an optional `projectPath` and
   default to the server's working directory; the server exits when stdin
   closes.
+- Project graph engine (INT-01, slice 1): `bin/core/graph.mjs` builds the
+  node inventory — it walks the source root and maps every source file to
+  its (layer, slice/segment) using `fsd explain`'s layer list, emitting
+  `{ nodes: [{ id, file, layer, slice }], edges: [] }`. No import parsing
+  yet — edges arrive in slice 2.
 
 ### Fixed
 
