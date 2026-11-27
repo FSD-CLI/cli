@@ -200,8 +200,8 @@ Create options:
 | Option | Purpose |
 | --- | --- |
 | `-f, --framework <id>` | Skip the framework prompt |
-| `--target <target>` | Select the project target: `web` (the only target available today; `multi-web`, `mobile` and `universal` are rejected until their support lands) |
-| `--monorepo` | Shortcut for `--target multi-web` (not yet available) |
+| `--target <target>` | Select the project target: `web`, or `multi-web` for a pnpm or npm workspace root (`mobile` and `universal` are rejected until their support lands) |
+| `--monorepo` | Shortcut for `--target multi-web`: generates a pnpm or npm workspace root (`fsd.config.json` with `target: multi-web`, root `package.json` with `workspaces: ["apps/*", "packages/*"]`, empty `apps/` and `packages/`). pnpm roots also get a `pnpm-workspace.yaml`; npm roots declare the workspaces in `package.json` only. `--package-manager` must be `pnpm` (default) or `npm` if given |
 | `--mobile` | Shortcut for `--target mobile` (not yet available) |
 | `-y, --yes` | Accept framework defaults without prompts; requires a project name and `--framework` |
 | `--package-manager <id>` | Select npm, pnpm, Yarn, or Bun non-interactively |

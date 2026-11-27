@@ -32,7 +32,7 @@ test("the legacy --yes --framework command plans a Web project, unchanged", (t) 
   assert.equal(fs.existsSync(path.join(result.cwd, "app")), false);
 });
 
-test("--monorepo is rejected until monorepo support lands", (t) => {
+test("--monorepo plans a pnpm workspace root (MONO-03)", (t) => {
   const result = runCli(t, [
     "app",
     "--framework",
@@ -42,8 +42,11 @@ test("--monorepo is rejected until monorepo support lands", (t) => {
     "--dry-run",
   ]);
 
-  assert.notEqual(result.status, 0, result.output);
-  assert.match(result.output, /The Multi-web project target is not available yet/);
+  assert.equal(result.status, 0, result.output);
+  assert.match(result.output, /Workspace plan \(dry run\)/);
+  assert.match(result.output, /Project target: Multi-web \(multi-web\)/);
+  assert.match(result.output, /Package manager: pnpm/);
+  assert.match(result.output, /No files were changed for app\./);
   assert.equal(fs.existsSync(path.join(result.cwd, "app")), false);
 });
 

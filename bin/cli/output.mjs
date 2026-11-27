@@ -64,8 +64,8 @@ Commands:
 
 Create options:
   -f, --framework <id>          Select a framework without the template prompt
-      --target <target>         Project target: web (multi-web, mobile and universal are not yet available)
-      --monorepo                Shortcut for --target multi-web (not yet available)
+      --target <target>         Project target: web, or multi-web for a pnpm or npm workspace root (mobile and universal are not yet available)
+      --monorepo                Shortcut for --target multi-web (pnpm or npm workspace root)
       --mobile                  Shortcut for --target mobile (not yet available)
   -y, --yes                     Accept defaults (requires name and --framework)
       --package-manager <id>    Select npm, pnpm, yarn, or bun
