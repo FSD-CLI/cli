@@ -166,7 +166,11 @@ overwrite an existing file unless `--force` is passed.
 buckets each changed file by FSD layer (app, pages, widgets, features,
 entities, shared), and prints per-layer file-touch counts, the most-touched slices (excluding
 app/shared segments),
-and a chronological per-commit timeline. A repository with no commits prints a
+and a chronological per-commit timeline. It also attributes structural
+erosion to the commit that introduced it: files placed outside the FSD
+layers (for example under `src/components/`) and new imports from a higher
+layer (for example `shared` importing from `features`), with a per-commit
+erosion count, the worst offending commits, and erosion summed per author. A repository with no commits prints a
 note and exits successfully; outside a Git repository the command fails.
 
 `sync api --schema <file> --dry-run` reads a JSON OpenAPI 3.x schema and
