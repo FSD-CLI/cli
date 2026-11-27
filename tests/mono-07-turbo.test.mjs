@@ -177,10 +177,15 @@ test("readTurboConfig throws on a missing file and on invalid JSON", (t) => {
 });
 
 test("parseCliArgs parses turbo with --force only", () => {
-  assert.deepEqual(parseCliArgs(["turbo"]), { command: "turbo", force: false });
+  assert.deepEqual(parseCliArgs(["turbo"]), {
+    command: "turbo",
+    force: false,
+    verify: false,
+  });
   assert.deepEqual(parseCliArgs(["turbo", "--force"]), {
     command: "turbo",
     force: true,
+    verify: false,
   });
   assert.throws(() => parseCliArgs(["turbo", "--dry-run"]), CliUsageError);
 });

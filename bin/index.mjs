@@ -108,6 +108,7 @@ export async function runCli(args = process.argv.slice(2)) {
   if (command.command === "turbo") {
     await runTurboProject(command, process.cwd(), {
       force: command.force,
+      verify: command.verify,
     });
     return;
   }

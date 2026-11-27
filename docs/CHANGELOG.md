@@ -51,6 +51,13 @@ All notable changes to `create-fsd-architecture` are documented here.
   Nuxt, `dist/**` otherwise). It refuses to overwrite an existing
   `turbo.json` without `--force`, and refuses when `nx.json` is present —
   a workspace uses Turborepo or Nx, not both.
+- `fsd turbo --verify` verifies Turborepo caching for a monorepo workspace
+  (MONO-08): it validates `turbo.json` against what the generator promises,
+  checks that each app's framework build output is declared for caching,
+  warns about members without a `build` script, and flags a coexisting
+  `nx.json`. When a `turbo` binary is available it also runs
+  `turbo build --dry-run` to prove Turborepo loads the config; without one
+  it reports the static checks only.
 
 ### Fixed
 

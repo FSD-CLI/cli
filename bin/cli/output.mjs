@@ -33,7 +33,7 @@ Usage:
   fsd history [--limit <n>]
   fsd sync api --schema <file> --dry-run
   fsd agent-rules [--force]
-  fsd turbo [--force]
+  fsd turbo [--force] [--verify]
   fsd policy
   fsd mcp
   fsd upgrade [--dry-run] [--check] [--yes] [--no-install] [--allow-dirty]
@@ -59,7 +59,7 @@ Commands:
        history [--limit <n>]       Sample recent commits by FSD layer (default: 50)
        sync api --schema <file> --dry-run Preview entities/endpoints from a JSON OpenAPI schema (no files written)
        agent-rules [--force]       Write AGENTS.md + .cursor/rules/fsd-cli.mdc
-       turbo [--force]             Write turbo.json build/lint/test pipelines for a monorepo workspace
+       turbo [--force] [--verify]  Write turbo.json build/lint/test pipelines for a monorepo workspace (--verify checks it instead)
        policy                    Load and validate fsd.policy.ts (rules are not evaluated yet)
        mcp                         Minimal MCP server over stdio (tools: check, explain)
        upgrade                   Safely migrate CLI-owned project tooling

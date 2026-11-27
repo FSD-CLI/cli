@@ -193,7 +193,11 @@ task. The pipelines cover the discovered `apps/*` and `packages/*` members
 (build outputs follow each app's framework: `.next/**` for Next.js,
 `.output/**` for Nuxt, `dist/**` otherwise). It refuses to overwrite an
 existing `turbo.json` unless `--force` is passed, and refuses when `nx.json`
-is present — a workspace uses Turborepo or Nx, not both.
+is present — a workspace uses Turborepo or Nx, not both. `turbo --verify`
+checks the file instead of writing it: it validates the config, confirms
+each app's framework build output is declared for caching, warns about
+members without a `build` script, and — when a `turbo` binary is available —
+runs `turbo build --dry-run` to prove Turborepo loads the config.
 
 `policy` loads and validates `fsd.policy.ts` (or `fsd.policy.mjs` /
 `fsd.policy.js`) in the project root and prints the declared rules. The
